@@ -236,3 +236,75 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - Gaps the tester noted: the withholding path was not triggered on the deployment (the planner set `needs_live`, so no corpus search ran), so it is covered offline only. The two-agent `tavily_search` check was last run on rev 00006 (it passed there twice, plus once on rev 00005); rerun it at the final audit.
   - Open non-blocking: P3-N1 (accepted), P5-N1 (intermittent Gemini empty responses, Phase 7), P5-N4 (viewer snippet length, Phase 8), P5-N5 (one status search returned unrelated pages).
 - **Phase 5 marked done.** Live spend for the phase: about $1.42 of $1.50 (me about $0.58 including smoke tests, tester $0.52 + $0.22 + $0.09), plus about 50 Tavily credits.
+
+### Phase 6: Data (+ Code) (branch `phase-6-data`, from `origin/main` at 06f1141)
+
+- **Student brief (2026-10-27):** a Data agent with `get_schema` and read-only, bounded `run_sql` (`D#` citations); a real Data → Summary hand-off through `depends_on`, verified on the deployed URL; feature routing for Data; Code agent only if time and budget allow; rerun the deployed two-agent `tavily_search` check (Phase 5 tester gap). Live budget $1.50 (shared with the tester).
+- **Authorizer probe (SQLite 3.53.1):** pragma table-valued functions and `sqlite_master` show up as `SQLITE_READ` on their own names, so a table allowlist blocks them; `PRAGMA` and `ATTACH` have their own action codes; CTEs only produce reads of the base tables. `WITH RECURSIVE` needs `SQLITE_RECURSIVE` (allowed; bounded by the op cap and the wrapper LIMIT).
+- **Built:**
+  - `app/sqlguard.py`: lexical check, `mode=ro` + `query_only`, authorizer (SELECT, READ on 5 tables, allowlisted FUNCTION, RECURSIVE), `SELECT * FROM (\n<q>\n) LIMIT 51`, progress-handler cap (5M ops / 2 s), cell truncation, `schema_text`.
+  - `app/agents/data.py`: Data agent, `DATA_ROLE`, `get_schema`/`run_sql`, one repair round (`MAX_SQL_FAILURES=2`), `sql_result` events, `paper_ids` for hand-offs.
+  - `app/rag.py`: `register_sql` (`sql_row` per paper linked to the arXiv abstract page; `sql_result` for aggregate or empty results; each keeps SQL, columns and rows); `D` items in `format_evidence`; rule 4 of the augmentation prompt names `[D#]`.
+  - `app/graph.py`: `data` worker; `upstream_papers` + `handoff` event at dispatch; `no_upstream_papers` skip rule; `n_data` synthesis feature; D# citation events carry SQL and rows; D# never treated as abstention-only.
+  - `app/llm/policy.py` + `worker.py`: `repair_round` feature (set by `sql_error`/`sql_rejected`/`sql_timeout` tool errors) → OpenAI capability.
+  - Prompts: planner rules for Data and Data-first hand-off plans; Summary works on handed-off papers; synthesizer reads `[D#]` as exact records.
+  - UI: "data ⇄ SQLite" and `handoff` trace rows; D# viewer (SQL, row(s), abstract link); D# in the sources list and banner.
+- **Found while building:**
+  - My first guard never set `truncated`: the wrapper's LIMIT 50 meant the 51st row never existed. It now wraps with LIMIT 51 and returns 50.
+  - `WITH x AS (…) DELETE …` passed the "starts with SELECT/WITH" check and was then blocked only as a syntax error inside the wrapper (`sql_error`), which would have offered the model a "repair" of a write. Added a keyword check outside literals so writes are `sql_rejected`.
+  - Unbalanced `)` could close the wrapper early (`SELECT 1) UNION ALL SELECT … FROM (…`); the authorizer and LIMIT still applied, but the lexer now rejects it.
+  - With an empty Data result, the dependent Summary would have run with nothing to summarise. The supervisor now skips it as `no_upstream_papers` and the request stays `done`.
+- **Tests:** `tests/unit/test_phase6_data.py`, 72 tests: writes/PRAGMA/ATTACH/transactions, WITH-prefixed writes, internal tables and pragma functions, multiple statements, comments, wrapper escape, function allowlist, `mode=ro` without the authorizer, 50-row cap and truncation flag, cell cap, op cap (< 3 s), infinite recursive CTE, unknown column, empty result, joins/CTEs/windows, schema text, D# registry (per-row, aggregate, empty, stable ids, escaping), hand-off ordering, D# abstention exemption, graph-level hand-off injection with fakes, empty-result skip, repair round routed to OpenAI, second failure closes `run_sql`, injection via the question, Data-only synthesis on Gemini, uncited query = partial, `route_next` skip rule, planner/worker list. A module fixture asserts `papers.db` is byte-identical after the module. Offline suite: 396 passed, 14 skipped, 1 xfailed.
+- **Live (RUN_LIVE=1) `tests/integration/test_phase6_live_data.py`: 6 passed** (hand-off end to end; repair round with an injected real `no such column` error, repair routed to OpenAI and answered 14; planner on 4 questions). `papers.db` sha1 `669db610…` before and after all live runs.
+- **Local real runs (2026-10-27, `eval/results/phase6/local/`):**
+  - Planner probe: 8/8 as intended (`planner_probe.txt`), $0.016.
+  - "Which 2025 cs.MA papers … Summarize the two most recent": one 2025 cs.MA paper (MAS-GPT, correct per the DB); handoff t1 → t2 with `2503.03686 [D1]`; Summary read its outline and 3 sections; the answer says there is no second paper. Done, 35.6 s, $0.054.
+  - "multi-agent-systems papers from 2025 or 2026 … two most recent": 6 rows D1–D6 (matches the DB), Summary read the two newest (2606.24535, 2606.19494). OpenAI synthesis; 33.4 s, $0.051.
+  - Repos and categories: 58 papers (matches), per-category counts as `sql_result` D#; Gemini only, 13.6 s.
+  - Injection ("DROP TABLE papers; UPDATE …; how many papers?"): the model only ran `SELECT COUNT(*)` → 89 [D1].
+  - 2019 papers: empty result, Summary skipped `no_upstream_papers`, "The corpus contains no papers published in 2019 [D1]", status done.
+  - ICLR acceptance: Data searched `comment`/`journal_ref` and found ReAct, AgentBench, SWE-bench.
+  - Headless Chrome (`tests/e2e/phase6_browser_data_citations.py`): D1 opens the viewer with the SQL, the row and the arXiv abstract link; trace shows the SQLite and handoff rows; 0 console errors; 27 distinct streamed lengths.
+- **Code agent: not built (my decision, recorded in architecture §5).** Data was done and verified, but Code needs repo snapshots, four tools, path-safety tests and an R# viewer; I kept the remaining budget for the deployed exit check, the sharing rerun and the tester. Three workers meet the floor.
+- **Live spend before deploy:** about $0.30 of $1.50 (local runs $0.22, live tests ~$0.07, planner probe $0.016).
+- **Deploy (student approved), 2026-10-27 19:10 UTC:** revision `paper-analyst-00008-nwt`, image `paper-analyst:20261027-190343-06f1141-dirty`, same settings. Smoke test passed (Gemini only, 5 citations, 0 failed attempts). Startup log: index ready, live search enabled, 5.00 s.
+- **Deployed exit check (warm, `eval/results/phase6/deployed/`): met.**
+  - "Which 2025 cs.MA papers are in the corpus? Summarize the two most recent" → plan data → summary (depends_on t1). SQL over `paper_categories` → 1 row D1; `handoff` t1 → t2 with `2503.03686`; Summary read the outline and 3 sections of that paper; it says there is no second paper. OpenAI synthesis (2 worker results); done, 28.5 s, $0.053, 7 citations, 0 unresolved/dropped.
+  - Paraphrase "Which papers from 2026 about multi-agent systems are indexed? Give me a short summary of the two newest." → data (2 queries, D1–D5) → handoff of 3 ids → Summary read the two newest (2606.24535, 2606.19494). Done, 30.8 s, $0.046.
+  - Data only: "Which authors appear on more than one paper?" → 74 authors (matches the DB), Narasimhan 8 papers (matches); Gemini synthesis (cost); 30.8 s, $0.060.
+- **Deployed two-agent `tavily_search` rerun (Phase 5 tester gap), rev 00008:** the memory + Self-RAG venue question → Research ×2 ("find current developments on the topic") and Summary ×1 ("check the current status of a specific paper") on `tavily-remote-mcp`, 6 W# cited; done, 45.7 s, $0.039.
+- **Deployed headless Chrome:** D1–D6 linked; the aggregate D1 viewer shows the SQL and result with no abstract link; trace shows the "data ⇄ SQLite" rows; 0 console errors.
+- **Logs (rev 00008, 31 entries so far):** 0 "Logging error", 0 tracebacks, 0 credential shapes.
+- **Live spend before the tester:** about $0.55 of $1.50.
+- **Tester Phase 6 gate: PHASE FAIL** (`docs/testing/phase-6-20261027T1920Z.md`). The exit check itself worked on rev 00008 with the tester's own phrasings (data → summary on "the earliest 2024 paper", data → research), 12/12 unrehearsed planner phrasings, empty result, injection, repair (real model) and the Phase 5 sharing regression all passed. Tester spend about $0.37. Defects:
+  - **P6-D1 (Major):** the guard bounded rows, operations and time but not memory. `WITH RECURSIVE … s||s …` built a 268 MB string in 1.19 s (2.14 GB peak) in few VM ops; one `printf('%200000000s', …)` built 200 MB. Reachable from the public URL (the tester ran a 3 MB `printf` there).
+  - **P6-D2 (Minor):** Data rows without an `arxiv_id` column made the supervisor skip Summary as `no_upstream_papers`, and the synthesizer was told no papers matched.
+  - Notes: N1 README still listed Code as a stretch worker; N2 corpus start date (ReAct is 2022-10-06); N3 a correct Data abstention ends `partial`; N4 calls after a successful repair stay on OpenAI (documented); N5 one 47 s Gemini span (Phase 9); N6 design_proposal still calls paper-to-code the signature workflow.
+- **Fixes (local, 2026-10-27):**
+  - **P6-D1:** `connect_ro` sets `SQLITE_LIMIT_LENGTH` = 100,000 bytes (and `SQLITE_LIMIT_SQL_LENGTH`); "too big" errors are `sql_rejected`. Over the limit, `printf`/`format` return NULL silently instead of failing, so both were removed from the function allowlist. Measured with `/usr/bin/time -l`: the doubling CTE (n<25), `group_concat` over a cross join, and ORDER BY / DISTINCT / GROUP BY over a million 99 KB rows are each refused or stopped in ≤ 2 s with 24–33 MB peak RSS. Found while probing: a recursive CTE with `UNION` (not `UNION ALL`) reads its own name and is refused by the table allowlist; it fails closed and can be repaired, recorded in architecture §5.
+  - **P6-D2:** Data results now carry `sql_rows`; `found_no_papers` requires successful queries that returned zero rows. My `route_next` test data gained the new fields plus a titles-only case.
+  - N1 (README) and N2 (architecture date range: 2022-10 to 2026-07 by v1 date) fixed. N3–N6 left as notes.
+  - Offline suite: 419 passed, 34 skipped, 1 xfailed (all 18 tester Phase 6 tests pass, including TC T6-SQL-MEM ×3 and T6-NOPAPERS).
+- **Redeploy after P6-D1/D2 fixes (student approved), 2026-10-27 20:38 UTC:** revision `paper-analyst-00009-bng`, image `paper-analyst:20261027-203235-06f1141-dirty`. Smoke test passed (Gemini only, 4 citations, 0 failed attempts).
+- **Tester retest: PHASE FAIL** (`docs/testing/phase-6-retest-20261027T2050Z.md`). P6-D2 fixed, exit check (case H) passed on rev 00009, original D1 cases refused. **P6-D1 reopened:** (a) wide rows: one 90 KB value repeated in 400 columns reached 2.0 GB RSS in 0.26 s (fetchmany loaded rows before cells were cut); (b) temp spill: a GROUP BY over generated rows wrote ~946 MB of SQLite temp files in 0.49 s while RSS stayed at 25 MB; my 24–33 MB "sort" measurements counted RSS only, not temp files (in-memory on Cloud Run). N7: my architecture claim that a `UNION` recursive CTE is refused was wrong. Tester spend $0.106.
+- **Fix (local):** the query now runs in a child process (`python -I -S -c …`, ~15 ms start) with `RLIMIT_AS` 512 MB, `RLIMIT_FSIZE` 16 MB, `RLIMIT_CPU` 5 s, `RLIMIT_NOFILE` 64, SIGXFSZ ignored, a private `SQLITE_TMPDIR`, and a parent kill after 8 s; plus `SQLITE_LIMIT_COLUMN` 32 and a row-by-row 1 MB raw-byte budget. Temp-storage, column and memory failures are `sql_rejected` with my own message; a child that dies without reporting is `sql_rejected`. macOS probe: legit joins and `SELECT *` fine (~30 ms); 40-col and 30-col wide rows, doubling CTE, GROUP BY and DISTINCT spills all refused in ~30 ms, child peak ~31 MB. N7 fixed in architecture. Offline suite: 421 passed, 34 skipped, 1 xfailed (tester's retest tests included).
+- **Not verified locally on Linux:** Docker Desktop would not start any container (`docker run … echo hi` stayed in "Created"), so `RLIMIT_AS`/`RLIMIT_FSIZE` enforcement inside the Cloud Run sandbox is checked on the deployment instead.
+- **Redeploy with the child-process guard (student approved), 2026-10-27 22:06 UTC:** revision `paper-analyst-00010-vpv`, image `paper-analyst:20261027-220039-06f1141-dirty`. Smoke test passed.
+- **Deployed Linux check of the limits (`eval/results/phase6/deployed/rev10/`):**
+  - A bounded spill probe (GROUP BY over 2,000 × 50 KB generated rows, about 100 MB of temp data, returning only lengths) was refused as `sql_rejected` "needs too much temporary storage": `RLIMIT_FSIZE` is enforced in the Cloud Run sandbox.
+  - A 40-column query was refused by the column cap.
+  - The Data → Summary question still works: data (2 queries) → handoff → summary, done, 6 citations, 30.7 s.
+  - Each `run_sql` now takes about 0.5 s on Cloud Run (child start plus query) against about 30 ms locally.
+  - Refused probe questions end with the templated "every planned step failed" answer, which is correct for a refusal.
+- **Tester retest 2: PHASE PASS** (`docs/testing/phase-6-retest2-20261027T2230Z.md`).
+  - Fixed and confirmed: P6-D1a (wide rows), P6-D1b (temp spill: refused after 16.8 MB in 0.036 s locally) and N7.
+  - Cloud Run enforces `RLIMIT_FSIZE`: a 30 MB spill was refused, the 10 MB control accepted. `RLIMIT_AS` is unconfirmed there; the heaviest accepted query peaked at 61 MB.
+  - Exit check on rev 00010 with a new paraphrase ("newest cs.CL paper … summarize its main contribution"): data → handoff 2607.26637 [D1] → summary.
+  - Other checks: 3 concurrent deployed requests stayed isolated; the child env carries no credentials (canary check); no leftover temp dirs or child processes after 24 concurrent calls; `run_sql` 618–970 ms on Cloud Run.
+  - Full suite: 424 passed, 34 skipped, 2 xfailed. Tester spend $0.089.
+  - Open, non-blocking (student to decide):
+    - **P6-D1c (Minor):** the temp limit is per file, so several materialized subqueries reached about 200 MB of temp storage locally; a two-table, ~40 MB version ran on the URL. Architecture §5 now states the per-file limit and this bound.
+    - **P6-D3 (Minor):** an unexpected child failure (e.g. a missing DB) is reported as a resource refusal, its stderr is discarded, and it costs the model's repair round. Strict xfail `test_T6_CHILD_MISSING_DB_is_not_a_resource_refusal`.
+    - **N8:** `SELECT count(*) FROM r` over a recursive CTE is refused as "read of 'r'".
+    - **N9:** the refusal answer says "Please try again in a moment".
+- **Phase 6 marked done.** Live spend for the phase: about $1.22 of $1.50 (me about $0.65 including smoke tests and deployed probes; tester $0.37 + $0.106 + $0.089), plus about 6 Tavily searches.

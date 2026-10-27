@@ -1,0 +1,5 @@
+{"ok": true, "rows": 1, "cols": 1, "max_cell": 1, "first": "[1]", "case": "inline_1", "sql_chars": 306, "elapsed_s": 0.038, "child_peak_rss_mb": 27.8, "parent_peak_rss_mb": 24.3, "peak_tmp_mb": 13.8, "leftover_tmpdirs": 0}
+{"ok": true, "rows": 1, "cols": 1, "max_cell": 1, "first": "[1]", "case": "inline_2", "sql_chars": 517, "elapsed_s": 0.054, "child_peak_rss_mb": 33.2, "parent_peak_rss_mb": 24.4, "peak_tmp_mb": 39.8, "leftover_tmpdirs": 0}
+{"ok": true, "rows": 1, "cols": 1, "max_cell": 1, "first": "[1]", "case": "inline_4", "sql_chars": 939, "elapsed_s": 0.088, "child_peak_rss_mb": 42.6, "parent_peak_rss_mb": 24.3, "peak_tmp_mb": 93.9, "leftover_tmpdirs": 0}
+{"ok": true, "rows": 1, "cols": 1, "max_cell": 1, "first": "[1]", "case": "inline_6", "sql_chars": 1361, "elapsed_s": 0.122, "child_peak_rss_mb": 52.1, "parent_peak_rss_mb": 24.4, "peak_tmp_mb": 147.2, "leftover_tmpdirs": 0}
+{"ok": true, "rows": 1, "cols": 1, "max_cell": 1, "first": "[1]", "case": "inline_8", "sql_chars": 1783, "elapsed_s": 0.16, "child_peak_rss_mb": 61.3, "parent_peak_rss_mb": 24.3, "peak_tmp_mb": 200.4, "leftover_tmpdirs": 0}

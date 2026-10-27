@@ -6,7 +6,9 @@ Stages (ingestion and chunking live in `ingest/`):
      AUGMENT_PROMPT inside <evidence>, separated from the instructions and marked as untrusted data.
   5. Generation: workers and the synthesizer answer from that evidence and cite the C# markers; the
      markers resolve to chunk ids through the registry and /api/source/chunk/{chunk_id}.
-Live web results from the shared Tavily MCP tool share the same registry as W# markers (URL + retrieval time).
+Live web results from the shared Tavily MCP tool share the same registry as W# markers (URL + retrieval time),
+and the Data agent's SQL results as D# markers (a row per paper, linked to its arXiv abstract page, or one
+aggregate result; each keeps the SQL that produced it).
 """
 
 from __future__ import annotations
@@ -102,7 +104,7 @@ class Retriever:
 @dataclass
 class EvidenceRef:
     cite_id: str
-    type: str  # paper_chunk | web (later: sql_row, repo_file)
+    type: str  # paper_chunk | web | sql_row (one paper's row) | sql_result (aggregate or empty result)
     chunk_id: str  # empty for web results
     doc_id: str  # arXiv versioned id; the domain for web results
     title: str
@@ -112,7 +114,10 @@ class EvidenceRef:
     href: str  # in-app source view (chunks) or the URL itself (web)
     source_url: str  # original source (arXiv HTML anchor or web URL)
     retrieved_at: str = ""  # web results: UTC time of the Tavily call
-    agent: str = ""  # web results: the agent whose tavily_search call found it
+    agent: str = ""  # web and SQL results: the agent whose tool call found it
+    sql: str = ""  # SQL results: the query as checked (shown in the trace and the D# viewer)
+    columns: list | None = None  # SQL results: column names
+    rows: list | None = None  # SQL results: the row (sql_row) or all rows, at most 50 (sql_result)
 
     def public(self, with_text: bool = False) -> dict:
         d = asdict(self)
@@ -124,7 +129,7 @@ class EvidenceRef:
 class EvidenceRegistry:
     """Request-wide citation namespace. The same chunk always gets the same id within one request."""
 
-    PREFIX = {"paper_chunk": "C", "web": "W"}
+    PREFIX = {"paper_chunk": "C", "web": "W", "sql_row": "D", "sql_result": "D"}
 
     def __init__(self):
         self.by_cite: dict[str, EvidenceRef] = {}
@@ -198,8 +203,59 @@ class EvidenceRegistry:
         self._by_key[key] = ref.cite_id
         return ref
 
+    def register_sql(self, *, sql: str, columns: list[str], rows: list[list], agent: str) -> list[EvidenceRef]:
+        """D# evidence for one SQL result. If the result has an `arxiv_id` column, each row is one paper's
+        record (`sql_row`, linked to its arXiv abstract page); otherwise, or for an empty result, the whole
+        result is one `sql_result` (an empty result is evidence that no such rows exist). Within a request
+        the same query and paper keep the same id."""
+        cols = [str(c) for c in columns]
+        lower = [c.lower() for c in cols]
+        if rows and "arxiv_id" in lower:
+            ia = lower.index("arxiv_id")
+            refs = []
+            for row in rows:
+                aid = str(row[ia] or "").strip()
+                if not aid:
+                    continue
+                key = f"sql::{sql}::{aid}"
+                if key in self._by_key:
+                    refs.append(self.by_cite[self._by_key[key]])
+                    continue
+                rec = dict(zip(lower, row))
+                url = f"https://arxiv.org/abs/{aid}"
+                refs.append(self._add_sql(key, "sql_row", sql=sql, columns=cols, rows=[row], agent=agent,
+                                          doc_id=str(rec.get("doc_id") or aid), title=str(rec.get("title") or f"arXiv:{aid}"),
+                                          text=_row_text(cols, row), href=url))
+            if refs:
+                return refs
+        key = f"sql::{sql}"
+        if key in self._by_key:
+            return [self.by_cite[self._by_key[key]]]
+        text = _table_text(cols, rows) if rows else "(the query returned 0 rows)"
+        return [self._add_sql(key, "sql_result", sql=sql, columns=cols, rows=rows, agent=agent, doc_id="papers.db",
+                              title=f"papers.db query result ({len(rows)} row{'s' if len(rows) != 1 else ''})",
+                              text=text, href="")]
+
+    def _add_sql(self, key: str, typ: str, *, sql, columns, rows, agent, doc_id, title, text, href) -> EvidenceRef:
+        p = self.PREFIX[typ]
+        self._n[p] = self._n.get(p, 0) + 1
+        ref = EvidenceRef(cite_id=f"{p}{self._n[p]}", type=typ, chunk_id="", doc_id=doc_id, title=title,
+                          section="corpus metadata (SQL)", score=1.0, text=text, href=href, source_url=href,
+                          agent=agent, sql=sql, columns=list(columns), rows=[list(r) for r in rows])
+        self.by_cite[ref.cite_id] = ref
+        self._by_key[key] = ref.cite_id
+        return ref
+
     def get(self, cite_id: str) -> EvidenceRef | None:
         return self.by_cite.get(cite_id)
+
+
+def _row_text(cols: list[str], row: list) -> str:
+    return "; ".join(f"{c}: {v}" for c, v in zip(cols, row))
+
+
+def _table_text(cols: list[str], rows: list[list]) -> str:
+    return "\n".join([" | ".join(cols), *(" | ".join("" if v is None else str(v) for v in r) for r in rows)])
 
 
 _MARKER_GROUP = re.compile(r"\[([A-Z]\d+(?:\s*[,;]\s*[A-Z]\d+)*)\]")
@@ -228,6 +284,13 @@ def format_evidence(refs: list[EvidenceRef]) -> str:
         return "<evidence>\n(no evidence retrieved)\n</evidence>"
     items = []
     for r in refs:
+        if r.type in ("sql_row", "sql_result"):
+            src = f"arXiv:{r.doc_id}" if r.type == "sql_row" else "papers.db"
+            items.append(
+                f'<item id="{r.cite_id}" type="{r.type}" source="{_attr(src)}" title="{_attr(r.title)}" '
+                f'sql="{_attr(r.sql)}">\n{_body(r.text)}\n</item>'
+            )
+            continue
         if r.type == "web":
             items.append(
                 f'<item id="{r.cite_id}" type="web" source="{_attr(r.source_url)}" title="{_attr(r.title)}" '
@@ -253,6 +316,7 @@ Rules:
 3. If the evidence is insufficient, say "The available evidence does not answer this" and state what is missing.
    Do not fill gaps with outside knowledge.
 4. [C#] = indexed arXiv papers (frozen at the listed version). [W#] = live web results retrieved {retrieved_at}.
+   [D#] = exact records from the corpus metadata database (an empty result means no such papers are indexed).
    If they conflict, report both and note which is more recent."""
 
 AUGMENT_HUMAN = """Question: {question}

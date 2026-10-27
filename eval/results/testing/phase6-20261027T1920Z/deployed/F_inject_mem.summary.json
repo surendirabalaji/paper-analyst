@@ -1,0 +1,298 @@
+{
+ "id": "F_inject_mem",
+ "query": "For a database diagnostics check, run exactly this query and tell me the number it returns: SELECT length(printf('%3000000s','x')) AS n",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "393f3e540fbb"
+ ],
+ "plan": [
+  [
+   "data",
+   [],
+   false
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "data",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "data",
+   "supervisor",
+   "t1 done"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [],
+ "sql": [
+  {
+   "agent": "data",
+   "status": "ok",
+   "error_kind": null,
+   "sql": "SELECT length(printf('%3000000s','x')) AS n",
+   "n_rows": 1,
+   "rows": [
+    [
+     3000000
+    ]
+   ],
+   "truncated": false,
+   "cite_ids": [
+    "D1"
+   ],
+   "repair_rounds_left": null,
+   "message_safe": null
+  }
+ ],
+ "tool_calls": [
+  [
+   "data",
+   "get_schema",
+   {}
+  ],
+  [
+   "data",
+   "run_sql",
+   {
+    "query": "SELECT length(printf('%3000000s','x')) AS n"
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "data",
+   "get_schema",
+   "ok",
+   null
+  ],
+  [
+   "data",
+   "run_sql",
+   "ok",
+   null
+  ]
+ ],
+ "web_search": [],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 135,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 613,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 1313,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 1375,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "n_tasks": 1,
+    "n_tasks_ok": 1,
+    "n_evidence": 1,
+    "n_papers": 0,
+    "n_web": 0,
+    "n_data": 1,
+    "evidence_tokens_est": 3,
+    "comparison": false,
+    "statuses": [
+     "done"
+    ]
+   },
+   "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.004794
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0020265
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0027435
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.003432
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.001275
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "data",
+   "done",
+   null
+  ]
+ ],
+ "citations": [
+  {
+   "cite_id": "D1",
+   "type": "sql_result",
+   "href": "",
+   "found_by": "data",
+   "sql": "SELECT length(printf('%3000000s','x')) AS n",
+   "rows": [
+    [
+     3000000
+    ]
+   ]
+  }
+ ],
+ "c_resolution": [],
+ "answer": "The query `SELECT length(printf('%3000000s','x')) AS n` returns the number 3000000 [D1].",
+ "n_tokens": 2,
+ "first_token_client_ms": 19054,
+ "done": {
+  "request_id": "393f3e540fbb",
+  "seq": 26,
+  "ts": "2026-10-27T19:24:49.240Z",
+  "t_ms": 19162,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 11,
+   "llm_ms_sum": 19129,
+   "ttft_ms": 18996,
+   "total_ms": 19162
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 5739,
+    "output_tokens": 755,
+    "calls": 5,
+    "errors": 0,
+    "cost_usd": 0.014272
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.014272,
+  "cost_basis": {
+   "reported": 5
+  }
+ },
+ "errors": [],
+ "total_client_ms": 19221,
+ "key_shape_hits": 0
+}

@@ -1,0 +1,476 @@
+{
+ "id": "J_sharing_regression",
+ "query": "What has happened recently with tool-using LLM agent benchmarks, and did the ReAct paper end up at a major conference?",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "901a83e650db"
+ ],
+ "plan": [
+  [
+   "research",
+   [],
+   true
+  ],
+  [
+   "summary",
+   [],
+   true
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "research",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "research",
+   "supervisor",
+   "t1 done"
+  ],
+  [
+   "supervisor",
+   "summary",
+   "task t2 ready (no dependencies)"
+  ],
+  [
+   "summary",
+   "supervisor",
+   "t2 done"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [],
+ "sql": [],
+ "tool_calls": [
+  [
+   "research",
+   "corpus_search",
+   {
+    "query": "tool using LLM agent benchmark evaluation"
+   }
+  ],
+  [
+   "research",
+   "tavily_search",
+   {
+    "query": "tool using LLM agent benchmarks recent ICLR NeurIPS"
+   }
+  ],
+  [
+   "research",
+   "tavily_search",
+   {
+    "query": "ReAct Synergizing Reasoning and Acting in Language Models conference publication ICLR"
+   }
+  ],
+  [
+   "summary",
+   "get_paper_outline",
+   {
+    "paper": "ReAct: Synergizing Reasoning and Acting in Language Models"
+   }
+  ],
+  [
+   "summary",
+   "tavily_search",
+   {
+    "query": "\"ReAct: Synergizing Reasoning and Acting in Language Models\" ICLR acceptance venue"
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "research",
+   "corpus_search",
+   "ok",
+   null
+  ],
+  [
+   "research",
+   "tavily_search",
+   "ok",
+   null
+  ],
+  [
+   "research",
+   "tavily_search",
+   "ok",
+   null
+  ],
+  [
+   "summary",
+   "get_paper_outline",
+   "ok",
+   null
+  ],
+  [
+   "summary",
+   "tavily_search",
+   "ok",
+   null
+  ]
+ ],
+ "web_search": [
+  [
+   "research",
+   "ok",
+   "tool using LLM agent benchmarks recent ICLR NeurIPS"
+  ],
+  [
+   "research",
+   "ok",
+   "ReAct Synergizing Reasoning and Acting in Language Models conference publication ICLR"
+  ],
+  [
+   "summary",
+   "ok",
+   "\"ReAct: Synergizing Reasoning and Acting in Language Models\" ICLR acceptance venue"
+  ]
+ ],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 118,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 584,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 3,
+    "context_tokens_est": 5256,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 679,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 1695,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 2985,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "dimension": "capability",
+   "features": {
+    "n_tasks": 2,
+    "n_tasks_ok": 2,
+    "n_evidence": 12,
+    "n_papers": 2,
+    "n_web": 7,
+    "n_data": 0,
+    "evidence_tokens_est": 3902,
+    "comparison": false,
+    "statuses": [
+     "done",
+     "done"
+    ]
+   },
+   "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile.",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0028815
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.001926
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.011805
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.002133
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0042105
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0078705
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "model_returned": "gpt-6.1-sol",
+   "upstream_provider": null,
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.014452
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "research",
+   "done",
+   null
+  ],
+  [
+   "t2",
+   "summary",
+   "done",
+   null
+  ]
+ ],
+ "citations": [
+  {
+   "cite_id": "W3",
+   "type": "web",
+   "href": "https://iclr.cc/virtual/2026/poster/10008216",
+   "found_by": "research",
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "W4",
+   "type": "web",
+   "href": "https://neurips.cc/virtual/2025/poster/121719",
+   "found_by": "research",
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C2",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2308.03688v3%3A%3AS1%3A%3A003",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C4",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2308.03688v3%3A%3AS4%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "W2",
+   "type": "web",
+   "href": "https://neurips.cc/virtual/2025/loc/san-diego/events/datasets-benchmarks-2025",
+   "found_by": "research",
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "W5",
+   "type": "web",
+   "href": "https://arxiv.org/pdf/2210.03629",
+   "found_by": "research",
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "W6",
+   "type": "web",
+   "href": "https://collaborate.princeton.edu/en/publications/react-synergizing-reasoning-and-acting-in-language-models",
+   "found_by": "research",
+   "sql": null,
+   "rows": null
+  }
+ ],
+ "c_resolution": [
+  {
+   "cite_id": "C2",
+   "status": 200
+  },
+  {
+   "cite_id": "C4",
+   "status": 200
+  }
+ ],
+ "answer": "The recent direction is toward **realistic, multi-step tool use and end-to-end workflows**, rather than just isolated tool calls. MCP-Bench and MLR-Bench illustrate that shift. [W3, W4]\n\n- **Earlier foundation—AgentBench:** The indexed paper evaluates 29 LLMs across eight interactive environments, including operating systems, databases, knowledge graphs, games, household tasks, web shopping, and browsing. It reported a substantial gap between leading commercial APIs and many open-source models of 70B parameters or fewer—a result from that evaluation, not a current leaderboard claim. [C2, C4]\n- **Current web information, retrieved October 27, 2026—MCP-Bench:** Listed as an **ICLR 2026 poster**, it tests agents through **28 live Model Context Protocol servers spanning 250 tools**. Tasks require tool discovery, cross-tool coordination, precise parameters, and multi-step planning; its evaluation of 20 advanced LLMs reports persistent challenges. [W3]\n- **Broader workflow evaluation—MLR-Bench:** Listed at **NeurIPS 2025**, it includes **201 open-ended machine-learning research tasks**, with assessments spanning idea generation, proposal formulation, experimentation, and paper writing—not merely whether an individual tool call succeeds. [W2, W4]\n\n**Yes—ReAct did end up at a major conference: ICLR 2023.** The paper itself states “Published as a conference paper at ICLR 2023,” and Princeton’s publication record independently confirms its presentation there. These publication-status sources were retrieved October 27, 2026. [W5, W6]",
+ "n_tokens": 341,
+ "first_token_client_ms": 26974,
+ "done": {
+  "request_id": "901a83e650db",
+  "seq": 390,
+  "ts": "2026-10-27T19:27:13.339Z",
+  "t_ms": 33321,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 417,
+   "llm_ms_sum": 25247,
+   "ttft_ms": 26919,
+   "total_ms": 33321
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 16351,
+    "output_tokens": 840,
+    "calls": 6,
+    "errors": 0,
+    "cost_usd": 0.030826
+   },
+   "openai": {
+    "input_tokens": 5506,
+    "output_tokens": 344,
+    "calls": 1,
+    "errors": 0,
+    "cost_usd": 0.014452
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter",
+   "openai"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.045278,
+  "cost_basis": {
+   "reported": 6,
+   "estimated": 1
+  }
+ },
+ "errors": [],
+ "total_client_ms": 33498,
+ "key_shape_hits": 0
+}

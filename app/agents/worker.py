@@ -9,7 +9,8 @@ A worker can pass `gate`, which is called before every round with the loop outpu
 tools available this round plus an optional note for the model. Research uses it to unlock the shared
 web-search tool only when the planner asked for live information or corpus support is low, and the
 decision is traced as a `tool_gate` event. Tools tagged `metadata={"reads_full_text": True}` (full
-paper sections) feed the `long_source_tokens_est` routing feature.
+paper sections) feed the `long_source_tokens_est` routing feature, and a tool error caused by the model's
+own input (invalid SQL) sets the `repair_round` feature for the calls that follow.
 """
 
 from __future__ import annotations
@@ -23,7 +24,7 @@ from langchain_core.tools import BaseTool
 
 from app.context import RequestContext
 from app.events import safe_error
-from app.llm.policy import approx_tokens, comparison_cue
+from app.llm.policy import REPAIRABLE_TOOL_ERRORS, approx_tokens, comparison_cue
 from app.llm.router import call_llm, text_of
 
 MAX_CALLS_PER_ROUND = 3
@@ -98,13 +99,17 @@ async def run_tool_loop(
 
 def _loop_features(ctx: RequestContext, messages: list[BaseMessage], rnd: int, out: LoopOutput) -> dict:
     """Observable inputs for routing a tool-loop call (logged in the llm_route event)."""
-    return {
+    f = {
         "round": rnd,
         "tool_calls_so_far": out.tool_calls,
         "context_tokens_est": sum(approx_tokens(text_of(m.content)) for m in messages),
         "long_source_tokens_est": out.long_source_tokens,
         "comparison": comparison_cue(ctx.query),
     }
+    repair = [e.split(": ", 1)[-1] for e in out.tool_errors if e.split(": ", 1)[-1] in REPAIRABLE_TOOL_ERRORS]
+    if repair:  # the model's own tool input failed (e.g. invalid SQL); the next call rewrites it
+        f["repair_round"] = repair[-1]
+    return f
 
 
 async def _run_tool(ctx: RequestContext, agent: str, by_name: dict, call: dict, out: LoopOutput) -> ToolMessage:

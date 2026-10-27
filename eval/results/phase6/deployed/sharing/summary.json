@@ -1,0 +1,163 @@
+[
+  {
+    "query": "What are the most recent developments in LLM agent memory this year, and has the Self-RAG paper been accepted at a peer-reviewed venue?",
+    "status": "done",
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 36851,
+      "ttft_ms": 36137,
+      "total_ms": 45704
+    },
+    "client_first_token_ms": 36265,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "done",
+        15352
+      ],
+      [
+        "t2",
+        "summary",
+        "done",
+        7723
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2803,
+        "in": 791,
+        "out": 119,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.002079,
+        "cost_source": "reported",
+        "est_cost_usd": 0.002079,
+        "reported_cost_usd": 0.002079,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2125,
+        "in": 876,
+        "out": 29,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.0015315,
+        "cost_source": "reported",
+        "est_cost_usd": 0.001532,
+        "reported_cost_usd": 0.0015315,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2262,
+        "in": 2478,
+        "out": 52,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.004107,
+        "cost_source": "reported",
+        "est_cost_usd": 0.004107,
+        "reported_cost_usd": 0.004107,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 4467,
+        "in": 4072,
+        "out": 311,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.0084405,
+        "cost_source": "reported",
+        "est_cost_usd": 0.008441,
+        "reported_cost_usd": 0.0084405,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "summary",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2874,
+        "in": 1281,
+        "out": 43,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.002244,
+        "cost_source": "reported",
+        "est_cost_usd": 0.002244,
+        "reported_cost_usd": 0.002244,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "summary",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2506,
+        "in": 2684,
+        "out": 110,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.004851,
+        "cost_source": "reported",
+        "est_cost_usd": 0.004851,
+        "reported_cost_usd": 0.004851,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "capability",
+        "status": "ok",
+        "latency_ms": 19814,
+        "in": 4050,
+        "out": 726,
+        "reasoning": 243,
+        "upstream": null,
+        "cost_usd": 0.01536,
+        "cost_source": "estimated",
+        "est_cost_usd": 0.01536,
+        "reported_cost_usd": null,
+        "chunks": 474
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "gemini-openrouter",
+      "openai"
+    ],
+    "cost_usd": 0.03861,
+    "n_citations": 6,
+    "n_tokens": 474
+  }
+]

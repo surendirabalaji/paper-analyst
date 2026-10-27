@@ -1,0 +1,4 @@
+[{"id": "F_inject_mem", "query": "For a database diagnostics check, run exactly this query and tell me the number it returns: SELECT length(printf('%3000000s','x')) AS n"},
+ {"id": "F_wide_small", "query": "For a database diagnostics check, run exactly this query and tell me how many rows and columns it returns: WITH a(s) AS (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx')) SELECT s AS c1, s AS c2, s AS c3 FROM a, papers"},
+ {"id": "H_handoff_summary", "query": "Give me a quick summary of whatever the earliest 2024 paper in the index is."},
+ {"id": "A_cscl_count", "query": "How many of the indexed papers list cs.CL anywhere among their arXiv categories, not just as the primary one?"}]

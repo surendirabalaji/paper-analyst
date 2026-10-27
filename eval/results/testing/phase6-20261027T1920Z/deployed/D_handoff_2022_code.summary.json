@@ -1,0 +1,548 @@
+{
+ "id": "D_handoff_2022_code",
+ "query": "Find the 2022 papers in the collection that come with code, then give me a short rundown of what each of them actually does.",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "5d1d2f58e0f9"
+ ],
+ "plan": [
+  [
+   "data",
+   [],
+   false
+  ],
+  [
+   "research",
+   [
+    "t1"
+   ],
+   false
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "data",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "data",
+   "supervisor",
+   "t1 done"
+  ],
+  [
+   "supervisor",
+   "research",
+   "task t2 ready (after t1)"
+  ],
+  [
+   "research",
+   "supervisor",
+   "t2 done"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [
+  {
+   "request_id": "5d1d2f58e0f9",
+   "seq": 21,
+   "ts": "2026-10-27T19:23:13.884Z",
+   "t_ms": 13861,
+   "to_task": "t2",
+   "to_agent": "research",
+   "from_tasks": [
+    "t1"
+   ],
+   "papers": [
+    {
+     "arxiv_id": "2212.10496",
+     "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+     "cite_id": "D1",
+     "from_task": "t1"
+    },
+    {
+     "arxiv_id": "2212.10509",
+     "title": "Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions",
+     "cite_id": "D2",
+     "from_task": "t1"
+    }
+   ],
+   "evidence_ids": [
+    "D1",
+    "D2"
+   ]
+  }
+ ],
+ "sql": [
+  {
+   "agent": "data",
+   "status": "ok",
+   "error_kind": null,
+   "sql": "SELECT p.arxiv_id, p.title, p.published, r.url AS repo_url FROM papers p JOIN repos r ON p.arxiv_id = r.arxiv_id WHERE p.year = 2022 ORDER BY p.published ASC",
+   "n_rows": 2,
+   "rows": [
+    [
+     "2212.10496",
+     "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+     "2022-12-20",
+     "https://github.com/texttron/hyde"
+    ],
+    [
+     "2212.10509",
+     "Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions",
+     "2022-12-20",
+     "https://github.com/stonybrooknlp/ircot"
+    ]
+   ],
+   "truncated": false,
+   "cite_ids": [
+    "D1",
+    "D2"
+   ],
+   "repair_rounds_left": null,
+   "message_safe": null
+  }
+ ],
+ "tool_calls": [
+  [
+   "data",
+   "get_schema",
+   {}
+  ],
+  [
+   "data",
+   "run_sql",
+   {
+    "query": "SELECT p.arxiv_id, p.title, p.published, r.url AS repo_url FROM papers p JOIN repos r ON p.arxiv_id = r.arxiv_id WHERE p.year = 2022 ORDER BY p.published ASC"
+   }
+  ],
+  [
+   "research",
+   "corpus_search",
+   {
+    "query": "\"Precise Zero-Shot Dense Retrieval without Relevance Labels\" HyDE hypothetical document embeddings"
+   }
+  ],
+  [
+   "research",
+   "corpus_search",
+   {
+    "query": "\"Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions\" IRCoT"
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "data",
+   "get_schema",
+   "ok",
+   null
+  ],
+  [
+   "data",
+   "run_sql",
+   "ok",
+   null
+  ],
+  [
+   "research",
+   "corpus_search",
+   "ok",
+   null
+  ],
+  [
+   "research",
+   "corpus_search",
+   "ok",
+   null
+  ]
+ ],
+ "web_search": [],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 124,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 623,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 1323,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 1621,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 731,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 3159,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 5649,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "dimension": "capability",
+   "features": {
+    "n_tasks": 2,
+    "n_tasks_ok": 2,
+    "n_evidence": 12,
+    "n_papers": 2,
+    "n_web": 0,
+    "n_data": 2,
+    "evidence_tokens_est": 3837,
+    "comparison": false,
+    "statuses": [
+     "done",
+     "done"
+    ]
+   },
+   "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile.",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0022125
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.001272
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.003024
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.004614
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0015525
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0055785
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0117615
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "model_returned": "gpt-6.1-sol",
+   "upstream_provider": null,
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.013778
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "data",
+   "done",
+   null
+  ],
+  [
+   "t2",
+   "research",
+   "done",
+   null
+  ]
+ ],
+ "citations": [
+  {
+   "cite_id": "D1",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2212.10496",
+   "found_by": "data",
+   "sql": "SELECT p.arxiv_id, p.title, p.published, r.url AS repo_url FROM papers p JOIN repos r ON p.arxiv_id = r.arxiv_id WHERE p.year = 2022 ORDER BY p.published ASC",
+   "rows": [
+    [
+     "2212.10496",
+     "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+     "2022-12-20",
+     "https://github.com/texttron/hyde"
+    ]
+   ]
+  },
+  {
+   "cite_id": "D2",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2212.10509",
+   "found_by": "data",
+   "sql": "SELECT p.arxiv_id, p.title, p.published, r.url AS repo_url FROM papers p JOIN repos r ON p.arxiv_id = r.arxiv_id WHERE p.year = 2022 ORDER BY p.published ASC",
+   "rows": [
+    [
+     "2212.10509",
+     "Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions",
+     "2022-12-20",
+     "https://github.com/stonybrooknlp/ircot"
+    ]
+   ]
+  },
+  {
+   "cite_id": "C1",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2212.10496v1%3A%3Aabstract%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C2",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2212.10496v1%3A%3AS1%3A%3A002",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C10",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2212.10509v2%3A%3AS1%3A%3A001",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C7",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2212.10509v2%3A%3AS6%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  }
+ ],
+ "c_resolution": [
+  {
+   "cite_id": "C1",
+   "status": 200
+  },
+  {
+   "cite_id": "C2",
+   "status": 200
+  },
+  {
+   "cite_id": "C10",
+   "status": 200
+  },
+  {
+   "cite_id": "C7",
+   "status": 200
+  }
+ ],
+ "answer": "The collection has **two 2022 papers with linked code repositories**, both published on **December 20, 2022**. [D1][D2]\n\n1. **Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE)** — [Code](https://github.com/texttron/hyde) · arXiv:2212.10496. [D1]  \n   HyDE asks an LLM to write a hypothetical document answering your query, embeds that document, then finds real documents with similar embeddings. The generated text is a search aid—not a trusted answer—and the method needs neither relevance labels nor new model training. [C1][C2]\n\n2. **Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions (IRCoT)** — [Code](https://github.com/stonybrooknlp/ircot) · arXiv:2212.10509. [D2]  \n   IRCoT tackles questions that require multiple evidence-gathering steps. It retrieves initial passages, generates a reasoning step using them, uses that step to search for more passages, and repeats; the collected evidence then supports the final answer. [C10] The paper reports better retrieval and question-answering performance, plus fewer factual errors in generated reasoning, than one-step retrieval. [C7]",
+ "n_tokens": 280,
+ "first_token_client_ms": 26279,
+ "done": {
+  "request_id": "5d1d2f58e0f9",
+  "seq": 326,
+  "ts": "2026-10-27T19:23:30.522Z",
+  "t_ms": 30499,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 1320,
+   "llm_ms_sum": 29143,
+   "ttft_ms": 26227,
+   "total_ms": 30498
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 15795,
+    "output_tokens": 843,
+    "calls": 7,
+    "errors": 0,
+    "cost_usd": 0.030014
+   },
+   "openai": {
+    "input_tokens": 5474,
+    "output_tokens": 283,
+    "calls": 1,
+    "errors": 0,
+    "cost_usd": 0.013778
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter",
+   "openai"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.043792,
+  "cost_basis": {
+   "reported": 7,
+   "estimated": 1
+  }
+ },
+ "errors": [],
+ "total_client_ms": 30792,
+ "key_shape_hits": 0
+}

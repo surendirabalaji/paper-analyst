@@ -1,0 +1,386 @@
+{
+ "id": "K_corpus_regression",
+ "query": "In plain terms, how does corrective RAG decide whether retrieved documents are good enough?",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "a213c1295ea9"
+ ],
+ "plan": [
+  [
+   "research",
+   [],
+   false
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "research",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "research",
+   "supervisor",
+   "t1 done"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [],
+ "sql": [],
+ "tool_calls": [
+  [
+   "research",
+   "corpus_search",
+   {
+    "k": 6,
+    "query": "Corrective RAG CRAG retrieval evaluator confidence thresholds Correct Incorrect Ambiguous score"
+   }
+  ],
+  [
+   "research",
+   "corpus_search",
+   {
+    "query": "CRAG \"confidence score\" \"threshold\" calculation value upper lower",
+    "k": 4
+   }
+  ],
+  [
+   "research",
+   "corpus_search",
+   {
+    "query": "\"threshold\" CRAG \"knowledge refinement\" \"knowledge strips\"",
+    "k": 4
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "research",
+   "corpus_search",
+   "ok",
+   null
+  ],
+  [
+   "research",
+   "corpus_search",
+   "ok",
+   null
+  ],
+  [
+   "research",
+   "corpus_search",
+   "ok",
+   null
+  ]
+ ],
+ "web_search": [],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 91,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 605,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 3274,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 4622,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 4,
+    "tool_calls_so_far": 3,
+    "context_tokens_est": 6253,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "n_tasks": 1,
+    "n_tasks_ok": 1,
+    "n_evidence": 6,
+    "n_papers": 1,
+    "n_web": 0,
+    "n_data": 0,
+    "evidence_tokens_est": 2373,
+    "comparison": false,
+    "statuses": [
+     "done"
+    ]
+   },
+   "rationale": "Grounded answer from 1 paper and one worker result; the low-cost model is sufficient.",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0019305
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0013005
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0052455
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0074955
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "research",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0119625
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.007659
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "research",
+   "done",
+   null
+  ]
+ ],
+ "citations": [
+  {
+   "cite_id": "C4",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2401.15884v3%3A%3AS4.SS2%3A%3A001",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C5",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2401.15884v3%3A%3AS4.SS2%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C2",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2401.15884v3%3A%3AS4.SS3%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C6",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2401.15884v3%3A%3AS4.SS1%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C9",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2401.15884v3%3A%3AS4.SS4%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C3",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2401.15884v3%3A%3AS4.SS3%3A%3A001",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  }
+ ],
+ "c_resolution": [
+  {
+   "cite_id": "C4",
+   "status": 200
+  },
+  {
+   "cite_id": "C5",
+   "status": 200
+  },
+  {
+   "cite_id": "C2",
+   "status": 200
+  },
+  {
+   "cite_id": "C6",
+   "status": 200
+  },
+  {
+   "cite_id": "C9",
+   "status": 200
+  },
+  {
+   "cite_id": "C3",
+   "status": 200
+  }
+ ],
+ "answer": "In Corrective Retrieval Augmented Generation (CRAG), retrieved documents are assessed using a dedicated, lightweight retrieval evaluator—specifically a fine-tuned T5-large model (0.77B parameters)—rather than relying on a large, expensive LLM [C4, C5]. \n\nThe evaluator pairs the input query with each retrieved document individually to compute a continuous relevance score [C4, C5]. CRAG then applies an upper threshold and a lower threshold to these scores to determine an overall judgment across three discrete action triggers [C2, C6]:\n\n* **Correct:** Triggered when the confidence score of at least one retrieved document exceeds the upper threshold [C2]. Because reliable knowledge is present, CRAG accepts the retrieval and refines the documents into fine-grained \"knowledge strips\" by filtering out irrelevant parts and recomposing relevant information [C2, C6, C9].\n* **Incorrect:** Triggered when the confidence scores of *all* retrieved documents fall below the lower threshold [C2]. This indicates that none of the documents are relevant; CRAG discards the retrieved documents entirely and executes a web search to find external knowledge [C2, C4, C6].\n* **Ambiguous:** Triggered when the retrieval scores fall in the intermediate range between the thresholds [C2]. Because the evaluator is not confident in a binary judgment, CRAG takes a balanced approach by combining the refined internal knowledge strips with external web search results to complement each other [C2, C4, C6]. \n\nThis intermediate \"Ambiguous\" action was specifically introduced because relying solely on binary correct/incorrect decisions made the system overly sensitive to errors made by the retrieval evaluator [C2, C3].",
+ "n_tokens": 14,
+ "first_token_client_ms": 15906,
+ "done": {
+  "request_id": "a213c1295ea9",
+  "seq": 50,
+  "ts": "2026-10-27T19:27:31.816Z",
+  "t_ms": 18299,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 1507,
+   "llm_ms_sum": 16764,
+   "ttft_ms": 15851,
+   "total_ms": 18299
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 19394,
+    "output_tokens": 867,
+    "calls": 6,
+    "errors": 0,
+    "cost_usd": 0.035592
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.035592,
+  "cost_basis": {
+   "reported": 6
+  }
+ },
+ "errors": [],
+ "total_client_ms": 18779,
+ "key_shape_hits": 0
+}

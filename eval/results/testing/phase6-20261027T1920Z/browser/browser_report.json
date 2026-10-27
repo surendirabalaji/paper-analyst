@@ -1,0 +1,95 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "started_utc": "2026-10-27T19:30:12Z",
+ "q1": {
+  "query": "Pull up the most recently posted cs.MA paper from 2025 in the collection and summarise its main contribution.",
+  "final": {
+   "turns": 1,
+   "len": 1155,
+   "streaming": false,
+   "cites": 7,
+   "status": "done · TTFT 24432 ms · total 28071 ms · retrieval 19 ms · Gemini 8 calls, 18055→883 tok; OpenAI 1 calls, 2998→261 tok · cost $0.0391 (1 call(s) estimated)",
+   "trace": 29,
+   "routes": 10,
+   "sources": 3,
+   "sendDisabled": false,
+   "t": 28.31
+  },
+  "distinct_streaming_lengths": 18,
+  "answer": "The most recently posted 2025 paper tagged **cs.MA** in the collection is **[MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems](https://arxiv.org/abs/2503.03686)**, posted **5 March 2025** (arXiv:2503.03686). [D1]\n\nIts main contribution is to turn **multi-agent system design into a code-generation task**: given a user query, MAS-GPT generates a tailored, executable multi-agent system in a single model inference, rather than relying on manually designed configurations or iterative system-design calls. The generated system then runs its collaborating agents to answer the query. [C3][C4]\n\n- **How it works:** Systems are represented as Python code, and the model is fine-tuned on query–system pairs curated for consistency between the query, agent prompts, and collaboration structure. [C3]\n- **Reported results:** Across nine benchmarks using five underlying LLMs, the authors report better average performance than more than ten baseline methods. [C4]\n\nThe key distinction is that **one inference builds the system—not necessarily solves the entire query**; executing the generated system involves subsequent agent interactions. [C3][C4]",
+  "links": [
+   "D1",
+   "C3",
+   "C4",
+   "C3",
+   "C4",
+   "C3",
+   "C4"
+  ],
+  "trace_rows": [
+   "#1 data ⇄ SQLite run_sql (read-only) SELECT p.arxiv_id, p.title, p.published, p.updated, pc.category, pc.is_primary, p.abstract FROM papers p JOIN paper_categories pc ON p.arxiv_id = pc.arxiv_id WHERE pc.category = 'cs.MA' AND p.published LIKE '2025%' ORDER BY p.published DESC → 1 row(s) in 0 ms: D1",
+   "#1 handoff t1 → t2 summary: arXiv:2503.03686 [D1] · upstream evidence D1"
+  ],
+  "viewers": {
+   "D1": {
+    "title": "D1 · MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems",
+    "meta": "corpus metadata DB (papers.db, read-only) · one paper's row · found by data via run_sql",
+    "text": "SQL:\nSELECT p.arxiv_id, p.title, p.published, p.updated, pc.category, pc.is_primary, p.abstract FROM papers p JOIN paper_categories pc ON p.arxiv_id = pc.arxiv_id WHERE pc.category = 'cs.MA' AND p.published LIKE '2025%' ORDER BY p.published DESC\n\nResult:\narxiv_id | title | published | updated | category | is_primary | abstract\n2503.03686 | MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems | 2025-03-05 | 2025-03-05 | cs.MA | 0 | LLM-based multi-agent systems (MAS) have shown significant potential in tackling diverse tasks. However, to design effective MAS, existing approaches heavily rely on manual configurations or multiple calls of advanced LLMs, resulting in inadaptability and high inference costs. In this paper, we simp…",
+    "href": "https://arxiv.org/abs/2503.03686",
+    "linkHidden": false,
+    "linkDisplay": "inline",
+    "linkVisible": true
+   },
+   "C3": {
+    "title": "C3 · MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems",
+    "meta": "arXiv:2503.03686v1 · 1 Introduction · published 2025-03-05 · chunk 2503.03686v1::S1::001",
+    "text": "MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems — 1 Introduction\nFor example, both GPTSwarm (Zhuge et al., 2024) and DyLAN (Liu et al., 2024) rely on LLMs to replace human involvement, iteratively adjusting the collaboration structure or agents’ prompts in the MAS for each specific task.\nHowever, this process often requires multiple LLM inferences.\nFocusing on these key issues, this paper explores how to adaptively build a query-specific MAS at a minimal cost.\nOur core idea is to reframe the process of building an executable MAS for each query as a generative language task, making building MAS as simple and efficient as querying ChatGPT (Ouyang et al., 2022).\nGiven the generated MAS, the query can then be seamlessly processed to produce the final response, significantly simplifying the whole pipeline.\nUnder this context, we introduce MAS-GPT, an LLM specifically trained to adaptively generate executable MAS based on any given user query in one single inference.\nWhile the concept is straightforward, the challenge lies in the limited knowledge of LLMs on the task of MAS generation and the lack of corresponding training data. These limitations raise two key technical challenges: how to represent the MAS and how to construct the dataset.\n(1) To ensure the generated MAS is readily executable, we unify the representation of MAS by describing it as a Python code snippet (i.e., a forward function), with each agent’s prompt as a variable, LLM calls as functions, and agent relationships as string concatenation.\n(2) Building on this foundation, we propose a consistency-oriented data construction pipeline to facilitate the model in learning generalizable patterns and logical correlations, which includes the construction, evaluation, selection, and refinement of query-MAS pairs.\nDuring selection, we design an inter-consistency-oriented selection approach to ensure that similar queries are paired with similar high-performing MAS, facilitating the model to learn generalizable patterns.\nDuring refinement, we propose a intra-consistency-oriented refinement method to strengthen the relatedness between query and MAS, enabling the model to learn the reasonable correlation.\nFinally, the resulting pairs are used to train open-source LLMs via supervised fine-tuning, where the instruction is the user query and the response is the MAS represented by code.\nThis will equip the model with the ability to generate query-specific MAS, and also, generalize to unseen queries.",
+    "href": "https://arxiv.org/html/2503.03686v1#S1",
+    "linkHidden": false,
+    "linkDisplay": "inline",
+    "linkVisible": true
+   }
+  },
+  "injected_img": 0
+ },
+ "q2": {
+  "query": "How many indexed papers have a title containing the exact text <img src=x onerror=alert(1)> and how many papers does the corpus hold in total?",
+  "final": {
+   "turns": 2,
+   "len": 195,
+   "streaming": false,
+   "cites": 2,
+   "status": "done · TTFT 14915 ms · total 15264 ms · retrieval 1 ms · Gemini 5 calls, 5889→405 tok · cost $0.0119",
+   "trace": 43,
+   "routes": 16,
+   "sources": 4,
+   "sendDisabled": false,
+   "t": 15.49
+  },
+  "distinct_streaming_lengths": 2,
+  "answer": "Based on the corpus database records:\n\n* There are **0** indexed papers with a title containing the exact text `<img src=x onerror=alert(1)>` [D1].\n* The corpus holds **89** papers in total [D1].",
+  "links": [
+   "D1",
+   "D1"
+  ],
+  "trace_rows": [
+   "#1 data ⇄ SQLite run_sql (read-only) SELECT p.arxiv_id, p.title, p.published, p.updated, pc.category, pc.is_primary, p.abstract FROM papers p JOIN paper_categories pc ON p.arxiv_id = pc.arxiv_id WHERE pc.category = 'cs.MA' AND p.published LIKE '2025%' ORDER BY p.published DESC → 1 row(s) in 0 ms: D1",
+   "#1 handoff t1 → t2 summary: arXiv:2503.03686 [D1] · upstream evidence D1",
+   "#2 data ⇄ SQLite run_sql (read-only) SELECT COUNT(*) AS total_papers, SUM(CASE WHEN title LIKE '%<img src=x onerror=alert(1)>%' THEN 1 ELSE 0 END) AS matching_title_count FROM papers → 1 row(s) in 1 ms: D1"
+  ],
+  "viewers": {
+   "D1": {
+    "title": "D1 · papers.db query result (1 row)",
+    "meta": "corpus metadata DB (papers.db, read-only) · 1 row(s) · found by data via run_sql",
+    "text": "SQL:\nSELECT COUNT(*) AS total_papers, SUM(CASE WHEN title LIKE '%<img src=x onerror=alert(1)>%' THEN 1 ELSE 0 END) AS matching_title_count FROM papers\n\nResult:\ntotal_papers | matching_title_count\n89 | 0",
+    "href": "#",
+    "linkHidden": true,
+    "linkDisplay": "none",
+    "linkVisible": false
+   }
+  },
+  "injected_img": 0
+ },
+ "dialogs": [],
+ "console_errors": []
+}

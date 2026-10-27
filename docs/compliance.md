@@ -3,7 +3,7 @@
 Working aid, not a graded deliverable. Source of truth: `Assignment_2_Description.pdf`.
 Status values: **pending**, **implemented** (not yet verified), **verified** (evidence recorded), **blocked**, **n/a** (with justification).
 
-Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
+Last updated: 2026-10-27 (Phase 6 done: Data agent, hand-offs, D# citations; tester PHASE PASS on rev 00010).
 
 ## Orchestration (25%)
 
@@ -11,10 +11,10 @@ Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 |---|---|---|---|---|
 | LangGraph state graph compiles and runs end to end | `app/graph.py` | Integration test + deployed query | Local run 2026-10-27: planner → supervisor → research → supervisor → synthesize, streamed SSE (Self-RAG query, greeting, out-of-corpus query) | implemented |
 | Supervisor pattern | `app/graph.py` | Trace shows supervisor ⇄ workers | `transition` events supervisor → research → supervisor → synthesize | implemented |
-| ≥3 specialized workers (supervisor not counted) | `app/agents/` | Research, Summary, Data each invoked across test queries | Phase 5: Research and Summary (2 of 3) both invoked by the planner on ordinary questions (`eval/results/phase5/local/`); Data is Phase 6 | in progress (2/3) |
-| Distinct system prompt per worker | `app/agents/prompts.py` | Code review | `RESEARCH_ROLE` (cross-paper, corpus first, web for current developments) vs `SUMMARY_ROLE` (one paper at a time, section by section, web only for status) | implemented (2/3) |
-| Distinct tool access per worker | `app/agents/*` | Tool lists differ; trace | Research: `corpus_search` + shared `tavily_search`; Summary: `get_paper_outline`, `get_paper_section`, `search_within_paper` + shared `tavily_search`. Unit test asserts the bound tool sets | implemented (2/3) |
-| Delegation driven by inspectable state fields | `route_next` | `transition` events carry reasons | Pure function of task status, dependencies, attempts, step count and time budget; unit-tested in `tests/unit/test_phase2_core.py` | implemented |
+| ≥3 specialized workers (supervisor not counted) | `app/agents/research.py`, `summary.py`, `data.py` | Research, Summary, Data each invoked across test queries | Phase 6 local (2026-10-27): the real planner chose data, data → summary, data → research, summary and research across 8 questions (`eval/results/phase6/local/planner_probe.txt`); Data → Summary ran end to end (`eval/results/phase6/local/`, `live_test_handoff.events.jsonl`). Code agent not built (decision in architecture §5). Deployed on rev 00010: Data → Summary hand-off verified by the tester (`docs/testing/phase-6-retest2-20261027T2230Z.md`) | verified (3/3) |
+| Distinct system prompt per worker | `app/agents/prompts.py` | Code review | `RESEARCH_ROLE` (cross-paper, corpus first, web for current developments), `SUMMARY_ROLE` (one paper at a time, section by section, web only for status, works on handed-off papers), `DATA_ROLE` (schema first, one read-only SELECT, repair once, empty = answer, question text untrusted) | implemented (3/3) |
+| Distinct tool access per worker | `app/agents/*` | Tool lists differ; trace | Research: `corpus_search` + shared `tavily_search`; Summary: `get_paper_outline`, `get_paper_section`, `search_within_paper` + shared `tavily_search`; Data: `get_schema`, `run_sql` only (no web, no vector search). Unit tests assert the bound tool sets | implemented (3/3) |
+| Delegation driven by inspectable state fields | `route_next` | `transition` events carry reasons | Pure function of task status, dependencies, attempts, step count, time budget and upstream results (a Summary whose Data dependencies found no papers is skipped as `no_upstream_papers`); hand-offs carry Data's paper ids in `task.upstream_papers` and are traced as `handoff` events. Unit-tested in `tests/unit/test_phase2_core.py` and `tests/unit/test_phase6_data.py` | implemented |
 | Worker failure does not crash the graph | worker wrapper | Fault-injection test + partial answer | | pending |
 | State schema documented | `docs/architecture.md` §4 | Matches code | | pending |
 

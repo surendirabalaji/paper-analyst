@@ -1,6 +1,6 @@
 # Architecture: Agentic AI Paper Analyst
 
-> **Status: DESIGN DRAFT, updated 2026-10-27 for Phase 2.** Phase 2 built the first end-to-end slice: planner → supervisor → Research → synthesize, SSE streaming, `C#` citations and the chat page. This describes the planned system. Sections are updated to match the actual code as each phase is built. Anything marked *(planned)* is not implemented yet. Full design rationale: [`design_proposal.md`](design_proposal.md).
+> **Status: updated 2026-10-27 for Phase 6 (Data agent, hand-offs, D# citations).** Phase 2 built the first end-to-end slice: planner → supervisor → Research → synthesize, SSE streaming, `C#` citations and the chat page. This describes the planned system. Sections are updated to match the actual code as each phase is built. Anything marked *(planned)* is not implemented yet. Full design rationale: [`design_proposal.md`](design_proposal.md).
 
 ## 1. What the system does
 
@@ -8,34 +8,35 @@ The Paper Analyst answers questions about a corpus of 89 arXiv papers (88 with f
 
 - explain and compare what papers claim, with citations to exact paper sections;
 - answer exact metadata questions (authors, dates, categories, which papers have code);
-- trace a paper's claim into its released code (pinned repository snapshots);
+- trace a paper's claim into its released code (pinned repository snapshots) *(stretch; not built, see §5)*;
 - add current developments from the live web (Tavily Remote MCP).
 
 It is **stateless and single-turn**: each question is answered independently. No conversation state is stored or claimed.
 
-## 2. Orchestration diagram *(planned)*
+## 2. Orchestration diagram *(Research, Summary and Data built; Code not built)*
 
 ```mermaid
 flowchart TD
     U[Browser: vanilla HTML/JS] -->|POST /api/chat| API[FastAPI]
-    API -->|SSE: plan, transition, llm_route, tool_gate, tool_call, retrieval, web_search, token, citation, done| U
+    API -->|SSE: plan, transition, handoff, llm_route, tool_gate, tool_call, retrieval, web_search, sql_result, token, citation, done| U
     API --> P[planner<br/>LLM: task DAG]
     P --> S{supervisor<br/>deterministic route_next}
     S -->|task ready| R[Research Agent]
     S -->|task ready| SM[Summary Agent]
     S -->|task ready| D[Data Agent]
-    S -->|task ready| C[Code Agent]
+    S -.->|not built| C[Code Agent]
     R --> S
     SM --> S
     D --> S
-    C --> S
+    C -.-> S
+    D -.->|handoff via supervisor: paper ids + D# when a task depends_on Data| SM
     S -->|no pending tasks / budget spent| SY[synthesize<br/>streamed LLM call]
     SY --> API
 
     R -.corpus_search.-> CH[(Chroma index)]
     SM -.paper outline / section.-> CH
     SM -.paper metadata read-only.-> DB
-    D -.run_sql read-only.-> DB[(SQLite metadata)]
+    D -.get_schema / run_sql read-only.-> DB[(SQLite metadata)]
     C -.list / read / grep.-> RS[(Repo snapshots)]
     R -.tavily_search.-> T[[Tavily Remote MCP]]
     SM -.tavily_search.-> T
@@ -70,8 +71,10 @@ class AnalystState(TypedDict, total=False):
     k: int                                   # retrieval top-k (default 6, request may set 3-10)
     plan_summary: str                        # short operational rationale from the planner
     plan_source: str                         # "llm" or "fallback" (planner failed -> one Research task)
-    tasks: list[dict]                        # id, worker, instruction, needs_live, depends_on, status, attempts, error_kind
+    tasks: list[dict]                        # id, worker, instruction, needs_live, depends_on, status, attempts, error_kind,
+                                             # upstream_papers (set at dispatch from the tasks it depends on)
     worker_results: dict[str, dict]          # task_id -> {status, findings_md, evidence_ids, error_kind, rounds, tool_calls}
+                                             #   Data adds paper_ids (hand-off list), sql_ok, sql_failures
     next: str                                # node chosen by route_next
     active_task: str | None
     step_count: int                          # supervisor dispatches so far
@@ -83,26 +86,40 @@ class AnalystState(TypedDict, total=False):
     dropped_citations: list[str]             # markers attached only to "evidence does not answer" clauses (not linked)
 ```
 
-The evidence registry (`C#` → chunk, `W#` → web result) and the event emitter are per-request objects in `RequestContext` (`app/context.py`), passed to nodes through the LangGraph config rather than stored in graph state. Routing decisions are emitted as `llm_route` events. Nothing is shared between requests except read-only handles (Chroma client, LLM clients, and the Tavily MCP tool definition; each search opens its own MCP session).
+The evidence registry (`C#` → chunk, `W#` → web result, `D#` → SQL row or result) and the event emitter are per-request objects in `RequestContext` (`app/context.py`), passed to nodes through the LangGraph config rather than stored in graph state. Routing decisions are emitted as `llm_route` events. Nothing is shared between requests except read-only handles (Chroma client, LLM clients, and the Tavily MCP tool definition; each search opens its own MCP session).
 
-Task status values: `pending | running | done | partial | failed | skipped`.
+Task status values: `pending | running | done | partial | failed | skipped`. A skipped task carries `error_kind`: `dependency_failed`, or `no_upstream_papers` when every dependency is a Data task whose queries succeeded and returned zero rows (rows without an `arxiv_id` column still count as found, tester P6-D2) (a complete answer, so the request stays `done`).
 
-## 5. Agents: responsibilities, prompts and tools *(Research and Summary built; Data in Phase 6)*
+**Hand-offs (Phase 6).** When the supervisor dispatches a task with `depends_on`, the worker node collects the `paper_ids` of its finished dependencies (Data's rows, cited rows first, at most 10) into `task.upstream_papers` and emits a `handoff` event (`from_tasks`, `to_task`, `to_agent`, the paper ids with their `D#`, and the upstream evidence ids). The receiving worker gets the upstream findings (with their markers) and a "Papers handed off" line in its input; the `D#` ids stay valid because the registry is request-wide.
+
+## 5. Agents: responsibilities, prompts and tools *(Research, Summary and Data built; Code not built)*
 
 | Agent | Responsibility | Distinguishing tools | Shared MCP tool |
 |---|---|---|---|
 | **Research** *(built)* | Conceptual and cross-paper questions; current developments; off-topic factual questions (web) | `corpus_search(query, k)`: vector top-k across all papers via the LCEL retriever | `tavily_search`, purpose "find current developments on the topic". Unlocked when the planner sets `needs_live`, or when corpus support is low (best similarity < `RAG_MIN_SCORE` = 0.55) |
 | **Summary** *(built, Phase 5)* | Faithful per-paper summaries, one paper at a time, keeping citations; a paper's current status | `get_paper_outline(paper)` (SQLite metadata + ordered section list + abstract as C#), `get_paper_section(paper, section)` (every chunk of a section in reading order, ≤ 3,500 tokens), `search_within_paper(paper, query, k)` (vector search filtered to one paper). `paper` = arXiv id or a title fragment such as "Self-RAG" | `tavily_search`, purpose "check the current status of a specific paper". Unlocked when the planner sets `needs_live` or the task asks about status (venue, accepted, follow-ups, latest …; `status_cue`) |
-| **Data** | Exact metadata questions: counts, dates, authors, categories, repos | `get_schema()`, `run_sql(select)`: read-only, SELECT only, row and time limits | none |
-| **Code** *(stretch)* | Paper-to-code tracing over pinned repo snapshots | `find_repo(id)`, `list_repo_files`, `read_repo_file`, `grep_repo` | none |
+| **Data** *(built, Phase 6)* | Exact metadata questions: counts, lists, dates, authors, categories, topics, which papers have code | `get_schema()` (DDL of the 5 corpus tables plus value hints), `run_sql(query)`: one read-only SELECT through `app/sqlguard.py` (below). Results become `D#` evidence | none (no web, no vector search) |
+| **Code** *(stretch, not built)* | Paper-to-code tracing over pinned repo snapshots | `find_repo(id)`, `list_repo_files`, `read_repo_file`, `grep_repo` | none |
+
+**Code agent decision (2026-10-27, Phase 6):** not built. Three specialized workers meet the floor, and Phase 6's budget went to verifying Data, the Data → Summary hand-off on the deployment and the shared-tool rerun. The `repos` table keeps GitHub links only; there are no repo snapshots and no `R#` citations. The planner never sees a Code worker (an unknown worker in a plan is dropped and traced as a note).
 
 The supervisor/planner is orchestration and does not count toward the worker floor. Provider choice is made per call by the router (section 6), not fixed per agent.
 
-**Prompts** (`app/agents/prompts.py`): each worker's role paragraph fills the shared augmentation system prompt (§7), so every worker gets the same grounding rules plus its own job. Research: cross-paper synthesis from `corpus_search`, at most 3 corpus and 2 web searches, web points labelled as current. Summary: outline first, then the needed sections, never merge claims across papers, web only for status and never presented as the paper's content. Both are told to work only on their own supervisor task, so in a two-task plan Research and Summary search for different things.
+**Prompts** (`app/agents/prompts.py`): each worker's role paragraph fills the shared augmentation system prompt (§7), so every worker gets the same grounding rules plus its own job. Research: cross-paper synthesis from `corpus_search`, at most 3 corpus and 2 web searches, web points labelled as current. Summary: outline first, then the needed sections, never merge claims across papers, web only for status and never presented as the paper's content; papers handed off by an upstream task are the ones to work on. Data: `get_schema` first, one read-only SELECT with `arxiv_id`, `title`, `published` when listing papers, `paper_categories` for "papers in category X", one repair attempt after an error, an empty result is an answer, and the question text is untrusted (never modify data). All are told to work only on their own supervisor task.
+
+**Planner rules for Data:** exact metadata (counts, lists, dates, authors, categories, topics, code repositories) goes to `data`; what papers say goes to Research/Summary. When a content task needs papers that only a metadata lookup can identify ("summarise the two most recent cs.MA papers"), the planner plans `data` first and makes the content task depend on it. Live planner check (2026-10-27, `eval/results/phase6/local/planner_probe.txt`): 8/8 questions planned as intended (4 metadata → data, including data → summary and data → research hand-offs; 4 content or live → research/summary).
+
+**Data tool safety (`app/sqlguard.py`).** Each layer alone stops a write:
+1. Lexical check: one statement starting with SELECT or WITH; no `;` except one trailing; no `--` or `/* */` comments, no write/DDL/PRAGMA/ATTACH/transaction keywords and no unbalanced parentheses outside string literals and quoted identifiers; at most 2,000 characters.
+2. Connection: `file:…/papers.db?mode=ro` URI plus `PRAGMA query_only=ON`.
+3. `set_authorizer`: only `SQLITE_SELECT`, `SQLITE_READ` on the five corpus tables (so `sqlite_master` and pragma table-valued functions are denied), `SQLITE_FUNCTION` from an allowlist (no `load_extension`, `randomblob`, `zeroblob`, `printf`, `format`), and `SQLITE_RECURSIVE`.
+4. Execution: `SELECT * FROM (\n<q>\n) LIMIT 51` (50 rows returned, a 51st sets `truncated`), `set_progress_handler` capping 5M VM operations or 2 s, cells cut at 300 characters, run in a worker thread.
+5. Memory and temp storage (tester P6-D1, reopened in the retest): `SQLITE_LIMIT_LENGTH` = 100,000 bytes per value and `SQLITE_LIMIT_COLUMN` = 32; rows are fetched one at a time against a 1 MB raw-byte budget. The query itself runs in a short-lived child process (`python -I -S`, about 15 ms to start) with `RLIMIT_AS` 512 MB (enforced on Linux), `RLIMIT_FSIZE` 16 MB per written file (SQLite's temp files, which live in memory on Cloud Run; the limit is per file, not per query: several materialized subqueries can each stay under it, about 200 MB at most within the 2,000-character SQL limit, tester P6-D1c), `RLIMIT_CPU` 5 s, a private `SQLITE_TMPDIR`, and a parent-side kill after 8 s. Only the lexical check runs in the app process. A per-value cap alone was not enough: 400 columns of a 90 KB value reached 2.0 GB of memory, and a GROUP BY over generated rows wrote about 946 MB of temp files in 0.5 s. `RLIMIT_FSIZE` enforcement was confirmed on Cloud Run (a 30 MB spill refused, a 10 MB one accepted); `RLIMIT_AS` could not be confirmed there, because no accepted query gets near it (the heaviest peaked at 61 MB). Measured after the fix (macOS): wide-column, doubling, GROUP BY and DISTINCT spill queries are all refused in about 30 ms, with the child peaking at about 31 MB.
+Errors are classified `sql_rejected` (policy, or a size/temp-storage limit), `sql_error` (invalid SQL, e.g. unknown column) or `sql_timeout`. The first failure gets one repair round; a second failure closes `run_sql` for the task (`repair_budget_spent`) and the task ends `failed` / `invalid_sql`. An empty result is `done` and becomes an empty-result `D#`. The test suite checks that `data/papers.db` is byte-identical after every guard and injection test.
 
 **Tool gating is state-driven and traced.** The worker loop (`run_tool_loop(gate=…)`) re-evaluates the available tools before every round. Research starts with `corpus_search` only unless the task is `needs_live`. After a search whose best similarity is below 0.55, the next round also binds `tavily_search` and tells the model why. Each decision is a `tool_gate` event ("planner marked the task needs_live", "low corpus support: best similarity 0.21 < RAG_MIN_SCORE 0.55"). The 0.55 threshold was calibrated on 2026-10-27 with 16 queries: in-domain top-1 scores were 0.62–0.81, off-topic ones 0.18–0.26, and adjacent but uncovered topics ("MCP authorization spec", "what did OpenAI release this week") 0.50–0.52.
 
-**Worker outcomes.** Research is `partial` with `live_search_unavailable` when the web failed but corpus evidence exists, and `failed` only when it has nothing to cite. Summary is `partial` with `paper_not_found` for papers outside the corpus (the resolver lists candidates for ambiguous fragments; "Agent" does not silently pick "AgentBench"), and `partial` with `live_search_unavailable` when only the status check failed.
+**Worker outcomes.** Research is `partial` with `live_search_unavailable` when the web failed but corpus evidence exists, and `failed` only when it has nothing to cite. Data is `done` for any successful query including an empty one, `partial` (`citation_or_empty`) if its write-up cites none of its rows (the rows are still passed on as evidence), and `failed` (`invalid_sql`) after the repair round fails. Summary is `partial` with `paper_not_found` for papers outside the corpus (the resolver lists candidates for ambiguous fragments; "Agent" does not silently pick "AgentBench"), and `partial` with `live_search_unavailable` when only the status check failed.
 
 ## 6. LLM routing *(built in Phase 4)*
 
@@ -115,6 +132,7 @@ The supervisor/planner is orchestration and does not count toward the worker flo
 | Call site | Condition | Dimension | Provider / model | Rationale shown in the UI |
 |---|---|---|---|---|
 | planner | always | cost | Gemini via OpenRouter, `google/gemini-3.8-flash` | Short structured planning (JSON task list); low-cost model is sufficient |
+| worker_tool_loop / worker_final | a tool call in this task failed on the model's own input (`repair_round`: `sql_error`, `sql_rejected` or `sql_timeout`) | capability | OpenAI, `gpt-6.1-sol` | "Rewriting a failed query needs the stronger model: repair round after a failed query (sql_error)" |
 | worker_tool_loop / worker_final | ≥ 3,000 estimated tokens of full paper sections in context (`long_source_tokens_est`, from tools tagged `reads_full_text`), or ≥ 10,000 tokens of context | capability | OpenAI, `gpt-6.1-sol` | "Faithful condensation of long source text needs the stronger model: ~N tokens of full paper sections in context" |
 | worker_tool_loop | otherwise | cost | Gemini via OpenRouter | Tool selection and search-query writing with short outputs |
 | worker_final | otherwise (tool budget reached) | cost | Gemini via OpenRouter | Compact findings from evidence already retrieved |
@@ -145,18 +163,23 @@ The supervisor/planner is orchestration and does not count toward the worker flo
 
 **Worker-side switching (Phase 5, tester note P4-N2).** Before Phase 5, only synthesis varied by features and every worker call went to Gemini. The worker rule is feature-based, not tied to an agent. In practice it fires when Summary has read whole sections. Measured locally on 2026-10-27: "Summarize the method and experiments of the Reflexion paper" ran its first three tool-loop rounds on Gemini (context 585 → 3,645 tokens). Once 3,317 tokens of section text were in context, round 4 and the final write-up went to OpenAI (capability). "How does Self-RAG decide when to retrieve?" switched to OpenAI for the final write-up at 3,289 section tokens. A status-only Summary task (outline + one web search) stays on Gemini throughout.
 
+**Data agent routing (Phase 6).** Data's calls go through the same feature rules as every worker; no provider is tied to it. Schema lookup and query writing are short structured outputs and stay on Gemini (cost). If `run_sql` fails on the model's own input, the loop sets the `repair_round` feature and the repair call goes to OpenAI (capability). The rule reads the observed error, not the agent name. Synthesis follows the usual rules: a Data-only answer (one task, no papers in evidence) synthesizes on Gemini, and a Data → Summary hand-off (2 completed tasks) on OpenAI. Measured 2026-10-27 (`eval/results/phase6/`):
+- "How many papers … have a linked GitHub repository, and which categories …?" → data ×4 on Gemini, synthesis on Gemini (cost); 13.6 s, $0.018.
+- "Which multi-agent-systems papers from 2025 or 2026 …? Summarize the two most recent" → data ×3 and summary ×3 on Gemini, synthesis on OpenAI (capability: 2 worker results); 33.4 s, $0.051.
+- Live repair test (first `run_sql` made to fail with a real "no such column" error): Data's next two calls were routed to OpenAI with `repair_round=sql_error`, and the repaired query answered 14 papers from 2024.
+
 **Known limit of the comparison cue (P4-N3).** It is a regex. Phase 5 added "stack(s) up", "outperform", "head-to-head", "as opposed to", "unlike" and "distinguish between". A comparison phrased without any cue word still reaches the capability side when the evidence spans ≥ 3 papers or ≥ 6,000 tokens.
 
 **Ordinary workloads that pick each provider (measured 2026-10-27, local):** "How does Self-RAG decide when to retrieve?" synthesizes on Gemini (1 paper). "Compare how Reflexion and Self-Refine use feedback to improve outputs." synthesizes on OpenAI (comparison over 2 papers). "Why do multi-agent LLM systems fail?" stays on Gemini, because its cited evidence came from one paper (MAST).
 
 ## 7. RAG pipeline *(ingestion built in Phase 1; retrieval chain planned)*
 
-- **Corpus:** 89 arXiv papers (88 with full text) on LLM agents: reasoning and acting, tool use, multi-agent systems, RAG, agentic search, memory, training, benchmarks and MCP. They span 2022-12 (ReAct, IRCoT, HyDE) to 2026-08. The list is `data/corpus_seed.json`: about 59 foundational papers chosen by hand and checked by ID against the arXiv API, plus 30 papers from 2025–2026 picked from arXiv title searches on the same topics, so cross-paper comparisons have answers. Full text comes from **arXiv HTML** (LaTeXML), not PDF. A paper is indexed only if its HTML parses to at least 3,000 words; 2506.16988 (2,721 words) is kept in SQLite as metadata only. Provenance (version, fetch time, word/chunk counts, status, repo link) is in `data/corpus_manifest.json`.
+- **Corpus:** 89 arXiv papers (88 with full text) on LLM agents: reasoning and acting, tool use, multi-agent systems, RAG, agentic search, memory, training, benchmarks and MCP. By v1 submission date they span 2022-10 (ReAct; IRCoT and HyDE are 2022-12) to 2026-07. The list is `data/corpus_seed.json`: about 59 foundational papers chosen by hand and checked by ID against the arXiv API, plus 30 papers from 2025–2026 picked from arXiv title searches on the same topics, so cross-paper comparisons have answers. Full text comes from **arXiv HTML** (LaTeXML), not PDF. A paper is indexed only if its HTML parses to at least 3,000 words; 2506.16988 (2,721 words) is kept in SQLite as metadata only. Provenance (version, fetch time, word/chunk counts, status, repo link) is in `data/corpus_manifest.json`.
 - **Parsing:** units are LaTeXML `section`/`subsection`/`subsubsection`/`appendix` elements, keyed by their stable anchors (`S3.SS2`, `A1.SS3`). Run-in paragraphs fold into their parent. Math becomes its LaTeX alttext. Inline TikZ token boxes keep their label; diagrams, bibliography, footnotes, navigation and acknowledgments are dropped. Acknowledgments are removed as headed sections ("Acknowledgments and …" too), as `ltx_acknowledgements` blocks, and as bold "Acknowledgement" pseudo-headings with the paragraphs after them. Inline elements are joined without separators, so small-caps headings stay whole.
 - **Chunking:** `RecursiveCharacterTextSplitter.from_tiktoken_encoder` (`cl100k_base`), 500 tokens with 75 overlap, run separately on each section, so chunks never cross section boundaries. Each chunk is prefixed with `"{title} — {section breadcrumb}"` (e.g. `… — 3 Self-Rag › 3.3 Self-Rag Inference`), and the prefix is embedded. Result: 4,521 chunks (1.62M tokens), median 400 tokens, max 544 including the prefix.
 - **IDs and metadata:** `chunk_id = "{arxiv_id}v{n}::{section_id}::{nnn}"`. Metadata: arxiv_id, doc_id, title, section_id, section_title, section_path, section_number, section_order, chunk_index, published, html_anchor_url (deep link `https://arxiv.org/html/<doc_id>#<section_id>`), n_tokens, content_sha256.
 - **Re-indexing:** per paper, the index is synced to exactly the new chunk set. New IDs are embedded, IDs whose content hash changed are re-embedded, and IDs no longer produced (old versions, parser changes) are deleted. Unchanged chunks are never re-embedded, so a repeat run adds 0. Versions are pinned by the manifest.
-- **SQLite (`data/papers.db`, for the Data agent):** `papers` (89), `authors` (621), `paper_authors` (730, with author position), `paper_categories` (192, with primary flag), `repos` (58 GitHub links found in the arXiv comment, abstract, or paper front matter/introduction near release wording; links only, no code snapshots).
+- **SQLite (`data/papers.db`, read by the Data agent through `app/sqlguard.py` and by Summary's paper resolver):** `papers` (89), `authors` (621), `paper_authors` (730, with author position), `paper_categories` (192, with primary flag), `repos` (58 GitHub links found in the arXiv comment, abstract, or paper front matter/introduction near release wording; links only, no code snapshots).
 - **Embeddings:** OpenAI `text-embedding-3-small` (1536 dimensions, $0.02 per 1M tokens, checked 2026-10-26; full build $0.032). The model name and dimensions are stored in the collection metadata; ingestion refuses a mismatched model unless `--rebuild` is given (on create or rebuild it measures the model's real dimensions before dropping anything), and the app will check it at startup (Phase 2).
 - **Store:** Chroma embedded, baked read-only into the image. `RAG_TOP_K=6` (configurable 3–10).
 - **LCEL chain (Phase 2, `app/rag.py`):** `corpus_search` is a tool whose body is the LCEL chain `RunnableLambda(retrieve) | RunnableLambda(register)`. `retrieve` embeds the query with the index's model, checks dimensions and runs Chroma cosine top-k (relevance = 1 − distance). `register` assigns request-wide `C#` ids and formats the `<evidence>` block. The Research worker calls this tool in a bounded loop, then writes cited findings. The synthesizer streams the final answer through `AUGMENT_PROMPT | chat_model`, using only the evidence items the worker cited. After synthesis, every marker is checked against the registry. Known markers are emitted as `citation` events, and unknown ones go to `done.unresolved_citations`.
@@ -175,6 +198,7 @@ Rules:
 3. If the evidence is insufficient, say "The available evidence does not answer this" and state what is missing.
    Do not fill gaps with outside knowledge.
 4. [C#] = indexed arXiv papers (frozen at the listed version). [W#] = live web results retrieved {retrieved_at}.
+   [D#] = exact records from the corpus metadata database (an empty result means no such papers are indexed).
    If they conflict, report both and note which is more recent.
 
 USER:
@@ -189,6 +213,13 @@ Upstream results: {upstream_findings_or_"none"}
 <item id="W1" type="web" url="{url}" title="{title}" retrieved_at="{ts}">
 {snippet}
 </item>
+<item id="D1" type="sql_row" source="arXiv:{arxiv_id}" title="{title}" sql="{query}">
+{column}: {value}; {column}: {value}; ...
+</item>
+<item id="D2" type="sql_result" source="papers.db" title="papers.db query result (N rows)" sql="{query}">
+{col} | {col}
+{value} | {value}            (or "(the query returned 0 rows)")
+</item>
 </evidence>
 ```
 
@@ -198,12 +229,12 @@ Upstream results: {upstream_findings_or_"none"}
 |---|---|---|
 | `C#` | Paper chunk | `/api/source/chunk/{chunk_id}` and the arXiv HTML section anchor |
 | `W#` | Web (Tavily, via the shared `tavily_search` MCP tool) | The page URL; the viewer shows the snippet, retrieval time and the agent that found it |
-| `D#` | SQLite row | The arXiv abstract page; the SQL is shown in the trace |
-| `R#` | Repo file lines | `/api/source/repo/...` and the GitHub permalink at the pinned commit |
+| `D#` | Corpus metadata DB (Data agent's `run_sql`) | A result with an `arxiv_id` column gives one `D#` per paper (`sql_row`), linked to `https://arxiv.org/abs/<id>`; an aggregate or empty result is one `D#` (`sql_result`). Each keeps its SQL, columns and rows. The `sql_result` event carries them to the browser; the D# viewer shows the SQL and the row(s), and the trace shows a "data ⇄ SQLite" row with the SQL |
+| `R#` | Repo file lines *(not built: Code agent skipped)* | — |
 
 Markers that are not in the registry are reported as `unresolved_citations` and never rendered as links.
 
-**Abstentions (P3-N3).** Synthesis receives only the evidence that worker findings actually cited. A worker that found nothing relevant therefore gives the synthesizer no evidence, instead of every retrieved chunk. The synthesis prompt forbids markers on "the evidence does not answer" sentences. As a code-level backstop, a marker that appears only in such clauses (`abstention_only_markers`) gets no `citation` event, is listed in `done.dropped_citations`, and is rendered as plain, struck-through text. Off-topic corpus hits are filtered as well (P5-D1). A chunk the workers cited is withheld from synthesis and never linked if it was found **only** by corpus-wide `corpus_search` and its strongest similarity there was below 0.35; off-topic questions score 0.16–0.26 and in-domain top-k ≥ 0.58. Such chunks are reported in `done.excluded_evidence`. Chunks that Summary read or searched inside a named paper are never filtered (P5-D3), because scoped keyword searches legitimately score 0.20–0.45.
+**Abstentions (P3-N3).** Synthesis receives only the evidence that worker findings actually cited. A worker that found nothing relevant therefore gives the synthesizer no evidence, instead of every retrieved chunk. The synthesis prompt forbids markers on "the evidence does not answer" sentences. As a code-level backstop, a marker that appears only in such clauses (`abstention_only_markers`) gets no `citation` event, is listed in `done.dropped_citations`, and is rendered as plain, struck-through text. Off-topic corpus hits are filtered as well (P5-D1). A chunk the workers cited is withheld from synthesis and never linked if it was found **only** by corpus-wide `corpus_search` and its strongest similarity there was below 0.35; off-topic questions score 0.16–0.26 and in-domain top-k ≥ 0.58. Such chunks are reported in `done.excluded_evidence`. Chunks that Summary read or searched inside a named paper are never filtered (P5-D3), because scoped keyword searches legitimately score 0.20–0.45. `D#` markers are never treated as abstention-only: "the corpus has no 2019 papers [D1]" is supported by the empty result it cites.
 
 ## 8. Live retrieval and MCP tool sharing *(built in Phase 5)*
 
@@ -231,7 +262,7 @@ Markers that are not in the registry are reported as `unresolved_citations` and 
 ## 9. State and deployment
 
 - **State:** stateless, single-turn. Each request has its own graph state, evidence registry and MCP session. No checkpointer or database is used in production, and none is needed because no persistence is claimed.
-- **Index persistence** (separate concern): the Chroma index, SQLite DB and repo snapshots are built at ingestion and baked read-only into the image.
+- **Index persistence** (separate concern): the Chroma index and SQLite DB are built at ingestion and baked read-only into the image.
 - **Container** (`Dockerfile`, built in Phase 3): multi-stage `python:3.13-slim`. The builder stage installs the pinned `requirements.txt` into `/opt/venv` and pre-fetches tiktoken's `cl100k_base` BPE into `/opt/tiktoken` (it is loaded at import time, so a cold start would otherwise download it). The runtime stage copies only the venv, the tokenizer cache, `app/`, `ingest/`, `data/papers.db` and `data/chroma_index/`, runs as the non-root user `app` (uid 10001), and starts `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}`.
 - **Chroma as non-root:** `chromadb.PersistentClient` opens `chroma.sqlite3` read-write even for queries. Opened as a uid that does not own the file it fails with `attempt to write a readonly database` (reproduced in the container as uid 10002). The index directory is therefore `COPY --chown=10001:10001`; code stays root-owned. Copying the index to `/tmp` at startup was rejected because Cloud Run's `/tmp` is in memory and the copy would cost about 105 MB of RAM and time on every cold start. Any writes go to the instance's ephemeral layer and are never shared or persisted.
 - **Secrets:** never in the image or the repo. `.dockerignore` and `.gcloudignore` are allowlists. `scripts/deploy.sh` turns an allowlist of `.env` keys into a temporary `--env-vars-file` outside the repo and deletes it afterwards.

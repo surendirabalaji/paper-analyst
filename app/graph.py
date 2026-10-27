@@ -1,6 +1,6 @@
 """LangGraph supervisor graph.
 
-    START -> planner -> supervisor --route_next--> research | summary | synthesize
+    START -> planner -> supervisor --route_next--> research | summary | data | synthesize
                          ^              |
                          +--- worker ---+          synthesize -> END
 
@@ -8,7 +8,8 @@ The planner is one structured-output LLM call that produces a small task list. T
 deterministic: `route_next` reads task statuses, dependencies, retry counts and the request budget,
 and every decision is emitted as a `transition` event with its reason. Workers always return to the
 supervisor, and an exception or timeout inside a worker becomes a recorded `failed` result.
-Workers: Research (Phase 2) and Summary (Phase 5); Data is added in Phase 6.
+Workers: Research (Phase 2), Summary (Phase 5) and Data (Phase 6). A task that depends on others gets
+their findings and, as `upstream_papers`, the paper ids they found (traced as a `handoff` event).
 """
 
 from __future__ import annotations
@@ -22,6 +23,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field
 
+from app.agents.data import run_data
 from app.agents.prompts import PLANNER_SYSTEM, SYNTH_NO_TASK_ROLE, SYNTH_ROLE
 from app.agents.research import run_research
 from app.agents.summary import run_summary
@@ -48,6 +50,12 @@ WORKERS: dict[str, tuple[WorkerFn, str]] = {
         run_summary,
         "summary: summarises or explains one or two specific named papers section by section, with citations; "
         "with needs_live it also checks a paper's current status on the web (venue, acceptance, follow-ups).",
+    ),
+    "data": (
+        run_data,
+        "data: exact metadata about the indexed papers from the corpus database (read-only SQL): counts, "
+        "lists, publication dates and years, authors, arXiv categories, topics, which papers have a code "
+        "repository. Not for what the papers say.",
     ),
 }
 
@@ -160,6 +168,20 @@ async def planner(state: AnalystState, config) -> dict:
 # ---------------------------------------------------------------- supervisor
 
 
+NO_UPSTREAM_PAPERS = "no_upstream_papers"
+
+
+def found_no_papers(task: dict, by_id: dict, results: dict) -> bool:
+    """True when every dependency is a Data task whose queries succeeded and returned zero rows. Rows without
+    an arxiv_id column (e.g. titles only) still count as found: the dependent task gets them through the
+    upstream findings (tester P6-D2)."""
+    deps = task["depends_on"]
+    return bool(deps) and all(
+        by_id[d]["worker"] == "data" and (results.get(d) or {}).get("sql_ok")
+        and not (results.get(d) or {}).get("sql_rows") and not (results.get(d) or {}).get("paper_ids")
+        for d in deps)
+
+
 def route_next(state: AnalystState, max_steps: int, remaining_s: float) -> tuple[str, str | None, str, list[dict]]:
     """Pure routing decision: returns (next_node, task_id, reason, updated_tasks)."""
     tasks = [dict(t) for t in state.get("tasks", [])]
@@ -177,10 +199,15 @@ def route_next(state: AnalystState, max_steps: int, remaining_s: float) -> tuple
         changed = False
         for t in tasks:
             if t["status"] == "pending" and any(by_id[d]["status"] in ("failed", "skipped") for d in t["depends_on"]):
-                t["status"] = "skipped"
+                t["status"], t["error_kind"] = "skipped", "dependency_failed"
                 changed = True
+    results = state.get("worker_results", {})
     for t in tasks:
         if t["status"] == "pending" and all(by_id[d]["status"] in DONE_LIKE for d in t["depends_on"]):
+            if t["worker"] == "summary" and found_no_papers(t, by_id, results):
+                # Data answered "no such papers": there is nothing to summarise, and that is not a failure.
+                t["status"], t["error_kind"] = "skipped", NO_UPSTREAM_PAPERS
+                continue
             why = f"after {', '.join(t['depends_on'])}" if t["depends_on"] else "no dependencies"
             return t["worker"], t["id"], f"task {t['id']} ready ({why})", tasks
     if not tasks:
@@ -199,7 +226,7 @@ async def supervisor(state: AnalystState, config) -> dict:
     for t in tasks:
         if t["status"] == "skipped" and not any(x["id"] == t["id"] and x["status"] == "skipped" for x in state["tasks"]):
             ctx.emitter.emit("worker_result", task_id=t["id"], agent=t["worker"], status="skipped",
-                             error_kind="dependency_failed")
+                             error_kind=t.get("error_kind") or "dependency_failed")
     return {"tasks": tasks, "next": nxt, "active_task": tid, "step_count": step, "transitions": [tr]}
 
 
@@ -215,6 +242,20 @@ def upstream_text(state: AnalystState, task: dict) -> str:
     return "\n\n".join(parts)
 
 
+def upstream_papers(state: AnalystState, task: dict) -> list[dict]:
+    """Paper ids found by the tasks this one depends on (Data's `paper_ids`), in dependency order."""
+    seen, out = set(), []
+    for d in task["depends_on"]:
+        r = state.get("worker_results", {}).get(d) or {}
+        if r.get("status") not in DONE_LIKE:
+            continue
+        for p in r.get("paper_ids") or []:
+            if p["arxiv_id"] not in seen:
+                seen.add(p["arxiv_id"])
+                out.append({**p, "from_task": d})
+    return out
+
+
 def make_worker_node(name: str, fn: WorkerFn):
     async def node(state: AnalystState, config) -> dict:
         ctx = ctx_of(config)
@@ -223,6 +264,13 @@ def make_worker_node(name: str, fn: WorkerFn):
         task["attempts"] += 1
         task["status"] = "running"
         errors = []
+        if task["depends_on"]:
+            papers = upstream_papers(state, task)
+            task["upstream_papers"] = papers
+            ctx.emitter.emit("handoff", to_task=task["id"], to_agent=name, from_tasks=task["depends_on"],
+                             papers=[{k: p.get(k) for k in ("arxiv_id", "title", "cite_id", "from_task")} for p in papers],
+                             evidence_ids=[c for d in task["depends_on"]
+                                           for c in (state.get("worker_results", {}).get(d) or {}).get("evidence_ids", [])])
         timeout = max(1.0, min(ctx.settings.worker_timeout_s, ctx.remaining_s()))
         try:
             res = await asyncio.wait_for(fn(ctx, task, upstream_text(state, task)), timeout=timeout)
@@ -296,7 +344,10 @@ async def synthesize(state: AnalystState, config) -> dict:
         off_ids = {c for c in ids if ctx.registry.corpus_off_topic(c, LOW_RELEVANCE_SCORE)}
         refs = [ctx.registry.get(c) for c in ids if c not in off_ids]
         upstream = "\n\n".join(
-            f"[{t['id']} {t['worker']} ({t['status']})]\n{results.get(t['id'], {}).get('findings_md') or '(no findings)'}"
+            f"[{t['id']} {t['worker']} ({t['status']})]\n" + (
+                "(not run: the database lookup found no matching papers, so there was nothing to summarise)"
+                if t.get("error_kind") == NO_UPSTREAM_PAPERS
+                else results.get(t["id"], {}).get("findings_md") or "(no findings)")
             for t in tasks
         )
     inputs = {
@@ -314,6 +365,7 @@ async def synthesize(state: AnalystState, config) -> dict:
         "n_evidence": len(refs),
         "n_papers": len({r.doc_id for r in refs if r.type == "paper_chunk"}),
         "n_web": sum(1 for r in refs if r.type == "web"),
+        "n_data": sum(1 for r in refs if r.type in ("sql_row", "sql_result")),
         "evidence_tokens_est": sum(approx_tokens(r.text) for r in refs),
         "comparison": comparison_cue(state["query"]),
         "statuses": statuses,
@@ -335,8 +387,12 @@ async def synthesize(state: AnalystState, config) -> dict:
         if ref and c not in dropped:
             ctx.emitter.emit("citation", cite_id=c, type=ref.type, label=f"{ref.title} — {ref.section}",
                              doc_id=ref.doc_id, chunk_id=ref.chunk_id, href=ref.href, source_url=ref.source_url,
-                             retrieved_at=ref.retrieved_at or None, found_by=ref.agent or None)
-    status = "done" if all(s == "done" for s in statuses) else "partial"
+                             retrieved_at=ref.retrieved_at or None, found_by=ref.agent or None,
+                             **({"sql": ref.sql, "columns": ref.columns, "rows": ref.rows}
+                                if ref.type in ("sql_row", "sql_result") else {}))
+    # A Summary skipped because Data found no papers is a complete answer ("no such papers"), not a gap.
+    status = "done" if all(t["status"] == "done" or t.get("error_kind") == NO_UPSTREAM_PAPERS
+                           for t in tasks) else "partial"
     return {"final_answer": answer, "status": status, "unresolved_citations": unresolved,
             "dropped_citations": [c for c in used if c in dropped], "excluded_evidence": sorted(off_ids)}
 
@@ -379,7 +435,8 @@ def abstention_only_markers(answer: str) -> set[str]:
         abstains = bool(_ABSTAIN.search(part))
         inherited = after_semicolon and prev_abstains and bool(_CONTINUES.match(part))
         for c in cited_ids(part):
-            unsupported = abstains or (inherited and c.startswith("C"))
+            # A D# is a database result; an empty one is what supports "the corpus has no such papers".
+            unsupported = (abstains or (inherited and c.startswith("C"))) and not c.startswith("D")
             support[c] = support.get(c, False) or not unsupported
         if part.strip():
             prev_abstains, after_semicolon = abstains, False

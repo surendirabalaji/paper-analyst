@@ -1,0 +1,41 @@
+{
+ "base": "http://localhost:8091",
+ "query": "Which 2025 cs.MA papers are in the corpus? Summarize the two most recent",
+ "started_utc": "2026-10-27T19:00:43Z",
+ "final": {
+  "turns": 1,
+  "len": 1198,
+  "streaming": false,
+  "cites": 9,
+  "status": "done \u00b7 TTFT 26885 ms \u00b7 total 32680 ms \u00b7 retrieval 61 ms \u00b7 Gemini 9 calls, 23619\u21921011 tok; OpenAI 1 calls, 4193\u2192307 tok \u00b7 cost $0.0545 (1 call(s) estimated)",
+  "trace": 32,
+  "routes": 11,
+  "sources": 6,
+  "sendDisabled": false,
+  "t": 32.75
+ },
+ "streamed_lengths": 27,
+ "answer_links": [
+  "D1",
+  "D1",
+  "C1",
+  "C1",
+  "C2",
+  "C5",
+  "C1",
+  "C3",
+  "C7"
+ ],
+ "sql_trace_rows": [
+  "#1 data \u21c4 SQLite run_sql (read-only) SELECT p.arxiv_id, p.title, p.published, pc.category, pc.is_primary FROM papers p JOIN paper_categories pc ON p.arxiv_id = pc.arxiv_id WHERE pc.category = 'cs.MA' AND p.published LIKE '2025%' ORDER BY p.published DESC \u2192 1 row(s) in 1 ms: D1",
+  "#1 handoff t1 \u2192 t2 summary: arXiv:2503.03686 [D1] \u00b7 upstream evidence D1"
+ ],
+ "viewer": {
+  "title": "D1 \u00b7 MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems",
+  "meta": "corpus metadata DB (papers.db, read-only) \u00b7 one paper's row \u00b7 found by data via run_sql",
+  "text": "SQL:\nSELECT p.arxiv_id, p.title, p.published, pc.category, pc.is_primary FROM papers p JOIN paper_categories pc ON p.arxiv_id = pc.arxiv_id WHERE pc.category = 'cs.MA' AND p.published LIKE '2025%' ORD",
+  "link": "https://arxiv.org/abs/2503.03686",
+  "linkText": "Open arXiv abstract page"
+ },
+ "console_errors": []
+}
