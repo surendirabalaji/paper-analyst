@@ -6,7 +6,7 @@ We build one phase at a time. Each phase ends with an exit check. The `assignmen
 
 | Phase | Goal | What we build | Exit check | Status |
 |---|---|---|---|---|
-| **0. Setup check** | Prove every external dependency works before writing app code | Python 3.13 venv; install pinned `requirements.txt`; one streaming test call each to OpenAI and Gemini via OpenRouter (confirm exact model IDs, tool calling, usage fields); Tavily MCP `list_tools` with the key as a query parameter; inspect 3 sample arXiv HTML pages | All three services respond; packages install on 3.13; model IDs confirmed and recorded | not started |
+| **0. Setup check** | Prove every external dependency works before writing app code | Python 3.13 venv; install pinned `requirements.txt`; one streaming test call each to OpenAI and Gemini via OpenRouter (confirm exact model IDs, tool calling, usage fields); Tavily MCP `list_tools` with the key as a query parameter; inspect 3 sample arXiv HTML pages | All three services respond; packages install on 3.13; model IDs confirmed and recorded | done |
 | **1. Corpus** | Build the data the agents search | arXiv selection (≈80 papers), HTML parser, section-aware chunking, Chroma index, SQLite metadata (`papers`, `authors`, `categories`, `repos`), `corpus_manifest.json` | Paper and chunk counts recorded; re-running ingest adds 0 chunks | not started |
 | **2. First working version** | Prove the full path end to end with one worker | FastAPI SSE endpoint, minimal HTML page, graph: planner → supervisor → Research → synthesize; token streaming; `C#` citations; `/api/source/chunk` | Browser shows a streamed answer with resolvable citations and a trace | not started |
 | **3. Early deploy** | Find container and Cloud Run problems early | Multi-stage Dockerfile (python:3.13-slim, non-root, `$PORT`), deploy script, first Cloud Run deploy | Public URL answers a corpus question after a cold start | not started |
@@ -27,6 +27,6 @@ We build one phase at a time. Each phase ends with an exit check. The `assignmen
 ## Done so far (before Phase 0)
 
 - Design proposal written (`design_proposal.md`).
-- Scaffolding: `requirements.in`/`requirements.txt` (144 exact pins, resolved for Python 3.13 Linux), `.env.example`, `.gitignore`, `.dockerignore`.
+- Scaffolding: `requirements.in`/`requirements.txt` (148 exact pins after the Phase 0 ragas fix, resolved for Python 3.13 Linux), `.env.example`, `.gitignore`, `.dockerignore`.
 - Draft docs: `architecture.md`, `compliance.md`, `evaluation.md`, `README.md`, `dev_notes.md`.
 - Course reference notes moved to `reference/` (git-ignored).

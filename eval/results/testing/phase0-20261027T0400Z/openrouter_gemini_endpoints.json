@@ -1,0 +1,14 @@
+{
+ "model": "google/gemini-3.8-flash",
+ "checked_utc": "2026-10-27T03:58Z",
+ "upstream_endpoints": [
+  [
+   "Google",
+   "Google | google/gemini-3.8-flash-20260902"
+  ],
+  [
+   "Google AI Studio",
+   "Google AI Studio | google/gemini-3.8-flash-20260902"
+  ]
+ ]
+}

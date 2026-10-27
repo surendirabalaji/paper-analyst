@@ -1,0 +1,12 @@
+Strict Tavily Remote MCP check (scratchpad diag/tavily_strict.py), 2026-10-27 ~03:57 UTC, real key loaded via python-dotenv, never printed.
+key_present True
+key_echoed False
+top_keys ['answer', 'auth_mode', 'follow_up_questions', 'images', 'query', 'request_id', 'response_time', 'results']
+is_error False
+n_results 3
+ - https://blog.arxiv.org/2026/10/01/updated-rate-limit-policy | date: None
+ - https://en.wikipedia.org/wiki/ArXiv | date: None
+ - https://info.arxiv.org/about/index.html | date: None
+
+Same tool with synthetic invalid key (diag/tavily_badkey.py): list_tools succeeded; tavily_search RETURNED (did not raise)
+a text block: {"error":"Search failed","status":401,"detail":{"error":"Unauthorized: missing or invalid API key."},...}; canary not echoed.

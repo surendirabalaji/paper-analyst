@@ -1,0 +1,154 @@
+{
+  "checked_at": "2026-10-27T03:55:12+00:00",
+  "python": "3.13.16",
+  "results": [
+    {
+      "service": "openai-direct",
+      "model_requested": "gpt-6.1-sol",
+      "stream_ok": true,
+      "ttft_s": 1.836,
+      "total_s": 2.587,
+      "content_chunks": 37,
+      "usage": {
+        "input_tokens": 18,
+        "output_tokens": 40,
+        "total_tokens": 58,
+        "input_token_details": {
+          "audio": 0,
+          "cache_creation": 0,
+          "cache_read": 0
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "model_returned": "gpt-6.1-sol",
+      "sample": "Retrieval-augmented generation (RAG) is a technique that improves an AI model\u2019s responses by retrieving relevant informa",
+      "tool_call_ok": true,
+      "tool_call": {
+        "name": "get_paper_year",
+        "args": {
+          "arxiv_id": "2310.11511"
+        },
+        "id": "call_yYcq1WlUC2d4x7OCQs26snDW",
+        "type": "tool_call"
+      },
+      "model_listed_in_/v1/models": true,
+      "embedding": {
+        "model": "text-embedding-3-small",
+        "dims": 1536,
+        "listed": true
+      },
+      "status": "ok"
+    },
+    {
+      "service": "gemini-via-openrouter",
+      "model_requested": "google/gemini-3.8-flash",
+      "stream_ok": true,
+      "ttft_s": 5.437,
+      "total_s": 5.615,
+      "content_chunks": 2,
+      "usage": {
+        "input_tokens": 12,
+        "output_tokens": 487,
+        "total_tokens": 499,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 0,
+          "cache_creation": 0
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 449
+        }
+      },
+      "model_returned": "google/gemini-3.8-flash",
+      "sample": "**Retrieval-augmented generation (RAG)** is an AI technique that enhances the accuracy and reliability of large language",
+      "tool_call_ok": true,
+      "tool_call": {
+        "name": "get_paper_year",
+        "args": {
+          "arxiv_id": "2310.11511"
+        },
+        "id": "call_3372990",
+        "type": "tool_call"
+      },
+      "model_listed_in_catalog": true,
+      "catalog_pricing_per_M": {
+        "input": 0.825,
+        "output": 4.125
+      },
+      "status": "ok"
+    },
+    {
+      "service": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "auth": "tavilyApiKey query parameter",
+      "list_tools_s": 0.968,
+      "tools": {
+        "tavily_search": [
+          "country",
+          "end_date",
+          "exact_match",
+          "exclude_domains",
+          "include_domains",
+          "include_favicon",
+          "include_image_descriptions",
+          "include_images",
+          "include_raw_content",
+          "max_results",
+          "query",
+          "search_depth",
+          "start_date",
+          "time_range",
+          "topic"
+        ],
+        "tavily_extract": [
+          "extract_depth",
+          "format",
+          "include_favicon",
+          "include_images",
+          "query",
+          "urls"
+        ],
+        "tavily_crawl": [
+          "allow_external",
+          "extract_depth",
+          "format",
+          "include_favicon",
+          "instructions",
+          "limit",
+          "max_breadth",
+          "max_depth",
+          "select_domains",
+          "select_paths",
+          "url"
+        ],
+        "tavily_map": [
+          "allow_external",
+          "instructions",
+          "limit",
+          "max_breadth",
+          "max_depth",
+          "select_domains",
+          "select_paths",
+          "url"
+        ],
+        "tavily_research": [
+          "input",
+          "model"
+        ]
+      },
+      "search_ok": true,
+      "search_s": 1.048,
+      "result_chars": 4606,
+      "sample_urls": [
+        "https://www.langchain.com/resources/ai-agent-frameworks",
+        "https://www.developersdigest.tech/blog/microsoft-agent-framework-whats-new-2026",
+        "https://www.morphllm.com/ai-agent-framework"
+      ],
+      "status": "ok"
+    }
+  ]
+}

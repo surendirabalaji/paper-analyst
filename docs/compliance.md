@@ -3,7 +3,7 @@
 Working aid, not a graded deliverable. Source of truth: `Assignment_2_Description.pdf`.
 Status values: **pending**, **implemented** (not yet verified), **verified** (evidence recorded), **blocked**, **n/a** (with justification).
 
-Last updated: 2026-10-26 (project scaffolding only; no application code yet).
+Last updated: 2026-10-27 (Phase 0 service checks; no application code yet).
 
 ## Orchestration (25%)
 
@@ -41,7 +41,7 @@ Last updated: 2026-10-26 (project scaffolding only; no application code yet).
 | Both selected under ordinary queries | router | Provider share over eval set | | pending |
 | Decision visible in UI/trace with rationale | `llm_route` event, Routing tab | Screenshot / SSE log | | pending |
 | Rationale documented (hybrid) | `docs/architecture.md` §6 | | | pending |
-| Exact verified model IDs in source + `.env.example` | `.env.example` | API check | Candidates only (OpenRouter catalog 2026-10-26) | pending |
+| Exact verified model IDs in source + `.env.example` | `.env.example` | API check | `gpt-6.1-sol` (OpenAI /v1/models) and `google/gemini-3.8-flash` (OpenRouter catalog) both answered real streaming + tool calls 2026-10-27; `docs/testing/phase0_service_check.json` | implemented |
 | Fallback traced separately | `fallback` event | Fault test | | pending |
 
 ## Frontend (15%)
@@ -63,7 +63,7 @@ Last updated: 2026-10-26 (project scaffolding only; no application code yet).
 | Cold start without failure | | First request after idle | | pending |
 | Credentials outside source | env vars file | Secret scan | | pending |
 | Multi-stage python:3.13-slim, non-root, `$PORT` | `Dockerfile` | Container run as uid 10001 | | pending |
-| `==` pins in requirements.txt | `requirements.txt` | grep for `>=`/`~=` | 144 packages, all `==`, resolved for py3.13 linux 2026-10-26; install not yet run | implemented |
+| `==` pins in requirements.txt | `requirements.txt` | grep for `>=`/`~=` | 148 packages, all `==`; installs on py3.13.16 and all key imports incl. ragas succeed (2026-10-27) | implemented |
 | Fresh-project deploy docs | README | | | pending |
 | Durable state | | | Stateless single-turn; no persistence claimed | n/a |
 
@@ -71,7 +71,7 @@ Last updated: 2026-10-26 (project scaffolding only; no application code yet).
 
 | Requirement | Where | How verified | Evidence | Status |
 |---|---|---|---|---|
-| Tavily Remote MCP, Streamable HTTP, key as query param | `app/mcp_client.py` | `list_tools` + call | | pending |
+| Tavily Remote MCP, Streamable HTTP, key as query param | `app/mcp_client.py` | `list_tools` + call | Phase 0 spike: list_tools + tavily_search OK 2026-10-27 (app client not built yet) | pending |
 | Same tool used by Research and Summary in different contexts | traces | Deployed SSE log | | pending |
 | Sharing rationale documented | `docs/architecture.md` §8 | | | pending |
 | Key redacted from logs/traces | | grep logs for `tavilyApiKey=` | | pending |

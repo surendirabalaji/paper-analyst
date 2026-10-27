@@ -25,11 +25,11 @@ from dotenv import load_dotenv
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
-TAVILY_KEY_RE = re.compile(r"tavilyApiKey=[^&\s'\"]+")
+TAVILY_KEY_RE = re.compile(r"tavilyApiKey(=|%3D)[^&\s'\"]+", re.IGNORECASE)
 
 
 def redact(text: str) -> str:
-    text = TAVILY_KEY_RE.sub("tavilyApiKey=REDACTED", str(text))
+    text = TAVILY_KEY_RE.sub(r"tavilyApiKey\1REDACTED", str(text))
     for var in ("OPENAI_API_KEY", "OPENROUTER_API_KEY", "TAVILY_API_KEY"):
         val = os.environ.get(var)
         if val and len(val) > 8:
@@ -150,10 +150,46 @@ async def check_tavily() -> dict:
     t0 = time.perf_counter()
     res = await search.ainvoke({"query": "latest LLM agent framework releases", "max_results": 3})
     text = res if isinstance(res, str) else json.dumps(res, default=str)
-    out.update(search_ok=bool(text), search_s=round(time.perf_counter() - t0, 3), result_chars=len(text))
+    # Tavily reports auth/quota failures as a normal tool result (e.g. {"error": ..., "status": 401}),
+    # not as an exception, so success requires parsed results and no error marker.
+    err = tavily_error(text)
     urls = re.findall(r"https?://[^\s\"'\\,\]]+", text)
-    out["sample_urls"] = urls[:3]
+    out.update(
+        search_ok=err is None and bool(urls),
+        search_error=err,
+        search_s=round(time.perf_counter() - t0, 3),
+        result_chars=len(text),
+        sample_urls=urls[:3],
+    )
+    if not out["search_ok"]:
+        raise RuntimeError(f"tavily_search returned no usable results: {err or 'zero result URLs'}")
     return out
+
+
+def tavily_error(text: str) -> str | None:
+    """Return an error description if a Tavily tool result signals failure, else None."""
+    candidates = [text]
+    try:
+        outer = json.loads(text)
+        # MCP content blocks: [{"type": "text", "text": "<json>"}]
+        if isinstance(outer, list):
+            candidates = [b.get("text", "") for b in outer if isinstance(b, dict)]
+        elif isinstance(outer, dict):
+            candidates = [json.dumps(outer)]
+    except (json.JSONDecodeError, TypeError):
+        pass
+    for c in candidates:
+        try:
+            obj = json.loads(c)
+        except (json.JSONDecodeError, TypeError):
+            continue
+        if isinstance(obj, dict):
+            status = obj.get("status")
+            if obj.get("error") or (isinstance(status, int) and status >= 400):
+                return f"status={status} error={str(obj.get('error'))[:120]}"
+            if "results" in obj and not obj["results"]:
+                return "zero results"
+    return None
 
 
 async def run_one(name, fn, required_env):

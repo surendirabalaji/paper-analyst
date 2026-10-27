@@ -14,8 +14,8 @@ A multi-agent system for CSCI 599 Assignment 2. It answers questions about a cor
 
 | Purpose | Service | Model / endpoint |
 |---|---|---|
-| Generation (provider 1) | OpenAI API (direct) | `gpt-6.1-sol` *(candidate, to verify)* |
-| Generation (provider 2) | Google Gemini via OpenRouter | `google/gemini-3.8-flash` *(candidate, to verify)* |
+| Generation (provider 1) | OpenAI API (direct) | `gpt-6.1-sol` (verified 2026-10-27) |
+| Generation (provider 2) | Google Gemini via OpenRouter | `google/gemini-3.8-flash` (verified 2026-10-27) |
 | Embeddings | OpenAI API | `text-embedding-3-small` |
 | Live web retrieval | Tavily Remote MCP | `https://mcp.tavily.com/mcp/?tavilyApiKey=…` |
 | Vector store | Chroma (embedded, baked into the image) | |

@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-27T04:00:18+00:00",
+  "python": "3.13.16",
+  "results": [
+    {
+      "service": "openai-direct",
+      "status": "error",
+      "error": "HTTPStatusError: Client error '401 Unauthorized' for url 'https://api.openai.com/v1/models'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401"
+    },
+    {
+      "service": "gemini-via-openrouter",
+      "status": "error",
+      "error": "OpenAIAuthenticationError: Error code: 401 - {'error': {'message': 'Missing Authentication header', 'code': 401}}"
+    },
+    {
+      "service": "tavily-remote-mcp",
+      "status": "error",
+      "error": "RuntimeError: tavily_search returned no usable results: status=401 error=Search failed"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "checked_at": "2026-10-27T03:54:30+00:00",
+  "python": "3.13.16",
+  "results": [
+    {
+      "service": "openai-direct",
+      "status": "error",
+      "error": "HTTPStatusError: Client error '401 Unauthorized' for url 'https://api.openai.com/v1/models'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401"
+    },
+    {
+      "service": "gemini-via-openrouter",
+      "status": "error",
+      "error": "OpenAIAuthenticationError: Error code: 401 - {'error': {'message': 'Missing Authentication header', 'code': 401}}"
+    },
+    {
+      "service": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "auth": "tavilyApiKey query parameter",
+      "list_tools_s": 0.929,
+      "tools": {
+        "tavily_search": [
+          "country",
+          "end_date",
+          "exact_match",
+          "exclude_domains",
+          "include_domains",
+          "include_favicon",
+          "include_image_descriptions",
+          "include_images",
+          "include_raw_content",
+          "max_results",
+          "query",
+          "search_depth",
+          "start_date",
+          "time_range",
+          "topic"
+        ],
+        "tavily_extract": [
+          "extract_depth",
+          "format",
+          "include_favicon",
+          "include_images",
+          "query",
+          "urls"
+        ],
+        "tavily_crawl": [
+          "allow_external",
+          "extract_depth",
+          "format",
+          "include_favicon",
+          "instructions",
+          "limit",
+          "max_breadth",
+          "max_depth",
+          "select_domains",
+          "select_paths",
+          "url"
+        ],
+        "tavily_map": [
+          "allow_external",
+          "instructions",
+          "limit",
+          "max_breadth",
+          "max_depth",
+          "select_domains",
+          "select_paths",
+          "url"
+        ],
+        "tavily_research": [
+          "input",
+          "model"
+        ]
+      },
+      "search_ok": true,
+      "search_s": 1.209,
+      "result_chars": 282,
+      "sample_urls": [
+        "https://docs.tavily.com/documentation/api-reference/endpoint/search"
+      ],
+      "status": "ok"
+    }
+  ]
+}

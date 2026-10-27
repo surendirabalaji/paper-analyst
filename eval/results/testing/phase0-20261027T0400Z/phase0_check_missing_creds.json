@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-10-27T03:54:10+00:00",
+  "python": "3.13.16",
+  "results": [
+    {
+      "service": "openai-direct",
+      "status": "skipped",
+      "missing_env": [
+        "OPENAI_API_KEY"
+      ]
+    },
+    {
+      "service": "gemini-via-openrouter",
+      "status": "skipped",
+      "missing_env": [
+        "OPENROUTER_API_KEY"
+      ]
+    },
+    {
+      "service": "tavily-remote-mcp",
+      "status": "skipped",
+      "missing_env": [
+        "TAVILY_API_KEY"
+      ]
+    }
+  ]
+}
