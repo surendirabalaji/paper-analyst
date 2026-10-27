@@ -1,0 +1,245 @@
+{
+  "id": "L3_cross_paper",
+  "query": "Compare how Reflexion and Self-Refine use feedback to improve a model's outputs. Where do they differ?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "f55208c96dc4"
+  ],
+  "event_counts": {
+    "_comment": 1,
+    "citation": 10,
+    "done": 1,
+    "llm_result": 5,
+    "llm_route": 5,
+    "meta": 1,
+    "plan": 1,
+    "retrieval": 3,
+    "token": 508,
+    "tool_call": 3,
+    "tool_result": 3,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "f55208c96dc4",
+    "seq": 5,
+    "ts": "2026-10-27T06:50:09.991Z",
+    "t_ms": 4449,
+    "plan_summary": "Compare Reflexion and Self-Refine using their papers, emphasizing feedback sources, refinement loops, memory, and learning mechanisms.",
+    "source": "llm",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find the indexed Reflexion and Self-Refine papers and compare how they use feedback to improve outputs. Explain each method's feedback source and form, how feedback drives subsequent attempts or revisions, whether feedback persists in memory across trials, and whether model weights are updated. Highlight shared principles and key differences in workflow and intended tasks, avoiding overly absolute distinctions where implementations vary. Ground the comparison in citations to both papers.",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 done",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [
+    {
+      "query": "Reflexion language agents verbal reinforcement learning feedback episodic memory actor evaluator self reflection weights",
+      "k": 6
+    },
+    {
+      "query": "Self-Refine iterative refinement self feedback same model feedback refine no training",
+      "k": 6
+    },
+    {
+      "query": "Self-Refine actionable specific feedback seven tasks dialogue code optimization math sentiment external feedback Reflexion",
+      "k": 4
+    }
+  ],
+  "retrieved_docs": [
+    "2303.11366v4",
+    "2303.17651v2"
+  ],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 373,
+      "output_tokens": 137,
+      "latency_ms": 4445
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 522,
+      "output_tokens": 87,
+      "latency_ms": 2505
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 6051,
+      "output_tokens": 40,
+      "latency_ms": 2589
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 7995,
+      "output_tokens": 756,
+      "latency_ms": 16941
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 6882,
+      "output_tokens": 511,
+      "latency_ms": 7972
+    }
+  ],
+  "answer": "Both methods use **iterative natural-language feedback to improve results without updating model weights**. The main difference is their organizing principle: **Reflexion learns lessons for the next attempt; Self-Refine critiques and revises the current output.** [C3][C6][C7][C12]\n\n| Aspect | Reflexion | Self-Refine |\n|---|---|---|\n| **Basic loop** | An Actor attempts a task, an Evaluator assesses it, and a Self-Reflection component generates lessons that guide subsequent attempts. [C3][C4] | A model generates an output, critiques it, and revises it, repeating until a stopping condition is met. [C8][C12] |\n| **Feedback source** | Can use environment success/failure, heuristics, exact-match grading, LLM evaluation, or self-written tests. An LLM then interprets that signal alongside the attempted trajectory. [C1][C6] | The **same LLM** that generated the output provides feedback through a task-specific critique prompt. [C12] |\n| **Feedback content** | Distilled experience summaries: what went wrong and what actions to take differently in future trials. [C1][C3] | Specific, actionable critiques of the output, potentially covering several quality dimensions, such as relevance, informativeness, and fluency. [C15][C16] |\n| **Memory** | Explicitly stores reflections across trials, separate from the current trajectory’s short-term history. [C3] | Carries previous outputs and feedback forward in the prompt as revision history. [C8] |\n| **Typical emphasis** | Improving an agent’s behavior across attempts, including sequential decision-making, reasoning, and programming. [C6] | Refining candidate outputs, including dialogue responses, code, mathematical reasoning, and constrained generation. [C14] |\n\nTwo distinctions are easy to overstate: **Reflexion does not require external feedback**, because it can use self-evaluation; and **Self-Refine is not memoryless**, because it retains its output-and-feedback history. [C6][C8]\n\nIn short: Reflexion asks, **“What should I remember to do better next time?”** Self-Refine asks, **“How should I improve this draft?”** These describe their different feedback structures, rather than a strict division between the tasks they can address. [C3][C6][C8][C14]",
+  "citations": [
+    {
+      "cite_id": "C3",
+      "chunk_id": "2303.11366v4::S3::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.11366v4",
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\ntask, when the agent receives a failure signal, it can infer that a specific\naction a_{i} led to subsequent incorrect actions a_{i+1} and a_{i+2} . The\nagent can then verbally state that "
+    },
+    {
+      "cite_id": "C6",
+      "chunk_id": "2303.11366v4::S1::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.11366v4",
+      "section": "1 Introduction",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 1 Introduction\ndoing this – simple binary environment feedback, pre-defined heuristics for common failure\ncases, and self-evaluation such as binary classification using LLMs (decision-making) or\nself-written unit tests (programming). In"
+    },
+    {
+      "cite_id": "C7",
+      "chunk_id": "2303.17651v2::S5::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.17651v2",
+      "section": "5 Related work",
+      "text_head": "Self-Refine: Iterative Refinement with Self-Feedback — 5 Related work\nNon-refinement reinforcement learning (RL) approaches.\nRather than having explicit refinement, an alternative way to incorporate feedback is by optimizing a scalar reward function, e.g. with reinforcement learning (e.g., Stiennon "
+    },
+    {
+      "cite_id": "C12",
+      "chunk_id": "2303.17651v2::S2::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.17651v2",
+      "section": "2 Iterative Refinement with Self-Refine",
+      "text_head": "Self-Refine: Iterative Refinement with Self-Feedback — 2 Iterative Refinement with Self-Refine\nGiven an input sequence, Self-Refine generates an initial output, provides feedback on the output, and refines the\noutput according to the feedback. Self-Refine iterates between feedback and refinement unt"
+    },
+    {
+      "cite_id": "C4",
+      "chunk_id": "2303.11366v4::S3::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.11366v4",
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\nAlgorithm 1 Reinforcement via self-reflection\nInitialize Actor, Evaluator, Self-Reflection:\nM_{a} , M_{e} , M_{sr}\nInitialize policy \\pi_{\\theta}(a_{i}|s_{i}) , \\theta=\\{M_{a},mem\\}\nGener"
+    },
+    {
+      "cite_id": "C8",
+      "chunk_id": "2303.17651v2::S2::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.17651v2",
+      "section": "2 Iterative Refinement with Self-Refine",
+      "text_head": "Self-Refine: Iterative Refinement with Self-Feedback — 2 Iterative Refinement with Self-Refine\nrefine\nNext, Self-Refine uses \\mathcal{M} to refine its most recent output, given its own feedback:\n\\displaystyle y_{t+1}=\\mathcal{M}\\left(p_{\\text{refine}}\\|x\\|y_{t}\\|fb_{t}\\right).\nFor example, in Figure"
+    },
+    {
+      "cite_id": "C1",
+      "chunk_id": "2303.11366v4::S3::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.11366v4",
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\nan observation from the environment o_{t} . We explore various Actor models,\nincluding Chain of Thought [26] and ReAct [30].\nThese diverse generation models allow us to explore different "
+    },
+    {
+      "cite_id": "C15",
+      "chunk_id": "2303.17651v2::S4::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.17651v2",
+      "section": "4 Analysis",
+      "text_head": "Self-Refine: Iterative Refinement with Self-Feedback — 4 Analysis\nThe three main steps of Self-Refine are feedback, refine, and repeating them iteratively.\nIn this section, we perform additional experiments to analyze the importance of each of these steps.\nTask\nSelf-Refine feedback\nGeneric feedback\n"
+    },
+    {
+      "cite_id": "C16",
+      "chunk_id": "2303.17651v2::A13.SS1::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.17651v2",
+      "section": "M Dialogue Response Generation › M.1 Modules",
+      "text_head": "Self-Refine: Iterative Refinement with Self-Feedback — M Dialogue Response Generation › M.1 Modules\nWe follow the high-level description of the framework from Section 2, and instantiate our framework as follows.\nInit\nThis is the first step in performing the task. The init module takes the dialogue c"
+    },
+    {
+      "cite_id": "C14",
+      "chunk_id": "2303.17651v2::S3::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.17651v2",
+      "section": "3 Evaluation",
+      "text_head": "Self-Refine: Iterative Refinement with Self-Feedback — 3 Evaluation\nWe evaluate Self-Refine on 7 diverse tasks:\nDialogue Response Generation (Mehri and Eskenazi, 2020, Appendix M; ),\nCode Optimization (Madaan et al., 2023, Appendix N; ),\nCode Readability Improvement (Puri et al., 2021, Appendix L; )"
+    }
+  ],
+  "cited_docs": [
+    "2303.11366v4",
+    "2303.17651v2"
+  ],
+  "done": {
+    "request_id": "f55208c96dc4",
+    "seq": 545,
+    "ts": "2026-10-27T06:50:40.902Z",
+    "t_ms": 35361,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 871,
+      "llm_ms_sum": 34452,
+      "ttft_ms": 28316,
+      "total_ms": 35361
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 21823,
+        "output_tokens": 1531,
+        "calls": 5
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 508,
+  "n_distinct_reads_with_tokens": 508,
+  "first_token_client_ms": 28318,
+  "last_token_client_ms": 35317,
+  "first_token_server_ms": 28316,
+  "last_token_server_ms": 35316,
+  "done_client_ms": 35362,
+  "total_client_ms": 35363,
+  "expect_docs": [
+    "2303.11366v4",
+    "2303.17651v2"
+  ],
+  "expect_abstain": false
+}

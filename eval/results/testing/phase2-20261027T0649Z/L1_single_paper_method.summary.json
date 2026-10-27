@@ -1,0 +1,210 @@
+{
+  "id": "L1_single_paper_method",
+  "query": "In ReWOO, how are the planner, worker and solver roles separated, and why does that cut token usage compared with interleaved reasoning-and-observation agents?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "8ea0c70d503b"
+  ],
+  "event_counts": {
+    "citation": 7,
+    "done": 1,
+    "llm_result": 5,
+    "llm_route": 5,
+    "meta": 1,
+    "plan": 1,
+    "retrieval": 2,
+    "token": 378,
+    "tool_call": 2,
+    "tool_result": 2,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "8ea0c70d503b",
+    "seq": 5,
+    "ts": "2026-10-27T06:49:27.936Z",
+    "t_ms": 4825,
+    "plan_summary": "Retrieve ReWOO’s role definitions and explain how its decoupled workflow reduces token usage relative to interleaved agents.",
+    "source": "llm",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find the ReWOO paper in the indexed corpus and explain the separate responsibilities of the planner, worker, and solver, including how planned tool calls reference earlier evidence. Explain why separating planning from tool observations reduces token usage compared with interleaved reasoning-and-observation agents such as ReAct, distinguishing repeated context/token overhead from tool execution costs. Ground the answer in citations to the paper; include reported token savings if directly supported and contextualize their evaluation.",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 done",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [
+    {
+      "query": "ReWOO planner worker solver evidence references token efficiency ReAct",
+      "k": 7
+    },
+    {
+      "query": "ReWOO token usage cost tool execution Worker LLM tokens 5x HotpotQA 1980 3.1 evaluation",
+      "k": 5
+    }
+  ],
+  "retrieved_docs": [
+    "2305.18323v1"
+  ],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 384,
+      "output_tokens": 145,
+      "latency_ms": 4815
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 541,
+      "output_tokens": 34,
+      "latency_ms": 1900
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 3984,
+      "output_tokens": 48,
+      "latency_ms": 2845
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 6348,
+      "output_tokens": 585,
+      "latency_ms": 14106
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 4547,
+      "output_tokens": 381,
+      "latency_ms": 7080
+    }
+  ],
+  "answer": "ReWOO separates the agent into a **plan–work–solve pipeline**, rather than alternating reasoning and tool observations at every step. [C7]\n\n- **Planner:** Writes the full blueprint upfront: step descriptions, tool choices and inputs, and evidence placeholders such as `#E1` and `#E2`. Later tool inputs can reference earlier placeholders, allowing dependent steps without the planner first seeing the actual results. [C1][C4]\n- **Worker:** Executes the planned tool calls and fills those placeholders with real observations, using earlier evidence where subsequent calls require it. [C1]\n- **Solver:** Receives the original question, plans, and collected evidence, then synthesizes the final answer; its reasoning can also partially compensate for planning or tool failures. [C1][C7]\n\n**The token savings come mainly from avoiding repeated context.** In an interleaved agent such as ReAct, each reasoning call receives the instructions, exemplars, and growing thought–action–observation history again—including potentially lengthy tool outputs. ReWOO generates the plan once, executes its calls, and then gives the collected plans and evidence to the solver, rather than restarting the reasoning prompt after every observation. [C7][C10]\n\nThis removes repeated exemplar processing and repeated processing of accumulated history; under the paper’s comparison assumptions, the latter overhead can grow quadratically with the number of steps. Tool calls still happen, and tokens used by LLM-based tools are included in the paper’s accounting. [C1][C11]\n\nThe paper reports **64% lower average token usage** than ReAct across six public benchmarks using GPT-3.5-turbo. The trade-off is that an upfront plan can make incorrect assumptions about what tools will return, rather than adapting its planning after each observation. [C3][C2][C7]",
+  "citations": [
+    {
+      "cite_id": "C7",
+      "chunk_id": "2305.18323v1::S1::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2305.18323v1",
+      "section": "1 Introduction",
+      "text_head": "ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models — 1 Introduction\nThis paper proposes ReWOO , a novel prompting paradigm for ALMs. As illustrated in Figure 1, ReWOO compartmentalizes the key components of an ALM: step-wise reasoning, tool-calls, and summarization"
+    },
+    {
+      "cite_id": "C1",
+      "chunk_id": "2305.18323v1::S2.SS1::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2305.18323v1",
+      "section": "2 Methodology › 2.1 ReWOO with Plan-Work-Solve Paradigm",
+      "text_head": "ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models — 2 Methodology › 2.1 ReWOO with Plan-Work-Solve Paradigm\nPlanner leverages the foreseeable reasoning of LLMs to compose a solution blueprint. Concretely, it contains consecutive tuples (Plan,\\#E) where Plan repres"
+    },
+    {
+      "cite_id": "C4",
+      "chunk_id": "2305.18323v1::A2.SS2::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2305.18323v1",
+      "section": "B Implementation Details › B.2 Prompts",
+      "text_head": "ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models — B Implementation Details › B.2 Prompts\nHereby we disclose the context prompts and exemplars used in ReWOO. The tool descriptions and exemplars are subject to setups at run time. Notably, ReWOO is a general paradi"
+    },
+    {
+      "cite_id": "C10",
+      "chunk_id": "2305.18323v1::A1.SS1::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2305.18323v1",
+      "section": "A Additional Observations › A.1 Token Decomposition",
+      "text_head": "ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models — A Additional Observations › A.1 Token Decomposition\nWe decompose the token usage of different prompt paradigms on HotpotQA into different components – context prompts, exemplars, and intermediate steps. Figure 8 "
+    },
+    {
+      "cite_id": "C11",
+      "chunk_id": "2305.18323v1::S2.SS2::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2305.18323v1",
+      "section": "2 Methodology › 2.2 Prompt Redundancy Reduction",
+      "text_head": "ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models — 2 Methodology › 2.2 Prompt Redundancy Reduction\n\\displaystyle\\texttt{\\#Token}_{I}^{\\texttt{ReWOO}}\n\\displaystyle=\\Theta(C_{\\text{planner}}+\\bm{S}+Q)+\\Theta(C_{\\text{solver}}+Q+\\sum_{j=1}^{k}P_{j}+E_{j})\n\\displays"
+    },
+    {
+      "cite_id": "C3",
+      "chunk_id": "2305.18323v1::S3.SS2.SSS1::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2305.18323v1",
+      "section": "3 Experiments › 3.2 Results and Observations › 3.2.1 Comparison between Prompting Paradigms",
+      "text_head": "ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models — 3 Experiments › 3.2 Results and Observations › 3.2.1 Comparison between Prompting Paradigms\n1†\n53.3\n47.5\n45.3\n215.9\n1.78\n0.43\n300\nReAct\n5\n1†\n58.6\n51.9\n49.3\n1720.0\n2.64\n3.44\nReWOO\n5\n1†\n61.3\n55.8\n55.3\n854.2\n3.04\n1."
+    },
+    {
+      "cite_id": "C2",
+      "chunk_id": "2305.18323v1::A1.SS2::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2305.18323v1",
+      "section": "A Additional Observations › A.2 Why ReWOO outperforms ReAct",
+      "text_head": "ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models — A Additional Observations › A.2 Why ReWOO outperforms ReAct\nOn the other hand, ReWOO can usually generate a reasonable planning trajectory independent from tool failures. Such plans, though \"reasonable\", can some"
+    }
+  ],
+  "cited_docs": [
+    "2305.18323v1"
+  ],
+  "done": {
+    "request_id": "8ea0c70d503b",
+    "seq": 409,
+    "ts": "2026-10-27T06:49:54.708Z",
+    "t_ms": 31598,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 819,
+      "llm_ms_sum": 30746,
+      "ttft_ms": 25917,
+      "total_ms": 31598
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 15804,
+        "output_tokens": 1193,
+        "calls": 5
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 378,
+  "n_distinct_reads_with_tokens": 378,
+  "first_token_client_ms": 25932,
+  "last_token_client_ms": 31572,
+  "first_token_server_ms": 25917,
+  "last_token_server_ms": 31557,
+  "done_client_ms": 31613,
+  "total_client_ms": 31614,
+  "expect_docs": [
+    "2305.18323v1"
+  ],
+  "expect_abstain": false
+}

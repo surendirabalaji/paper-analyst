@@ -1,0 +1,98 @@
+{
+ "checks": {
+  "page_title": "Paper Analyst",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "turn1": {
+   "final": {
+    "turns": 1,
+    "len": 1314,
+    "streaming": false,
+    "cites": 7,
+    "status": "done · TTFT 26770 ms · total 31371 ms · retrieval 1197 ms · openai 7 calls, 23652→1288 tok",
+    "trace": 21,
+    "routes": 7,
+    "sources": 4,
+    "sendDisabled": false,
+    "t": 31.46
+   },
+   "distinct_answer_lengths_while_streaming": 23,
+   "first_text_at_s": 26.8,
+   "streaming_ended_at_s": 31.46,
+   "send_disabled_during_stream": true
+  },
+  "routing_rows": [
+   "#1planner / plannerOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.367→128 · 3968 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.512→39 · 2718 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.3173→46 · 2168 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.4253→34 · 1681 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.5672→45 · 2563 ms",
+   "#1research / worker_finalOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.6768→685 · 11297 ms",
+   "#1synthesizer / synthesizeOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.2907→311 · 5743 ms (TTFT 1143)"
+  ],
+  "trace_items": [
+   "#1 start request 21b54386df9f, k=6, workers: research",
+   "#1 → start → planner: new request",
+   "#1 plan Find Toolformer’s API-call filtering criterion and explain how it selects calls for training, with citations. (llm)",
+   "#1 t1 research: Locate the Toolformer paper in the indexed corpus and explain how it decides which sampled API calls to retain in its training data. Describe the execution and loss-based filtering pro",
+   "#1 → supervisor → research: task t1 ready (no dependencies)",
+   "#1 research calls corpus_search({\"query\":\"Toolformer filtering API calls weighted loss L_i minus L_i plus tau_f no response\",\"k\":6})",
+   "#1 retrieval \"Toolformer filtering API calls weighted loss L_i minus L_i plus tau_f no response\": C1 2302.04761v1 (0.61), C2 2302.04761v1 (0.59), C3 2302.04761v1 (0.53), C4 2302.04761v1 (0.47), C5 230",
+   "#1 research corpus_search → ok, 6 results, 496 ms",
+   "#1 research calls corpus_search({\"query\":\"Toolformer executing API calls weights w_t max 0 1 0.2 t sampling API calls section 2\",\"k\":3})",
+   "#1 retrieval \"Toolformer executing API calls weights w_t max 0 1 0.2 t sampling API calls section 2\": C2 2302.04761v1 (0.59), C1 2302.04761v1 (0.61), C7 2302.04761v1 (0.52) in 204 ms",
+   "#1 research corpus_search → ok, 3 results, 208 ms",
+   "#1 research calls corpus_search({\"query\":\"Toolformer \\\"Executing API Calls\\\" \\\"Sampling API Calls\\\"\",\"k\":3})",
+   "#1 retrieval \"Toolformer \"Executing API Calls\" \"Sampling API Calls\"\": C2 2302.04761v1 (0.59), C8 2302.04761v1 (0.56), C9 2302.04761v1 (0.53) in 252 ms",
+   "#1 research corpus_search → ok, 3 results, 255 ms",
+   "#1 research calls corpus_search({\"query\":\"Toolformer weights \\\"0.2\\\" \\\"w\\\" loss\",\"k\":3})",
+   "#1 retrieval \"Toolformer weights \"0.2\" \"w\" loss\": C1 2302.04761v1 (0.61), C7 2302.04761v1 (0.52), C2 2302.04761v1 (0.59) in 249 ms",
+   "#1 research corpus_search → ok, 3 results, 252 ms",
+   "#1 research t1 done, cites C1 C8 C2 C4",
+   "#1 → research → supervisor: t1 done",
+   "#1 → supervisor → synthesize: no pending tasks",
+   "#1 done done in 31371 ms"
+  ],
+  "citation_click": {
+   "clicked": "C1",
+   "viewer_title": "C1 · 2302.04761v1::S2::002",
+   "viewer_meta": "arXiv:2302.04761v1 · 2 Approach · published 2023-02-09 · chunk 2302.04761v1::S2::002",
+   "viewer_tab": "sources",
+   "viewer_hidden": false,
+   "viewer_text_equals_api": true,
+   "viewer_link": "https://arxiv.org/html/2302.04761v1#S2",
+   "link_equals_anchor": true,
+   "chunk_id": "2302.04761v1::S2::002"
+  },
+  "turn2": {
+   "final": {
+    "turns": 2,
+    "len": 191,
+    "streaming": false,
+    "cites": 0,
+    "status": "done · TTFT 4079 ms · total 4786 ms · retrieval 0 ms · openai 2 calls, 744→125 tok",
+    "trace": 26,
+    "routes": 9,
+    "sources": 4,
+    "sendDisabled": false,
+    "t": 4.87
+   },
+   "xss_flag": 0,
+   "img_or_script_in_turns": 0,
+   "question_text_rendered": "hello <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script> [C1](javascript:alert(1))",
+   "javascript_links": 0,
+   "turn2_answer_cite_links": 0
+  },
+  "routing_rows_after_turn2": [
+   "#1 planner / planner",
+   "#1 research / worker_tool_loop",
+   "#1 research / worker_tool_loop",
+   "#1 research / worker_tool_loop",
+   "#1 research / worker_tool_loop",
+   "#1 research / worker_final",
+   "#1 synthesizer / synthesize",
+   "#2 planner / planner",
+   "#2 synthesizer / synthesize"
+  ]
+ },
+ "console_errors": []
+}

@@ -1,0 +1,161 @@
+{
+  "id": "C1_lost_in_middle",
+  "query": "What did the Lost in the Middle study find about where relevant information is placed in a long input context?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "8bbd5d80fe58"
+  ],
+  "event_counts": {
+    "citation": 3,
+    "done": 1,
+    "llm_result": 4,
+    "llm_route": 4,
+    "meta": 1,
+    "plan": 1,
+    "retrieval": 1,
+    "token": 107,
+    "tool_call": 1,
+    "tool_result": 1,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "8bbd5d80fe58",
+    "seq": 5,
+    "ts": "2026-10-27T06:51:38.171Z",
+    "t_ms": 3586,
+    "plan_summary": "Find the study’s findings on how relevant information’s position in a long context affects model performance.",
+    "source": "llm",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find the Lost in the Middle study in the indexed corpus and explain its findings on placement of relevant information in long input contexts, especially performance when information appears at the beginning, middle, or end. Cite the study and note whether longer-context models resolve the issue.",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 done",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [
+    {
+      "query": "Lost in the Middle language models use long contexts relevant information beginning middle end extended context models",
+      "k": 5
+    }
+  ],
+  "retrieved_docs": [
+    "2307.03172v3"
+  ],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 371,
+      "output_tokens": 101,
+      "latency_ms": 3584
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 490,
+      "output_tokens": 39,
+      "latency_ms": 2167
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 2399,
+      "output_tokens": 202,
+      "latency_ms": 4050
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 1916,
+      "output_tokens": 110,
+      "latency_ms": 2359
+    }
+  ],
+  "answer": "The *Lost in the Middle* study found a **U-shaped performance pattern**: language models generally used relevant information best when it appeared at the **beginning** (primacy bias) or **end** (recency bias) of a long input, while performance dropped substantially when it appeared in the **middle**. [C3]\n\nThis effect occurred even in models explicitly designed for long contexts—so a larger context window did not necessarily mean the model could use information throughout that window effectively. [C1][C5]",
+  "citations": [
+    {
+      "cite_id": "C3",
+      "chunk_id": "2307.03172v3::S1::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2307.03172v3",
+      "section": "1 Introduction",
+      "text_head": "Lost in the Middle: How Language Models Use Long Contexts — 1 Introduction\nFigure 1: Changing the location of relevant information (in this case, the position of the passage that answers an input question) within the language model’s input context results in a U-shaped performance curve—models are b"
+    },
+    {
+      "cite_id": "C1",
+      "chunk_id": "2307.03172v3::abstract::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2307.03172v3",
+      "section": "Abstract",
+      "text_head": "Lost in the Middle: How Language Models Use Long Contexts — Abstract\nWhile recent language models have the ability to take long contexts as input, relatively little is known about how well they use longer context.\nWe analyze the performance of language models on two tasks that require identifying re"
+    },
+    {
+      "cite_id": "C5",
+      "chunk_id": "2307.03172v3::S1::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2307.03172v3",
+      "section": "1 Introduction",
+      "text_head": "Lost in the Middle: How Language Models Use Long Contexts — 1 Introduction\nWe empirically investigate this question via controlled experiments with a variety of state-of-the-art open (MPT-30B-Instruct, LongChat-13B (16K)) and closed (OpenAI’s GPT-3.5-Turbo and Anthropic’s Claude-1.3) language models"
+    }
+  ],
+  "cited_docs": [
+    "2307.03172v3"
+  ],
+  "done": {
+    "request_id": "8bbd5d80fe58",
+    "seq": 129,
+    "ts": "2026-10-27T06:51:47.071Z",
+    "t_ms": 12486,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 306,
+      "llm_ms_sum": 12160,
+      "ttft_ms": 11297,
+      "total_ms": 12486
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 5176,
+        "output_tokens": 452,
+        "calls": 4
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 107,
+  "n_distinct_reads_with_tokens": 107,
+  "first_token_client_ms": 11314,
+  "last_token_client_ms": 12496,
+  "first_token_server_ms": 11297,
+  "last_token_server_ms": 12480,
+  "done_client_ms": 12502,
+  "total_client_ms": 12503,
+  "expect_docs": [
+    "2307.03172v3"
+  ],
+  "expect_abstain": false
+}

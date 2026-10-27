@@ -1,0 +1,4 @@
+[
+ {"id": "C1_lost_in_middle", "query": "What did the Lost in the Middle study find about where relevant information is placed in a long input context?", "expect_docs": ["2307.03172v3"]},
+ {"id": "C2_memgpt", "query": "How does MemGPT organise memory into tiers and move information between them?", "expect_docs": ["2310.08560v2"]}
+]

@@ -1,0 +1,7 @@
+[
+ {"id": "L1_single_paper_method", "query": "In ReWOO, how are the planner, worker and solver roles separated, and why does that cut token usage compared with interleaved reasoning-and-observation agents?", "expect_docs": ["2305.18323v1"]},
+ {"id": "L2_lowoverlap_paraphrase", "query": "Which approach lets a language model jot down lessons from its failed attempts in plain words and reuse those notes on the next try, without updating any weights?", "expect_docs": ["2303.11366v4"]},
+ {"id": "L3_cross_paper", "query": "Compare how Reflexion and Self-Refine use feedback to improve a model's outputs. Where do they differ?", "expect_docs": ["2303.11366v4", "2303.17651v2"]},
+ {"id": "L4_out_of_scope", "query": "What is the boiling point of tungsten and who first isolated the element?", "expect_docs": [], "expect_abstain": true},
+ {"id": "L5_unicode", "query": "Qu'est-ce que τ-bench évalue exactement ? Réponds brièvement en français.", "expect_docs": ["2406.12045v1"]}
+]

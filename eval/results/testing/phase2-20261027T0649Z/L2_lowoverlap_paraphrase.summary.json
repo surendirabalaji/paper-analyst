@@ -1,0 +1,152 @@
+{
+  "id": "L2_lowoverlap_paraphrase",
+  "query": "Which approach lets a language model jot down lessons from its failed attempts in plain words and reuse those notes on the next try, without updating any weights?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "509369f17c77"
+  ],
+  "event_counts": {
+    "citation": 2,
+    "done": 1,
+    "llm_result": 4,
+    "llm_route": 4,
+    "meta": 1,
+    "plan": 1,
+    "retrieval": 1,
+    "token": 83,
+    "tool_call": 1,
+    "tool_result": 1,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "509369f17c77",
+    "seq": 5,
+    "ts": "2026-10-27T06:49:58.153Z",
+    "t_ms": 3415,
+    "plan_summary": "Identify the approach that stores verbal lessons from failed attempts for reuse without weight updates.",
+    "source": "llm",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Identify the approach described as a language model writing lessons from failed attempts in natural language and reusing them on subsequent attempts without updating weights. Search the indexed papers, check whether this is Reflexion, and provide a concise explanation with a citation to the relevant paper.",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 done",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [
+    {
+      "query": "Reflexion language agents verbal reinforcement learning reflect failures natural language episodic memory without updating weights",
+      "k": 3
+    }
+  ],
+  "retrieved_docs": [
+    "2303.11366v4"
+  ],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 380,
+      "output_tokens": 98,
+      "latency_ms": 3412
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 499,
+      "output_tokens": 40,
+      "latency_ms": 2145
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 1778,
+      "output_tokens": 89,
+      "latency_ms": 2796
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 1409,
+      "output_tokens": 86,
+      "latency_ms": 2092
+    }
+  ],
+  "answer": "The approach is **Reflexion**, introduced in *Reflexion: Language Agents with Verbal Reinforcement Learning*. It learns from feedback without updating model weights. [C2]\n\nAfter a failed attempt, the agent writes a plain-language reflection on what went wrong and what to do differently, stores it in episodic memory, and uses those notes to guide its next attempt. [C2][C3]",
+  "citations": [
+    {
+      "cite_id": "C2",
+      "chunk_id": "2303.11366v4::abstract::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.11366v4",
+      "section": "Abstract",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — Abstract\nLarge language models (LLMs) have been increasingly used to interact with external\nenvironments (e.g., games, compilers, APIs) as goal-driven agents. However, it\nremains challenging for these language agents to quickly and effi"
+    },
+    {
+      "cite_id": "C3",
+      "chunk_id": "2303.11366v4::S3::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2303.11366v4",
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\ntask, when the agent receives a failure signal, it can infer that a specific\naction a_{i} led to subsequent incorrect actions a_{i+1} and a_{i+2} . The\nagent can then verbally state that "
+    }
+  ],
+  "cited_docs": [
+    "2303.11366v4"
+  ],
+  "done": {
+    "request_id": "509369f17c77",
+    "seq": 104,
+    "ts": "2026-10-27T06:50:05.527Z",
+    "t_ms": 10790,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 323,
+      "llm_ms_sum": 10445,
+      "ttft_ms": 9873,
+      "total_ms": 10790
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 4066,
+        "output_tokens": 313,
+        "calls": 4
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 83,
+  "n_distinct_reads_with_tokens": 83,
+  "first_token_client_ms": 9875,
+  "last_token_client_ms": 10782,
+  "first_token_server_ms": 9873,
+  "last_token_server_ms": 10780,
+  "done_client_ms": 10791,
+  "total_client_ms": 10792,
+  "expect_docs": [
+    "2303.11366v4"
+  ],
+  "expect_abstain": false
+}
