@@ -30,7 +30,6 @@ def make_settings(**over) -> Settings:
         openrouter_api_key="",
         openrouter_base_url="http://invalid.local",
         gemini_model="fake-gemini",
-        default_provider="openai",
         embedding_model="text-embedding-3-small",
         chroma_dir=Path("/nonexistent"),
         chroma_collection="none",

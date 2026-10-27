@@ -66,6 +66,9 @@ for f in Dockerfile .dockerignore .gcloudignore requirements.txt app/main.py; do
 done
 [ -f data/chroma_index/chroma.sqlite3 ] || die "no Chroma index in data/chroma_index; run scripts/ingest.py first"
 [ -f data/papers.db ] || die "no data/papers.db; run scripts/ingest.py first"
+# The router needs both generation providers (OpenAI direct + Gemini via OpenRouter).
+grep -Eq '^[[:space:]]*(export[[:space:]]+)?OPENROUTER_API_KEY=.+' "$ENV_FILE" && ! grep -Eq '^[[:space:]]*(export[[:space:]]+)?OPENROUTER_API_KEY=.*REPLACE_ME' "$ENV_FILE" \
+  || die "OPENROUTER_API_KEY missing or placeholder in $ENV_FILE (needed for Gemini routing)"
 for n in "$CONCURRENCY" "$TIMEOUT" "$MIN_INSTANCES" "$MAX_INSTANCES"; do
   case "$n" in ''|*[!0-9]*) die "CONCURRENCY, TIMEOUT, MIN_INSTANCES and MAX_INSTANCES must be integers" ;; esac
 done
@@ -144,15 +147,22 @@ curl -sS -N --max-time 240 -X POST "$URL/api/chat" -H 'content-type: application
   || die "/api/chat request failed"
 python3 - "$SSE" <<'PY' || die "chat smoke test failed"
 import json, sys
-counts, errors, event = {}, [], None
+counts, errors, event, done, failed_calls = {}, [], None, {}, []
 for line in open(sys.argv[1], encoding="utf-8"):
     if line.startswith("event:"):
         event = line[6:].strip()
     elif line.startswith("data:"):
         counts[event] = counts.get(event, 0) + 1
+        data = json.loads(line[5:])
         if event == "error":
-            errors.append(json.loads(line[5:]).get("message_safe", "")[:160])
+            errors.append(data.get("message_safe", "")[:160])
+        elif event == "llm_result" and data.get("status") != "ok":
+            failed_calls.append(f"{data.get('provider')}:{data.get('error_kind')}")
+        elif event == "done":
+            done = data
 print(f"[deploy] /api/chat events: {counts}", file=sys.stderr)
+print(f"[deploy] providers used: {done.get('providers_used')}, fallbacks: {done.get('fallbacks')}, "
+      f"failed LLM attempts: {failed_calls or 'none'}", file=sys.stderr)
 ok = counts.get("token", 0) > 0 and counts.get("citation", 0) > 0 and counts.get("done") == 1 and not errors
 if not ok:
     print(f"[deploy] expected tokens, citations and one done event without errors; errors={errors}", file=sys.stderr)

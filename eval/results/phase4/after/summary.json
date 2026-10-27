@@ -1,0 +1,342 @@
+[
+  {
+    "query": "Why do multi-agent LLM systems fail?",
+    "status": "done",
+    "timings": {
+      "retrieval_ms": 1294,
+      "llm_ms_sum": 19195,
+      "ttft_ms": 15180,
+      "total_ms": 20525
+    },
+    "client_first_token_ms": 15192,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "done",
+        11287
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2201,
+        "in": 349,
+        "out": 89,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.000655,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1621,
+        "in": 547,
+        "out": 27,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.000563,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1419,
+        "in": 2962,
+        "out": 31,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.002572,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1784,
+        "in": 5291,
+        "out": 36,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.004514,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 5148,
+        "in": 7637,
+        "out": 424,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.00805,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 7022,
+        "in": 3939,
+        "out": 694,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.006112,
+        "chunks": 28
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "est_cost_usd": 0.02247,
+    "n_citations": 8,
+    "n_tokens": 28
+  },
+  {
+    "query": "How does Self-RAG decide when to retrieve?",
+    "status": "done",
+    "timings": {
+      "retrieval_ms": 866,
+      "llm_ms_sum": 18274,
+      "ttft_ms": 15867,
+      "total_ms": 19171
+    },
+    "client_first_token_ms": 15870,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "done",
+        11684
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2862,
+        "in": 350,
+        "out": 82,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.000627,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1325,
+        "in": 548,
+        "out": 27,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.000563,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1897,
+        "in": 3758,
+        "out": 32,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.003232,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2143,
+        "in": 6376,
+        "out": 29,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.00538,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 5433,
+        "in": 10041,
+        "out": 376,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.009835,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 4614,
+        "in": 4920,
+        "out": 379,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.005622,
+        "chunks": 16
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "est_cost_usd": 0.02526,
+    "n_citations": 8,
+    "n_tokens": 16
+  },
+  {
+    "query": "Compare how Reflexion and Self-Refine use feedback to improve outputs.",
+    "status": "done",
+    "timings": {
+      "retrieval_ms": 592,
+      "llm_ms_sum": 19431,
+      "ttft_ms": 12746,
+      "total_ms": 20049
+    },
+    "client_first_token_ms": 12749,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "done",
+        8490
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2637,
+        "in": 354,
+        "out": 97,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.000692,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1732,
+        "in": 562,
+        "out": 30,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.000587,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1574,
+        "in": 3325,
+        "out": 34,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.002883,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 4577,
+        "in": 6237,
+        "out": 374,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.006688,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "capability",
+        "status": "ok",
+        "latency_ms": 8911,
+        "in": 5010,
+        "out": 404,
+        "reasoning": 0,
+        "upstream": null,
+        "cost_usd": 0.01406,
+        "chunks": 401
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "gemini-openrouter",
+      "openai"
+    ],
+    "est_cost_usd": 0.02491,
+    "n_citations": 8,
+    "n_tokens": 401
+  }
+]

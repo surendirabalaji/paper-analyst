@@ -1,27 +1,78 @@
-"""Generation-provider router.
+"""Generation-provider router and resilient, traced LLM calls.
 
-Every LLM call goes through `Router.decide()` and is traced as an `llm_route` event (decision) plus
-an `llm_result` event (tokens, latency). Phase 2 has no routing policy yet: every call uses
-DEFAULT_PROVIDER and the rationale says so. Phase 4 replaces `decide()` with the hybrid
-cost/capability policy; the call sites and trace format stay the same.
+Every LLM call goes through `Router.decide()` (the hybrid policy in policy.py) and then through
+`call_llm()` or `stream_llm()`, which add:
+
+- a per-attempt timeout (policy.TIMEOUTS, else LLM_TIMEOUT_S); SDK retries are off so retries are ours;
+- one retry with jittered backoff on transient errors (timeout, 429, 5xx, connection);
+- then a fallback to the other provider (directly for 401/403/404/400), emitted as a separate
+  `fallback` event that names the original decision; a stream falls back only before its first token;
+- an `llm_result` event for every attempt, with status ok / error / cancelled, so a failed or
+  cancelled call never leaves its route without a result.
+
+Trace events: `llm_route` (decision: agent, call site, provider, exact model id, decision inputs,
+dimension, rationale), `llm_retry`, `fallback`, `llm_result` (tokens, reasoning tokens, latency, TTFT,
+OpenRouter upstream provider, estimated and provider-reported cost).
 """
 
 from __future__ import annotations
 
+import asyncio
+import random
 import time
 import uuid
 from dataclasses import asdict, dataclass, field
-from typing import Any
+from typing import Any, Awaitable, Callable
 
+import openai
 from langchain_core.messages import AIMessage, BaseMessage
 from langchain_openai import ChatOpenAI
 
 from app.config import Settings
+from app.events import safe_error
+from app.llm import policy
+from app.llm.policy import GEMINI, OPENAI
 
 PROVIDER_LABELS = {
-    "openai": "OpenAI (direct API)",
-    "gemini-openrouter": "Google Gemini (served through OpenRouter)",
+    OPENAI: "OpenAI (direct API)",
+    GEMINI: "Google Gemini (served through OpenRouter)",
 }
+TRANSIENT = {"timeout", "rate_limit", "provider_unavailable"}
+MAX_TRIES_PER_PROVIDER = 2
+
+
+class OpenRouterChat(ChatOpenAI):
+    """ChatOpenAI against OpenRouter that keeps two fields LangChain drops: the upstream provider that
+    served the call (e.g. "Google AI Studio") and OpenRouter's reported cost. They are attached once per
+    response (on the usage chunk when streaming) because LangChain concatenates string metadata across
+    stream chunks."""
+
+    @staticmethod
+    def _extra(d: dict) -> dict:
+        out = {}
+        if d.get("provider"):
+            out["upstream_provider"] = d["provider"]
+        usage = d.get("usage") or {}
+        cost = usage.get("cost")
+        upstream = (usage.get("cost_details") or {}).get("upstream_inference_cost")
+        if cost:
+            out["reported_cost_usd"] = cost
+        elif upstream:  # BYOK: OpenRouter bills 0 and reports what the upstream provider charges
+            out["reported_cost_usd"] = upstream
+        return out
+
+    def _convert_chunk_to_generation_chunk(self, chunk, default_chunk_class, base_generation_info):
+        g = super()._convert_chunk_to_generation_chunk(chunk, default_chunk_class, base_generation_info)
+        if g is not None and chunk.get("usage"):
+            g.message.response_metadata.update(self._extra(chunk))
+        return g
+
+    def _create_chat_result(self, response, generation_info=None):
+        r = super()._create_chat_result(response, generation_info)
+        d = response if isinstance(response, dict) else response.model_dump()
+        for g in r.generations:
+            g.message.response_metadata.update(self._extra(d))
+        return r
 
 
 @dataclass
@@ -33,12 +84,24 @@ class RouteDecision:
     dimension: str
     rationale: str
     features: dict[str, Any] = field(default_factory=dict)
+    reasoning_effort: str | None = None
+    timeout_s: float = 60.0
+    price_checked: str | None = None
     decision_id: str = field(default_factory=lambda: uuid.uuid4().hex[:8])
 
     def public(self) -> dict[str, Any]:
         d = asdict(self)
         d["provider_label"] = PROVIDER_LABELS.get(self.provider, self.provider)
         return d
+
+
+class ProviderCallError(Exception):
+    """An LLM attempt failed with a provider-side error; `kind` drives retry/fallback."""
+
+    def __init__(self, kind: str, original: BaseException):
+        super().__init__(str(original))
+        self.kind = kind
+        self.original = original
 
 
 def text_of(content: Any) -> str:
@@ -52,7 +115,43 @@ def text_of(content: Any) -> str:
 
 def usage_of(msg: BaseMessage | None) -> dict[str, int]:
     u = getattr(msg, "usage_metadata", None) or {}
-    return {"input_tokens": int(u.get("input_tokens", 0)), "output_tokens": int(u.get("output_tokens", 0))}
+    out_d = u.get("output_token_details") or {}
+    in_d = u.get("input_token_details") or {}
+    return {
+        "input_tokens": int(u.get("input_tokens", 0)),
+        "output_tokens": int(u.get("output_tokens", 0)),
+        "reasoning_tokens": int(out_d.get("reasoning") or 0),
+        "cached_input_tokens": int(in_d.get("cache_read") or 0),
+    }
+
+
+def _model_returned(meta: dict) -> str | None:
+    name = meta.get("model_name")
+    if isinstance(name, str) and len(name) % 2 == 0 and name[: len(name) // 2] * 2 == name:
+        return name[: len(name) // 2]  # merged stream chunks repeat the name once per carrying chunk
+    return name
+
+
+def classify_error(e: BaseException) -> str:
+    if isinstance(e, ProviderCallError):
+        return e.kind
+    if isinstance(e, (asyncio.TimeoutError, TimeoutError, openai.APITimeoutError)):
+        return "timeout"
+    if isinstance(e, openai.RateLimitError):
+        return "rate_limit"
+    if isinstance(e, (openai.APIConnectionError, openai.InternalServerError)):
+        return "provider_unavailable"
+    if isinstance(e, (openai.AuthenticationError, openai.PermissionDeniedError, openai.NotFoundError)):
+        return "auth_or_config"
+    if isinstance(e, openai.BadRequestError):
+        return "bad_request"
+    if isinstance(e, openai.APIStatusError):
+        return "provider_unavailable" if getattr(e, "status_code", 0) >= 500 else "provider_error"
+    return "worker_error"
+
+
+def is_provider_error(e: BaseException) -> bool:
+    return isinstance(e, (asyncio.TimeoutError, TimeoutError, openai.APIError))
 
 
 class Router:
@@ -61,67 +160,198 @@ class Router:
         self._clients: dict[str, ChatOpenAI] = {}
 
     def model_id(self, provider: str) -> str:
-        return self.settings.openai_model if provider == "openai" else self.settings.gemini_model
+        return self.settings.openai_model if provider == OPENAI else self.settings.gemini_model
+
+    def reasoning_effort(self, provider: str) -> str | None:
+        s = self.settings
+        return (s.openai_reasoning_effort if provider == OPENAI else s.gemini_reasoning_effort) or None
 
     def client(self, provider: str) -> ChatOpenAI:
         if provider not in self._clients:
             s = self.settings
-            common = dict(stream_usage=True, timeout=s.llm_timeout_s, max_retries=1)
-            if provider == "openai":
-                self._clients[provider] = ChatOpenAI(model=s.openai_model, api_key=s.openai_api_key, **common)
-            elif provider == "gemini-openrouter":
-                self._clients[provider] = ChatOpenAI(
-                    model=s.gemini_model,
-                    base_url=s.openrouter_base_url,
-                    api_key=s.openrouter_api_key,
-                    extra_body={"usage": {"include": True}},
-                    **common,
+            effort = self.reasoning_effort(provider)
+            common = dict(stream_usage=True, timeout=s.llm_timeout_s, max_retries=0)  # retries are ours
+            if provider == OPENAI:
+                kw = {"reasoning_effort": effort} if effort else {}
+                self._clients[provider] = ChatOpenAI(model=s.openai_model, api_key=s.openai_api_key, **common, **kw)
+            elif provider == GEMINI:
+                body: dict[str, Any] = {"usage": {"include": True}}
+                if effort:  # Gemini 3.8 cannot disable reasoning; low/minimal effort keeps it near zero
+                    body["reasoning"] = {"effort": effort}
+                self._clients[provider] = OpenRouterChat(
+                    model=s.gemini_model, base_url=s.openrouter_base_url, api_key=s.openrouter_api_key,
+                    extra_body=body, **common,
                 )
             else:
                 raise ValueError(f"unknown provider {provider!r}")
         return self._clients[provider]
 
-    def decide(self, call_site: str, agent: str, features: dict[str, Any] | None = None) -> RouteDecision:
-        provider = self.settings.default_provider
+    def _decision(self, call_site: str, agent: str, choice: policy.Choice, features: dict) -> RouteDecision:
+        model = self.model_id(choice.provider)
         return RouteDecision(
             call_site=call_site,
             agent=agent,
-            provider=provider,
-            model_id=self.model_id(provider),
-            dimension="fixed default",
-            rationale="Phase 2 build: every call uses the configured default provider; "
-            "cost/capability routing is not implemented yet.",
-            features=features or {},
+            provider=choice.provider,
+            model_id=model,
+            dimension=choice.dimension,
+            rationale=choice.rationale,
+            features=features,
+            reasoning_effort=self.reasoning_effort(choice.provider),
+            timeout_s=policy.TIMEOUTS.get(call_site, self.settings.llm_timeout_s),
+            price_checked=(policy.PRICES.get(model) or {}).get("checked"),
         )
 
+    def decide(self, call_site: str, agent: str, features: dict[str, Any] | None = None,
+               failed: dict[str, str] | None = None) -> RouteDecision:
+        features = dict(features or {})
+        choice = policy.choose(call_site, features, failed=failed, force=self.settings.router_force_provider)
+        return self._decision(call_site, agent, choice, features)
 
-async def traced_invoke(ctx, decision: RouteDecision, runnable, inputs) -> Any:
-    """Invoke a runnable built on the decision's client and trace it. Returns the runnable's output."""
-    ctx.emitter.emit("llm_route", **decision.public())
-    t0 = time.perf_counter()
-    out = await runnable.ainvoke(inputs)
-    raw = out.get("raw") if isinstance(out, dict) else out
-    record_llm_result(ctx, decision, raw if isinstance(raw, AIMessage) else None, t0)
-    return out
+    def fallback_decision(self, original: RouteDecision, error_kind: str) -> RouteDecision:
+        to = policy.other(original.provider)
+        choice = policy.Choice(to, "availability fallback",
+                               f"{original.provider} failed ({error_kind}); retrying this call on {to}.")
+        return self._decision(original.call_site, original.agent, choice, original.features)
 
 
-def record_llm_result(ctx, decision: RouteDecision, msg: BaseMessage | None, t0: float, ttft_ms: int | None = None):
+# ---------------------------------------------------------------- traced calls
+
+
+def record_llm_result(ctx, decision: RouteDecision, msg: BaseMessage | None, t0: float, *, status: str = "ok",
+                      attempt: int = 1, ttft_ms: int | None = None, error_kind: str | None = None,
+                      error: str | None = None, stream_stats: dict | None = None) -> None:
     latency_ms = int((time.perf_counter() - t0) * 1000)
     usage = usage_of(msg)
+    meta = (getattr(msg, "response_metadata", None) or {}) if msg is not None else {}
+    est = policy.estimate_cost(decision.model_id, usage["input_tokens"], usage["output_tokens"],
+                               usage["cached_input_tokens"]) if msg is not None else None
+    # Prefer what the provider reports (OpenRouter returns a per-call cost); otherwise our dated estimate.
+    reported = meta.get("reported_cost_usd")
+    cost, cost_source = (reported, "reported") if reported is not None else (est, "estimated" if est is not None else None)
     ctx.llm_ms_sum += latency_ms
-    tb = ctx.tokens_by_provider.setdefault(decision.provider, {"input_tokens": 0, "output_tokens": 0, "calls": 0})
+    tb = ctx.tokens_by_provider.setdefault(
+        decision.provider, {"input_tokens": 0, "output_tokens": 0, "calls": 0, "errors": 0, "cost_usd": 0.0})
     tb["input_tokens"] += usage["input_tokens"]
     tb["output_tokens"] += usage["output_tokens"]
     tb["calls"] += 1
-    model_returned = (getattr(msg, "response_metadata", None) or {}).get("model_name")
+    if status != "ok":
+        tb["errors"] += 1
+    if cost:
+        tb["cost_usd"] = round(tb["cost_usd"] + cost, 6)
+        ctx.cost_basis[cost_source] = ctx.cost_basis.get(cost_source, 0) + 1
     ctx.emitter.emit(
         "llm_result",
         decision_id=decision.decision_id,
         agent=decision.agent,
         call_site=decision.call_site,
         provider=decision.provider,
-        model_returned=model_returned,
+        model_id=decision.model_id,
+        model_returned=_model_returned(meta),
+        upstream_provider=meta.get("upstream_provider"),
+        status=status,
+        attempt=attempt,
+        error_kind=error_kind,
+        error=error,
         latency_ms=latency_ms,
         ttft_ms=ttft_ms,
+        cost_usd=cost,
+        cost_source=cost_source,
+        est_cost_usd=est,
+        reported_cost_usd=reported,
         **usage,
+        **(stream_stats or {}),
     )
+
+
+async def _resilient(ctx, decision: RouteDecision, attempt_fn: Callable[[RouteDecision, int], Awaitable[Any]]) -> Any:
+    """Run attempt_fn under the retry/fallback policy. attempt_fn records its own llm_result and raises
+    ProviderCallError for provider-side failures (anything else propagates unchanged)."""
+    ctx.emitter.emit("llm_route", **decision.public())
+    current, tries, n = decision, 0, 0
+    while True:
+        tries += 1
+        n += 1
+        try:
+            return await attempt_fn(current, n)
+        except ProviderCallError as pe:
+            if pe.kind in TRANSIENT and tries < MAX_TRIES_PER_PROVIDER and ctx.remaining_s() > 5:
+                delay = round(min(4.0, 0.5 * 2 ** (tries - 1)) * random.uniform(0.7, 1.3), 2)
+                ctx.emitter.emit("llm_retry", decision_id=current.decision_id, agent=current.agent,
+                                 call_site=current.call_site, provider=current.provider, error_kind=pe.kind,
+                                 next_attempt=n + 1, backoff_s=delay)
+                await asyncio.sleep(delay)
+                continue
+            ctx.failed_providers[current.provider] = pe.kind
+            if current is decision and ctx.settings.fallback_enabled and ctx.remaining_s() > 5:
+                fb = ctx.router.fallback_decision(decision, pe.kind)
+                ctx.fallbacks += 1
+                ctx.emitter.emit("fallback", original_decision_id=decision.decision_id,
+                                 from_provider=decision.provider, to_provider=fb.provider, error_kind=pe.kind,
+                                 attempts_on_original=tries, **fb.public())
+                current, tries = fb, 0
+                continue
+            raise pe.original
+
+
+async def call_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], inputs: Any) -> Any:
+    """Non-streaming routed call. `build(client)` returns the runnable for whichever provider is used
+    (so a fallback rebuilds the same chain on the other provider). Returns the runnable's output."""
+
+    async def attempt(dec: RouteDecision, n: int) -> Any:
+        t0 = time.perf_counter()
+        try:
+            out = await asyncio.wait_for(build(ctx.router.client(dec.provider)).ainvoke(inputs), dec.timeout_s)
+        except asyncio.CancelledError:
+            record_llm_result(ctx, dec, None, t0, status="cancelled", attempt=n)
+            raise
+        except Exception as e:
+            kind = classify_error(e)
+            record_llm_result(ctx, dec, None, t0, status="error", attempt=n, error_kind=kind, error=safe_error(e))
+            if is_provider_error(e):
+                raise ProviderCallError(kind, e) from e
+            raise
+        raw = out.get("raw") if isinstance(out, dict) else out
+        record_llm_result(ctx, dec, raw if isinstance(raw, AIMessage) else None, t0, attempt=n)
+        return out
+
+    return await _resilient(ctx, decision, attempt)
+
+
+async def stream_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], inputs: Any,
+                     on_delta: Callable[[str], None]) -> str:
+    """Streaming routed call: forwards each text delta to on_delta as it arrives and returns the full
+    text. Retry/fallback only happen before the first delta; a failure mid-stream is raised."""
+
+    async def attempt(dec: RouteDecision, n: int) -> str:
+        t0 = time.perf_counter()
+        first_ms, gathered, parts, chunks, max_gap, last = None, None, [], 0, 0, None
+        try:
+            async with asyncio.timeout(dec.timeout_s):
+                async for chunk in build(ctx.router.client(dec.provider)).astream(inputs):
+                    gathered = chunk if gathered is None else gathered + chunk
+                    delta = text_of(chunk.content)
+                    if delta:
+                        now = time.perf_counter()
+                        if first_ms is None:
+                            first_ms = int((now - t0) * 1000)
+                        else:
+                            max_gap = max(max_gap, int((now - last) * 1000))
+                        last = now
+                        chunks += 1
+                        parts.append(delta)
+                        on_delta(delta)
+        except asyncio.CancelledError:
+            record_llm_result(ctx, dec, gathered, t0, status="cancelled", attempt=n, ttft_ms=first_ms)
+            raise
+        except Exception as e:
+            kind = classify_error(e)
+            record_llm_result(ctx, dec, gathered, t0, status="error", attempt=n, ttft_ms=first_ms,
+                              error_kind=kind, error=safe_error(e), stream_stats={"stream_chunks": chunks})
+            if is_provider_error(e) and not parts:
+                raise ProviderCallError(kind, e) from e
+            raise
+        record_llm_result(ctx, dec, gathered, t0, attempt=n, ttft_ms=first_ms,
+                          stream_stats={"stream_chunks": chunks, "max_chunk_gap_ms": max_gap})
+        return "".join(parts)
+
+    return await _resilient(ctx, decision, attempt)

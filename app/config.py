@@ -26,7 +26,6 @@ class Settings:
     openrouter_api_key: str
     openrouter_base_url: str
     gemini_model: str
-    default_provider: str  # Phase 2: every call uses this provider; the router arrives in Phase 4
     embedding_model: str
     chroma_dir: Path
     chroma_collection: str
@@ -36,6 +35,11 @@ class Settings:
     worker_timeout_s: float
     request_budget_s: float
     llm_timeout_s: float
+    # Routing (Phase 4). Defaults keep the dataclass constructible in tests.
+    gemini_reasoning_effort: str = "low"  # OpenRouter reasoning effort; Gemini 3.8 cannot disable reasoning
+    openai_reasoning_effort: str = ""  # empty = model default (the capability side keeps its reasoning)
+    router_force_provider: str = ""  # evaluation-only override: "openai" or "gemini-openrouter"
+    fallback_enabled: bool = True
 
 
 def load_settings() -> Settings:
@@ -47,7 +51,6 @@ def load_settings() -> Settings:
         openrouter_api_key=env("OPENROUTER_API_KEY", ""),
         openrouter_base_url=env("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
         gemini_model=env("GEMINI_MODEL", "google/gemini-3.8-flash"),
-        default_provider=env("DEFAULT_PROVIDER", "openai"),
         embedding_model=env("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
         chroma_dir=_path(env("CHROMA_PERSIST_DIR", "./data/chroma_index")),
         chroma_collection=env("CHROMA_COLLECTION", "arxiv_agents"),
@@ -57,4 +60,8 @@ def load_settings() -> Settings:
         worker_timeout_s=float(env("WORKER_TIMEOUT_S", "45")),
         request_budget_s=float(env("REQUEST_BUDGET_S", "120")),
         llm_timeout_s=float(env("LLM_TIMEOUT_S", "60")),
+        gemini_reasoning_effort=env("GEMINI_REASONING_EFFORT", "low"),
+        openai_reasoning_effort=env("OPENAI_REASONING_EFFORT", ""),
+        router_force_provider=env("ROUTER_FORCE_PROVIDER", ""),
+        fallback_enabled=env("LLM_FALLBACK", "1") != "0",
     )

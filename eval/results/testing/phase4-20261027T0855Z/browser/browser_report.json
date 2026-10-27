@@ -1,0 +1,258 @@
+{
+  "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+  "started_utc": "2026-10-27T09:01:08Z",
+  "turns": [
+    {
+      "query": "What is the core idea of HyDE for zero-shot dense retrieval?",
+      "n_samples": 71,
+      "distinct_answer_lengths_while_streaming": 14,
+      "answer_len_final": 1618,
+      "routing_line": "Routing: planner → Gemini (cost) · research → Gemini ×2 (cost) · synthesizer → Gemini (cost)",
+      "ui_rows": [
+        {
+          "cls": "",
+          "cells": [
+            "#1",
+            "planner / planner",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Short structured planning (JSON task list); the low-cost model is sufficient.\ninputs: query_chars=60, comparison=false",
+            "354→85 tok · 2564 ms · $0.00064\nserved by Google AI Studio"
+          ]
+        },
+        {
+          "cls": "",
+          "cells": [
+            "#1",
+            "research / worker_tool_loop",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.\ninputs: round=1, tool_calls_so_far=0, context_tokens_est=423, comparison=false",
+            "546→30 tok · 2394 ms · $0.00057\nserved by Google AI Studio"
+          ]
+        },
+        {
+          "cls": "",
+          "cells": [
+            "#1",
+            "research / worker_tool_loop",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.\ninputs: round=2, tool_calls_so_far=1, context_tokens_est=2851, comparison=false",
+            "3193→309 tok · 3973 ms · $0.0039\nserved by Google AI Studio"
+          ]
+        },
+        {
+          "cls": "",
+          "cells": [
+            "#1",
+            "synthesizer / synthesize",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Grounded answer from 1 paper and one worker result; the low-cost model is sufficient.\ninputs: n_tasks=1, n_tasks_ok=1, n_evidence=4, n_papers=1, evidence_tokens_est=1672, comparison=false, statuses=done",
+            "2670→346 tok · 4653 ms · TTFT 2044 ms · $0.0036\nserved by Google AI Studio"
+          ]
+        }
+      ],
+      "sse_routes": [
+        {
+          "agent": "planner",
+          "call_site": "planner",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+        },
+        {
+          "agent": "research",
+          "call_site": "worker_tool_loop",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+        },
+        {
+          "agent": "research",
+          "call_site": "worker_tool_loop",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+        },
+        {
+          "agent": "synthesizer",
+          "call_site": "synthesize",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Grounded answer from 1 paper and one worker result; the low-cost model is sufficient."
+        }
+      ],
+      "ui_matches_sse": true,
+      "done": {
+        "request_id": "dd8ae9b7ffe3",
+        "seq": 37,
+        "ts": "2026-10-27T09:01:25.438Z",
+        "t_ms": 13938,
+        "status": "done",
+        "plan_source": "llm",
+        "unresolved_citations": [],
+        "timings": {
+          "retrieval_ms": 335,
+          "llm_ms_sum": 13584,
+          "ttft_ms": 11327,
+          "total_ms": 13938
+        },
+        "tokens_by_provider": {
+          "gemini-openrouter": {
+            "input_tokens": 6763,
+            "output_tokens": 770,
+            "calls": 4,
+            "errors": 0,
+            "est_cost_usd": 0.008756
+          }
+        },
+        "providers_used": [
+          "gemini-openrouter"
+        ],
+        "fallbacks": 0,
+        "est_cost_usd": 0.008756
+      }
+    },
+    {
+      "query": "How do Corrective RAG and Self-RAG differ in how they handle poor retrieval results?",
+      "n_samples": 90,
+      "distinct_answer_lengths_while_streaming": 26,
+      "answer_len_final": 1262,
+      "routing_line": "Routing: planner → Gemini (cost) · research → Gemini ×3 (cost) · synthesizer → OpenAI (capability)",
+      "ui_rows": [
+        {
+          "cls": "",
+          "cells": [
+            "#2",
+            "planner / planner",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Short structured planning (JSON task list); the low-cost model is sufficient.\ninputs: query_chars=84, comparison=true",
+            "359→95 tok · 2252 ms · $0.00069\nserved by Google AI Studio"
+          ]
+        },
+        {
+          "cls": "",
+          "cells": [
+            "#2",
+            "research / worker_tool_loop",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.\ninputs: round=1, tool_calls_so_far=0, context_tokens_est=448, comparison=true",
+            "563→27 tok · 1976 ms · $0.00058\nserved by Google AI Studio"
+          ]
+        },
+        {
+          "cls": "",
+          "cells": [
+            "#2",
+            "research / worker_tool_loop",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.\ninputs: round=2, tool_calls_so_far=1, context_tokens_est=3181, comparison=true",
+            "3104→32 tok · 2053 ms · $0.0027\nserved by Google AI Studio"
+          ]
+        },
+        {
+          "cls": "",
+          "cells": [
+            "#2",
+            "research / worker_tool_loop",
+            "Google Gemini (served through OpenRouter) · google/gemini-3.8-flash\nreasoning effort: low",
+            "cost: Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.\ninputs: round=3, tool_calls_so_far=2, context_tokens_est=5665, comparison=true",
+            "5679→308 tok · 4831 ms · $0.0060\nserved by Google AI Studio"
+          ]
+        },
+        {
+          "cls": "",
+          "cells": [
+            "#2",
+            "synthesizer / synthesize",
+            "OpenAI (direct API) · gpt-6.1-sol",
+            "capability: Multi-source synthesis needs the stronger model: comparison question across papers.\ninputs: n_tasks=1, n_tasks_ok=1, n_evidence=7, n_papers=2, evidence_tokens_est=3244, comparison=true, statuses=done",
+            "3968→270 tok · 6311 ms · TTFT 1416 ms · $0.0106"
+          ]
+        }
+      ],
+      "sse_routes": [
+        {
+          "agent": "planner",
+          "call_site": "planner",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+        },
+        {
+          "agent": "research",
+          "call_site": "worker_tool_loop",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+        },
+        {
+          "agent": "research",
+          "call_site": "worker_tool_loop",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+        },
+        {
+          "agent": "research",
+          "call_site": "worker_tool_loop",
+          "provider": "gemini-openrouter",
+          "model_id": "google/gemini-3.8-flash",
+          "dimension": "cost",
+          "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+        },
+        {
+          "agent": "synthesizer",
+          "call_site": "synthesize",
+          "provider": "openai",
+          "model_id": "gpt-6.1-sol",
+          "dimension": "capability",
+          "rationale": "Multi-source synthesis needs the stronger model: comparison question across papers."
+        }
+      ],
+      "ui_matches_sse": true,
+      "done": {
+        "request_id": "1525dcae7c4b",
+        "seq": 296,
+        "ts": "2026-10-27T09:01:44.234Z",
+        "t_ms": 17961,
+        "status": "done",
+        "plan_source": "llm",
+        "unresolved_citations": [],
+        "timings": {
+          "retrieval_ms": 515,
+          "llm_ms_sum": 17423,
+          "ttft_ms": 13064,
+          "total_ms": 17961
+        },
+        "tokens_by_provider": {
+          "gemini-openrouter": {
+            "input_tokens": 9705,
+            "output_tokens": 462,
+            "calls": 4,
+            "errors": 0,
+            "est_cost_usd": 0.009913
+          },
+          "openai": {
+            "input_tokens": 3968,
+            "output_tokens": 270,
+            "calls": 1,
+            "errors": 0,
+            "est_cost_usd": 0.010636
+          }
+        },
+        "providers_used": [
+          "gemini-openrouter",
+          "openai"
+        ],
+        "fallbacks": 0,
+        "est_cost_usd": 0.020549
+      }
+    }
+  ]
+}

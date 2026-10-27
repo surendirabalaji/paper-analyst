@@ -21,6 +21,8 @@ A multi-agent system for CSCI 599 Assignment 2. It answers questions about a cor
 | Vector store | Chroma (embedded, baked into the image) | |
 | Hosting | Google Cloud Run | |
 
+**Routing.** Each LLM call is routed in code by a hybrid cost/capability policy (`app/llm/policy.py`). Planning, tool-loop and simple single-source synthesis calls go to Gemini (cost). Synthesis that reconciles several papers or worker results, or answers a comparison question, goes to OpenAI (capability). On a provider error the call is retried once (transient errors only) and then falls back to the other provider, traced as a separate `fallback` event. Every decision appears in the UI's Routing tab and in a one-line summary under each answer. Full table: [docs/architecture.md §6](docs/architecture.md). Routing settings in `.env`: `GEMINI_REASONING_EFFORT` (default `low`), `OPENAI_REASONING_EFFORT` (empty = model default), `LLM_FALLBACK` (1), `LLM_TIMEOUT_S` (60). `ROUTER_FORCE_PROVIDER` is for evaluation runs only and is not deployed.
+
 ## Local setup
 
 ```bash
@@ -54,7 +56,7 @@ The corpus is defined by `data/corpus_seed.json` (committed list of arXiv IDs, t
 
 ## Run locally
 
-Needs the built index (`data/chroma_index`, see above) and `.env` with at least `OPENAI_API_KEY`.
+Needs the built index (`data/chroma_index`, see above) and `.env` with `OPENAI_API_KEY` and `OPENROUTER_API_KEY` (the router uses both providers).
 
 ```bash
 .venv/bin/uvicorn app.main:app --port 8080
@@ -80,7 +82,7 @@ The image (multi-stage `python:3.13-slim`) installs the pinned requirements into
 
 ## Deploy to a fresh GCP project
 
-Prerequisites: the [gcloud CLI](https://cloud.google.com/sdk/docs/install), a GCP project with billing enabled (or credits), the built index in `data/` (see *Corpus ingestion*), and a filled-in `.env` (at least `OPENAI_API_KEY`; `OPENROUTER_API_KEY` and `TAVILY_API_KEY` are used from Phases 4 and 5).
+Prerequisites: the [gcloud CLI](https://cloud.google.com/sdk/docs/install), a GCP project with billing enabled (or credits), the built index in `data/` (see *Corpus ingestion*), and a filled-in `.env` (`OPENAI_API_KEY` and `OPENROUTER_API_KEY` are required; `TAVILY_API_KEY` is used from Phase 5).
 
 ```bash
 # 1. Authenticate and pick the project
@@ -106,7 +108,7 @@ GCP_PROJECT_ID=YOUR_PROJECT_ID scripts/deploy.sh --dry-run  # print the commands
 
 Overrides (environment variables): `GCP_REGION` (default `us-west1`), `CLOUD_RUN_SERVICE` (`paper-analyst`), `AR_REPO` (`paper-analyst`), `ENV_FILE` (`.env`), `MEMORY`, `CPU`, `CONCURRENCY`, `TIMEOUT`, `MIN_INSTANCES`, `MAX_INSTANCES`.
 
-Credentials end up as Cloud Run environment variables on the service (visible to project members with Cloud Run access), not in the image or the repo. To rotate a key, edit `.env` and rerun the script.
+Credentials end up as plain Cloud Run environment variables on the service, not in the image or the repo. Project members with Cloud Run access can read them, and they also appear in the Cloud Audit Log entries for each deploy. Secret Manager was considered (tester note P3-N1); the student accepted plain env vars for this project on 2026-10-27. To rotate a key, edit `.env` and rerun the script.
 
 Time a deployed instance from the client (health, TTFT, total): `.venv/bin/python scripts/probe_remote.py https://YOUR-SERVICE-URL`.
 
@@ -116,4 +118,12 @@ Time a deployed instance from the client (health, TTFT, total): `.venv/bin/pytho
 
 ## Cost and access (dated)
 
-*TBD.* Prices are verified on each provider's pricing page and dated here before submission.
+Generation prices, checked **2026-10-27** (per 1M tokens, input / output). Re-check before submission:
+
+| Model | Price | Source |
+|---|---|---|
+| `gpt-6.1-sol` (OpenAI direct) | $2.00 / $10.00 (cached input $0.10; long context over 272k tokens $4.00 / $15.00) | [OpenAI API pricing](https://developers.openai.com/api/docs/pricing), standard tier |
+| `google/gemini-3.8-flash` (via OpenRouter, BYOK) | **$1.50 / $7.50** used for costing (reasoning tokens billed as output) | OpenRouter's reported per-call upstream cost matches this exactly. [Google's pricing page](https://ai.google.dev/gemini-api/docs/pricing) lists it as the standard rate from 2027-01-01 and $0.75 / $3.75 through 2026-12-31. The [OpenRouter catalog](https://openrouter.ai/api/v1/models) lists $0.825 / $4.125, which does not apply to BYOK calls. We use the conservative reported rate until a Google bill confirms which applies. |
+| `text-embedding-3-small` | $0.02 (input only) | OpenAI model page, checked 2026-10-26 |
+
+Access: an OpenAI API key and an OpenRouter API key. In this deployment, OpenRouter calls Google with the student's own key (BYOK), so OpenRouter reports $0 and the upstream cost is billed by Google. Each call's cost is shown in the Routing tab: OpenRouter's reported cost for Gemini calls ("reported"), and an estimate from the dated price table for OpenAI calls ("est."), because OpenAI returns no per-call cost. After the P4-D1 price fix, a typical question measured on 2026-10-27 cost about $0.02–0.04. Cloud Run costs are covered by GCP credits; LLM APIs bill separately. Full cost and latency numbers: Phase 9 (`docs/evaluation.md`).

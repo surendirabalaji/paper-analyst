@@ -101,6 +101,25 @@ function traceItem(turn, badge, text, kind = "") {
   li.scrollIntoView({ block: "nearest" });
 }
 
+const SHORT = { openai: "OpenAI", "gemini-openrouter": "Gemini" };
+const fmtCost = (c, src) => (c == null ? "" : ` · $${c < 0.001 ? c.toFixed(5) : c.toFixed(4)}` +
+  (src === "estimated" ? " (est.)" : src === "reported" ? " (reported)" : ""));
+const fmtInputs = (f) => Object.entries(f || {})
+  .map(([k, v]) => `${k}=${Array.isArray(v) ? v.join("/") : v}`).join(", ");
+
+// One Routing-tab row per decision (original or fallback); the result cell is filled by llm_result.
+function routeRow(turn, d, kind) {
+  const tr = el("tr", kind);
+  const why = el("td");
+  why.append(el("strong", "", `${d.dimension}: `), document.createTextNode(d.rationale));
+  if (d.features && Object.keys(d.features).length) why.append(el("div", "muted", `inputs: ${fmtInputs(d.features)}`));
+  const prov = el("td", "", `${d.provider_label} · ${d.model_id}`);
+  if (d.reasoning_effort) prov.append(el("div", "muted", `reasoning effort: ${d.reasoning_effort}`));
+  tr.append(el("td", "", `#${turn}`), el("td", "", `${d.agent} / ${d.call_site}`), prov, why, el("td", "", "…"));
+  $("routing-rows").append(tr);
+  return tr;
+}
+
 const statusKind = (s) => (s === "done" || s === "ok" ? "ok" : s === "partial" || s === "skipped" ? "warn" : "bad");
 
 // ---------------------------------------------------------------- one turn
@@ -115,6 +134,26 @@ async function ask(query) {
 
   const registry = new Map();
   const routes = new Map();
+  const picks = []; // per-turn routing summary: [{agent, provider, dimension, fallback}]
+  const routeLine = el("div", "routing-line");
+  box.append(routeLine);
+  const paintRouting = () => {
+    const groups = [];
+    for (const p of picks) {
+      const last = groups[groups.length - 1];
+      const key = `${p.agent}|${p.provider}|${p.dimension}|${p.fallback}`;
+      if (last && last.key === key) last.n++;
+      else groups.push({ key, ...p, n: 1 });
+    }
+    routeLine.textContent = "Routing: " + groups.map((g) =>
+      `${g.agent} → ${SHORT[g.provider] || g.provider}${g.n > 1 ? ` ×${g.n}` : ""} (${g.dimension})` +
+      (g.fallback ? " ↪ fallback" : "")).join(" · ");
+  };
+  const head = el("tr", "turn-head");
+  const th = el("td", "", `Turn #${turn}: ${query}`);
+  th.colSpan = 5;
+  head.append(th);
+  $("routing-rows").append(head);
   let text = "";
   let gotDone = false;
   let pending = false;
@@ -138,17 +177,32 @@ async function ask(query) {
       if (d.to !== "supervisor") status.textContent = `${d.to}…`;
     },
     llm_route: (d) => {
-      const tr = el("tr");
-      tr.append(el("td", "", `#${turn}`), el("td", "", `${d.agent} / ${d.call_site}`),
-        el("td", "", `${d.provider_label} · ${d.model_id}`), el("td", "", `${d.dimension}: ${d.rationale}`),
-        el("td", "", "…"));
-      $("routing-rows").append(tr);
-      routes.set(d.decision_id, tr);
+      routes.set(d.decision_id, routeRow(turn, d, ""));
+      picks.push({ agent: d.agent, provider: d.provider, dimension: d.dimension, fallback: false });
+      paintRouting();
+    },
+    llm_retry: (d) => {
+      traceItem(turn, "retry", ` ${d.agent} ${d.call_site} on ${d.provider}: ${d.error_kind}, retrying in ${d.backoff_s}s`, "warn");
+    },
+    fallback: (d) => {
+      routes.set(d.decision_id, routeRow(turn, d, "fallback"));
+      picks.push({ agent: d.agent, provider: d.provider, dimension: "fallback", fallback: true });
+      paintRouting();
+      traceItem(turn, "fallback", ` ${d.agent} ${d.call_site}: ${d.from_provider} failed (${d.error_kind}) → ${d.to_provider}`, "warn");
     },
     llm_result: (d) => {
       const tr = routes.get(d.decision_id);
-      if (tr) tr.lastChild.textContent = `${d.input_tokens}→${d.output_tokens} · ${d.latency_ms} ms` +
-        (d.ttft_ms != null ? ` (TTFT ${d.ttft_ms})` : "");
+      if (!tr) return;
+      const cell = tr.lastChild;
+      const line = el("div", d.status === "ok" ? "" : `res-${statusKind(d.status)}`,
+        (d.attempt > 1 ? `try ${d.attempt}: ` : "") +
+        (d.status === "ok"
+          ? `${d.input_tokens}→${d.output_tokens} tok` + (d.reasoning_tokens ? ` (${d.reasoning_tokens} reasoning)` : "") +
+            ` · ${d.latency_ms} ms` + (d.ttft_ms != null ? ` · TTFT ${d.ttft_ms} ms` : "") + fmtCost(d.cost_usd, d.cost_source)
+          : `${d.status}${d.error_kind ? ` (${d.error_kind})` : ""} after ${d.latency_ms} ms`));
+      if (d.upstream_provider) line.append(el("div", "muted", `served by ${d.upstream_provider}`));
+      if (cell.textContent === "…") cell.replaceChildren();
+      cell.append(line);
     },
     tool_call: (d) => traceItem(turn, d.agent, ` calls ${d.tool}(${JSON.stringify(d.args_safe)})`),
     tool_result: (d) => traceItem(turn, d.agent, ` ${d.tool} → ${d.status}` +
@@ -178,7 +232,9 @@ async function ask(query) {
     done: (d) => {
       gotDone = true;
       const t = d.timings;
-      const tok = Object.entries(d.tokens_by_provider).map(([p, v]) => `${p} ${v.calls} calls, ${v.input_tokens}→${v.output_tokens} tok`).join("; ");
+      const tok = Object.entries(d.tokens_by_provider).map(([p, v]) => `${SHORT[p] || p} ${v.calls} calls, ${v.input_tokens}→${v.output_tokens} tok`).join("; ") +
+        (d.cost_usd != null ? ` · cost $${d.cost_usd.toFixed(4)}` +
+          (d.cost_basis && d.cost_basis.estimated ? ` (${d.cost_basis.estimated} call(s) estimated)` : "") : "") + (d.fallbacks ? ` · ${d.fallbacks} fallback(s)` : "");
       status.textContent = `${d.status} · TTFT ${t.ttft_ms ?? "–"} ms · total ${t.total_ms} ms · retrieval ${t.retrieval_ms} ms · ${tok}` +
         (d.unresolved_citations.length ? ` · unresolved: ${d.unresolved_citations.join(" ")}` : "");
       if (d.status !== "done") status.classList.add("error");

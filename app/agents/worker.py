@@ -15,7 +15,8 @@ from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage, To
 from langchain_core.tools import BaseTool
 
 from app.context import RequestContext
-from app.llm.router import text_of, traced_invoke
+from app.llm.policy import approx_tokens, comparison_cue
+from app.llm.router import call_llm, text_of
 
 MAX_CALLS_PER_ROUND = 3
 MAX_CALLS_PER_TASK = 4
@@ -50,10 +51,9 @@ async def run_tool_loop(
 
     for rnd in range(1, max_rounds + 1):
         out.rounds = rnd
-        decision = ctx.router.decide("worker_tool_loop", agent, {"round": rnd, "tool_calls_so_far": out.tool_calls})
+        decision = ctx.route("worker_tool_loop", agent, _loop_features(ctx, messages, rnd, out))
         choice = "required" if (rnd == 1 and require_first_tool) else "auto"
-        llm = ctx.router.client(decision.provider).bind_tools(tools, tool_choice=choice)
-        ai = await traced_invoke(ctx, decision, llm, messages)
+        ai = await call_llm(ctx, decision, lambda c: c.bind_tools(tools, tool_choice=choice), messages)
         messages.append(ai)
         if not ai.tool_calls:
             out.text = text_of(ai.content)
@@ -67,12 +67,22 @@ async def run_tool_loop(
 
     # Tool budget spent: one last round with tools disabled so the worker writes up what it has.
     out.rounds += 1
-    decision = ctx.router.decide("worker_final", agent, {"reason": "tool round cap reached"})
-    llm = ctx.router.client(decision.provider).bind_tools(tools, tool_choice="none")
     messages.append(HumanMessage("Tool budget reached. Write your findings now from the evidence above."))
-    ai = await traced_invoke(ctx, decision, llm, messages)
+    decision = ctx.route("worker_final", agent, {**_loop_features(ctx, messages, out.rounds, out),
+                                                  "reason": "tool round cap reached"})
+    ai = await call_llm(ctx, decision, lambda c: c.bind_tools(tools, tool_choice="none"), messages)
     out.text = text_of(ai.content)
     return out
+
+
+def _loop_features(ctx: RequestContext, messages: list[BaseMessage], rnd: int, out: LoopOutput) -> dict:
+    """Observable inputs for routing a tool-loop call (logged in the llm_route event)."""
+    return {
+        "round": rnd,
+        "tool_calls_so_far": out.tool_calls,
+        "context_tokens_est": sum(approx_tokens(text_of(m.content)) for m in messages),
+        "comparison": comparison_cue(ctx.query),
+    }
 
 
 async def _run_tool(ctx: RequestContext, agent: str, by_name: dict, call: dict, out: LoopOutput) -> ToolMessage:

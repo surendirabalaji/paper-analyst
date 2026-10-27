@@ -1,0 +1,317 @@
+[
+  {
+    "query": "Why do multi-agent LLM systems fail?",
+    "status": "failed",
+    "timings": {
+      "retrieval_ms": 3091,
+      "llm_ms_sum": 22681,
+      "ttft_ms": 96595,
+      "total_ms": 96596
+    },
+    "client_first_token_ms": 96611,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "failed",
+        45002
+      ],
+      [
+        "t1",
+        "research",
+        "failed",
+        45003
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 6572,
+        "in": 359,
+        "out": 175,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 3663,
+        "in": 523,
+        "out": 82,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 5004,
+        "in": 6311,
+        "out": 154,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 3126,
+        "in": 523,
+        "out": 83,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 4316,
+        "in": 7148,
+        "out": 124,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "openai"
+    ],
+    "est_cost_usd": 0,
+    "n_citations": 0,
+    "n_tokens": 1
+  },
+  {
+    "query": "How does Self-RAG decide when to retrieve?",
+    "status": "done",
+    "timings": {
+      "retrieval_ms": 1227,
+      "llm_ms_sum": 24447,
+      "ttft_ms": 19980,
+      "total_ms": 25701
+    },
+    "client_first_token_ms": 19983,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "done",
+        14584
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 3860,
+        "in": 360,
+        "out": 113,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 2110,
+        "in": 493,
+        "out": 35,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 2374,
+        "in": 3601,
+        "out": 46,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 8858,
+        "in": 5526,
+        "out": 388,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 7245,
+        "in": 3629,
+        "out": 293,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "openai"
+    ],
+    "est_cost_usd": 0,
+    "n_citations": 5,
+    "n_tokens": 290
+  },
+  {
+    "query": "Compare how Reflexion and Self-Refine use feedback to improve outputs.",
+    "status": "done",
+    "timings": {
+      "retrieval_ms": 1367,
+      "llm_ms_sum": 45917,
+      "ttft_ms": 39900,
+      "total_ms": 47322
+    },
+    "client_first_token_ms": 39902,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "done",
+        33224
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 5355,
+        "in": 365,
+        "out": 137,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 2795,
+        "in": 517,
+        "out": 85,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 4714,
+        "in": 5801,
+        "out": 122,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 24322,
+        "in": 9809,
+        "out": 1053,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "fixed default",
+        "status": "ok",
+        "latency_ms": 8731,
+        "in": 8367,
+        "out": 459,
+        "reasoning": null,
+        "upstream": null,
+        "cost_usd": null,
+        "chunks": null
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "openai"
+    ],
+    "est_cost_usd": 0,
+    "n_citations": 11,
+    "n_tokens": 456
+  }
+]

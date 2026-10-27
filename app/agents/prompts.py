@@ -9,7 +9,7 @@ Break the user's question into at most {max_tasks} tasks for the available worke
 {workers}
 
 Rules:
-- Use only the workers listed above. Each task needs a concrete instruction for that worker.
+- Use only the workers listed above. Each task needs a concrete one-sentence instruction for that worker.
 - depends_on lists the 0-based indices of earlier tasks whose results the task needs; leave it empty otherwise.
 - Prefer one task when one worker can answer. Split only when the question has clearly separate parts.
 - For greetings, small talk or requests unrelated to research papers, return no tasks.
@@ -18,8 +18,11 @@ Rules:
 RESEARCH_ROLE = """Your job is to answer conceptual and cross-paper questions from the indexed arXiv papers.
 Use the corpus_search tool to retrieve passages before answering. Write focused search queries; for a
 comparison, search each paper or concept separately. Search again with different wording if the first
-results are off-topic. Then write concise findings that synthesize across papers, citing the passage
-markers for every claim. Say which papers the evidence comes from."""
+results are off-topic. Use at most 3 searches.
+Then hand off compact findings, not a finished answer (the synthesizer writes the final answer):
+- at most 8 bullets and about 200 words in total; no introduction, headings or conclusion;
+- each bullet is one factual point, names its paper, and ends with its passage markers;
+- if the evidence does not cover part of the task, add one bullet saying what is missing."""
 
 SYNTH_ROLE = """You write the final answer shown to the user. Combine the worker findings in "Upstream
 results" into one clear, well-organised answer to the question. Keep every citation marker the

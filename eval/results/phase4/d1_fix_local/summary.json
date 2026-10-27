@@ -1,0 +1,121 @@
+[
+  {
+    "query": "What is the difference between ReAct and Reflexion?",
+    "status": "done",
+    "timings": {
+      "retrieval_ms": 2557,
+      "llm_ms_sum": 22262,
+      "ttft_ms": 19203,
+      "total_ms": 24844
+    },
+    "client_first_token_ms": 19220,
+    "worker_spans": [
+      [
+        "t1",
+        "research",
+        "done",
+        13974
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2846,
+        "in": 350,
+        "out": 96,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.001245,
+        "cost_source": "reported",
+        "est_cost_usd": 0.001245,
+        "reported_cost_usd": 0.001245,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 3070,
+        "in": 557,
+        "out": 25,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.001023,
+        "cost_source": "reported",
+        "est_cost_usd": 0.001023,
+        "reported_cost_usd": 0.001023,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2417,
+        "in": 4133,
+        "out": 25,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.006387,
+        "cost_source": "reported",
+        "est_cost_usd": 0.006387,
+        "reported_cost_usd": 0.006387,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "research",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 5919,
+        "in": 6539,
+        "out": 386,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.0127035,
+        "cost_source": "reported",
+        "est_cost_usd": 0.012703,
+        "reported_cost_usd": 0.0127035,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "openai",
+        "model": "gpt-6.1-sol",
+        "dimension": "capability",
+        "status": "ok",
+        "latency_ms": 8010,
+        "in": 4408,
+        "out": 343,
+        "reasoning": 0,
+        "upstream": null,
+        "cost_usd": 0.012246,
+        "cost_source": "estimated",
+        "est_cost_usd": 0.012246,
+        "reported_cost_usd": null,
+        "chunks": 340
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "gemini-openrouter",
+      "openai"
+    ],
+    "cost_usd": 0.0336,
+    "n_citations": 6,
+    "n_tokens": 340
+  }
+]
