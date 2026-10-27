@@ -1,0 +1,19 @@
+# Keep secrets and dev clutter out of the image.
+.env
+.env.*
+*.env.yaml
+.git
+.claude
+.venv
+__pycache__
+**/*.pyc
+.pytest_cache
+.DS_Store
+docs/
+eval/
+tests/
+data/raw/
+*.pdf
+*.zip
+# data/chroma_index, data/papers.db and data/repos ARE included: the service needs them.
+reference/

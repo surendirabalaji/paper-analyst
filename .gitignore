@@ -1,0 +1,29 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.env.yaml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Generated data (rebuilt by scripts/ingest.py)
+data/raw/
+data/chroma_index/
+data/repos/
+data/papers.db
+
+# Evaluation run outputs that are not final results
+eval/runs/
+
+# OS
+.DS_Store
+
+# Course-provided reference notes (not part of the submission)
+reference/
+
+# Instructor-provided assignment description (kept locally, not redistributed)
+Assignment_2_Description.pdf
