@@ -1,0 +1,23 @@
+Papers: 89 | indexed: 88 | chunks: 4523 | chunk tokens: 1,618,024 | arXiv requests: 0
+Full re-embed cost estimate: $0.0324 at $0.02/1M tokens
+  "last_run": {
+    "finished_at": "2026-10-27T04:45:39Z",
+    "seconds": 19.5,
+    "chunks_before": 4523,
+    "chunks_after": 4523,
+    "added": 0,
+    "updated": 0,
+    "deleted": 0,
+    "unchanged": 4523,
+    "embedded_tokens": 0,
+    "pruned_other_papers": 0,
+    "embedding_cost_usd": 0.0
+  },
+  "sqlite": {
+    "papers": 89,
+    "authors": 621,
+    "paper_authors": 730,
+    "paper_categories": 192,
+    "repos": 58
+  }
+}

@@ -1,0 +1,66 @@
+### how does Self-RAG decide when to retrieve?
+0.631  2310.11511v1::A1.SS3::000
+       https://arxiv.org/html/2310.11511v1#A1.SS3
+0.612  2310.11511v1::A3.SS1::000
+       https://arxiv.org/html/2310.11511v1#A3.SS1
+0.611  2310.11511v1::S3.SS3::000
+       https://arxiv.org/html/2310.11511v1#S3.SS3
+0.609  2310.11511v1::S3.SS3::001
+       https://arxiv.org/html/2310.11511v1#S3.SS3
+0.606  2310.11511v1::A1.SS2::004
+       https://arxiv.org/html/2310.11511v1#A1.SS2
+### when should a language model choose to look things up instead of answering from memory, according to a model that emits special critique tokens?
+0.565  2307.03172v3::S5::000
+       https://arxiv.org/html/2307.03172v3#S5
+0.550  2307.03172v3::S4::000
+       https://arxiv.org/html/2307.03172v3#S4
+0.544  2212.10509v2::Sx2::000
+       https://arxiv.org/html/2212.10509v2#Sx2
+0.541  2309.15217v2::S1::000
+       https://arxiv.org/html/2309.15217v2#S1
+0.539  2307.03172v3::S1::002
+       https://arxiv.org/html/2307.03172v3#S1
+### what failure categories cause teams of cooperating LLM agents to break down?
+0.701  2503.13657v3::A1.SS2::000
+       https://arxiv.org/html/2503.13657v3#A1.SS2
+0.677  2503.13657v3::A1.SS1::000
+       https://arxiv.org/html/2503.13657v3#A1.SS1
+0.674  2503.13657v3::S4::001
+       https://arxiv.org/html/2503.13657v3#S4
+0.660  2503.13657v3::A1.SS3::000
+       https://arxiv.org/html/2503.13657v3#A1.SS3
+0.651  2503.13657v3::A12.SS3::000
+       https://arxiv.org/html/2503.13657v3#A12.SS3
+### what signal tells an LM trained with reflection tokens to fetch passages on demand?
+0.514  2310.11511v1::S4.SS2::000
+       4 Experiments › 4.2 Baselines
+       https://arxiv.org/html/2310.11511v1#S4.SS2
+       Baselines without retrievals. We evaluate strong publicly available pre-trained LLMs, Llama2 {}_{\textsc{7b},\textsc{13b}} (Touvron et al., 2023), instruction-t ...
+0.514  2303.11366v4::S3::003
+       3 Reflexion: reinforcement via verbal reflection
+       https://arxiv.org/html/2303.11366v4#S3
+       for improvement by an LLM, the Self-Reflection model analyzes the set of \{\tau_{0},r_{0}\} to produce a summary sr_{0} which is stored in the memory mem. sr_{t ...
+0.511  2310.11511v1::A4::000
+       D Full List of Instructions and Demonstrations for GPT-4
+       https://arxiv.org/html/2310.11511v1#A4
+       Here, we show the instructions and demonstrations used to prompt GPT-4 to collect reflection tokens. Table 8 shows the instructions and demonstrations for the i ...
+0.504  2310.11511v1::S3.SS1::001
+       3 Self-Rag: Learning to Retrieve, Generate and Critique › 3.1 Problem Formalization and Overview
+       https://arxiv.org/html/2310.11511v1#S3.SS1
+       \mathcal{M} predicts IsSup and IsUse given x,y_{t},d for each d\in\mathbf{D} \triangleright Critique Rank y_{t} based on IsRel , IsSup , IsUse \triangleright De ...
+0.499  2305.06983v2::A1::000
+       A FLARE Implementation Details
+       https://arxiv.org/html/2305.06983v2#A1
+       FLARE {}_{\text{instruct}} implementation details We found that LMs can effectively combine retrieval and downstream task-related skills and generate meaningful ...
+0.497  2310.11511v1::S4.SS3::000
+       4 Experiments › 4.3 Experimental settings
+       https://arxiv.org/html/2310.11511v1#S4.SS3
+       Training data and settings. Our training data consists of diverse instruction-following input-output pairs. In particular, we sample instances from Open-Instruc ...
+0.496  2310.11511v1::abstract::000
+       Abstract
+       https://arxiv.org/html/2310.11511v1
+       Despite their remarkable capabilities, large language models (LLMs) often produce responses containing factual inaccuracies due to their sole reliance on the pa ...
+0.495  2305.06983v2::S3.SS2.SSS1::000
+       3 FLARE: Forward-Looking Active REtrieval Augmented Generation › 3.2 Direct FLARE › 3.2.1 Confidence-based Active Retrieval
+       https://arxiv.org/html/2305.06983v2#S3.SS2.SSS1
+       As shown in Figure 1, at step t , we first generate a temporary next sentence \hat{\bm{s}}_{t}=\text{LM}([\bm{x},\bm{y}_{<t}]) without conditioning on retrieved ...

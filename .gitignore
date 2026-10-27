@@ -15,6 +15,7 @@ data/raw/
 data/chroma_index/
 data/repos/
 data/papers.db
+data/*.tmp
 
 # Evaluation run outputs that are not final results
 eval/runs/

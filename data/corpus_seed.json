@@ -1,0 +1,378 @@
+{
+  "description": "Curated arXiv corpus for the Agentic AI Paper Analyst. Papers on LLM agents, tool use, multi-agent systems, retrieval-augmented generation, agent memory, and agent evaluation.",
+  "curated_on": "2026-10-26",
+  "method": "Hand-picked foundational papers (2022-12 to 2024) verified by id against the arXiv API, plus recent papers (2025-01 to 2026-09) chosen from arXiv API title searches on the same topics so that cross-paper comparison questions have answers. Every id was checked against the arXiv API title before inclusion.",
+  "selection_criteria": [
+    "Topic: LLM agents, tool use, multi-agent systems, RAG, agent memory, or agent evaluation",
+    "Mostly cs.CL / cs.AI / cs.LG / cs.MA / cs.IR (a few seminal cs.SE, cs.HC, cs.OS, cs.CR papers are included for coverage)",
+    "Full text is indexed only if arXiv serves LaTeXML HTML that parses to at least 3000 words; otherwise metadata only",
+    "Topical overlap between papers so comparison questions are answerable"
+  ],
+  "search_queries_2025_2026": [
+    "ti:\"multi-agent\" AND ti:LLM",
+    "ti:\"retrieval-augmented generation\" AND ti:agentic",
+    "ti:\"agent memory\" OR ti:\"memory for LLM agents\"",
+    "ti:\"model context protocol\"",
+    "ti:\"tool use\" AND ti:agents AND cat:cs.CL",
+    "ti:\"deep research\" AND ti:agent",
+    "ti:agent AND ti:benchmark AND cat:cs.AI"
+  ],
+  "papers": [
+    {
+      "arxiv_id": "2210.03629",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2303.11366",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2305.10601",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2310.04406",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2305.18323",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2305.04091",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2303.17651",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2402.01030",
+      "topic": "reasoning-and-acting"
+    },
+    {
+      "arxiv_id": "2302.04761",
+      "topic": "tool-use"
+    },
+    {
+      "arxiv_id": "2303.17580",
+      "topic": "tool-use"
+    },
+    {
+      "arxiv_id": "2307.16789",
+      "topic": "tool-use"
+    },
+    {
+      "arxiv_id": "2305.15334",
+      "topic": "tool-use"
+    },
+    {
+      "arxiv_id": "2304.08354",
+      "topic": "tool-use"
+    },
+    {
+      "arxiv_id": "2604.00835",
+      "topic": "tool-use"
+    },
+    {
+      "arxiv_id": "2607.04686",
+      "topic": "tool-use"
+    },
+    {
+      "arxiv_id": "2308.08155",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2308.00352",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2307.07924",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2303.17760",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2308.10848",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2402.01680",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2305.14325",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2406.04692",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2402.05120",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2308.07201",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2307.05300",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2503.13657",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2501.06322",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2503.03686",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2606.24535",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2606.19494",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2510.01279",
+      "topic": "multi-agent-systems"
+    },
+    {
+      "arxiv_id": "2310.11511",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2401.15884",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2312.10997",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2305.06983",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2212.10509",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2404.16130",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2403.14403",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2401.18059",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2212.10496",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2307.03172",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2410.05779",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2501.09136",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2604.18509",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2506.16988",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2511.05385",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2603.08329",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2501.15228",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2504.12330",
+      "topic": "rag"
+    },
+    {
+      "arxiv_id": "2501.05366",
+      "topic": "agentic-search-and-deep-research"
+    },
+    {
+      "arxiv_id": "2503.09516",
+      "topic": "agentic-search-and-deep-research"
+    },
+    {
+      "arxiv_id": "2505.15872",
+      "topic": "agentic-search-and-deep-research"
+    },
+    {
+      "arxiv_id": "2508.12752",
+      "topic": "agentic-search-and-deep-research"
+    },
+    {
+      "arxiv_id": "2508.10152",
+      "topic": "agentic-search-and-deep-research"
+    },
+    {
+      "arxiv_id": "2603.04384",
+      "topic": "agentic-search-and-deep-research"
+    },
+    {
+      "arxiv_id": "2602.18940",
+      "topic": "agentic-search-and-deep-research"
+    },
+    {
+      "arxiv_id": "2304.03442",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2310.08560",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2309.02427",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2404.13501",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2403.16971",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2502.12110",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2601.02553",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2507.05257",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2606.06036",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2607.26637",
+      "topic": "agent-memory-and-architecture"
+    },
+    {
+      "arxiv_id": "2310.12823",
+      "topic": "agent-training"
+    },
+    {
+      "arxiv_id": "2310.05915",
+      "topic": "agent-training"
+    },
+    {
+      "arxiv_id": "2305.16291",
+      "topic": "agent-training"
+    },
+    {
+      "arxiv_id": "2308.03688",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2310.06770",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2405.15793",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2307.13854",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2306.06070",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2406.12045",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2311.12983",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2407.01502",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2309.15217",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2311.09476",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2603.15798",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2607.12338",
+      "topic": "agent-benchmarks-and-evaluation"
+    },
+    {
+      "arxiv_id": "2503.23278",
+      "topic": "mcp-and-frameworks"
+    },
+    {
+      "arxiv_id": "2509.25292",
+      "topic": "mcp-and-frameworks"
+    },
+    {
+      "arxiv_id": "2606.05339",
+      "topic": "mcp-and-frameworks"
+    },
+    {
+      "arxiv_id": "2508.16260",
+      "topic": "mcp-and-frameworks"
+    },
+    {
+      "arxiv_id": "2310.03714",
+      "topic": "mcp-and-frameworks"
+    },
+    {
+      "arxiv_id": "2308.11432",
+      "topic": "mcp-and-frameworks"
+    },
+    {
+      "arxiv_id": "2309.07864",
+      "topic": "mcp-and-frameworks"
+    }
+  ]
+}
