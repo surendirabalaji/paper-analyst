@@ -1,6 +1,6 @@
 # Architecture: Agentic AI Paper Analyst
 
-> **Status: DESIGN DRAFT (2026-10-26).** This describes the planned system. Sections are updated to match the actual code as each phase is built. Anything marked *(planned)* is not implemented yet. Full design rationale: [`design_proposal.md`](design_proposal.md).
+> **Status: DESIGN DRAFT, updated 2026-10-27 for Phase 2.** Phase 2 built the first end-to-end slice: planner → supervisor → Research → synthesize, SSE streaming, `C#` citations and the chat page. This describes the planned system. Sections are updated to match the actual code as each phase is built. Anything marked *(planned)* is not implemented yet. Full design rationale: [`design_proposal.md`](design_proposal.md).
 
 ## 1. What the system does
 
@@ -60,24 +60,28 @@ flowchart TD
 
 Bounds: 4 tasks, 6 supervisor steps, 4 tool rounds per worker, 45 s per worker, 120 s per request.
 
-## 4. State schema *(planned)*
+## 4. State schema *(implemented in Phase 2, `app/graph.py`)*
 
 ```python
-class AnalystState(TypedDict):
+class AnalystState(TypedDict, total=False):
     request_id: str
     query: str
-    k: int                                  # retrieval top-k (default 6)
-    plan_summary: str                       # short operational rationale
-    tasks: list[Task]                       # id, worker, instruction, needs_live, depends_on, status, attempts
-    worker_results: dict[str, WorkerResult] # task_id -> {status, findings_md, evidence_ids, error}
-    evidence: dict[str, EvidenceRef]        # C#/W#/D#/R# registry shared across workers
-    routing_decisions: Annotated[list[RouteDecision], add]
-    transitions: Annotated[list[Transition], add]
-    errors: Annotated[list[ErrorRecord], add]
-    step_count: int
+    k: int                                   # retrieval top-k (default 6, request may set 3-10)
+    plan_summary: str                        # short operational rationale from the planner
+    plan_source: str                         # "llm" or "fallback" (planner failed -> one Research task)
+    tasks: list[dict]                        # id, worker, instruction, depends_on, status, attempts, error_kind
+    worker_results: dict[str, dict]          # task_id -> {status, findings_md, evidence_ids, error_kind, rounds, tool_calls}
+    next: str                                # node chosen by route_next
+    active_task: str | None
+    step_count: int                          # supervisor dispatches so far
+    transitions: Annotated[list[dict], add]  # every supervisor decision with its reason
+    errors: Annotated[list[dict], add]
     final_answer: str
-    status: Literal["running", "done", "partial", "failed"]
+    status: str                              # done | partial | failed
+    unresolved_citations: list[str]
 ```
+
+The evidence registry (`C#` → chunk) and the event emitter are per-request objects in `RequestContext` (`app/context.py`), passed to nodes through the LangGraph config rather than stored in graph state. Routing decisions are emitted as `llm_route` events. Nothing is shared between requests except read-only handles (Chroma client, LLM clients).
 
 Task status values: `pending | running | done | partial | failed | skipped`.
 
@@ -120,7 +124,8 @@ Gemini is accessed through **OpenRouter** (OpenAI-compatible API). OpenAI is acc
 - **SQLite (`data/papers.db`, for the Data agent):** `papers` (89), `authors` (621), `paper_authors` (730, with author position), `paper_categories` (192, with primary flag), `repos` (58 GitHub links found in the arXiv comment, abstract, or paper front matter/introduction near release wording; links only, no code snapshots).
 - **Embeddings:** OpenAI `text-embedding-3-small` (1536 dimensions, $0.02 per 1M tokens, checked 2026-10-26; full build $0.032). The model name and dimensions are stored in the collection metadata; ingestion refuses a mismatched model unless `--rebuild` is given (on create or rebuild it measures the model's real dimensions before dropping anything), and the app will check it at startup (Phase 2).
 - **Store:** Chroma embedded, baked read-only into the image. `RAG_TOP_K=6` (configurable 3–10).
-- **LCEL chain:** retriever with scores → register citation IDs → augmentation prompt → routed LLM → parser.
+- **LCEL chain (Phase 2, `app/rag.py`):** `corpus_search` is a tool whose body is the LCEL chain `RunnableLambda(retrieve) | RunnableLambda(register)`. `retrieve` embeds the query with the index's model, checks dimensions and runs Chroma cosine top-k (relevance = 1 − distance). `register` assigns request-wide `C#` ids and formats the `<evidence>` block. The Research worker calls this tool in a bounded loop, then writes cited findings. The synthesizer streams the final answer through `AUGMENT_PROMPT | chat_model`, using only the evidence items the worker cited. After synthesis, every marker is checked against the registry. Known markers are emitted as `citation` events, and unknown ones go to `done.unresolved_citations`.
+- **Startup check:** the app refuses to start if the configured embedding model differs from the one stored in the collection metadata. Each query also checks the embedding's dimensions against the index.
 
 ### Augmentation prompt template
 

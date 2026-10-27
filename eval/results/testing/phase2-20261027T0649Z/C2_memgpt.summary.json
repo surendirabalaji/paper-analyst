@@ -1,0 +1,193 @@
+{
+  "id": "C2_memgpt",
+  "query": "How does MemGPT organise memory into tiers and move information between them?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "3b97da9d2d82"
+  ],
+  "event_counts": {
+    "citation": 5,
+    "done": 1,
+    "llm_result": 5,
+    "llm_route": 5,
+    "meta": 1,
+    "plan": 1,
+    "retrieval": 2,
+    "token": 488,
+    "tool_call": 2,
+    "tool_result": 2,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "3b97da9d2d82",
+    "seq": 5,
+    "ts": "2026-10-27T06:51:39.076Z",
+    "t_ms": 4490,
+    "plan_summary": "Retrieve MemGPT’s memory architecture and explain how information moves between tiers, with citations.",
+    "source": "llm",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find the MemGPT paper in the indexed corpus and explain its tiered memory architecture and movement of information between tiers. Cover main/context memory and its components, external recall and archival storage, explicit tool/function calls for reading and updating memory, and context-pressure handling, eviction/summarization, and retrieval. Distinguish automatic mechanisms from agent-directed memory management, and cite the paper for the key claims.",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 done",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [
+    {
+      "query": "MemGPT tiered memory main context system instructions working context FIFO queue recall archival memory eviction summarization functions",
+      "k": 8
+    },
+    {
+      "query": "MemGPT archival storage recall storage database semantic search conversation_search archival_memory_insert core_memory_append core_memory_replace",
+      "k": 5
+    }
+  ],
+  "retrieved_docs": [
+    "2310.08560v2",
+    "2606.06036v1"
+  ],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 364,
+      "output_tokens": 127,
+      "latency_ms": 4488
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 511,
+      "output_tokens": 42,
+      "latency_ms": 2337
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 3743,
+      "output_tokens": 42,
+      "latency_ms": 2273
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 5424,
+      "output_tokens": 763,
+      "latency_ms": 13735
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 3417,
+      "output_tokens": 491,
+      "latency_ms": 7658
+    }
+  ],
+  "answer": "MemGPT uses an **OS-inspired memory hierarchy**: a limited **main context**, analogous to RAM, and **external context**, analogous to disk. The LLM can directly access only main context; information stored externally must be explicitly brought into the prompt before it can be used during inference. [C2]\n\n**How the tiers are organised**\n\n- **Main context** contains three sections: read-only **system instructions** describing memory management and available functions; a fixed-size, editable **working context** for important facts, preferences, and persona information; and a **FIFO message queue** containing recent messages, function calls/results, and a recursive summary of previously evicted messages. [C1]\n- **External context** consists of **recall storage**, the message database that automatically records incoming messages and generated outputs, and **archival storage**, a read/write database for arbitrary-length text objects the agent chooses to save. [C7][C3]\n\n**How information moves**\n\n1. **The agent explicitly saves, edits, and retrieves information through function calls.** The LLM decides what to search for, what to preserve externally, and how to update working context; MemGPT validates and executes those calls, then feeds results or errors back to the LLM. [C5]\n2. **Retrieval brings information back into view.** Retrieved recall messages are appended to the FIFO queue, making them available during inference again. Retrieval is paginated to avoid overflowing the context window, and the agent can chain calls using `request_heartbeat=true` to continue searching across pages or sources. [C3][C5][C7]\n3. **The queue manager automatically handles context pressure.** At a warning threshold—70% of the context window is the paper’s example—it alerts the agent so important information can be copied into working context or archival storage. At a flush threshold—100% in the example—it evicts part of the queue and updates the recursive summary using the previous summary and evicted messages. [C3]\n4. **Eviction is not deletion.** Evicted messages disappear from immediate LLM visibility but remain in recall storage and can later be retrieved through function calls. [C3]\n\nThe key distinction is that **logging, warnings, eviction, and summarisation are automatic**, while **deciding what to retain, revise, or retrieve is agent-directed**. [C3][C5]",
+  "citations": [
+    {
+      "cite_id": "C2",
+      "chunk_id": "2310.08560v2::S2::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2310.08560v2",
+      "section": "2 MemGPT (MemoryGPT)",
+      "text_head": "MemGPT: Towards LLMs as Operating Systems — 2 MemGPT (MemoryGPT)\nMemGPT’s OS-inspired multi-level memory architecture delineates between two primary memory types: main context (analogous to main memory/physical memory/RAM) and external context (analogous to disk memory/disk storage).\nMain context co"
+    },
+    {
+      "cite_id": "C1",
+      "chunk_id": "2310.08560v2::S2.SS1::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2310.08560v2",
+      "section": "2 MemGPT (MemoryGPT) › 2.1 Main context (prompt tokens)",
+      "text_head": "MemGPT: Towards LLMs as Operating Systems — 2 MemGPT (MemoryGPT) › 2.1 Main context (prompt tokens)\nThe prompt tokens in MemGPT are split into three contiguous sections: the system instructions, working context, and FIFO Queue. The system instructions are read-only (static) and contain information o"
+    },
+    {
+      "cite_id": "C7",
+      "chunk_id": "2310.08560v2::S1::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2310.08560v2",
+      "section": "1 Introduction",
+      "text_head": "MemGPT: Towards LLMs as Operating Systems — 1 Introduction\nIn both settings, MemGPT is able to overcome the limitations of finite context to outperform existing LLM-based approaches.\nFigure 2:\nMemGPT (left) can search out-of-context data to bring relevant information into the current context window."
+    },
+    {
+      "cite_id": "C3",
+      "chunk_id": "2310.08560v2::S2.SS2::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2310.08560v2",
+      "section": "2 MemGPT (MemoryGPT) › 2.2 Queue Manager",
+      "text_head": "MemGPT: Towards LLMs as Operating Systems — 2 MemGPT (MemoryGPT) › 2.2 Queue Manager\nThe queue manager manages messages in recall storage and the FIFO queue. When a new message is received by the system, the queue manager appends the incoming messages to the FIFO queue, concatenates the prompt token"
+    },
+    {
+      "cite_id": "C5",
+      "chunk_id": "2310.08560v2::S2.SS3::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2310.08560v2",
+      "section": "2 MemGPT (MemoryGPT) › 2.3 Function executor (handling of completion tokens)",
+      "text_head": "MemGPT: Towards LLMs as Operating Systems — 2 MemGPT (MemoryGPT) › 2.3 Function executor (handling of completion tokens)\nMemGPT orchestrates data movement between main context and external context via function calls that are generated by the LLM processor.\nMemory edits and retrieval are entirely sel"
+    }
+  ],
+  "cited_docs": [
+    "2310.08560v2"
+  ],
+  "done": {
+    "request_id": "3b97da9d2d82",
+    "seq": 517,
+    "ts": "2026-10-27T06:52:05.509Z",
+    "t_ms": 30923,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 405,
+      "llm_ms_sum": 30491,
+      "ttft_ms": 24317,
+      "total_ms": 30923
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 13459,
+        "output_tokens": 1465,
+        "calls": 5
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 488,
+  "n_distinct_reads_with_tokens": 488,
+  "first_token_client_ms": 24319,
+  "last_token_client_ms": 30863,
+  "first_token_server_ms": 24317,
+  "last_token_server_ms": 30861,
+  "done_client_ms": 30926,
+  "total_client_ms": 30926,
+  "expect_docs": [
+    "2310.08560v2"
+  ],
+  "expect_abstain": false
+}

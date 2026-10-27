@@ -1,0 +1,1 @@
+{"id": "F1_invalid_key_total_failure", "status": "failed", "plan_tasks": 1, "tokens": 1, "reads": 1, "cited": [], "retrieved": [], "resolved": "0/0", "unresolved": [], "ttft": 495, "total": 496, "tok": {}}

@@ -3,18 +3,18 @@
 Working aid, not a graded deliverable. Source of truth: `Assignment_2_Description.pdf`.
 Status values: **pending**, **implemented** (not yet verified), **verified** (evidence recorded), **blocked**, **n/a** (with justification).
 
-Last updated: 2026-10-27 (Phase 1 corpus built; no application code yet).
+Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 
 ## Orchestration (25%)
 
 | Requirement | Where | How verified | Evidence | Status |
 |---|---|---|---|---|
-| LangGraph state graph compiles and runs end to end | `app/graph.py` | Integration test + deployed query | | pending |
-| Supervisor pattern | `app/graph.py` | Trace shows supervisor ⇄ workers | | pending |
+| LangGraph state graph compiles and runs end to end | `app/graph.py` | Integration test + deployed query | Local run 2026-10-27: planner → supervisor → research → supervisor → synthesize, streamed SSE (Self-RAG query, greeting, out-of-corpus query) | implemented |
+| Supervisor pattern | `app/graph.py` | Trace shows supervisor ⇄ workers | `transition` events supervisor → research → supervisor → synthesize | implemented |
 | ≥3 specialized workers (supervisor not counted) | `app/agents/` | Research, Summary, Data each invoked across test queries | | pending |
 | Distinct system prompt per worker | `app/agents/prompts.py` | Code review | | pending |
 | Distinct tool access per worker | `app/agents/*` | Tool lists differ; trace | | pending |
-| Delegation driven by inspectable state fields | `route_next` | `transition` events carry reasons | | pending |
+| Delegation driven by inspectable state fields | `route_next` | `transition` events carry reasons | Pure function of task status, dependencies, attempts, step count and time budget; unit-tested in `tests/unit/test_phase2_core.py` | implemented |
 | Worker failure does not crash the graph | worker wrapper | Fault-injection test + partial answer | | pending |
 | State schema documented | `docs/architecture.md` §4 | Matches code | | pending |
 
@@ -26,11 +26,11 @@ Last updated: 2026-10-27 (Phase 1 corpus built; no application code yet).
 | Ingestion → chunks → embeddings | `scripts/ingest.py`, `ingest/` | Ingest log | LaTeXML HTML → section records → 500/75-token section-bounded chunks → `text-embedding-3-small` (1536 d); first build embedded 4,523 chunks, $0.032; total spend about $0.035 | verified |
 | Stored in Chroma | `data/chroma_index` (collection `arxiv_agents`, cosine) | Collection count | count 4,521 = manifest chunk total = Σ DB n_chunks (tester-verified); ids unique; `scripts/query_index.py` returns relevant sections; paraphrase queries retrieve the right paper | verified |
 | Re-indexing adds no duplicates | `ingest/store.py` `sync_paper_chunks` | Second run adds 0 | Run 2: 0 added/0 updated/4,523 unchanged. After a parser change: 254 updated, 2 added, 2 deleted, count unchanged; next run 0 changes. After the acknowledgment fix: 4 updated, 2 deleted (4,521); next run 0 changes (2026-10-27). Tester Phase 1: PHASE PASS | verified |
-| Top-k vector retrieval, k configurable | `app/rag.py` | Unit test | | pending |
-| LCEL pipeline | `app/rag.py` | Code review | | pending |
-| Augmentation prompt with chunk IDs | `app/rag.py` | Prompt in architecture.md matches code | | pending |
-| Citations resolve to source chunks | `/api/source/chunk` | Resolution-rate check | | pending |
-| Out-of-corpus question → abstain or escalate | | System test | | pending |
+| Top-k vector retrieval, k configurable | `app/rag.py` | Unit test | `Retriever.search`, k clamped 3–10, `RAG_TOP_K` default 6; `retrieval` events show k and scores | implemented |
+| LCEL pipeline | `app/rag.py` | Code review | `make_corpus_search_chain` (retrieve \| register) and `AUGMENT_PROMPT \| chat_model` streaming synthesis | implemented |
+| Augmentation prompt with chunk IDs | `app/rag.py` | Prompt in architecture.md matches code | `AUGMENT_SYSTEM`/`AUGMENT_HUMAN`; evidence items carry cite id and chunk_id | implemented |
+| Citations resolve to source chunks | `/api/source/chunk` | Resolution-rate check | Self-RAG run: 5/5 cited markers resolved, 0 unresolved; unknown or malformed ids give 404 | implemented |
+| Out-of-corpus question → abstain or escalate | Research + synth prompts | System test | AlphaFold 3 query: "The available evidence does not answer this…", no invented sources (local, 2026-10-27) | implemented |
 | RAGAS: faithfulness, answer relevance, context precision, context recall | `scripts/run_ragas.py` | Numeric results | | pending |
 
 ## LLM routing (15%)
@@ -48,11 +48,11 @@ Last updated: 2026-10-27 (Phase 1 corpus built; no application code yet).
 
 | Requirement | Where | How verified | Evidence | Status |
 |---|---|---|---|---|
-| FastAPI SSE token streaming (incremental) | `app/main.py` | First token before `done` | | pending |
-| Vanilla HTML/JS served by FastAPI, no build | `app/static/` | | | pending |
-| Visible routing decision per turn | Routing tab | | | pending |
-| Inspectable trace of orchestration | Trace tab | | | pending |
-| Citations linked to source identifiers | Sources tab | | | pending |
+| FastAPI SSE token streaming (incremental) | `app/main.py` | First token before `done` | Synth tokens forwarded from `astream`; Self-RAG run: 305 `token` events, first at about 29 s, `done` at 34.8 s | implemented |
+| Vanilla HTML/JS served by FastAPI, no build | `app/static/` | | `index.html`, `app.js` (fetch + incremental SSE parser), `styles.css` | implemented |
+| Visible routing decision per turn | Routing tab | | Routing tab lists every call (agent, provider, model, rationale, tokens); single default provider until Phase 4 | implemented (one provider) |
+| Inspectable trace of orchestration | Trace tab | | Plan, transitions, tool calls, retrievals, worker results, errors, done | implemented |
+| Citations linked to source identifiers | Sources tab | | `[C#]` markers become links only when in the registry; source viewer fetches the chunk and links the arXiv section | implemented |
 
 ## Deployment (15%)
 

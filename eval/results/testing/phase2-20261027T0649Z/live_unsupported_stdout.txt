@@ -1,0 +1,1 @@
+{"id": "L6_in_domain_unsupported", "status": "done", "plan_tasks": 1, "tokens": 104, "reads": 104, "cited": ["2305.16291v2"], "retrieved": ["2305.16291v2", "2508.16260v2"], "resolved": "3/3", "unresolved": [], "ttft": 14354, "total": 15496, "tok": {"openai": {"input_tokens": 10713, "output_tokens": 536, "calls": 5}}}

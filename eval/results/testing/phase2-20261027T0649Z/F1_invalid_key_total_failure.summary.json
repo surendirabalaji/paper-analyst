@@ -1,0 +1,75 @@
+{
+  "id": "F1_invalid_key_total_failure",
+  "query": "How does ReAct interleave reasoning and acting?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "d3ebd40ee90c"
+  ],
+  "event_counts": {
+    "done": 1,
+    "error": 2,
+    "llm_route": 2,
+    "meta": 1,
+    "plan": 1,
+    "token": 1,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "d3ebd40ee90c",
+    "seq": 5,
+    "ts": "2026-10-27T06:54:44.316Z",
+    "t_ms": 395,
+    "plan_summary": "Planner unavailable; falling back to a single Research task.",
+    "source": "fallback",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "How does ReAct interleave reasoning and acting?",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 failed",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [],
+  "retrieved_docs": [],
+  "llm_calls": [],
+  "answer": "I could not answer this question: every planned step failed, so there is no evidence to report.\n- research (t1): failed, worker_error\nPlease try again in a moment.",
+  "citations": [],
+  "cited_docs": [],
+  "done": {
+    "request_id": "d3ebd40ee90c",
+    "seq": 13,
+    "ts": "2026-10-27T06:54:44.417Z",
+    "t_ms": 496,
+    "status": "failed",
+    "plan_source": "fallback",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 0,
+      "ttft_ms": 495,
+      "total_ms": 496
+    },
+    "tokens_by_provider": {}
+  },
+  "last_event": "done",
+  "n_token_events": 1,
+  "n_distinct_reads_with_tokens": 1,
+  "first_token_client_ms": 506,
+  "last_token_client_ms": 506,
+  "first_token_server_ms": 495,
+  "last_token_server_ms": 495,
+  "done_client_ms": 507,
+  "total_client_ms": 507,
+  "expect_docs": [],
+  "expect_abstain": false
+}

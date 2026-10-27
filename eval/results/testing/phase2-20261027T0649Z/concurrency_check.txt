@@ -1,0 +1,10 @@
+request_id per stream: {'8bbd5d80fe58'} {'3b97da9d2d82'} disjoint: True
+time windows overlap (client ms): (17, 12502) (3, 30926)
+retrieved docs A: {'2307.03172v3'} B: {'2310.08560v2', '2606.06036v1'}
+A retrieval queries: ['Lost in the Middle language models use long contexts relevant information beginning middle end extended context models']
+B retrieval queries: ['MemGPT tiered memory main context system instructions working context FIFO queue recall archival memory eviction summarization functions', 'MemGPT archival storage recall storage database semantic search conversation_search archival_memory_insert core_memory_append core_memory_replace']
+cited chunks A: ['2307.03172v3::S1::000', '2307.03172v3::S1::001', '2307.03172v3::abstract::000']
+cited chunks B: ['2310.08560v2::S1::002', '2310.08560v2::S2.SS1::000', '2310.08560v2::S2.SS2::000', '2310.08560v2::S2.SS3::000', '2310.08560v2::S2::000']
+cited chunk overlap: set()
+A mentions MemGPT: False | B mentions 'Lost in the Middle': False
+seq monotonic A/B: True True

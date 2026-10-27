@@ -1,0 +1,152 @@
+{
+  "id": "L5_unicode",
+  "query": "Qu'est-ce que τ-bench évalue exactement ? Réponds brièvement en français.",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "d23befb04b8c"
+  ],
+  "event_counts": {
+    "citation": 2,
+    "done": 1,
+    "llm_result": 4,
+    "llm_route": 4,
+    "meta": 1,
+    "plan": 1,
+    "retrieval": 1,
+    "token": 126,
+    "tool_call": 1,
+    "tool_result": 1,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "d23befb04b8c",
+    "seq": 5,
+    "ts": "2026-10-27T06:50:50.370Z",
+    "t_ms": 4154,
+    "plan_summary": "Rechercher ce que τ-bench évalue et en fournir une brève synthèse en français avec citation.",
+    "source": "llm",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Retrouve le papier τ-bench dans le corpus et explique brièvement en français ce que ce benchmark évalue exactement : interactions agent–utilisateur–outils dans des scénarios réalistes, respect des politiques du domaine, réussite des tâches et fiabilité sur des essais répétés si confirmé par le papier. Fournis une citation et distingue les capacités évaluées des modalités de mesure, sans détails superflus.",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 done",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [
+    {
+      "query": "τ-bench benchmark user tool agent interactions domain policies task success repeated trials pass^k",
+      "k": 5
+    }
+  ],
+  "retrieved_docs": [
+    "2406.12045v1"
+  ],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 369,
+      "output_tokens": 136,
+      "latency_ms": 4150
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 520,
+      "output_tokens": 39,
+      "latency_ms": 2716
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 2381,
+      "output_tokens": 158,
+      "latency_ms": 4093
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 1272,
+      "output_tokens": 129,
+      "latency_ms": 2526
+    }
+  ],
+  "answer": "τ-bench évalue la capacité d’un agent IA à **accomplir des tâches en dialoguant avec un utilisateur simulé, en utilisant des outils/API et en respectant les règles propres au domaine**. [C4]\n\nLa réussite est vérifiée en comparant l’état final de la base de données à l’état cible attendu. Sa **fiabilité** est aussi mesurée par *pass^k* : la probabilité de réussir **tous les k essais** d’une même tâche, moyennée sur les tâches — et non au moins un essai parmi k. [C4][C1]",
+  "citations": [
+    {
+      "cite_id": "C4",
+      "chunk_id": "2406.12045v1::abstract::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2406.12045v1",
+      "section": "Abstract",
+      "text_head": "$τ$-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains — Abstract\nExisting benchmarks do not test language agents on their interaction with human users or ability to follow domain-specific rules, both of which are vital for deploying them in real world applications. We propose "
+    },
+    {
+      "cite_id": "C1",
+      "chunk_id": "2406.12045v1::S3::004",
+      "http": 200,
+      "match": true,
+      "doc_id": "2406.12045v1",
+      "section": "3 \\tau -bench: A benchmark for Tool-Agent-User Interaction",
+      "text_head": "$τ$-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains — 3 \\tau -bench: A benchmark for Tool-Agent-User Interaction\nPass^k metric. For tasks like code generation with good verification techniques (unit tests), the community has defined the pass@k (pass at k) metric as the chanc"
+    }
+  ],
+  "cited_docs": [
+    "2406.12045v1"
+  ],
+  "done": {
+    "request_id": "d23befb04b8c",
+    "seq": 147,
+    "ts": "2026-10-27T06:51:00.246Z",
+    "t_ms": 14030,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 522,
+      "llm_ms_sum": 13485,
+      "ttft_ms": 12609,
+      "total_ms": 14030
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 4542,
+        "output_tokens": 462,
+        "calls": 4
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 126,
+  "n_distinct_reads_with_tokens": 126,
+  "first_token_client_ms": 12612,
+  "last_token_client_ms": 13992,
+  "first_token_server_ms": 12609,
+  "last_token_server_ms": 13990,
+  "done_client_ms": 14032,
+  "total_client_ms": 14033,
+  "expect_docs": [
+    "2406.12045v1"
+  ],
+  "expect_abstain": false
+}

@@ -1,0 +1,31 @@
+{
+  "run_id": "phase2-20261027T0649Z",
+  "mode": "phase",
+  "phase": 2,
+  "verdict": "PHASE PASS",
+  "utc_started": "2026-10-27T06:40Z",
+  "source": {"branch": "phase-2-first-slice", "head": "b4ed3b3033fa4e8e96fb5b583eaf637b691164e3", "dirty": true,
+             "dirty_tree_sha256_of_diff_plus_untracked": "57ec62464bf7391ab26867f12674eaee6db04c6f495fb645b48aafcc258da3f7 (computed before tester files were added)"},
+  "environment": {"python": "3.13.16", "fastapi": "0.162.0", "starlette": "1.10.0", "uvicorn": "0.54.0", "langgraph": "1.2.18",
+                  "langchain-core": "1.7.0", "langchain-openai": "1.7.3", "chromadb": "1.5.9", "node": "v26.8.1", "browser": "HeadlessChrome/156 (installed Google Chrome, driven over CDP)"},
+  "index": {"chunks": 4521, "embedding_model": "text-embedding-3-small", "dims": 1536},
+  "offline_tests": {"passed": 159, "skipped": 6, "xfailed": 1, "new_tester_tests": 39},
+  "live": {
+    "generation_provider": "openai (direct)", "model_returned": "gpt-6.1-sol",
+    "queries": 10, "llm_calls": 43, "input_tokens": 100679, "output_tokens": 7563,
+    "estimated_cost_usd": "about 0.28 (estimate at $2/$10 per 1M; OpenRouter-listed price, OpenAI direct price unconfirmed)",
+    "cases": {
+      "L1_single_paper_method": "done, 378 token events over 5.6 s, 7/7 citations resolve to 2305.18323v1",
+      "L2_lowoverlap_paraphrase": "done, Reflexion identified, 2/2 resolve",
+      "L3_cross_paper": "done, cites both 2303.11366v4 and 2303.17651v2, 10/10 resolve",
+      "L4_out_of_scope": "done, empty plan, abstains, 0 citations",
+      "L5_unicode": "done, French + tau, 2/2 resolve to 2406.12045v1",
+      "L6_in_domain_unsupported": "done, abstains on ARC-AGI-3/GPT-5, cites only Voyager chunks for what it did report",
+      "C1+C2_concurrent": "overlapping windows, disjoint request ids, retrievals and citations",
+      "F1_invalid_key": "planner fallback, worker failed (401), honest failure text, done=failed in 0.5 s, canary absent",
+      "browser_turn1_toolformer": "23 distinct growing answer lengths while streaming, 7 cite links, viewer text == API",
+      "browser_turn2_hostile_markup": "no script execution, no img/script nodes, 0 javascript: links"
+    }
+  },
+  "secret_scan": {"secret_values_checked": 3, "files": 81, "hits": 0}
+}

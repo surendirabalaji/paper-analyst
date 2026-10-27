@@ -54,7 +54,19 @@ The corpus is defined by `data/corpus_seed.json` (committed list of arXiv IDs, t
 
 ## Run locally
 
-*TBD (Phase 2)*
+Needs the built index (`data/chroma_index`, see above) and `.env` with at least `OPENAI_API_KEY`.
+
+```bash
+.venv/bin/uvicorn app.main:app --port 8080
+# open http://localhost:8080 ; health check: curl localhost:8080/health
+# raw SSE stream:
+curl -N -X POST localhost:8080/api/chat -H 'content-type: application/json' \
+     -d '{"query": "How does Self-RAG decide when to retrieve?"}'
+```
+
+Endpoints: `POST /api/chat` (SSE stream of `meta`, `plan`, `transition`, `llm_route`, `llm_result`, `tool_call`, `tool_result`, `retrieval`, `worker_result`, `token`, `citation`, `error`, `done`; each event carries `request_id`, `seq`, `ts`), `GET /api/source/chunk/{chunk_id}`, `GET /health`, `GET /`.
+
+The app is single-turn: each question is answered independently.
 
 ## Deploy to a fresh GCP project
 

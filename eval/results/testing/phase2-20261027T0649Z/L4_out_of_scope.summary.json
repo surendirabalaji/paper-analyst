@@ -1,0 +1,90 @@
+{
+  "id": "L4_out_of_scope",
+  "query": "What is the boiling point of tungsten and who first isolated the element?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "83aeb6d944c2"
+  ],
+  "event_counts": {
+    "done": 1,
+    "llm_result": 2,
+    "llm_route": 2,
+    "meta": 1,
+    "plan": 1,
+    "token": 65,
+    "transition": 2
+  },
+  "plan": {
+    "request_id": "83aeb6d944c2",
+    "seq": 5,
+    "ts": "2026-10-27T06:50:42.673Z",
+    "t_ms": 1741,
+    "plan_summary": "No research tasks are needed because the question is unrelated to the indexed research papers.",
+    "source": "llm",
+    "notes": [],
+    "tasks": []
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->synthesize: no tasks planned"
+  ],
+  "tool_calls": [],
+  "retrieved_docs": [],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 364,
+      "output_tokens": 35,
+      "latency_ms": 1738
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 336,
+      "output_tokens": 163,
+      "latency_ms": 3532
+    }
+  ],
+  "answer": "The available evidence does not answer this. No sources were retrieved establishing tungsten’s boiling point or who first isolated it.\n\nI answer questions about indexed arXiv papers on LLM agents, tool use, multi-agent systems, and RAG. For example: “How do the indexed papers evaluate tool use by LLM agents?”",
+  "citations": [],
+  "cited_docs": [],
+  "done": {
+    "request_id": "83aeb6d944c2",
+    "seq": 74,
+    "ts": "2026-10-27T06:50:46.210Z",
+    "t_ms": 5278,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 5270,
+      "ttft_ms": 4685,
+      "total_ms": 5278
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 700,
+        "output_tokens": 198,
+        "calls": 2
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 65,
+  "n_distinct_reads_with_tokens": 65,
+  "first_token_client_ms": 4687,
+  "last_token_client_ms": 5273,
+  "first_token_server_ms": 4685,
+  "last_token_server_ms": 5272,
+  "done_client_ms": 5279,
+  "total_client_ms": 5280,
+  "expect_docs": [],
+  "expect_abstain": true
+}

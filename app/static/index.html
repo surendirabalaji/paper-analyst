@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper Analyst</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Agentic AI Paper Analyst</h1>
+    <p class="banner">Single-turn: each question is answered independently. Answers cite indexed arXiv passages.</p>
+  </header>
+  <main>
+    <section id="chat" aria-label="Chat">
+      <div id="turns" aria-live="polite"></div>
+      <form id="ask">
+        <textarea id="q" rows="2" maxlength="2000" placeholder="Ask about LLM agents, tool use, multi-agent systems or RAG papers…" required></textarea>
+        <button id="send" type="submit">Ask</button>
+      </form>
+    </section>
+    <aside id="panel" aria-label="Inspection panel">
+      <nav role="tablist">
+        <button role="tab" data-tab="routing" aria-selected="true">Routing</button>
+        <button role="tab" data-tab="trace" aria-selected="false">Trace</button>
+        <button role="tab" data-tab="sources" aria-selected="false">Sources</button>
+      </nav>
+      <div id="tab-routing" class="tab">
+        <table>
+          <thead><tr><th>Turn</th><th>Agent / call</th><th>Provider · model</th><th>Why</th><th>Tokens · ms</th></tr></thead>
+          <tbody id="routing-rows"></tbody>
+        </table>
+      </div>
+      <div id="tab-trace" class="tab" hidden><ol id="trace"></ol></div>
+      <div id="tab-sources" class="tab" hidden>
+        <ul id="sources"></ul>
+        <article id="viewer" hidden>
+          <h3 id="viewer-title"></h3>
+          <p class="muted" id="viewer-meta"></p>
+          <pre id="viewer-text"></pre>
+          <a id="viewer-link" target="_blank" rel="noopener noreferrer">Open on arXiv</a>
+        </article>
+      </div>
+    </aside>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
