@@ -17,11 +17,13 @@ A multi-agent system for CSCI 599 Assignment 2. It answers questions about a cor
 | Generation (provider 1) | OpenAI API (direct) | `gpt-6.1-sol` (verified 2026-10-27) |
 | Generation (provider 2) | Google Gemini via OpenRouter | `google/gemini-3.8-flash` (verified 2026-10-27) |
 | Embeddings | OpenAI API | `text-embedding-3-small` |
-| Live web retrieval | Tavily Remote MCP | `https://mcp.tavily.com/mcp/?tavilyApiKey=…` |
+| Live web retrieval (shared MCP tool) | Tavily Remote MCP, Streamable HTTP | `https://mcp.tavily.com/mcp/?tavilyApiKey=…` (key only as the query parameter; tool `tavily_search`, shared by Research and Summary) |
 | Vector store | Chroma (embedded, baked into the image) | |
 | Hosting | Google Cloud Run | |
 
 **Routing.** Each LLM call is routed in code by a hybrid cost/capability policy (`app/llm/policy.py`). Planning, tool-loop and simple single-source synthesis calls go to Gemini (cost). Synthesis that reconciles several papers or worker results, or answers a comparison question, goes to OpenAI (capability). On a provider error the call is retried once (transient errors only) and then falls back to the other provider, traced as a separate `fallback` event. Every decision appears in the UI's Routing tab and in a one-line summary under each answer. Full table: [docs/architecture.md §6](docs/architecture.md). Routing settings in `.env`: `GEMINI_REASONING_EFFORT` (default `low`), `OPENAI_REASONING_EFFORT` (empty = model default), `LLM_FALLBACK` (1), `LLM_TIMEOUT_S` (60). `ROUTER_FORCE_PROVIDER` is for evaluation runs only and is not deployed.
+
+**Live retrieval and MCP tool sharing.** Research and Summary each get a handle on the same Tavily Remote MCP `tavily_search` tool. Research uses it for current developments on a topic. It is unlocked when the planner marks a task `needs_live`, or when the best corpus similarity is below `RAG_MIN_SCORE` (0.55), which covers questions outside the corpus. Summary uses it to check one named paper's current status (venue, acceptance, follow-ups). Web results are cited as `W#` with their URL and retrieval time. Every call appears in the Trace tab with the calling agent. If Tavily fails (bad key, quota, network, no results), the answer continues from the papers and says that live results were unavailable. Settings: `TAVILY_API_KEY`, `TAVILY_TIMEOUT_S` (15), `TAVILY_MAX_RESULTS` (4), `RAG_MIN_SCORE` (0.55). Details: [docs/architecture.md §8](docs/architecture.md).
 
 ## Local setup
 
@@ -82,7 +84,7 @@ The image (multi-stage `python:3.13-slim`) installs the pinned requirements into
 
 ## Deploy to a fresh GCP project
 
-Prerequisites: the [gcloud CLI](https://cloud.google.com/sdk/docs/install), a GCP project with billing enabled (or credits), the built index in `data/` (see *Corpus ingestion*), and a filled-in `.env` (`OPENAI_API_KEY` and `OPENROUTER_API_KEY` are required; `TAVILY_API_KEY` is used from Phase 5).
+Prerequisites: the [gcloud CLI](https://cloud.google.com/sdk/docs/install), a GCP project with billing enabled (or credits), the built index in `data/` (see *Corpus ingestion*), and a filled-in `.env` (`OPENAI_API_KEY`, `OPENROUTER_API_KEY` and `TAVILY_API_KEY` are required; `scripts/deploy.sh` refuses to run without them).
 
 ```bash
 # 1. Authenticate and pick the project
@@ -123,7 +125,8 @@ Generation prices, checked **2026-10-27** (per 1M tokens, input / output). Re-ch
 | Model | Price | Source |
 |---|---|---|
 | `gpt-6.1-sol` (OpenAI direct) | $2.00 / $10.00 (cached input $0.10; long context over 272k tokens $4.00 / $15.00) | [OpenAI API pricing](https://developers.openai.com/api/docs/pricing), standard tier |
-| `google/gemini-3.8-flash` (via OpenRouter, BYOK) | **$1.50 / $7.50** used for costing (reasoning tokens billed as output) | OpenRouter's reported per-call upstream cost matches this exactly. [Google's pricing page](https://ai.google.dev/gemini-api/docs/pricing) lists it as the standard rate from 2027-01-01 and $0.75 / $3.75 through 2026-12-31. The [OpenRouter catalog](https://openrouter.ai/api/v1/models) lists $0.825 / $4.125, which does not apply to BYOK calls. We use the conservative reported rate until a Google bill confirms which applies. |
+| `google/gemini-3.8-flash` (via OpenRouter, BYOK) | **$1.50 / $7.50** used for costing (reasoning tokens billed as output) | OpenRouter's reported per-call upstream cost matches this exactly. [Google's pricing page](https://ai.google.dev/gemini-api/docs/pricing) lists it as the standard rate from 2027-01-01 and $0.75 / $3.75 through 2026-12-31. The [OpenRouter catalog](https://openrouter.ai/api/v1/models) lists $0.825 / $4.125, which does not apply to BYOK calls. We use the conservative reported rate until a Google bill confirms which applies. The calls run on the student's own Google key, so that key's Gemini free tier may cover some calls; treat Gemini figures as an upper bound. |
+| Tavily search (basic depth) | 1 API credit per search; 1,000 free credits per month; pay-as-you-go $0.008 per credit; paid plans from $30/month | [Tavily API credits](https://docs.tavily.com/documentation/api-credits), checked 2026-10-27. The app uses basic depth, ≤ 4 results and ≤ 2 searches per worker task, so a question costs 0–4 credits. The plan of the key used here was not verified |
 | `text-embedding-3-small` | $0.02 (input only) | OpenAI model page, checked 2026-10-26 |
 
-Access: an OpenAI API key and an OpenRouter API key. In this deployment, OpenRouter calls Google with the student's own key (BYOK), so OpenRouter reports $0 and the upstream cost is billed by Google. Each call's cost is shown in the Routing tab: OpenRouter's reported cost for Gemini calls ("reported"), and an estimate from the dated price table for OpenAI calls ("est."), because OpenAI returns no per-call cost. After the P4-D1 price fix, a typical question measured on 2026-10-27 cost about $0.02–0.04. Cloud Run costs are covered by GCP credits; LLM APIs bill separately. Full cost and latency numbers: Phase 9 (`docs/evaluation.md`).
+Access: an OpenAI API key, an OpenRouter API key and a Tavily API key. In this deployment, OpenRouter calls Google with the student's own key (BYOK), so OpenRouter reports $0 and the upstream cost is billed by Google. Each call's cost is shown in the Routing tab: OpenRouter's reported cost for Gemini calls ("reported"), and an estimate from the dated price table for OpenAI calls ("est."), because OpenAI returns no per-call cost. After the P4-D1 price fix, a typical question measured on 2026-10-27 cost about $0.02–0.04. Cloud Run costs are covered by GCP credits; LLM APIs bill separately. Full cost and latency numbers: Phase 9 (`docs/evaluation.md`).

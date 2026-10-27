@@ -1,0 +1,94 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "query": "Give me the gist of the Voyager paper and check whether it got accepted at a peer-reviewed venue. Separately, what are the latest open-ended embodied agents in Minecraft or similar games?",
+ "started_utc": "2026-10-27T17:44:36Z",
+ "checks": {
+  "incremental_render": false,
+  "both_agents_mcp_rows": false,
+  "mcp_rows_name_server_and_tool": true,
+  "w_link_opens_viewer": true,
+  "c_link_opens_chunk": true,
+  "no_console_errors": true,
+  "no_secret_shapes_in_dom": true
+ },
+ "final_sample": {
+  "turns": 1,
+  "len": 2909,
+  "streaming": false,
+  "cites": 15,
+  "status": "partial · TTFT 55438 ms · total 63547 ms · retrieval 662 ms · Gemini 5 calls, 3113→191 tok; OpenAI 8 calls, 30933→1801 tok · cost $0.0573 (8 call(s) estimated) · 1 fallback(s)",
+  "trace": 40,
+  "routes": 13,
+  "sources": 8,
+  "sendDisabled": false,
+  "t": 63.75
+ },
+ "streamed_lengths": 0,
+ "answer_links": [
+  "C1",
+  "C3",
+  "C2",
+  "C3",
+  "C1",
+  "C3",
+  "C1",
+  "W1",
+  "W5",
+  "W6",
+  "W8",
+  "W3",
+  "C1",
+  "W6",
+  "W8"
+ ],
+ "unlinked_markers": [],
+ "mcp_trace_rows": [
+  "#1 research ⇄ MCP tavily_search on tavily-remote-mcp (find current developments on the topic) \"Minecraft open ended agent 2026 2025 2026 VLM Nitro Generalist MineWorld Oasis Dreamer\": W1 arxiv.org, W2 www.emergentmind.com, W3 github.com, W4 starkaritra.github.io, 2328 ms",
+  "#1 research ⇄ MCP tavily_search on tavily-remote-mcp (find current developments on the topic) \"\"Minecraft\" \"agent\" \"2026\" \"arxiv\" \"2025\" OpenHA Optimus-3\": W5 github.com, W6 arxiv.org, W7 openaccess.thecvf.com, W8 huggingface.co, 1995 ms"
+ ],
+ "gate_rows": [
+  "#1 summary tavily_search enabled: planner marked the task needs_live",
+  "#1 research tavily_search enabled: planner marked the task needs_live"
+ ],
+ "routing_rows": [
+  "Turn #1: Give me the gist of the Voyager paper and check whether it got accepted at a peer-reviewed venue. Separately, what are the latest open-ended embodied agents in Minecraft or similar games?",
+  "#1planner / plannerGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Short structured planning (JSON task list); the low-cost model is sufficient.inputs: qu",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopOpenAI (direct API) · gpt-6.1-solavailability fallback: gemini-openrouter failed (empty_response); retrying this call on openai.inputs: round=3, tool_calls_so_far=2, contex",
+  "#1summary / worker_tool_loopOpenAI (direct API) · gpt-6.1-solavailability: Policy picked gemini-openrouter (cost), but it already failed in this request (empty_response); using openai.inputs: round=4,",
+  "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solavailability: Policy picked gemini-openrouter (cost), but it already failed in this request (empty_response); using openai.inputs: round=1",
+  "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solavailability: Policy picked gemini-openrouter (cost), but it already failed in this request (empty_response); using openai.inputs: round=2",
+  "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solavailability: Policy picked gemini-openrouter (cost), but it already failed in this request (empty_response); using openai.inputs: round=3",
+  "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solavailability: Policy picked gemini-openrouter (cost), but it already failed in this request (empty_response); using openai.inputs: round=4",
+  "#1research / worker_finalOpenAI (direct API) · gpt-6.1-solavailability: Policy picked gemini-openrouter (cost), but it already failed in this request (empty_response); using openai.inputs: round=5, to",
+  "#1synthesizer / synthesizeOpenAI (direct API) · gpt-6.1-solcapability: Multi-source synthesis needs the stronger model: 2 worker results to reconcile.inputs: n_tasks=2, n_tasks_ok=2, n_evidence=8, n_p"
+ ],
+ "sources": [
+  "#1C1 Voyager: An Open-Ended Embodied Agent with Large Language Models — Abstract (arXiv:2305.16291v2)",
+  "#1C3 Voyager: An Open-Ended Embodied Agent with Large Language Models — 2 Method › 2.2 Skill Library (arXiv:2305.16291v2)",
+  "#1C2 Voyager: An Open-Ended Embodied Agent with Large Language Models — 2 Method › 2.1 Automatic Curriculum (arXiv:2305.16291v2)",
+  "#1W1 [2509.13347] OpenHA: A Series of Open-Source Hierarchical ...CS25 · Notes 20 — Generalist Agents in Open-Ended WorldsMineDojo: Open-Ended Agent Framework - emergentmind.comOptimus-3: Towards Generalis — web, retrieved 2026-10-27T17:45:11.902Z (arxiv.org)",
+  "#1W5 Optimus-2: Multimodal Minecraft Agent with Goal ... — web, retrieved 2026-10-27T17:45:16.869Z (github.com)",
+  "#1W6 Optimus-3: Towards Generalist Multimodal Minecraft Agents with Scalable Task Experts — web, retrieved 2026-10-27T17:45:16.869Z (arxiv.org)",
+  "#1W8 Paper page - Optimus-3: Towards Generalist Multimodal Minecraft Agents with Scalable\n  Task Experts — web, retrieved 2026-10-27T17:45:16.869Z (huggingface.co)",
+  "#1W3 GitHub - lizaijing/Awesome-Minecraft-Agent: Paper List of Minecraft Agents · GitHub — web, retrieved 2026-10-27T17:45:11.902Z (github.com)"
+ ],
+ "w_viewer": {
+  "title": "W1 · [2509.13347] OpenHA: A Series of Open-Source Hierarchical ...CS25 · Notes 20 — Generalist Agents in Open-Ended WorldsMineDojo: Open-Ended Agent Framework - emergentmind.comOptimus-3: Towards Generalis",
+  "meta": "web · arxiv.org · retrieved 2026-10-27T17:45:11.902Z · found by research via tavily_search",
+  "text": "Sep 13, 2025 · The choice of action spaces is a critical yet unresolved challenge in developing capable, end-to-end trainable agents. This paper first presents a large-scale, systematic comparison of prominent abstracted action spaces and tokenizers for Vision-Language-Action (VL",
+  "link": "https://arxiv.org/abs/2509.13347",
+  "linkText": "Open web page"
+ },
+ "c_viewer": {
+  "title": "C1 · Voyager: An Open-Ended Embodied Agent with Large Language Models",
+  "meta": "arXiv:2305.16291v2 · Abstract · published 2023-05-25 · chunk 2305.16291v2::abstract::000",
+  "text": "Voyager: An Open-Ended Embodied Agent with Large Language Models — Abstract\nWe introduce Voyager, the first LLM-powered embodied lifelong learning agent in Minecraft that continuously explores the world, acquires diverse skills, and makes novel discoveries without human intervention. Voyager consist",
+  "link": "https://arxiv.org/html/2305.16291v2",
+  "linkText": "Open on arXiv"
+ },
+ "dom_secret_shapes": 0,
+ "console_errors": []
+}

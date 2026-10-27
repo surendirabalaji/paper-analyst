@@ -1,0 +1,10 @@
+[
+ {
+  "id": "R5_voyager_rerun2",
+  "query": "What GPU hardware and how many training hours did the Voyager paper use to fine-tune its policy network?"
+ },
+ {
+  "id": "R1_everest_rerun2",
+  "query": "At what temperature does water boil on the summit of Mount Everest?"
+ }
+]

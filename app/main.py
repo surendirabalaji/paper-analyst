@@ -15,16 +15,18 @@ from pydantic import BaseModel, Field
 
 from app.config import ROOT, load_settings
 from app.context import RequestContext
-from app.events import Emitter, sse_frame
+from app.events import Emitter, RedactingFilter, sse_frame
 from app.graph import run_request
 from app.llm.router import Router
+from app.mcp_tavily import TavilyMCP
 from app.rag import MAX_K, MIN_K, Retriever
 
 STATIC = ROOT / "app" / "static"
 KEEPALIVE_S = 15
 
-# httpx logs full request URLs at INFO; keep them out of the logs (credentials may sit in query strings).
-for name in ("httpx", "httpcore"):
+# httpx logs full request URLs at INFO and the MCP client logs session details; the Tavily key sits in the
+# MCP URL's query string, so keep these loggers at WARNING. RedactingFilter is a backstop on every handler.
+for name in ("httpx", "httpcore", "mcp", "langchain_mcp_adapters"):
     logging.getLogger(name).setLevel(logging.WARNING)
 log = logging.getLogger("paper_analyst")
 if not log.handlers:  # uvicorn only configures its own loggers; send ours to stderr (Cloud Run captures it)
@@ -35,16 +37,31 @@ if not log.handlers:  # uvicorn only configures its own loggers; send ours to st
     log.propagate = False
 
 
+def install_redaction() -> None:
+    """Attach RedactingFilter to our handler, the root handlers and uvicorn's handlers (idempotent)."""
+    loggers = [log, logging.getLogger(), *(logging.getLogger(n) for n in ("uvicorn", "uvicorn.error", "uvicorn.access"))]
+    for lg in loggers:
+        for h in lg.handlers:
+            if not any(isinstance(f, RedactingFilter) for f in h.filters):
+                h.addFilter(RedactingFilter())
+
+
+install_redaction()
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     t0 = time.perf_counter()
+    install_redaction()  # uvicorn has configured its handlers by now
     settings = load_settings()
     app.state.settings = settings
     app.state.retriever = Retriever(settings)  # refuses to start on an embedding-model mismatch
     app.state.router = Router(settings)
+    app.state.tavily = TavilyMCP(settings)
     log.info(
-        "index ready: %s chunks, %s-d, startup %.2fs",
-        app.state.retriever.count, app.state.retriever.dims, time.perf_counter() - t0,
+        "index ready: %s chunks, %s-d, live search %s, startup %.2fs",
+        app.state.retriever.count, app.state.retriever.dims,
+        "enabled" if app.state.tavily.enabled else "DISABLED (no TAVILY_API_KEY)", time.perf_counter() - t0,
     )
     yield
 
@@ -73,6 +90,7 @@ async def chat(body: ChatRequest, request: Request):
         router=s.router,
         retriever=s.retriever,
         emitter=Emitter(request_id),
+        tavily=s.tavily,
     )
 
     async def stream():
@@ -112,7 +130,8 @@ async def source_chunk(chunk_id: str, request: Request):
 @app.get("/health")
 async def health(request: Request):
     r = request.app.state.retriever
-    return {"status": "ok", "chunks": r.count, "embedding_dims": r.dims}
+    return {"status": "ok", "chunks": r.count, "embedding_dims": r.dims,
+            "live_search": "tavily-remote-mcp" if request.app.state.tavily.enabled else "disabled"}
 
 
 @app.get("/")

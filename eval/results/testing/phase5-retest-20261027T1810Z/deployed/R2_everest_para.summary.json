@@ -1,0 +1,298 @@
+{
+  "id": "R2_everest_para",
+  "query": "How hot does water need to get before it boils at the top of Everest?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "b5fb4f7063e5"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Look up the boiling point of water at the altitude and atmospheric pressure of Mount Everest.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find the boiling point of water at the summit of Mount Everest based on atmospheric pressure.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "boiling point of water at summit of Mount Everest atmospheric pressure"
+      }
+    ],
+    [
+      "research",
+      "corpus_search",
+      {
+        "query": "boiling point of water Mount Everest atmospheric pressure"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "research",
+      "corpus_search",
+      "ok",
+      null,
+      6
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "boiling point of water at summit of Mount Everest atmospheric pressure",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2317,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "en.wikipedia.org",
+        "chem.libretexts.org",
+        "sciencenotes.org",
+        "en.wikipedia.org"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2072,
+      "in": 590,
+      "out": 69,
+      "cost_usd": 0.0014025
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2368,
+      "in": 833,
+      "out": 29,
+      "cost_usd": 0.001467
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1842,
+      "in": 2410,
+      "out": 24,
+      "cost_usd": 0.003795
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2888,
+      "in": 6443,
+      "out": 169,
+      "cost_usd": 0.010932
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2921,
+      "in": 1766,
+      "out": 146,
+      "cost_usd": 0.003744
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 535,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1868,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 3786,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 3,
+        "evidence_tokens_est": 793,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W2",
+        "W1",
+        "W3"
+      ],
+      "rounds": 3,
+      "tool_calls": 2
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Physical_Properties_of_Matter/States_of_Matter/Phase_Transitions/Boiling",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:22.655Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://en.wikipedia.org/wiki/Boiling_point",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:22.655Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W3",
+      "type": "web",
+      "url": "https://sciencenotes.org/boiling-point-of-water-what-temperature-does-water-boil",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:22.655Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W1",
+    "W2",
+    "W3"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 364,
+      "llm_ms_sum": 12091,
+      "ttft_ms": 13918,
+      "total_ms": 14794
+    },
+    "cost_usd": 0.021341,
+    "cost_basis": {
+      "reported": 5
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 6,
+  "distinct_token_arrivals": 6,
+  "first_token_client_ms": 13973,
+  "total_client_ms": 14849,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "According to current web sources (retrieved October 27, 2026), boiling begins when the atmospheric pressure equals the vapor pressure of the liquid [W2]. \n\nAt the summit of Mount Everest (elevation 8,848 m / 29,029 ft), atmospheric pressure drops to approximately 33.7 to 34 kPa (about 255 Torr) [W1, W2]. Because of this lower pressure, water needs to reach approximately 69.9 °C to 71 °C (about 158 °F to 160 °F) before it boils [W1, W2, W3]."
+}

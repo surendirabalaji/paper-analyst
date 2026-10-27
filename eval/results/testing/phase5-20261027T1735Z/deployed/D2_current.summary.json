@@ -1,0 +1,333 @@
+{
+  "id": "D2_current",
+  "query": "Have there been any new results or leaderboard changes on the GAIA benchmark in the last few weeks?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "87c9032c7393"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Search the live web for recent leaderboard updates and state-of-the-art results on the GAIA benchmark in recent weeks.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Search the live web for recent updates, new top-performing models or agents, and leaderboard changes on the GAIA benchmark over the past few weeks.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "GAIA benchmark leaderboard Hugging Face recent results models"
+      }
+    ],
+    [
+      "research",
+      "tavily_search",
+      {
+        "time_range": "month",
+        "query": "\"GAIA benchmark\" \"leaderboard\" 2025 2026"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "GAIA benchmark leaderboard Hugging Face recent results models",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2143,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "www.linkedin.com",
+        "www.redcellpartners.com",
+        "h2o.ai",
+        "hal.cs.princeton.edu"
+      ]
+    },
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "\"GAIA benchmark\" \"leaderboard\" 2025 2026",
+      "time_range": "month",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2654,
+      "w_ids": [
+        "W5",
+        "W6",
+        "W7",
+        "W8"
+      ],
+      "domains": [
+        "leaderboard.steel.dev",
+        "llm-stats.com",
+        "browser-use.com",
+        "www.codesota.com"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 5172,
+      "in": 594,
+      "out": 150,
+      "cost_usd": 0.002016
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2166,
+      "in": 850,
+      "out": 27,
+      "cost_usd": 0.0014775
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2294,
+      "in": 2739,
+      "out": 44,
+      "cost_usd": 0.0044385
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4847,
+      "in": 4900,
+      "out": 410,
+      "cost_usd": 0.010425
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 5266,
+      "in": 2996,
+      "out": 431,
+      "cost_usd": 0.0077265
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 556,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1860,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 3167,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 4,
+        "evidence_tokens_est": 1159,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W5",
+        "W4",
+        "W2",
+        "W6"
+      ],
+      "rounds": 3,
+      "tool_calls": 2
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W5",
+      "type": "web",
+      "url": "https://leaderboard.steel.dev/results",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:37:04.515Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W4",
+      "type": "web",
+      "url": "https://hal.cs.princeton.edu/gaia",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:37:00.075Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://www.redcellpartners.com/perspectives/trase-tops-hugging-face-leaderboard-again",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:37:00.075Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W6",
+      "type": "web",
+      "url": "https://llm-stats.com/benchmarks/omnigaia",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:37:04.515Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W2",
+    "W4",
+    "W5",
+    "W6"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 19745,
+      "ttft_ms": 21458,
+      "total_ms": 24565
+    },
+    "cost_usd": 0.026085,
+    "cost_basis": {
+      "reported": 5
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 19,
+  "distinct_token_arrivals": 19,
+  "first_token_client_ms": 21529,
+  "total_client_ms": 24631,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "Current web findings (retrieved October 27, 2026) report the following recent standings and entries across GAIA and its multimodal variants:\n\n* **Top Benchmark Index Results:** Aggregated agent benchmark tracking lists top GAIA submissions surpassing 90% accuracy, including `openJiuwen-deepagent (GPT5/Gemini)` at rank #3 with 91.69% and `Lemon Agent` (Lenovo CTO Org) at rank #4 with 91.36% [W5]. Other notable high scores include `SU Zero (Shuqian Pro)` with 90.03%, `HALO V1217-1` by Microsoft AI Asia with 89.37%, and `JoinAI V2` with 89.04% [W5].\n* **Alternative and Research Leaderboards:** The Princeton HAL GAIA Leaderboard shows evaluations such as `HF Open Deep Research` using Claude Opus 4 scoring 57.58%, and `HAL Generalist Agent` reaching 56.36% when using Claude Haiku 4.5 or Claude-3.7 Sonnet [W4]. Earlier high-profile results include OpenAI's Deep Research reporting 72.57% on the validation set, and Trase recording an overall test score of 66.78% (70.3% validation) [W2].\n* **OmniGAIA Variant:** On the related multimodal benchmark `OmniGAIA` (updated October 2026), `Qwen3.8 Omni Flash` leads with a score of 0.740 (74.0%) [W6].\n\nThe available evidence does not answer whether there were specific leaderboard movements or rank changes restricted specifically to the last few weeks of October 2026, as the aggregated indices record timestamps and updates across late 2025 and 2026 without a fine-grained, day-by-day changelog for recent weeks."
+}

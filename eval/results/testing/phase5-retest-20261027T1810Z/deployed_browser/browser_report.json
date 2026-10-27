@@ -1,0 +1,1329 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "query": "Give me a short summary of the Reflexion paper, tell me which venue it was published at, and what newer self-reflection methods for LLM agents have appeared recently?",
+ "started_utc": "2026-10-27T18:13:51Z",
+ "checks": {
+  "incremental_render": true,
+  "both_agents_mcp_rows": true,
+  "mcp_rows_name_server_and_tool": true,
+  "w_link_opens_viewer": true,
+  "c_link_opens_chunk": true,
+  "no_console_errors": true,
+  "no_secret_shapes_in_dom": true
+ },
+ "final_sample": {
+  "turns": 1,
+  "len": 1879,
+  "streaming": false,
+  "cites": 11,
+  "status": "done · TTFT 36230 ms · total 41649 ms · retrieval 378 ms · Gemini 8 calls, 28426→919 tok; OpenAI 1 calls, 6166→625 tok · cost $0.0681 (1 call(s) estimated)",
+  "trace": 36,
+  "routes": 10,
+  "sources": 9,
+  "sendDisabled": false,
+  "t": 41.73
+ },
+ "samples": [
+  {
+   "t": 0.0,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.21,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.41,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.61,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.82,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.02,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.23,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.43,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.63,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.84,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.04,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.24,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.45,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.65,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.85,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.06,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.26,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.46,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.67,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.87,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.08,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.28,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.48,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.68,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.89,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.09,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.29,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.5,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.7,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.91,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.11,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.31,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.52,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.72,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.93,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.13,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.33,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.53,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.74,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.94,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.14,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.35,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.55,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.75,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.95,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.16,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.36,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.56,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.77,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.97,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.18,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.38,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.58,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.79,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.99,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.19,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.4,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.6,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.8,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.01,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.21,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.41,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.61,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.82,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.02,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.22,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.43,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.63,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.84,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.04,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.24,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.45,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.65,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.85,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.05,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.26,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.46,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.67,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.87,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.07,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.28,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.48,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.68,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.89,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.09,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.3,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.5,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.7,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.91,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.11,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.32,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.52,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.72,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.93,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.13,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.33,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.54,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.74,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.95,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.15,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.35,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.56,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.76,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.96,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.17,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.37,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.57,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.78,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.98,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.18,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.39,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.59,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.8,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.0,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.2,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.41,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.61,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.82,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.02,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.22,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.43,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.63,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.83,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.04,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.24,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.45,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.65,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.85,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.06,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.26,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.46,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.67,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.87,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.07,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.28,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.48,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.68,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.89,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.09,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.29,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.5,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.7,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.9,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.11,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.31,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.52,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.72,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.92,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.13,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.33,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.53,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.73,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.94,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.14,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.35,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.55,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.75,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.96,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.16,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.37,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.57,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.77,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.98,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.18,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.39,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.59,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.79,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.0,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.2,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.4,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.61,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.81,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.01,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.22,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.42,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.63,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.83,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.03,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.24,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.44,
+   "len": 68,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.64,
+   "len": 165,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.85,
+   "len": 224,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 37.05,
+   "len": 302,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 37.25,
+   "len": 439,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 37.46,
+   "len": 469,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 37.66,
+   "len": 560,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 37.87,
+   "len": 666,
+   "streaming": true,
+   "cites": 4
+  },
+  {
+   "t": 38.07,
+   "len": 757,
+   "streaming": true,
+   "cites": 4
+  },
+  {
+   "t": 38.27,
+   "len": 778,
+   "streaming": true,
+   "cites": 6
+  },
+  {
+   "t": 38.48,
+   "len": 878,
+   "streaming": true,
+   "cites": 6
+  },
+  {
+   "t": 38.68,
+   "len": 979,
+   "streaming": true,
+   "cites": 6
+  },
+  {
+   "t": 38.88,
+   "len": 1061,
+   "streaming": true,
+   "cites": 6
+  },
+  {
+   "t": 39.09,
+   "len": 1160,
+   "streaming": true,
+   "cites": 7
+  },
+  {
+   "t": 39.29,
+   "len": 1164,
+   "streaming": true,
+   "cites": 7
+  },
+  {
+   "t": 39.5,
+   "len": 1249,
+   "streaming": true,
+   "cites": 8
+  },
+  {
+   "t": 39.7,
+   "len": 1371,
+   "streaming": true,
+   "cites": 9
+  },
+  {
+   "t": 39.9,
+   "len": 1453,
+   "streaming": true,
+   "cites": 9
+  },
+  {
+   "t": 40.11,
+   "len": 1477,
+   "streaming": true,
+   "cites": 9
+  },
+  {
+   "t": 40.31,
+   "len": 1505,
+   "streaming": true,
+   "cites": 10
+  },
+  {
+   "t": 40.52,
+   "len": 1540,
+   "streaming": true,
+   "cites": 10
+  },
+  {
+   "t": 40.72,
+   "len": 1625,
+   "streaming": true,
+   "cites": 10
+  },
+  {
+   "t": 40.92,
+   "len": 1629,
+   "streaming": true,
+   "cites": 11
+  },
+  {
+   "t": 41.12,
+   "len": 1698,
+   "streaming": true,
+   "cites": 11
+  },
+  {
+   "t": 41.33,
+   "len": 1755,
+   "streaming": true,
+   "cites": 11
+  },
+  {
+   "t": 41.53,
+   "len": 1831,
+   "streaming": true,
+   "cites": 11
+  },
+  {
+   "t": 41.73,
+   "len": 1879,
+   "streaming": false,
+   "cites": 11
+  }
+ ],
+ "chat_stream_chunks": 328,
+ "chat_stream_arrival_span_s": 41.66,
+ "streamed_lengths": 26,
+ "answer_links": [
+  "C1",
+  "C2",
+  "C3",
+  "C1",
+  "W2",
+  "W3",
+  "W11",
+  "W11",
+  "W10",
+  "W12",
+  "W9"
+ ],
+ "unlinked_markers": [],
+ "mcp_trace_rows": [
+  "#1 summary ⇄ MCP tavily_search on tavily-remote-mcp (check the current status of a specific paper) \"Reflexion Shinn et al venue published\": W1 www.youtube.com, W2 collaborate.princeton.edu, W3 openreview.net, W4 github.com, 3047 ms",
+  "#1 research ⇄ MCP tavily_search on tavily-remote-mcp (find current developments on the topic) \"newer self-reflection self-correction methods LLM agents after Reflexion\": W5 arxiv.org, W6 www.turingpost.com, W7 medium.com, W8 www.youtube.com, 2226 ms",
+  "#1 research ⇄ MCP tavily_search on tavily-remote-mcp (find current developments on the topic) \"\"self-correction\" \"self-reflection\" agent LLM \"Self-Refine\" \"CRITIC\" \"Retroformer\"\": W9 labo-llm.fr, W10 arxiv.org, W11 futureagi.com, W12 medium.com, 1864 ms"
+ ],
+ "gate_rows": [
+  "#1 summary tavily_search enabled: planner marked the task needs_live",
+  "#1 research tavily_search enabled: planner marked the task needs_live"
+ ],
+ "routing_rows": [
+  "Turn #1: Give me a short summary of the Reflexion paper, tell me which venue it was published at, and what newer self-reflection methods for LLM agents have appeared recently?",
+  "#1planner / plannerGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Short structured planning (JSON task list); the low-cost model is sufficient.inputs: qu",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1synthesizer / synthesizeOpenAI (direct API) · gpt-6.1-solcapability: Multi-source synthesis needs the stronger model: 2 worker results to reconcile.inputs: n_tasks=2, n_tasks_ok=2, n_evidence=14, n_"
+ ],
+ "sources": [
+  "#1C1 Reflexion: Language Agents with Verbal Reinforcement Learning — Abstract (arXiv:2303.11366v4)",
+  "#1C2 Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection (arXiv:2303.11366v4)",
+  "#1C3 Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection (arXiv:2303.11366v4)",
+  "#1W2 Reflexion: Language Agents with Verbal Reinforcement Learning - Princeton University — web, retrieved 2026-10-27T18:13:57.205Z (collaborate.princeton.edu)",
+  "#1W3 Reflexion: language agents with verbal reinforcement learning | OpenReview — web, retrieved 2026-10-27T18:13:57.205Z (openreview.net)",
+  "#1W11 Self-Correcting Agent Loops: Detect and Fix Errors — web, retrieved 2026-10-27T18:14:16.788Z (futureagi.com)",
+  "#1W10 Retroformer: Retrospective Large Language Agents with Policy Gradient Optimization — web, retrieved 2026-10-27T18:14:16.788Z (arxiv.org)",
+  "#1W12 Building the Reflector: How Self-Correcting Agents Actually Compute What Went Wrong — web, retrieved 2026-10-27T18:14:16.788Z (medium.com)",
+  "#1W9 Reflection and self-critique — when agents correct themselves — Labo LLM — web, retrieved 2026-10-27T18:14:16.788Z (labo-llm.fr)"
+ ],
+ "w_viewer": {
+  "title": "W2 · Reflexion: Language Agents with Verbal Reinforcement Learning - Princeton University",
+  "meta": "web · collaborate.princeton.edu · retrieved 2026-10-27T18:13:57.205Z · found by summary via tavily_search",
+  "text": "author = \"Noah Shinn and Federico Cassano and Ashwin Gopinath and Karthik Narasimhan and Shunyu Yao\",\n\nnote = \"Publisher Copyright: {\\textcopyright} 2023 Neural information processing systems foundation. All rights reserved.; 37th Conference on Neural Information Processing Syste",
+  "link": "https://collaborate.princeton.edu/en/publications/reflexion-language-agents-with-verbal-reinforcement-learning-2",
+  "linkText": "Open web page"
+ },
+ "c_viewer": {
+  "title": "C1 · Reflexion: Language Agents with Verbal Reinforcement Learning",
+  "meta": "arXiv:2303.11366v4 · Abstract · published 2023-03-20 · chunk 2303.11366v4::abstract::000",
+  "text": "Reflexion: Language Agents with Verbal Reinforcement Learning — Abstract\nLarge language models (LLMs) have been increasingly used to interact with external\nenvironments (e.g., games, compilers, APIs) as goal-driven agents. However, it\nremains challenging for these language agents to quickly and effi",
+  "link": "https://arxiv.org/html/2303.11366v4",
+  "linkText": "Open on arXiv"
+ },
+ "dom_secret_shapes": 0,
+ "console_errors": []
+}

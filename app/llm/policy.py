@@ -5,8 +5,10 @@ Every generation call is routed from features computed in code (never by an LLM)
   call site          | rule                                                        | dimension  | provider
   -------------------+-------------------------------------------------------------+------------+------------------
   planner            | always                                                      | cost       | Gemini/OpenRouter
-  worker_tool_loop   | always (tool choice and query writing, short outputs)       | cost       | Gemini/OpenRouter
-  worker_final       | always (findings from evidence already in context)          | cost       | Gemini/OpenRouter
+  worker_tool_loop / | >= 3k tokens of full paper sections read, or >= 10k tokens  | capability | OpenAI
+  worker_final       | of context (faithful condensation of long source text)      |            |
+  worker_tool_loop   | otherwise (tool choice and query writing, short outputs)    | cost       | Gemini/OpenRouter
+  worker_final       | otherwise (findings from evidence already in context)       | cost       | Gemini/OpenRouter
   synthesize_no_task | greeting / off-scope reply, no evidence                     | cost       | Gemini/OpenRouter
   synthesize         | >= 2 completed tasks, or >= 3 distinct papers, or a          | capability | OpenAI
                      | comparison question over >= 2 papers, or evidence >= 6k tok  |            |
@@ -55,12 +57,18 @@ SYNTH_MIN_PAPERS = 3
 SYNTH_COMPARE_MIN_PAPERS = 2
 SYNTH_MIN_EVIDENCE_TOKENS = 6000
 
+# Thresholds for the capability side of worker calls (P4-N2). Full-section text comes from Summary's
+# get_paper_section; a short outline or a handful of search passages stays well below both.
+WORKER_LONG_SOURCE_TOKENS = 3000
+WORKER_LONG_CONTEXT_TOKENS = 10000
+
 # Per-attempt timeouts by call site (seconds). Structured calls are short; synthesis streams longer.
 TIMEOUTS = {"planner": 20.0, "worker_tool_loop": 25.0, "worker_final": 25.0}
 
 _COMPARE = re.compile(
     r"\b(compare[sd]?|comparison|comparing|versus|vs\.?|differ(s|ence|ences)?|contrast|trade-?offs?|"
-    r"similarit(y|ies)|relative to|better than|worse than|which (is|one) (better|more))\b",
+    r"similarit(y|ies)|relative to|better than|worse than|which (is|one) (better|more)|"
+    r"stacks? up|outperform(s|ed)?|head[- ]to[- ]head|as opposed to|unlike|distinguish(es)? between)\b",
     re.I,
 )
 
@@ -98,10 +106,24 @@ def _synth_reasons(f: dict) -> list[str]:
     return reasons
 
 
+def _worker_reasons(f: dict) -> list[str]:
+    reasons = []
+    if f.get("long_source_tokens_est", 0) >= WORKER_LONG_SOURCE_TOKENS:
+        reasons.append(f"~{f['long_source_tokens_est']} tokens of full paper sections in context")
+    if f.get("context_tokens_est", 0) >= WORKER_LONG_CONTEXT_TOKENS:
+        reasons.append(f"~{f['context_tokens_est']} tokens of context")
+    return reasons
+
+
 def base_choice(call_site: str, f: dict) -> Choice:
     """The policy table, before availability and force overrides."""
     if call_site == "planner":
         return Choice(GEMINI, "cost", "Short structured planning (JSON task list); the low-cost model is sufficient.")
+    if call_site in ("worker_tool_loop", "worker_final"):
+        reasons = _worker_reasons(f)
+        if reasons:
+            return Choice(OPENAI, "capability", "Faithful condensation of long source text needs the stronger "
+                                                "model: " + "; ".join(reasons) + ".")
     if call_site == "worker_tool_loop":
         return Choice(GEMINI, "cost", "Tool selection and search-query writing with short outputs; "
                                       "the low-cost, fast model is sufficient.")

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import re
 import time
 from datetime import datetime, timezone
@@ -24,12 +25,48 @@ _SECRET_PATTERNS = [
 ]
 
 
-def safe_error(e: BaseException, limit: int = 300) -> str:
-    """Exception text that is safe to show in the trace: credentials redacted, length capped."""
-    s = f"{type(e).__name__}: {e}"
+def redact(s: str) -> str:
+    """Remove credentials (Tavily query-string key, sk-/tvly- keys, bearer tokens) from any text."""
     for pat, rep in _SECRET_PATTERNS:
         s = pat.sub(rep, s)
-    return s[:limit]
+    return s
+
+
+def _exc_text(e: BaseException) -> str:
+    # anyio/MCP failures arrive as ExceptionGroups whose str() hides the real cause; show the leaves.
+    if isinstance(e, BaseExceptionGroup):
+        return "; ".join(_exc_text(x) for x in e.exceptions[:3])
+    return f"{type(e).__name__}: {e}"
+
+
+def safe_error(e: BaseException, limit: int = 300) -> str:
+    """Exception text that is safe to show in the trace: credentials redacted, length capped."""
+    return redact(_exc_text(e))[:limit]
+
+
+class RedactingFilter(logging.Filter):
+    """Backstop for log records: formats the message once and redacts credentials before any handler
+    writes it (attached to every handler at startup)."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        # Redact msg and each string arg in place, keeping the args structure: some formatters (uvicorn's
+        # AccessFormatter) unpack record.args, so it must stay a tuple (tester P5-D2).
+        if isinstance(record.msg, str):
+            record.msg = redact(record.msg)
+        if isinstance(record.args, tuple):
+            record.args = tuple(redact(a) if isinstance(a, str) else a for a in record.args)
+        elif isinstance(record.args, dict):
+            record.args = {k: (redact(v) if isinstance(v, str) else v) for k, v in record.args.items()}
+        try:
+            msg = record.getMessage()
+        except Exception:  # a broken format string must not drop the record
+            msg = str(record.msg)
+        if redact(msg) != msg:  # a secret hidden in a non-string arg: fall back to the formatted, redacted text
+            record.msg, record.args = redact(msg), None
+        if record.exc_info and record.exc_info[1] is not None:
+            record.exc_text = redact(logging.Formatter().formatException(record.exc_info))
+            record.exc_info = None
+        return True
 
 
 def utc_now() -> str:

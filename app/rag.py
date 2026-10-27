@@ -6,6 +6,7 @@ Stages (ingestion and chunking live in `ingest/`):
      AUGMENT_PROMPT inside <evidence>, separated from the instructions and marked as untrusted data.
   5. Generation: workers and the synthesizer answer from that evidence and cite the C# markers; the
      markers resolve to chunk ids through the registry and /api/source/chunk/{chunk_id}.
+Live web results from the shared Tavily MCP tool share the same registry as W# markers (URL + retrieval time).
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ import asyncio
 import re
 import time
 from dataclasses import asdict, dataclass
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
@@ -55,13 +56,25 @@ class Retriever:
             client=self.client, collection_name=settings.chroma_collection, embedding_function=self.embeddings
         )
 
-    async def search(self, query: str, k: int) -> list[ScoredChunk]:
+    async def search(self, query: str, k: int, doc_id: str | None = None) -> list[ScoredChunk]:
+        """Vector top-k; `doc_id` restricts the search to one paper (Summary's search_within_paper)."""
         k = max(MIN_K, min(MAX_K, int(k)))
         vec = await self.embeddings.aembed_query(query)
         if len(vec) != self.dims:
             raise EmbeddingMismatch(f"query embedding has {len(vec)} dims, index has {self.dims}; rebuild needed")
-        pairs = await asyncio.to_thread(self.store.similarity_search_by_vector_with_relevance_scores, vec, k)
+        where = {"doc_id": doc_id} if doc_id else None
+        pairs = await asyncio.to_thread(
+            self.store.similarity_search_by_vector_with_relevance_scores, vec, k, filter=where
+        )
         return [ScoredChunk(d.id, d.page_content, d.metadata, round(1.0 - dist, 4)) for d, dist in pairs]
+
+    async def paper_chunks(self, doc_id: str, section_id: str | None = None) -> list[ScoredChunk]:
+        """All chunks of one paper (or one section), in reading order. Metadata-filtered, no embedding call."""
+        where = {"doc_id": doc_id} if section_id is None else {"$and": [{"doc_id": doc_id}, {"section_id": section_id}]}
+        got = await asyncio.to_thread(self.collection.get, where=where, include=["documents", "metadatas"])
+        rows = [ScoredChunk(i, d, m or {}, 1.0) for i, d, m in zip(got["ids"], got["documents"], got["metadatas"])]
+        rows.sort(key=lambda c: (c.metadata.get("section_order", 0), c.metadata.get("chunk_index", 0)))
+        return rows
 
     def get_chunk(self, chunk_id: str) -> dict | None:
         if not CHUNK_ID_RE.match(chunk_id):
@@ -89,15 +102,17 @@ class Retriever:
 @dataclass
 class EvidenceRef:
     cite_id: str
-    type: str  # paper_chunk (later: web, sql_row, repo_file)
-    chunk_id: str
-    doc_id: str
+    type: str  # paper_chunk | web (later: sql_row, repo_file)
+    chunk_id: str  # empty for web results
+    doc_id: str  # arXiv versioned id; the domain for web results
     title: str
     section: str
     score: float
     text: str
-    href: str  # in-app source view
-    source_url: str  # original source (arXiv HTML anchor)
+    href: str  # in-app source view (chunks) or the URL itself (web)
+    source_url: str  # original source (arXiv HTML anchor or web URL)
+    retrieved_at: str = ""  # web results: UTC time of the Tavily call
+    agent: str = ""  # web results: the agent whose tavily_search call found it
 
     def public(self, with_text: bool = False) -> dict:
         d = asdict(self)
@@ -109,14 +124,33 @@ class EvidenceRef:
 class EvidenceRegistry:
     """Request-wide citation namespace. The same chunk always gets the same id within one request."""
 
-    PREFIX = {"paper_chunk": "C"}
+    PREFIX = {"paper_chunk": "C", "web": "W"}
 
     def __init__(self):
         self.by_cite: dict[str, EvidenceRef] = {}
         self._by_key: dict[str, str] = {}
         self._n: dict[str, int] = {}
+        # Relevance bookkeeping for the off-topic filter in synthesis (P5-D1/D3): the strongest similarity a
+        # chunk got from corpus-wide search, and chunks that were read or searched inside a named paper.
+        self.best_corpus_score: dict[str, float] = {}
+        self.in_paper: set[str] = set()
 
-    def register_chunk(self, c: ScoredChunk) -> EvidenceRef:
+    def register_chunk(self, c: ScoredChunk, scope: str = "corpus") -> EvidenceRef:
+        """`scope`: "corpus" for corpus-wide vector search, "paper" for Summary's reads and searches inside
+        one named paper (their scores are not comparable to corpus-wide ones)."""
+        ref = self._register_chunk(c)
+        if scope == "paper":
+            self.in_paper.add(ref.cite_id)
+        else:
+            self.best_corpus_score[ref.cite_id] = max(self.best_corpus_score.get(ref.cite_id, 0.0), c.score)
+        return ref
+
+    def corpus_off_topic(self, cite_id: str, floor: float) -> bool:
+        """True for a chunk seen only through corpus-wide search, never above `floor` similarity."""
+        return (cite_id not in self.in_paper and cite_id in self.best_corpus_score
+                and self.best_corpus_score[cite_id] < floor)
+
+    def _register_chunk(self, c: ScoredChunk) -> EvidenceRef:
         if c.chunk_id in self._by_key:
             return self.by_cite[self._by_key[c.chunk_id]]
         p = self.PREFIX["paper_chunk"]
@@ -136,6 +170,32 @@ class EvidenceRegistry:
         )
         self.by_cite[ref.cite_id] = ref
         self._by_key[c.chunk_id] = ref.cite_id
+        return ref
+
+    def register_web(self, *, url: str, title: str, content: str, score: float, retrieved_at: str,
+                     agent: str) -> EvidenceRef:
+        """A live web result. The same URL keeps one W# id within a request, whichever agent found it."""
+        key = f"web::{url}"
+        if key in self._by_key:
+            return self.by_cite[self._by_key[key]]
+        p = self.PREFIX["web"]
+        self._n[p] = self._n.get(p, 0) + 1
+        ref = EvidenceRef(
+            cite_id=f"{p}{self._n[p]}",
+            type="web",
+            chunk_id="",
+            doc_id=urlsplit(url).netloc.lower(),
+            title=title or url,
+            section=f"web, retrieved {retrieved_at}",
+            score=round(float(score or 0.0), 4),
+            text=content,
+            href=url,
+            source_url=url,
+            retrieved_at=retrieved_at,
+            agent=agent,
+        )
+        self.by_cite[ref.cite_id] = ref
+        self._by_key[key] = ref.cite_id
         return ref
 
     def get(self, cite_id: str) -> EvidenceRef | None:
@@ -168,6 +228,12 @@ def format_evidence(refs: list[EvidenceRef]) -> str:
         return "<evidence>\n(no evidence retrieved)\n</evidence>"
     items = []
     for r in refs:
+        if r.type == "web":
+            items.append(
+                f'<item id="{r.cite_id}" type="web" source="{_attr(r.source_url)}" title="{_attr(r.title)}" '
+                f'retrieved_at="{_attr(r.retrieved_at)}" score="{r.score:.2f}">\n{_body(r.text)}\n</item>'
+            )
+            continue
         items.append(
             f'<item id="{r.cite_id}" type="{r.type}" source="arXiv:{_attr(r.doc_id)}" title="{_attr(r.title)}" '
             f'section="{_attr(r.section)}" chunk_id="{_attr(r.chunk_id)}" score="{r.score:.2f}">\n'

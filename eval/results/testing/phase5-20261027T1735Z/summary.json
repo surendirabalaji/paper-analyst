@@ -1,0 +1,348 @@
+{
+ "run_id": "phase5-20261027T1735Z",
+ "source": "4005361 + dirty diff sha256[:16]=23ed0a01e4f3c3e9",
+ "deployed_revision": "paper-analyst-00005-zc8",
+ "image": "us-west1-docker.pkg.dev/changelens-510807/paper-analyst/paper-analyst@sha256:cde78fa46ab8158ba271769ce50077ce62acfd09d2fe69447634b5d4ad577902",
+ "static_assets_identical_to_local": true,
+ "runs": [
+  {
+   "id": "D1_sharing",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.054098,
+   "providers": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "web_search_agents": [
+    "summary",
+    "research",
+    "research"
+   ],
+   "web_status": [
+    "ok",
+    "ok",
+    "ok"
+   ],
+   "linked": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "W6",
+    "W8",
+    "W10",
+    "W11",
+    "W7"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 36973,
+   "total_ms": 47611
+  },
+  {
+   "id": "D2_current",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.026085,
+   "providers": [
+    "gemini-openrouter"
+   ],
+   "web_search_agents": [
+    "research",
+    "research"
+   ],
+   "web_status": [
+    "ok",
+    "ok"
+   ],
+   "linked": [
+    "W5",
+    "W4",
+    "W2",
+    "W6"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 21458,
+   "total_ms": 24565
+  },
+  {
+   "id": "D3_offtopic",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.039281,
+   "providers": [
+    "gemini-openrouter"
+   ],
+   "web_search_agents": [
+    "research",
+    "research"
+   ],
+   "web_status": [
+    "ok",
+    "ok"
+   ],
+   "linked": [
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6",
+    "W7",
+    "C1",
+    "C6"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 24875,
+   "total_ms": 27399
+  },
+  {
+   "id": "D3p_offtopic_paraphrase",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.025625,
+   "providers": [
+    "gemini-openrouter"
+   ],
+   "web_search_agents": [
+    "research"
+   ],
+   "web_status": [
+    "ok"
+   ],
+   "linked": [
+    "W2",
+    "W4",
+    "W1",
+    "W3"
+   ],
+   "dropped": [
+    "C1",
+    "C2"
+   ],
+   "secret_shapes": 0,
+   "ttft_ms": 19627,
+   "total_ms": 21003
+  },
+  {
+   "id": "D3r_offtopic_repeat",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.014183,
+   "providers": [
+    "gemini-openrouter"
+   ],
+   "web_search_agents": [
+    "research"
+   ],
+   "web_status": [
+    "ok"
+   ],
+   "linked": [
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 12634,
+   "total_ms": 13939
+  },
+  {
+   "id": "D4_abstain",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.048746,
+   "providers": [
+    "gemini-openrouter"
+   ],
+   "web_search_agents": [],
+   "web_status": [],
+   "linked": [
+    "C1",
+    "C5",
+    "C2",
+    "C6"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 23632,
+   "total_ms": 25465
+  },
+  {
+   "id": "D5_summary",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.043264,
+   "providers": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "web_search_agents": [],
+   "web_status": [],
+   "linked": [
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C1"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 21678,
+   "total_ms": 28311
+  },
+  {
+   "id": "D6_notincorpus",
+   "env": "deployed",
+   "status": "partial",
+   "cost_usd": 0.028383,
+   "providers": [
+    "gemini-openrouter"
+   ],
+   "web_search_agents": [
+    "summary",
+    "summary"
+   ],
+   "web_status": [
+    "ok",
+    "ok"
+   ],
+   "linked": [
+    "W1",
+    "W2",
+    "W3",
+    "W5",
+    "W6",
+    "W7"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 25644,
+   "total_ms": 28535
+  },
+  {
+   "id": "D7_offtopic2",
+   "env": "deployed",
+   "status": "done",
+   "cost_usd": 0.010884,
+   "providers": [
+    "gemini-openrouter"
+   ],
+   "web_search_agents": [
+    "research"
+   ],
+   "web_status": [
+    "ok"
+   ],
+   "linked": [
+    "W1",
+    "W3",
+    "W2"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 13889,
+   "total_ms": 14661
+  },
+  {
+   "id": "L1_fakekey_sharing",
+   "env": "local_fake_key",
+   "status": "partial",
+   "cost_usd": 0.093325,
+   "providers": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "web_search_agents": [
+    "summary",
+    "research"
+   ],
+   "web_status": [
+    "error:auth",
+    "error:auth"
+   ],
+   "linked": [
+    "C1",
+    "C12",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C15",
+    "C17",
+    "C18",
+    "C16"
+   ],
+   "dropped": [],
+   "secret_shapes": 0,
+   "ttft_ms": 41878,
+   "total_ms": 53554
+  },
+  {
+   "id": "deployed_browser",
+   "env": "deployed browser",
+   "status_line": "partial \u00b7 TTFT 55438 ms \u00b7 total 63547 ms \u00b7 retrieval 662 ms \u00b7 Gemini 5 calls, 3113\u2192191 tok; OpenAI 8 calls, 30933\u21921801 tok \u00b7 cost $0.0573 (8 call(s) estimated) \u00b7 1 fallback(s)",
+   "streamed_lengths": 0,
+   "mcp_rows": 2,
+   "links": [
+    "C1",
+    "C3",
+    "C2",
+    "C3",
+    "C1",
+    "C3",
+    "C1",
+    "W1",
+    "W5",
+    "W6",
+    "W8",
+    "W3",
+    "C1",
+    "W6",
+    "W8"
+   ],
+   "console_errors": 0,
+   "dom_secret_shapes": 0
+  },
+  {
+   "id": "deployed_browser_run2",
+   "env": "deployed browser",
+   "status_line": "done \u00b7 TTFT 38168 ms \u00b7 total 46652 ms \u00b7 retrieval 852 ms \u00b7 Gemini 9 calls, 33711\u2192951 tok; OpenAI 1 calls, 7629\u2192623 tok \u00b7 cost $0.0792 (1 call(s) estimated)",
+   "streamed_lengths": 41,
+   "mcp_rows": 2,
+   "links": [
+    "C1",
+    "C1",
+    "C2",
+    "W1",
+    "W3",
+    "W5",
+    "W6",
+    "W7",
+    "W7",
+    "W5"
+   ],
+   "console_errors": 0,
+   "dom_secret_shapes": 0
+  }
+ ],
+ "cloud_run_log_scan": {
+  "entries_since_1735Z": 1764,
+  "tavilyApiKey_unredacted": 0,
+  "tvly_unredacted": 0,
+  "sk_long": 0,
+  "logging_error_tracebacks_rev00005": 48,
+  "requests_rev00005": 48
+ }
+}

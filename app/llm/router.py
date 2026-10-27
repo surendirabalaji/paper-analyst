@@ -37,7 +37,7 @@ PROVIDER_LABELS = {
     OPENAI: "OpenAI (direct API)",
     GEMINI: "Google Gemini (served through OpenRouter)",
 }
-TRANSIENT = {"timeout", "rate_limit", "provider_unavailable"}
+TRANSIENT = {"timeout", "rate_limit", "provider_unavailable", "empty_response"}
 MAX_TRIES_PER_PROVIDER = 2
 
 
@@ -53,12 +53,15 @@ class OpenRouterChat(ChatOpenAI):
         if d.get("provider"):
             out["upstream_provider"] = d["provider"]
         usage = d.get("usage") or {}
-        cost = usage.get("cost")
-        upstream = (usage.get("cost_details") or {}).get("upstream_inference_cost")
-        if cost:
-            out["reported_cost_usd"] = cost
-        elif upstream:  # BYOK: OpenRouter bills 0 and reports what the upstream provider charges
-            out["reported_cost_usd"] = upstream
+        cost = usage.get("cost") or 0
+        upstream = (usage.get("cost_details") or {}).get("upstream_inference_cost") or 0
+        if usage.get("is_byok"):
+            # BYOK: OpenRouter's own fee (usually 0) plus what the upstream provider charges (P4-N6).
+            total = cost + upstream
+        else:
+            total = cost or upstream
+        if total:
+            out["reported_cost_usd"] = round(total, 10)
         return out
 
     def _convert_chunk_to_generation_chunk(self, chunk, default_chunk_class, base_generation_info):
@@ -148,6 +151,18 @@ def classify_error(e: BaseException) -> str:
     if isinstance(e, openai.APIStatusError):
         return "provider_unavailable" if getattr(e, "status_code", 0) >= 500 else "provider_error"
     return "worker_error"
+
+
+class EmptyResponse(Exception):
+    """The provider returned HTTP 200 with no text, no tool calls and no usage (seen from Gemini via
+    OpenRouter on Cloud Run, 2026-10-27). Treated as a transient provider failure: retry, then fall back."""
+
+
+def is_empty_completion(msg: Any) -> bool:
+    if not isinstance(msg, AIMessage):
+        return False
+    usage = msg.usage_metadata or {}
+    return not text_of(msg.content).strip() and not msg.tool_calls and not usage.get("output_tokens")
 
 
 def is_provider_error(e: BaseException) -> bool:
@@ -311,6 +326,12 @@ async def call_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], in
                 raise ProviderCallError(kind, e) from e
             raise
         raw = out.get("raw") if isinstance(out, dict) else out
+        if is_empty_completion(raw):
+            finish = (raw.response_metadata or {}).get("finish_reason")
+            e = EmptyResponse(f"empty completion from {dec.provider} (finish_reason={finish})")
+            record_llm_result(ctx, dec, raw, t0, status="error", attempt=n, error_kind="empty_response",
+                              error=safe_error(e))
+            raise ProviderCallError("empty_response", e)
         record_llm_result(ctx, dec, raw if isinstance(raw, AIMessage) else None, t0, attempt=n)
         return out
 

@@ -1,0 +1,257 @@
+{
+  "id": "D7_offtopic2",
+  "query": "Who was the architect of the Sydney Opera House, and when did it open?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "da87b5277765"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Look up the architect and opening date of the Sydney Opera House using web search.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find who designed the Sydney Opera House and the date it officially opened.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "Sydney Opera House architect opening date"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "Sydney Opera House architect opening date",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2215,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "en.wikipedia.org",
+        "mhnsw.au",
+        "www.britannica.com",
+        "www.sydneyoperahouse.com"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3207,
+      "in": 590,
+      "out": 140,
+      "cost_usd": 0.001935
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3702,
+      "in": 830,
+      "out": 58,
+      "cost_usd": 0.00168
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2951,
+      "in": 2100,
+      "out": 112,
+      "cost_usd": 0.00399
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2565,
+      "in": 1556,
+      "out": 126,
+      "cost_usd": 0.003279
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 530,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1708,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 3,
+        "evidence_tokens_est": 858,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W1",
+        "W3",
+        "W2"
+      ],
+      "rounds": 2,
+      "tool_calls": 1
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://en.wikipedia.org/wiki/Sydney_Opera_House",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:39:55.940Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W3",
+      "type": "web",
+      "url": "https://www.britannica.com/topic/Sydney-Opera-House",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:39:55.940Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://mhnsw.au/stories/general/the-myth-of-a-non-invitation-utzon",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:39:55.940Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W1",
+    "W2",
+    "W3"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 12425,
+      "ttft_ms": 13889,
+      "total_ms": 14661
+    },
+    "cost_usd": 0.010884,
+    "cost_basis": {
+      "reported": 4
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 6,
+  "distinct_token_arrivals": 6,
+  "first_token_client_ms": 13942,
+  "total_client_ms": 14715,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "According to web sources retrieved on October 27, 2026:\n\n* **Architect:** The Sydney Opera House was designed by Danish architect Jørn Utzon, who won an international design competition for the project announced in 1957 [W1], [W3]. Following Utzon's departure from the project in 1966, construction was completed by an Australian architectural team headed by Peter Hall [W1], [W2].\n* **Opening Date:** The building was formally opened by Queen Elizabeth II on October 20, 1973 [W1]."
+}

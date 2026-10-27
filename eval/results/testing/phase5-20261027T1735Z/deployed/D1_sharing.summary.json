@@ -1,0 +1,575 @@
+{
+  "id": "D1_sharing",
+  "query": "Can you summarize what the MetaGPT paper proposes and tell me whether it ended up being accepted at a conference? Also, which multi-agent coding frameworks are people actually adopting right now?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "1c6466863b3c"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Summarize MetaGPT and check its conference acceptance status, then research currently adopted multi-agent coding frameworks.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "summary",
+        "instruction": "Summarize the MetaGPT paper's core proposal, architecture, and findings, and check the live web for its conference publication/acceptance status.",
+        "needs_live": true,
+        "depends_on": []
+      },
+      {
+        "id": "t2",
+        "worker": "research",
+        "instruction": "Investigate current industry and community adoption trends of multi-agent coding frameworks (e.g., MetaGPT, ChatDev, AutoGen, CrewAI).",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "summary",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    },
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "summary",
+      "get_paper_outline",
+      {
+        "paper": "MetaGPT"
+      }
+    ],
+    [
+      "summary",
+      "tavily_search",
+      {
+        "query": "MetaGPT \"MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework\" accepted conference ICLR ACL"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      {
+        "paper": "2308.00352",
+        "section": "S3.SS1"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      {
+        "paper": "2308.00352",
+        "section": "S3.SS2"
+      }
+    ],
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "multi-agent coding frameworks adoption MetaGPT ChatDev AutoGen CrewAI GitHub stars popularity"
+      }
+    ],
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "\"ChatDev\" GitHub stars adoption open source multi-agent coding"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "summary",
+      "get_paper_outline",
+      "ok",
+      null,
+      1
+    ],
+    [
+      "summary",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      "ok",
+      null,
+      1
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      "ok",
+      null,
+      2
+    ],
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "summary",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "check the current status of a specific paper",
+      "query": "MetaGPT \"MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework\" accepted conference ICLR ACL",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3061,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "www.statmuse.com",
+        "www.sofascore.com",
+        "en.wikipedia.org",
+        "www.landofbasketball.com"
+      ]
+    },
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "multi-agent coding frameworks adoption MetaGPT ChatDev AutoGen CrewAI GitHub stars popularity",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2051,
+      "w_ids": [
+        "W5",
+        "W6",
+        "W7",
+        "W8"
+      ],
+      "domains": [
+        "www.youtube.com",
+        "www.zenml.io",
+        "www.ayautomate.com",
+        "github.com"
+      ]
+    },
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "\"ChatDev\" GitHub stars adoption open source multi-agent coding",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3429,
+      "w_ids": [
+        "W9",
+        "W10",
+        "W11",
+        "W12"
+      ],
+      "domains": [
+        "x.com",
+        "github.com",
+        "www.ibm.com",
+        "atoms.dev"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3110,
+      "in": 611,
+      "out": 133,
+      "cost_usd": 0.001914
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2183,
+      "in": 1197,
+      "out": 57,
+      "cost_usd": 0.002223
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2794,
+      "in": 3785,
+      "out": 155,
+      "cost_usd": 0.00684
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 5648,
+      "in": 5594,
+      "out": 362,
+      "cost_usd": 0.011106
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2332,
+      "in": 868,
+      "out": 34,
+      "cost_usd": 0.001557
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2397,
+      "in": 2270,
+      "out": 30,
+      "cost_usd": 0.00363
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4372,
+      "in": 3530,
+      "out": 302,
+      "cost_usd": 0.00756
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "upstream": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 16176,
+      "in": 5889,
+      "out": 749,
+      "cost_usd": 0.019268
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 603,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 2430,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 4286,
+        "long_source_tokens_est": 1822,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 576,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1784,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 2899,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "openai",
+      "model_id": "gpt-6.1-sol",
+      "dimension": "capability",
+      "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile.",
+      "features": {
+        "n_tasks_ok": 2,
+        "n_papers": 1,
+        "n_web": 10,
+        "evidence_tokens_est": 4063,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "summary",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "rounds": 3,
+      "tool_calls": 4
+    },
+    {
+      "task_id": "t2",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W7",
+        "W8",
+        "W6",
+        "W9",
+        "W10",
+        "W11"
+      ],
+      "rounds": 3,
+      "tool_calls": 2
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "C1",
+      "doc_id": "2308.00352v7",
+      "http": 200,
+      "match": true,
+      "section": "Abstract",
+      "text_head": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework — Abstract\nRemarkable progress has been made on automated problem solving through societies of agents based on large language models (LLMs). Existing LLM-based multi-agent "
+    },
+    {
+      "cite_id": "C2",
+      "doc_id": "2308.00352v7",
+      "http": 200,
+      "match": true,
+      "section": "3 MetaGPT: A Meta-programming Framework › 3.1 Agents in Standard Operating Procedures",
+      "text_head": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework — 3 MetaGPT: A Meta-programming Framework › 3.1 Agents in Standard Operating Procedures\nSpecialization of Roles\nUnambiguous role specialization enables the breakdown of com"
+    },
+    {
+      "cite_id": "C3",
+      "doc_id": "2308.00352v7",
+      "http": 200,
+      "match": true,
+      "section": "3 MetaGPT: A Meta-programming Framework › 3.2 Communication Protocol",
+      "text_head": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework — 3 MetaGPT: A Meta-programming Framework › 3.2 Communication Protocol\nStructured Communication Interfaces\nMost current LLM-based multi-agent frameworks (Li et al., 2023; Z"
+    },
+    {
+      "cite_id": "C4",
+      "doc_id": "2308.00352v7",
+      "http": 200,
+      "match": true,
+      "section": "3 MetaGPT: A Meta-programming Framework › 3.2 Communication Protocol",
+      "text_head": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework — 3 MetaGPT: A Meta-programming Framework › 3.2 Communication Protocol\nSharing all information with every agent can lead to information overload.\nDuring task execution, an "
+    },
+    {
+      "cite_id": "W6",
+      "type": "web",
+      "url": "https://www.zenml.io/blog/crewai-vs-autogen",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:36:23.853Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W8",
+      "type": "web",
+      "url": "https://github.com/foundationagents/metagpt",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:36:23.853Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W10",
+      "type": "web",
+      "url": "https://github.com/openbmb/ChatDev",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:36:28.304Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W11",
+      "type": "web",
+      "url": "https://www.ibm.com/think/tutorials/chatdev-chatchain-agent-communication-watsonx-ai",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:36:28.304Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W7",
+      "type": "web",
+      "url": "https://www.ayautomate.com/blog/best-multi-agent-frameworks",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:36:23.853Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "W10",
+    "W11",
+    "W6",
+    "W7",
+    "W8"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 16,
+      "llm_ms_sum": 39012,
+      "ttft_ms": 36973,
+      "total_ms": 47611
+    },
+    "cost_usd": 0.054098,
+    "cost_basis": {
+      "reported": 7,
+      "estimated": 1
+    },
+    "providers_used": [
+      "gemini-openrouter",
+      "openai"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 629,
+  "distinct_token_arrivals": 472,
+  "first_token_client_ms": 37277,
+  "total_client_ms": 47849,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "## What MetaGPT proposes\n\n**MetaGPT’s central idea is to organize LLM agents like a software team, using explicit workflows rather than free-form conversation.** It encodes standard operating procedures (SOPs) into prompt sequences so agents produce and check intermediate work, aiming to reduce cascading errors and hallucinations. [C1]\n\nIts software-development pipeline assigns five roles: **Product Manager → Architect → Project Manager → Engineer → QA Engineer**, covering requirements, system design, task allocation, implementation, and testing. [C2]\n\nTwo mechanisms distinguish the approach:\n- **Structured handoffs:** agents exchange documents, interface definitions, and diagrams rather than relying only on dialogue. [C3]\n- **Shared, selective communication:** agents publish to a shared message pool, subscribe to role-relevant information, and act once prerequisite inputs are available. [C3, C4]\n\nThe paper reports more coherent solutions than earlier chat-based multi-agent systems on collaborative software-engineering benchmarks; that is the paper’s reported result, not evidence of present-day production adoption. [C1]\n\n## Was it accepted at a conference?\n\n**The available evidence does not answer this.** An official conference listing, acceptance record, or proceedings entry is missing, so I cannot reliably confirm the venue or acceptance status.\n\n## Which frameworks have adoption signals now?\n\n**Web evidence retrieved October 27, 2026** identifies the following candidates, but some underlying statistics are older. [W6, W8, W10]\n\n| Framework | What the evidence shows |\n|---|---|\n| **MetaGPT** | Its GitHub repository shows approximately **71,000 stars and 9,000 forks**—substantial public interest in its software-team approach. [W8] |\n| **ChatDev** | Its repository shows approximately **34,300 stars and 4,300 forks**. The current **ChatDev 2.0 / DevAll** describes itself as a configurable, zero-code multi-agent platform extending beyond coding to other workflows. [W10] |\n| **AutoGen** | A ZenML comparison reports **48,400+ stars and 7,400+ forks**, but explicitly dates those figures to **August 2025**. It describes AutoGen as Microsoft’s conversation-driven, general-purpose multi-agent framework. [W6] |\n| **CrewAI** | The same source reports **35,400+ stars**, alongside **over 1.3 million monthly PyPI installs** and **100,000+ course-certified developers**; its comparison metrics are dated August 2025, not a fresh October 2026 measurement. [W6] |\n\n**Practical shortlist:** MetaGPT and ChatDev are the closer matches for software-team-style automation; AutoGen and CrewAI offer broader conversation-driven or role-based multi-agent orchestration. [C2, W11, W6, W7]\n\nFor “actually adopting” in the stronger sense of sustained production coding use, **the available evidence does not answer this**: verified deployment counts, active-user measurements, and comparable customer case studies are missing."
+}

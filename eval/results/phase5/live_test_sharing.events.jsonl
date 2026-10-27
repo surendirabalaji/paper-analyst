@@ -1,0 +1,555 @@
+{"event": "meta", "data": {"request_id": "live5", "seq": 1, "ts": "2026-10-27T16:55:51.948Z", "t_ms": 0, "single_turn": true, "k": 6, "workers": ["research", "summary"]}}
+{"event": "transition", "data": {"request_id": "live5", "seq": 2, "ts": "2026-10-27T16:55:51.948Z", "t_ms": 0, "from": "start", "to": "planner", "reason": "new request", "step": 0}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 3, "ts": "2026-10-27T16:55:51.948Z", "t_ms": 0, "call_site": "planner", "agent": "planner", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "dimension": "cost", "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.", "features": {"query_chars": 135, "comparison": false}, "reasoning_effort": "low", "timeout_s": 20.0, "price_checked": "2026-10-27", "decision_id": "e4a666e5", "provider_label": "Google Gemini (served through OpenRouter)"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 4, "ts": "2026-10-27T16:55:54.862Z", "t_ms": 2913, "decision_id": "e4a666e5", "agent": "planner", "call_site": "planner", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "model_returned": "google/gemini-3.8-flash", "upstream_provider": "Google AI Studio", "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 2913, "ttft_ms": null, "cost_usd": 0.001905, "cost_source": "reported", "est_cost_usd": 0.001905, "reported_cost_usd": 0.001905, "input_tokens": 605, "output_tokens": 133, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "plan", "data": {"request_id": "live5", "seq": 5, "ts": "2026-10-27T16:55:54.862Z", "t_ms": 2913, "plan_summary": "Investigate recent developments in LLM agent memory this year via live research, and verify the publication status of the Self-RAG paper.", "source": "llm", "notes": [], "tasks": [{"id": "t1", "worker": "research", "instruction": "Search for and synthesize the most recent developments and papers in LLM agent memory published this year.", "needs_live": true, "depends_on": []}, {"id": "t2", "worker": "summary", "instruction": "Check if the Self-RAG paper (Self-Reflective Retrieval-Augmented Generation) has been accepted at a peer-reviewed venue and identify the venue details.", "needs_live": true, "depends_on": []}]}}
+{"event": "transition", "data": {"request_id": "live5", "seq": 6, "ts": "2026-10-27T16:55:54.863Z", "t_ms": 2915, "from": "supervisor", "to": "research", "task_id": "t1", "reason": "task t1 ready (no dependencies)", "step": 1}}
+{"event": "tool_gate", "data": {"request_id": "live5", "seq": 7, "ts": "2026-10-27T16:55:54.864Z", "t_ms": 2916, "agent": "research", "tool": "tavily_search", "enabled": true, "reason": "planner marked the task needs_live"}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 8, "ts": "2026-10-27T16:55:54.865Z", "t_ms": 2916, "call_site": "worker_tool_loop", "agent": "research", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "dimension": "cost", "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.", "features": {"round": 1, "tool_calls_so_far": 0, "context_tokens_est": 529, "long_source_tokens_est": 0, "comparison": false}, "reasoning_effort": "low", "timeout_s": 25.0, "price_checked": "2026-10-27", "decision_id": "36ffc93a", "provider_label": "Google Gemini (served through OpenRouter)"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 9, "ts": "2026-10-27T16:56:02.422Z", "t_ms": 10474, "decision_id": "36ffc93a", "agent": "research", "call_site": "worker_tool_loop", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "model_returned": "google/gemini-3.8-flash", "upstream_provider": "Google AI Studio", "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 7557, "ttft_ms": null, "cost_usd": 0.0019335, "cost_source": "reported", "est_cost_usd": 0.001934, "reported_cost_usd": 0.0019335, "input_tokens": 829, "output_tokens": 92, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "tool_call", "data": {"request_id": "live5", "seq": 10, "ts": "2026-10-27T16:56:02.423Z", "t_ms": 10474, "agent": "research", "tool": "corpus_search", "args_safe": {"query": "LLM agent memory architecture external memory retrieval reflection"}}}
+{"event": "retrieval", "data": {"request_id": "live5", "seq": 11, "ts": "2026-10-27T16:56:03.560Z", "t_ms": 11612, "agent": "research", "query": "LLM agent memory architecture external memory retrieval reflection", "k": 6, "retrieval_ms": 1134, "chunks": [{"cite_id": "C1", "type": "paper_chunk", "chunk_id": "2502.12110v11::S2.SS1::000", "doc_id": "2502.12110v11", "title": "A-MEM: Agentic Memory for LLM Agents", "section": "2 Related Work \u203a 2.1 Memory for LLM Agents", "score": 0.6692, "href": "/api/source/chunk/2502.12110v11%3A%3AS2.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2502.12110v11#S2.SS1", "retrieved_at": "", "agent": ""}, {"cite_id": "C2", "type": "paper_chunk", "chunk_id": "2606.24535v1::S2.SS4::000", "doc_id": "2606.24535v1", "title": "Governed Shared Memory for Multi-Agent LLM Systems", "section": "2 Background and Related Work \u203a 2.4 Memory Governance, Security, and Privacy", "score": 0.6527, "href": "/api/source/chunk/2606.24535v1%3A%3AS2.SS4%3A%3A000", "source_url": "https://arxiv.org/html/2606.24535v1#S2.SS4", "retrieved_at": "", "agent": ""}, {"cite_id": "C3", "type": "paper_chunk", "chunk_id": "2606.06036v1::S5.SS1::000", "doc_id": "2606.06036v1", "title": "Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents", "section": "5 Experiments \u203a 5.1 Experiment Setup", "score": 0.6462, "href": "/api/source/chunk/2606.06036v1%3A%3AS5.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2606.06036v1#S5.SS1", "retrieved_at": "", "agent": ""}, {"cite_id": "C4", "type": "paper_chunk", "chunk_id": "2404.13501v1::S5.SS3::001", "doc_id": "2404.13501v1", "title": "A Survey on the Memory Mechanism of Large Language Model based Agents", "section": "5 How to Implement the Memory of LLM-based Agent \u203a 5.3 Memory Operations", "score": 0.6443, "href": "/api/source/chunk/2404.13501v1%3A%3AS5.SS3%3A%3A001", "source_url": "https://arxiv.org/html/2404.13501v1#S5.SS3", "retrieved_at": "", "agent": ""}, {"cite_id": "C5", "type": "paper_chunk", "chunk_id": "2404.13501v1::S5.SS1::000", "doc_id": "2404.13501v1", "title": "A Survey on the Memory Mechanism of Large Language Model based Agents", "section": "5 How to Implement the Memory of LLM-based Agent \u203a 5.1 Memory Sources", "score": 0.6426, "href": "/api/source/chunk/2404.13501v1%3A%3AS5.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2404.13501v1#S5.SS1", "retrieved_at": "", "agent": ""}, {"cite_id": "C6", "type": "paper_chunk", "chunk_id": "2502.12110v11::A1.SS1::000", "doc_id": "2502.12110v11", "title": "A-MEM: Agentic Memory for LLM Agents", "section": "A Experiment \u203a A.1 Detailed Baselines Introduction", "score": 0.6415, "href": "/api/source/chunk/2502.12110v11%3A%3AA1.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2502.12110v11#A1.SS1", "retrieved_at": "", "agent": ""}]}}
+{"event": "tool_result", "data": {"request_id": "live5", "seq": 12, "ts": "2026-10-27T16:56:03.561Z", "t_ms": 11612, "agent": "research", "tool": "corpus_search", "status": "ok", "latency_ms": 1138, "n_results": 6}}
+{"event": "tool_call", "data": {"request_id": "live5", "seq": 13, "ts": "2026-10-27T16:56:03.561Z", "t_ms": 11613, "agent": "research", "tool": "tavily_search", "args_safe": {"query": "LLM agent memory recent developments 2024 paper"}}}
+{"event": "web_search", "data": {"request_id": "live5", "seq": 14, "ts": "2026-10-27T16:56:07.195Z", "t_ms": 15247, "agent": "research", "tool": "tavily_search", "server": "tavily-remote-mcp", "transport": "streamable_http", "purpose": "find current developments on the topic", "query": "LLM agent memory recent developments 2024 paper", "time_range": null, "status": "ok", "latency_ms": 3633, "results": [{"cite_id": "W1", "url": "https://github.com/Shichun-Liu/Agent-Memory-Paper-List", "title": "GitHub - Shichun-Liu/Agent-Memory-Paper-List: The paper list of \"Memory in the Age of AI Agents: A Survey\" \u00b7 GitHub", "domain": "github.com", "score": 0.8695, "retrieved_at": "2026-10-27T16:56:03.561Z", "snippet": "[2024/09] Crafting Personalized Agents through Retrieval-Augmented Generation on Editable Memory Graphs. [paper]\n [2024/07] Human-inspired Episodic Memory for Infinite Context LLMs. [paper]\n [2024/07] Arigraph: Learning knowledge graph world models with episodic memory for llm ag"}, {"cite_id": "W2", "url": "https://aclanthology.org/2025.acl-long.413.pdf", "title": "2025.acl-long.413.pdf", "domain": "aclanthology.org", "score": 0.8639, "retrieved_at": "2026-10-27T16:56:03.561Z", "snippet": "as CoMemNN (Pei et al., 2021), introduce mecha-nisms to incrementally enrich user profiles dur-8417 ing dialogues. However, collecting substantial an-notations for training a personalized system for long-term use is hard (Tseng et al., 2024). Re-cent advancements focus on integra"}, {"cite_id": "W3", "url": "https://arxiv.org/html/2603.07670v1", "title": "Memory for Autonomous LLM Agents:Mechanisms, Evaluation, and Emerging Frontiers", "domain": "arxiv.org", "score": 0.8462, "retrieved_at": "2026-10-27T16:56:03.561Z", "snippet": "ChatDev [Qian et al., 2024] equips role-playing agents (CEO, CTO, programmer, tester) with shared memory to keep a project coherent across development phases.\nMetaGPT [Hong et al., 2024] structures this shared memory as standardized documents\u2014PRDs, design specs, code modules\u2014that"}, {"cite_id": "W4", "url": "https://www.alphaxiv.org/abs/2505.00675", "title": "Rethinking Memory in LLM based Agents: Representations, Operations, and Emerging Topics | alphaXiv", "domain": "www.alphaxiv.org", "score": 0.8229, "retrieved_at": "2026-10-27T16:56:03.561Z", "snippet": "This paper is frequently cited as a foundational system and benchmark for long-term memory. It exemplifies several core memory operations discussed in the survey, including consolidation, updating, and forgetting, making it central to the paper's conceptual framework.\n\nWanjun Zho"}]}}
+{"event": "tool_result", "data": {"request_id": "live5", "seq": 15, "ts": "2026-10-27T16:56:07.196Z", "t_ms": 15247, "agent": "research", "tool": "tavily_search", "status": "ok", "latency_ms": 3634, "n_results": 4}}
+{"event": "tool_call", "data": {"request_id": "live5", "seq": 16, "ts": "2026-10-27T16:56:07.196Z", "t_ms": 15247, "agent": "research", "tool": "tavily_search", "args_safe": {"query": "\"Self-RAG\" \"Learning to Retrieve, Generate, and Critique\" accepted venue ICLR NAACL"}}}
+{"event": "web_search", "data": {"request_id": "live5", "seq": 17, "ts": "2026-10-27T16:56:09.598Z", "t_ms": 17650, "agent": "research", "tool": "tavily_search", "server": "tavily-remote-mcp", "transport": "streamable_http", "purpose": "find current developments on the topic", "query": "\"Self-RAG\" \"Learning to Retrieve, Generate, and Critique\" accepted venue ICLR NAACL", "time_range": null, "status": "ok", "latency_ms": 2401, "results": [{"cite_id": "W5", "url": "https://selfrag.github.io", "title": "Self-RAG: Learning to Retrieve, Generate and Critique through Self-Reflection", "domain": "selfrag.github.io", "score": 0.7261, "retrieved_at": "2026-10-27T16:56:07.197Z", "snippet": "Self-Reflective Retrieval-Augmented Generation (Self-RAG) is a new framework to enhances an LM's quality and factuality through retrieval and self-reflection. Our framework trains a single arbitrary LM that adaptively retrieves passages on-demand (e.g., can retrieve multiple time"}, {"cite_id": "W6", "url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/25f7be9694d7b32d5cc670927b8091e1-Paper-Conference.pdf", "title": "SELF-RAG: LEARNING TO RETRIEVE, GENERATE, AND ...", "domain": "proceedings.iclr.cc", "score": 0.7228, "retrieved_at": "2026-10-27T16:56:07.197Z", "snippet": "Published as a conference paper at ICLR 2024 SELF-RAG: LEARNING TO RETRIEVE, GENERATE, AND CRITIQUE THROUGH SELF-REFLECTION Akari Asai\u2020, Zeqiu Wu\u2020, Yizhong Wang\u2020\u00a7, Avirup Sil\u2021, Hannaneh Hajishirzi\u2020\u00a7 \u2020University of Washington \u00a7Allen Institute for AI \u2021IBM Research AI {akari,zeqiuwu"}, {"cite_id": "W7", "url": "https://github.com/akariasai/self-rag", "title": "GitHub - AkariAsai/self-rag: This includes the original implementation of SELF-RAG: Learning to Retrieve, Generate and Critique through self-reflection by Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Si", "domain": "github.com", "score": 0.6742, "retrieved_at": "2026-10-27T16:56:07.197Z", "snippet": "Self-RAG (Figure right) is a new framework to train an arbitrary LM to learn to retrieve, generate, and critique to enhance the factuality and quality of generations, without hurting the versatility of LLMs. [...] ## Repository files navigation\n\n# SELF-RAG: Learning to Retrieve, "}, {"cite_id": "W8", "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/25f7be9694d7b32d5cc670927b8091e1-Abstract-Conference.html", "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection", "domain": "proceedings.iclr.cc", "score": 0.667, "retrieved_at": "2026-10-27T16:56:07.197Z", "snippet": "# Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection\n\nAkari Asai, Zeqiu Wu, Yizhong Wang, Avi Sil, Hannaneh Hajishirzi\n\nInternational Conference on Learning Representations 2024 (ICLR 2024) Conference\n\nBibtex Paper\n\n## Abstract"}]}}
+{"event": "tool_result", "data": {"request_id": "live5", "seq": 18, "ts": "2026-10-27T16:56:09.598Z", "t_ms": 17650, "agent": "research", "tool": "tavily_search", "status": "ok", "latency_ms": 2402, "n_results": 4}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 19, "ts": "2026-10-27T16:56:09.598Z", "t_ms": 17650, "call_site": "worker_tool_loop", "agent": "research", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "dimension": "cost", "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.", "features": {"round": 2, "tool_calls_so_far": 3, "context_tokens_est": 5373, "long_source_tokens_est": 0, "comparison": false}, "reasoning_effort": "low", "timeout_s": 25.0, "price_checked": "2026-10-27", "decision_id": "cc0181af", "provider_label": "Google Gemini (served through OpenRouter)"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 20, "ts": "2026-10-27T16:56:14.383Z", "t_ms": 22435, "decision_id": "cc0181af", "agent": "research", "call_site": "worker_tool_loop", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "model_returned": "google/gemini-3.8-flash", "upstream_provider": "Google AI Studio", "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 4784, "ttft_ms": null, "cost_usd": 0.012024, "cost_source": "reported", "est_cost_usd": 0.012024, "reported_cost_usd": 0.012024, "input_tokens": 6591, "output_tokens": 285, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "worker_result", "data": {"request_id": "live5", "seq": 21, "ts": "2026-10-27T16:56:14.383Z", "t_ms": 22435, "task_id": "t1", "agent": "research", "status": "done", "error_kind": null, "evidence_ids": ["C1", "C3", "C2", "C4", "C5", "W4", "W2", "W3", "W1", "W6", "W7", "W8"], "rounds": 2, "tool_calls": 3}}
+{"event": "transition", "data": {"request_id": "live5", "seq": 22, "ts": "2026-10-27T16:56:14.383Z", "t_ms": 22435, "from": "research", "to": "supervisor", "task_id": "t1", "reason": "t1 done", "step": 1}}
+{"event": "transition", "data": {"request_id": "live5", "seq": 23, "ts": "2026-10-27T16:56:14.384Z", "t_ms": 22436, "from": "supervisor", "to": "summary", "task_id": "t2", "reason": "task t2 ready (no dependencies)", "step": 2}}
+{"event": "tool_gate", "data": {"request_id": "live5", "seq": 24, "ts": "2026-10-27T16:56:14.385Z", "t_ms": 22437, "agent": "summary", "tool": "tavily_search", "enabled": true, "reason": "planner marked the task needs_live"}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 25, "ts": "2026-10-27T16:56:14.386Z", "t_ms": 22437, "call_site": "worker_tool_loop", "agent": "summary", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "dimension": "cost", "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.", "features": {"round": 1, "tool_calls_so_far": 0, "context_tokens_est": 565, "long_source_tokens_est": 0, "comparison": false}, "reasoning_effort": "low", "timeout_s": 25.0, "price_checked": "2026-10-27", "decision_id": "c507dc7f", "provider_label": "Google Gemini (served through OpenRouter)"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 26, "ts": "2026-10-27T16:56:19.241Z", "t_ms": 27293, "decision_id": "c507dc7f", "agent": "summary", "call_site": "worker_tool_loop", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "model_returned": "google/gemini-3.8-flash", "upstream_provider": "Google AI Studio", "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 4855, "ttft_ms": null, "cost_usd": 0.00192, "cost_source": "reported", "est_cost_usd": 0.00192, "reported_cost_usd": 0.00192, "input_tokens": 1175, "output_tokens": 21, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "tool_call", "data": {"request_id": "live5", "seq": 27, "ts": "2026-10-27T16:56:19.241Z", "t_ms": 27293, "agent": "summary", "tool": "get_paper_outline", "args_safe": {"paper": "Self-RAG"}}}
+{"event": "retrieval", "data": {"request_id": "live5", "seq": 28, "ts": "2026-10-27T16:56:19.250Z", "t_ms": 27302, "agent": "summary", "tool": "get_paper_outline", "query": "2310.11511", "k": 1, "retrieval_ms": 6, "chunks": [{"cite_id": "C7", "type": "paper_chunk", "chunk_id": "2310.11511v1::abstract::000", "doc_id": "2310.11511v1", "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection", "section": "Abstract", "score": 1.0, "href": "/api/source/chunk/2310.11511v1%3A%3Aabstract%3A%3A000", "source_url": "https://arxiv.org/html/2310.11511v1", "retrieved_at": "", "agent": ""}]}}
+{"event": "tool_result", "data": {"request_id": "live5", "seq": 29, "ts": "2026-10-27T16:56:19.251Z", "t_ms": 27303, "agent": "summary", "tool": "get_paper_outline", "status": "ok", "latency_ms": 9, "n_results": 1}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 30, "ts": "2026-10-27T16:56:19.251Z", "t_ms": 27303, "call_site": "worker_tool_loop", "agent": "summary", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "dimension": "cost", "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.", "features": {"round": 2, "tool_calls_so_far": 1, "context_tokens_est": 1563, "long_source_tokens_est": 0, "comparison": false}, "reasoning_effort": "low", "timeout_s": 25.0, "price_checked": "2026-10-27", "decision_id": "1b33c33c", "provider_label": "Google Gemini (served through OpenRouter)"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 31, "ts": "2026-10-27T16:56:21.977Z", "t_ms": 30028, "decision_id": "1b33c33c", "agent": "summary", "call_site": "worker_tool_loop", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "model_returned": "google/gemini-3.8-flash", "upstream_provider": "Google AI Studio", "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 2725, "ttft_ms": null, "cost_usd": 0.0040395, "cost_source": "reported", "est_cost_usd": 0.004039, "reported_cost_usd": 0.0040395, "input_tokens": 2463, "output_tokens": 46, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "tool_call", "data": {"request_id": "live5", "seq": 32, "ts": "2026-10-27T16:56:21.977Z", "t_ms": 30028, "agent": "summary", "tool": "tavily_search", "args_safe": {"query": "\"Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection\" venue OR accepted OR conference OR ICLR OR ACL"}}}
+{"event": "web_search", "data": {"request_id": "live5", "seq": 33, "ts": "2026-10-27T16:56:24.745Z", "t_ms": 32797, "agent": "summary", "tool": "tavily_search", "server": "tavily-remote-mcp", "transport": "streamable_http", "purpose": "check the current status of a specific paper", "query": "\"Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection\" venue OR accepted OR conference OR ICLR OR ACL", "time_range": null, "status": "ok", "latency_ms": 2767, "results": [{"cite_id": "W9", "url": "https://zenn.dev/knowledgesense/articles/67dd2a41fc4d0b", "title": "RAG\u306e\u6027\u80fd\u3092\u9ad8\u3081\u308b\u300cSelf-RAG\u300d\u30923\u5206\u3067\u7406\u89e3\u3059\u308b", "domain": "zenn.dev", "score": 0.7178, "retrieved_at": "2026-10-27T16:56:21.978Z", "snippet": "\"Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection ... \u300d2026/10/08 - 2026/10/27 \u00b7 \u958b\u50ac\u4e2d\u7b2c5\u56de Agentic AI"}, {"cite_id": "W10", "url": "https://www.mdpi.com/2079-9292/15/21/4962", "title": "AURORA-RAG: A Trustworthy Hierarchical Retrieval-Augmented Generation Architecture for Grounded Synthetic Personas", "domain": "www.mdpi.com", "score": 0.6737, "retrieved_at": "2026-10-27T16:56:21.978Z", "snippet": "20. Asai, A.; Wu, Z.; Wang, Y.; Sil, A.; Hajishirzi, H. Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection. In Proceedings of the International Conference on Learning Representations, Vienna, Austria, 7\u201311 May 2024. [Google Scholar] [...] Self-RAG lear"}]}}
+{"event": "tool_result", "data": {"request_id": "live5", "seq": 34, "ts": "2026-10-27T16:56:24.746Z", "t_ms": 32797, "agent": "summary", "tool": "tavily_search", "status": "ok", "latency_ms": 2768, "n_results": 2}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 35, "ts": "2026-10-27T16:56:24.746Z", "t_ms": 32798, "call_site": "worker_tool_loop", "agent": "summary", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "dimension": "cost", "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.", "features": {"round": 3, "tool_calls_so_far": 2, "context_tokens_est": 2011, "long_source_tokens_est": 0, "comparison": false}, "reasoning_effort": "low", "timeout_s": 25.0, "price_checked": "2026-10-27", "decision_id": "386d6792", "provider_label": "Google Gemini (served through OpenRouter)"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 36, "ts": "2026-10-27T16:56:26.806Z", "t_ms": 34858, "decision_id": "386d6792", "agent": "summary", "call_site": "worker_tool_loop", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "model_returned": "google/gemini-3.8-flash", "upstream_provider": "Google AI Studio", "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 2060, "ttft_ms": null, "cost_usd": 0.0049215, "cost_source": "reported", "est_cost_usd": 0.004921, "reported_cost_usd": 0.0049215, "input_tokens": 3081, "output_tokens": 40, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "tool_call", "data": {"request_id": "live5", "seq": 37, "ts": "2026-10-27T16:56:26.806Z", "t_ms": 34858, "agent": "summary", "tool": "tavily_search", "args_safe": {"query": "\"Self-RAG\" \"International Conference on Learning Representations\" OR \"ICLR 2024\""}}}
+{"event": "web_search", "data": {"request_id": "live5", "seq": 38, "ts": "2026-10-27T16:56:29.373Z", "t_ms": 37425, "agent": "summary", "tool": "tavily_search", "server": "tavily-remote-mcp", "transport": "streamable_http", "purpose": "check the current status of a specific paper", "query": "\"Self-RAG\" \"International Conference on Learning Representations\" OR \"ICLR 2024\"", "time_range": null, "status": "ok", "latency_ms": 2565, "results": [{"cite_id": "W11", "url": "https://learn.ifs.name/d/asai2024", "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection \u2014 flashcards \u00b7 learn.ifs.name", "domain": "learn.ifs.name", "score": 0.8152, "retrieved_at": "2026-10-27T16:56:26.807Z", "snippet": "Asai et al., 2024, Self-RAG (The Twelfth International Conference on Learning Representations (ICLR 2024)), \u00a73.2.2\n2. Why is Self-RAG\u2019s training cheaper than RLHF?\n\n   Critique is computed once, offline, and inserted into the training text; the generator then learns with a standa"}, {"cite_id": "W8", "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/25f7be9694d7b32d5cc670927b8091e1-Abstract-Conference.html", "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection", "domain": "proceedings.iclr.cc", "score": 0.667, "retrieved_at": "2026-10-27T16:56:07.197Z", "snippet": "# Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection\n\nAkari Asai, Zeqiu Wu, Yizhong Wang, Avi Sil, Hannaneh Hajishirzi\n\nInternational Conference on Learning Representations 2024 (ICLR 2024) Conference\n\nBibtex Paper\n\n## Abstract"}, {"cite_id": "W7", "url": "https://github.com/akariasai/self-rag", "title": "GitHub - AkariAsai/self-rag: This includes the original implementation of SELF-RAG: Learning to Retrieve, Generate and Critique through self-reflection by Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Si", "domain": "github.com", "score": 0.6742, "retrieved_at": "2026-10-27T16:56:07.197Z", "snippet": "Self-RAG (Figure right) is a new framework to train an arbitrary LM to learn to retrieve, generate, and critique to enhance the factuality and quality of generations, without hurting the versatility of LLMs. [...] ## Repository files navigation\n\n# SELF-RAG: Learning to Retrieve, "}, {"cite_id": "W6", "url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/25f7be9694d7b32d5cc670927b8091e1-Paper-Conference.pdf", "title": "SELF-RAG: LEARNING TO RETRIEVE, GENERATE, AND ...", "domain": "proceedings.iclr.cc", "score": 0.7228, "retrieved_at": "2026-10-27T16:56:07.197Z", "snippet": "Published as a conference paper at ICLR 2024 SELF-RAG: LEARNING TO RETRIEVE, GENERATE, AND CRITIQUE THROUGH SELF-REFLECTION Akari Asai\u2020, Zeqiu Wu\u2020, Yizhong Wang\u2020\u00a7, Avirup Sil\u2021, Hannaneh Hajishirzi\u2020\u00a7 \u2020University of Washington \u00a7Allen Institute for AI \u2021IBM Research AI {akari,zeqiuwu"}]}}
+{"event": "tool_result", "data": {"request_id": "live5", "seq": 39, "ts": "2026-10-27T16:56:29.373Z", "t_ms": 37425, "agent": "summary", "tool": "tavily_search", "status": "ok", "latency_ms": 2566, "n_results": 4}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 40, "ts": "2026-10-27T16:56:29.374Z", "t_ms": 37425, "call_site": "worker_tool_loop", "agent": "summary", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "dimension": "cost", "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.", "features": {"round": 4, "tool_calls_so_far": 3, "context_tokens_est": 3236, "long_source_tokens_est": 0, "comparison": false}, "reasoning_effort": "low", "timeout_s": 25.0, "price_checked": "2026-10-27", "decision_id": "cf8c66a3", "provider_label": "Google Gemini (served through OpenRouter)"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 41, "ts": "2026-10-27T16:56:32.283Z", "t_ms": 40335, "decision_id": "cf8c66a3", "agent": "summary", "call_site": "worker_tool_loop", "provider": "gemini-openrouter", "model_id": "google/gemini-3.8-flash", "model_returned": "google/gemini-3.8-flash", "upstream_provider": "Google AI Studio", "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 2909, "ttft_ms": null, "cost_usd": 0.0081975, "cost_source": "reported", "est_cost_usd": 0.008197, "reported_cost_usd": 0.0081975, "input_tokens": 4645, "output_tokens": 164, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "worker_result", "data": {"request_id": "live5", "seq": 42, "ts": "2026-10-27T16:56:32.284Z", "t_ms": 40335, "task_id": "t2", "agent": "summary", "status": "done", "error_kind": null, "evidence_ids": ["C7", "W10", "W8", "W7", "W6"], "rounds": 4, "tool_calls": 3}}
+{"event": "transition", "data": {"request_id": "live5", "seq": 43, "ts": "2026-10-27T16:56:32.284Z", "t_ms": 40335, "from": "summary", "to": "supervisor", "task_id": "t2", "reason": "t2 done", "step": 2}}
+{"event": "transition", "data": {"request_id": "live5", "seq": 44, "ts": "2026-10-27T16:56:32.284Z", "t_ms": 40336, "from": "supervisor", "to": "synthesize", "task_id": null, "reason": "no pending tasks", "step": 2}}
+{"event": "llm_route", "data": {"request_id": "live5", "seq": 45, "ts": "2026-10-27T16:56:32.286Z", "t_ms": 40337, "call_site": "synthesize", "agent": "synthesizer", "provider": "openai", "model_id": "gpt-6.1-sol", "dimension": "capability", "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile; evidence spans 5 papers.", "features": {"n_tasks": 2, "n_tasks_ok": 2, "n_evidence": 14, "n_papers": 5, "n_web": 8, "evidence_tokens_est": 3948, "comparison": false, "statuses": ["done", "done"]}, "reasoning_effort": null, "timeout_s": 60.0, "price_checked": "2026-10-27", "decision_id": "44941188", "provider_label": "OpenAI (direct API)"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 46, "ts": "2026-10-27T16:56:37.161Z", "t_ms": 45212, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 47, "ts": "2026-10-27T16:56:37.162Z", "t_ms": 45213, "delta": "For"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 48, "ts": "2026-10-27T16:56:37.165Z", "t_ms": 45216, "delta": " \u201c"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 49, "ts": "2026-10-27T16:56:37.165Z", "t_ms": 45217, "delta": "this"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 50, "ts": "2026-10-27T16:56:37.168Z", "t_ms": 45220, "delta": " year"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 51, "ts": "2026-10-27T16:56:37.169Z", "t_ms": 45220, "delta": ",\u201d"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 52, "ts": "2026-10-27T16:56:37.174Z", "t_ms": 45226, "delta": " I"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 53, "ts": "2026-10-27T16:56:37.175Z", "t_ms": 45227, "delta": "\u2019m"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 54, "ts": "2026-10-27T16:56:37.269Z", "t_ms": 45321, "delta": " treating"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 55, "ts": "2026-10-27T16:56:37.270Z", "t_ms": 45321, "delta": " the"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 56, "ts": "2026-10-27T16:56:37.290Z", "t_ms": 45342, "delta": " question"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 57, "ts": "2026-10-27T16:56:37.290Z", "t_ms": 45342, "delta": " as"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 58, "ts": "2026-10-27T16:56:37.307Z", "t_ms": 45358, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 59, "ts": "2026-10-27T16:56:37.307Z", "t_ms": 45359, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 60, "ts": "2026-10-27T16:56:37.312Z", "t_ms": 45364, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 61, "ts": "2026-10-27T16:56:37.312Z", "t_ms": 45364, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 62, "ts": "2026-10-27T16:56:37.315Z", "t_ms": 45367, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 63, "ts": "2026-10-27T16:56:37.315Z", "t_ms": 45367, "delta": " The"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 64, "ts": "2026-10-27T16:56:37.320Z", "t_ms": 45372, "delta": " available"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 65, "ts": "2026-10-27T16:56:37.320Z", "t_ms": 45372, "delta": " evidence"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 66, "ts": "2026-10-27T16:56:37.364Z", "t_ms": 45415, "delta": " highlights"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 67, "ts": "2026-10-27T16:56:37.364Z", "t_ms": 45416, "delta": " these"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 68, "ts": "2026-10-27T16:56:37.366Z", "t_ms": 45418, "delta": " developments"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 69, "ts": "2026-10-27T16:56:37.366Z", "t_ms": 45418, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 70, "ts": "2026-10-27T16:56:37.369Z", "t_ms": 45420, "delta": " but"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 71, "ts": "2026-10-27T16:56:37.369Z", "t_ms": 45421, "delta": " does"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 72, "ts": "2026-10-27T16:56:37.382Z", "t_ms": 45433, "delta": " not"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 73, "ts": "2026-10-27T16:56:37.382Z", "t_ms": 45434, "delta": " establish"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 74, "ts": "2026-10-27T16:56:37.382Z", "t_ms": 45434, "delta": " a"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 75, "ts": "2026-10-27T16:56:37.383Z", "t_ms": 45434, "delta": " complete"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 76, "ts": "2026-10-27T16:56:37.459Z", "t_ms": 45510, "delta": " ranking"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 77, "ts": "2026-10-27T16:56:37.459Z", "t_ms": 45511, "delta": " of"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 78, "ts": "2026-10-27T16:56:37.545Z", "t_ms": 45597, "delta": " the"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 79, "ts": "2026-10-27T16:56:37.546Z", "t_ms": 45597, "delta": " latest"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 80, "ts": "2026-10-27T16:56:37.548Z", "t_ms": 45600, "delta": " work"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 81, "ts": "2026-10-27T16:56:37.549Z", "t_ms": 45600, "delta": " through"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 82, "ts": "2026-10-27T16:56:37.629Z", "t_ms": 45681, "delta": " October"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 83, "ts": "2026-10-27T16:56:37.630Z", "t_ms": 45681, "delta": ".\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 84, "ts": "2026-10-27T16:56:37.641Z", "t_ms": 45693, "delta": "###"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 85, "ts": "2026-10-27T16:56:37.642Z", "t_ms": 45694, "delta": " L"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 86, "ts": "2026-10-27T16:56:37.732Z", "t_ms": 45783, "delta": "LM"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 87, "ts": "2026-10-27T16:56:37.733Z", "t_ms": 45784, "delta": " agent"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 88, "ts": "2026-10-27T16:56:37.736Z", "t_ms": 45788, "delta": " memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 89, "ts": "2026-10-27T16:56:37.737Z", "t_ms": 45788, "delta": ":"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 90, "ts": "2026-10-27T16:56:37.739Z", "t_ms": 45791, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 91, "ts": "2026-10-27T16:56:37.739Z", "t_ms": 45791, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 92, "ts": "2026-10-27T16:56:37.747Z", "t_ms": 45799, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 93, "ts": "2026-10-27T16:56:37.748Z", "t_ms": 45799, "delta": " developments"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 94, "ts": "2026-10-27T16:56:37.749Z", "t_ms": 45800, "delta": "\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 95, "ts": "2026-10-27T16:56:37.749Z", "t_ms": 45801, "delta": "-"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 96, "ts": "2026-10-27T16:56:37.750Z", "t_ms": 45802, "delta": " **"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 97, "ts": "2026-10-27T16:56:37.751Z", "t_ms": 45802, "delta": "Graph"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 98, "ts": "2026-10-27T16:56:37.826Z", "t_ms": 45878, "delta": "-based"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 99, "ts": "2026-10-27T16:56:37.827Z", "t_ms": 45878, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 100, "ts": "2026-10-27T16:56:37.843Z", "t_ms": 45895, "delta": " reconstruct"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 101, "ts": "2026-10-27T16:56:37.844Z", "t_ms": 45895, "delta": "ive"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 102, "ts": "2026-10-27T16:56:37.925Z", "t_ms": 45976, "delta": " memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 103, "ts": "2026-10-27T16:56:37.925Z", "t_ms": 45977, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 104, "ts": "2026-10-27T16:56:37.937Z", "t_ms": 45989, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 105, "ts": "2026-10-27T16:56:37.937Z", "t_ms": 45989, "delta": " The"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 106, "ts": "2026-10-27T16:56:37.941Z", "t_ms": 45992, "delta": " June"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 107, "ts": "2026-10-27T16:56:37.941Z", "t_ms": 45993, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 108, "ts": "2026-10-27T16:56:37.944Z", "t_ms": 45995, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 109, "ts": "2026-10-27T16:56:37.944Z", "t_ms": 45996, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 110, "ts": "2026-10-27T16:56:37.948Z", "t_ms": 46000, "delta": " paper"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 111, "ts": "2026-10-27T16:56:37.949Z", "t_ms": 46000, "delta": " *"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 112, "ts": "2026-10-27T16:56:37.951Z", "t_ms": 46002, "delta": "Memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 113, "ts": "2026-10-27T16:56:37.951Z", "t_ms": 46003, "delta": " is"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 114, "ts": "2026-10-27T16:56:37.955Z", "t_ms": 46006, "delta": " Re"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 115, "ts": "2026-10-27T16:56:37.955Z", "t_ms": 46007, "delta": "constructed"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 116, "ts": "2026-10-27T16:56:37.957Z", "t_ms": 46009, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 117, "ts": "2026-10-27T16:56:37.957Z", "t_ms": 46009, "delta": " Not"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 118, "ts": "2026-10-27T16:56:38.023Z", "t_ms": 46074, "delta": " Retrieved"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 119, "ts": "2026-10-27T16:56:38.023Z", "t_ms": 46075, "delta": ":"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 120, "ts": "2026-10-27T16:56:38.035Z", "t_ms": 46086, "delta": " Graph"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 121, "ts": "2026-10-27T16:56:38.035Z", "t_ms": 46087, "delta": " Memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 122, "ts": "2026-10-27T16:56:38.038Z", "t_ms": 46089, "delta": " for"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 123, "ts": "2026-10-27T16:56:38.038Z", "t_ms": 46090, "delta": " L"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 124, "ts": "2026-10-27T16:56:38.041Z", "t_ms": 46093, "delta": "LM"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 125, "ts": "2026-10-27T16:56:38.041Z", "t_ms": 46093, "delta": " Agents"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 126, "ts": "2026-10-27T16:56:38.043Z", "t_ms": 46095, "delta": "*"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 127, "ts": "2026-10-27T16:56:38.044Z", "t_ms": 46096, "delta": " presents"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 128, "ts": "2026-10-27T16:56:38.112Z", "t_ms": 46164, "delta": " M"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 129, "ts": "2026-10-27T16:56:38.113Z", "t_ms": 46164, "delta": "RA"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 130, "ts": "2026-10-27T16:56:38.123Z", "t_ms": 46175, "delta": "gent"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 131, "ts": "2026-10-27T16:56:38.123Z", "t_ms": 46175, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 132, "ts": "2026-10-27T16:56:38.210Z", "t_ms": 46261, "delta": " framing"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 133, "ts": "2026-10-27T16:56:38.210Z", "t_ms": 46262, "delta": " memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 134, "ts": "2026-10-27T16:56:38.225Z", "t_ms": 46277, "delta": " around"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 135, "ts": "2026-10-27T16:56:38.225Z", "t_ms": 46277, "delta": " graph"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 136, "ts": "2026-10-27T16:56:38.230Z", "t_ms": 46281, "delta": "-based"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 137, "ts": "2026-10-27T16:56:38.230Z", "t_ms": 46282, "delta": " reconstruction"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 138, "ts": "2026-10-27T16:56:38.238Z", "t_ms": 46290, "delta": " rather"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 139, "ts": "2026-10-27T16:56:38.238Z", "t_ms": 46290, "delta": " than"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 140, "ts": "2026-10-27T16:56:38.303Z", "t_ms": 46355, "delta": " retrieval"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 141, "ts": "2026-10-27T16:56:38.304Z", "t_ms": 46356, "delta": " alone"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 142, "ts": "2026-10-27T16:56:38.314Z", "t_ms": 46366, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 143, "ts": "2026-10-27T16:56:38.314Z", "t_ms": 46366, "delta": " Its"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 144, "ts": "2026-10-27T16:56:38.395Z", "t_ms": 46447, "delta": " experiments"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 145, "ts": "2026-10-27T16:56:38.396Z", "t_ms": 46447, "delta": " compare"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 146, "ts": "2026-10-27T16:56:38.398Z", "t_ms": 46450, "delta": " against"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 147, "ts": "2026-10-27T16:56:38.398Z", "t_ms": 46450, "delta": " R"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 148, "ts": "2026-10-27T16:56:38.403Z", "t_ms": 46455, "delta": "AG"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 149, "ts": "2026-10-27T16:56:38.404Z", "t_ms": 46455, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 150, "ts": "2026-10-27T16:56:38.409Z", "t_ms": 46461, "delta": " Lang"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 151, "ts": "2026-10-27T16:56:38.410Z", "t_ms": 46462, "delta": "Mem"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 152, "ts": "2026-10-27T16:56:38.490Z", "t_ms": 46541, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 153, "ts": "2026-10-27T16:56:38.490Z", "t_ms": 46542, "delta": " A"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 154, "ts": "2026-10-27T16:56:38.495Z", "t_ms": 46546, "delta": "-M"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 155, "ts": "2026-10-27T16:56:38.495Z", "t_ms": 46547, "delta": "em"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 156, "ts": "2026-10-27T16:56:38.501Z", "t_ms": 46552, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 157, "ts": "2026-10-27T16:56:38.501Z", "t_ms": 46552, "delta": " Memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 158, "ts": "2026-10-27T16:56:38.505Z", "t_ms": 46557, "delta": "OS"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 159, "ts": "2026-10-27T16:56:38.506Z", "t_ms": 46557, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 160, "ts": "2026-10-27T16:56:38.509Z", "t_ms": 46561, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 161, "ts": "2026-10-27T16:56:38.509Z", "t_ms": 46561, "delta": " Mem"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 162, "ts": "2026-10-27T16:56:38.593Z", "t_ms": 46645, "delta": "0"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 163, "ts": "2026-10-27T16:56:38.594Z", "t_ms": 46645, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 164, "ts": "2026-10-27T16:56:38.690Z", "t_ms": 46742, "delta": " The"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 165, "ts": "2026-10-27T16:56:38.691Z", "t_ms": 46742, "delta": " supplied"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 166, "ts": "2026-10-27T16:56:38.776Z", "t_ms": 46828, "delta": " excerpt"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 167, "ts": "2026-10-27T16:56:38.776Z", "t_ms": 46828, "delta": " does"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 168, "ts": "2026-10-27T16:56:38.789Z", "t_ms": 46841, "delta": " not"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 169, "ts": "2026-10-27T16:56:38.789Z", "t_ms": 46841, "delta": " establish"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 170, "ts": "2026-10-27T16:56:38.871Z", "t_ms": 46923, "delta": " which"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 171, "ts": "2026-10-27T16:56:38.871Z", "t_ms": 46923, "delta": " system"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 172, "ts": "2026-10-27T16:56:38.874Z", "t_ms": 46926, "delta": " performs"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 173, "ts": "2026-10-27T16:56:38.875Z", "t_ms": 46926, "delta": " best"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 174, "ts": "2026-10-27T16:56:38.879Z", "t_ms": 46931, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 175, "ts": "2026-10-27T16:56:38.880Z", "t_ms": 46931, "delta": " ["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 176, "ts": "2026-10-27T16:56:38.882Z", "t_ms": 46934, "delta": "C"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 177, "ts": "2026-10-27T16:56:38.883Z", "t_ms": 46934, "delta": "3"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 178, "ts": "2026-10-27T16:56:38.886Z", "t_ms": 46937, "delta": "]\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 179, "ts": "2026-10-27T16:56:38.886Z", "t_ms": 46938, "delta": "-"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 180, "ts": "2026-10-27T16:56:38.889Z", "t_ms": 46941, "delta": " **"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 181, "ts": "2026-10-27T16:56:38.890Z", "t_ms": 46941, "delta": "Govern"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 182, "ts": "2026-10-27T16:56:38.894Z", "t_ms": 46946, "delta": "ance"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 183, "ts": "2026-10-27T16:56:38.894Z", "t_ms": 46946, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 184, "ts": "2026-10-27T16:56:38.897Z", "t_ms": 46949, "delta": " security"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 185, "ts": "2026-10-27T16:56:38.898Z", "t_ms": 46949, "delta": " for"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 186, "ts": "2026-10-27T16:56:38.968Z", "t_ms": 47020, "delta": " shared"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 187, "ts": "2026-10-27T16:56:38.968Z", "t_ms": 47020, "delta": " memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 188, "ts": "2026-10-27T16:56:39.078Z", "t_ms": 47130, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 189, "ts": "2026-10-27T16:56:39.079Z", "t_ms": 47131, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 190, "ts": "2026-10-27T16:56:39.083Z", "t_ms": 47135, "delta": " The"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 191, "ts": "2026-10-27T16:56:39.083Z", "t_ms": 47135, "delta": " June"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 192, "ts": "2026-10-27T16:56:39.086Z", "t_ms": 47138, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 193, "ts": "2026-10-27T16:56:39.087Z", "t_ms": 47138, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 194, "ts": "2026-10-27T16:56:39.089Z", "t_ms": 47141, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 195, "ts": "2026-10-27T16:56:39.090Z", "t_ms": 47141, "delta": " paper"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 196, "ts": "2026-10-27T16:56:39.094Z", "t_ms": 47146, "delta": " *"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 197, "ts": "2026-10-27T16:56:39.094Z", "t_ms": 47146, "delta": "Govern"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 198, "ts": "2026-10-27T16:56:39.096Z", "t_ms": 47147, "delta": "ed"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 199, "ts": "2026-10-27T16:56:39.096Z", "t_ms": 47148, "delta": " Shared"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 200, "ts": "2026-10-27T16:56:39.100Z", "t_ms": 47151, "delta": " Memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 201, "ts": "2026-10-27T16:56:39.100Z", "t_ms": 47152, "delta": " for"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 202, "ts": "2026-10-27T16:56:39.106Z", "t_ms": 47157, "delta": " Multi"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 203, "ts": "2026-10-27T16:56:39.106Z", "t_ms": 47158, "delta": "-Agent"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 204, "ts": "2026-10-27T16:56:39.179Z", "t_ms": 47231, "delta": " L"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 205, "ts": "2026-10-27T16:56:39.180Z", "t_ms": 47231, "delta": "LM"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 206, "ts": "2026-10-27T16:56:39.181Z", "t_ms": 47232, "delta": " Systems"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 207, "ts": "2026-10-27T16:56:39.181Z", "t_ms": 47233, "delta": "*"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 208, "ts": "2026-10-27T16:56:39.183Z", "t_ms": 47235, "delta": " treats"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 209, "ts": "2026-10-27T16:56:39.184Z", "t_ms": 47235, "delta": " memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 210, "ts": "2026-10-27T16:56:39.188Z", "t_ms": 47239, "delta": " as"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 211, "ts": "2026-10-27T16:56:39.188Z", "t_ms": 47240, "delta": " a"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 212, "ts": "2026-10-27T16:56:39.309Z", "t_ms": 47361, "delta": " security"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 213, "ts": "2026-10-27T16:56:39.309Z", "t_ms": 47361, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 214, "ts": "2026-10-27T16:56:39.312Z", "t_ms": 47364, "delta": " privacy"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 215, "ts": "2026-10-27T16:56:39.312Z", "t_ms": 47364, "delta": " surface"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 216, "ts": "2026-10-27T16:56:39.366Z", "t_ms": 47417, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 217, "ts": "2026-10-27T16:56:39.366Z", "t_ms": 47417, "delta": " not"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 218, "ts": "2026-10-27T16:56:39.371Z", "t_ms": 47423, "delta": " merely"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 219, "ts": "2026-10-27T16:56:39.371Z", "t_ms": 47423, "delta": " a"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 220, "ts": "2026-10-27T16:56:39.376Z", "t_ms": 47428, "delta": " retrieval"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 221, "ts": "2026-10-27T16:56:39.376Z", "t_ms": 47428, "delta": " index"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 222, "ts": "2026-10-27T16:56:39.452Z", "t_ms": 47504, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 223, "ts": "2026-10-27T16:56:39.452Z", "t_ms": 47504, "delta": " It"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 224, "ts": "2026-10-27T16:56:39.466Z", "t_ms": 47517, "delta": " discusses"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 225, "ts": "2026-10-27T16:56:39.466Z", "t_ms": 47518, "delta": " extraction"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 226, "ts": "2026-10-27T16:56:39.551Z", "t_ms": 47602, "delta": " of"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 227, "ts": "2026-10-27T16:56:39.551Z", "t_ms": 47603, "delta": " private"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 228, "ts": "2026-10-27T16:56:39.665Z", "t_ms": 47716, "delta": " interactions"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 229, "ts": "2026-10-27T16:56:39.665Z", "t_ms": 47717, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 230, "ts": "2026-10-27T16:56:39.681Z", "t_ms": 47732, "delta": " scoped"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 231, "ts": "2026-10-27T16:56:39.681Z", "t_ms": 47733, "delta": " retrieval"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 232, "ts": "2026-10-27T16:56:39.743Z", "t_ms": 47794, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 233, "ts": "2026-10-27T16:56:39.743Z", "t_ms": 47795, "delta": " provenance"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 234, "ts": "2026-10-27T16:56:39.755Z", "t_ms": 47807, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 235, "ts": "2026-10-27T16:56:39.755Z", "t_ms": 47807, "delta": " information"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 236, "ts": "2026-10-27T16:56:39.759Z", "t_ms": 47811, "delta": "-flow"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 237, "ts": "2026-10-27T16:56:39.760Z", "t_ms": 47812, "delta": " controls"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 238, "ts": "2026-10-27T16:56:39.838Z", "t_ms": 47889, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 239, "ts": "2026-10-27T16:56:39.838Z", "t_ms": 47890, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 240, "ts": "2026-10-27T16:56:39.937Z", "t_ms": 47988, "delta": " unauthorized"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 241, "ts": "2026-10-27T16:56:39.937Z", "t_ms": 47989, "delta": " leakage"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 242, "ts": "2026-10-27T16:56:39.941Z", "t_ms": 47993, "delta": " across"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 243, "ts": "2026-10-27T16:56:39.942Z", "t_ms": 47993, "delta": " agent"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 244, "ts": "2026-10-27T16:56:39.951Z", "t_ms": 48002, "delta": " boundaries"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 245, "ts": "2026-10-27T16:56:39.951Z", "t_ms": 48003, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 246, "ts": "2026-10-27T16:56:39.956Z", "t_ms": 48007, "delta": " ["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 247, "ts": "2026-10-27T16:56:39.956Z", "t_ms": 48008, "delta": "C"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 248, "ts": "2026-10-27T16:56:39.960Z", "t_ms": 48011, "delta": "2"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 249, "ts": "2026-10-27T16:56:39.960Z", "t_ms": 48012, "delta": "]\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 250, "ts": "2026-10-27T16:56:39.963Z", "t_ms": 48015, "delta": "-"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 251, "ts": "2026-10-27T16:56:39.964Z", "t_ms": 48015, "delta": " **"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 252, "ts": "2026-10-27T16:56:40.132Z", "t_ms": 48184, "delta": "Evaluation"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 253, "ts": "2026-10-27T16:56:40.133Z", "t_ms": 48184, "delta": " across"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 254, "ts": "2026-10-27T16:56:40.150Z", "t_ms": 48202, "delta": " long"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 255, "ts": "2026-10-27T16:56:40.150Z", "t_ms": 48202, "delta": " conversations"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 256, "ts": "2026-10-27T16:56:40.158Z", "t_ms": 48209, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 257, "ts": "2026-10-27T16:56:40.158Z", "t_ms": 48210, "delta": " multiple"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 258, "ts": "2026-10-27T16:56:40.166Z", "t_ms": 48218, "delta": " sessions"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 259, "ts": "2026-10-27T16:56:40.167Z", "t_ms": 48219, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 260, "ts": "2026-10-27T16:56:40.180Z", "t_ms": 48232, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 261, "ts": "2026-10-27T16:56:40.181Z", "t_ms": 48232, "delta": " M"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 262, "ts": "2026-10-27T16:56:40.181Z", "t_ms": 48233, "delta": "RA"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 263, "ts": "2026-10-27T16:56:40.182Z", "t_ms": 48233, "delta": "gent"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 264, "ts": "2026-10-27T16:56:40.230Z", "t_ms": 48281, "delta": " evaluates"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 265, "ts": "2026-10-27T16:56:40.230Z", "t_ms": 48282, "delta": " on"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 266, "ts": "2026-10-27T16:56:40.242Z", "t_ms": 48294, "delta": " Lo"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 267, "ts": "2026-10-27T16:56:40.243Z", "t_ms": 48294, "delta": "Co"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 268, "ts": "2026-10-27T16:56:40.245Z", "t_ms": 48296, "delta": "Mo"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 269, "ts": "2026-10-27T16:56:40.245Z", "t_ms": 48296, "delta": " for"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 270, "ts": "2026-10-27T16:56:40.250Z", "t_ms": 48301, "delta": " long"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 271, "ts": "2026-10-27T16:56:40.250Z", "t_ms": 48302, "delta": " conversational"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 272, "ts": "2026-10-27T16:56:40.254Z", "t_ms": 48305, "delta": " memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 273, "ts": "2026-10-27T16:56:40.254Z", "t_ms": 48306, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 274, "ts": "2026-10-27T16:56:40.258Z", "t_ms": 48309, "delta": " Long"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 275, "ts": "2026-10-27T16:56:40.258Z", "t_ms": 48310, "delta": "Mem"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 276, "ts": "2026-10-27T16:56:40.332Z", "t_ms": 48384, "delta": "Eval"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 277, "ts": "2026-10-27T16:56:40.332Z", "t_ms": 48384, "delta": " for"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 278, "ts": "2026-10-27T16:56:40.335Z", "t_ms": 48386, "delta": " multi"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 279, "ts": "2026-10-27T16:56:40.335Z", "t_ms": 48387, "delta": "-session"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 280, "ts": "2026-10-27T16:56:40.523Z", "t_ms": 48574, "delta": " histories"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 281, "ts": "2026-10-27T16:56:40.523Z", "t_ms": 48575, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 282, "ts": "2026-10-27T16:56:40.534Z", "t_ms": 48586, "delta": " reporting"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 283, "ts": "2026-10-27T16:56:40.535Z", "t_ms": 48586, "delta": " F"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 284, "ts": "2026-10-27T16:56:40.537Z", "t_ms": 48589, "delta": "1"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 285, "ts": "2026-10-27T16:56:40.538Z", "t_ms": 48590, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 286, "ts": "2026-10-27T16:56:40.541Z", "t_ms": 48593, "delta": " L"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 287, "ts": "2026-10-27T16:56:40.541Z", "t_ms": 48593, "delta": "LM"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 288, "ts": "2026-10-27T16:56:40.544Z", "t_ms": 48596, "delta": "-"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 289, "ts": "2026-10-27T16:56:40.545Z", "t_ms": 48596, "delta": "judge"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 290, "ts": "2026-10-27T16:56:40.548Z", "t_ms": 48600, "delta": " scores"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 291, "ts": "2026-10-27T16:56:40.548Z", "t_ms": 48600, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 292, "ts": "2026-10-27T16:56:40.552Z", "t_ms": 48604, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 293, "ts": "2026-10-27T16:56:40.552Z", "t_ms": 48604, "delta": " evidence"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 294, "ts": "2026-10-27T16:56:40.616Z", "t_ms": 48667, "delta": " recall"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 295, "ts": "2026-10-27T16:56:40.616Z", "t_ms": 48668, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 296, "ts": "2026-10-27T16:56:40.721Z", "t_ms": 48772, "delta": " This"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 297, "ts": "2026-10-27T16:56:40.721Z", "t_ms": 48773, "delta": " makes"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 298, "ts": "2026-10-27T16:56:40.819Z", "t_ms": 48871, "delta": " persistent"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 299, "ts": "2026-10-27T16:56:40.820Z", "t_ms": 48872, "delta": "-memory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 300, "ts": "2026-10-27T16:56:40.909Z", "t_ms": 48960, "delta": " evaluation"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 301, "ts": "2026-10-27T16:56:40.909Z", "t_ms": 48961, "delta": " a"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 302, "ts": "2026-10-27T16:56:40.921Z", "t_ms": 48972, "delta": " concrete"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 303, "ts": "2026-10-27T16:56:40.921Z", "t_ms": 48973, "delta": " focus"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 304, "ts": "2026-10-27T16:56:41.016Z", "t_ms": 49068, "delta": " of"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 305, "ts": "2026-10-27T16:56:41.017Z", "t_ms": 49068, "delta": " the"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 306, "ts": "2026-10-27T16:56:41.021Z", "t_ms": 49073, "delta": " supplied"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 307, "ts": "2026-10-27T16:56:41.022Z", "t_ms": 49073, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 308, "ts": "2026-10-27T16:56:41.024Z", "t_ms": 49075, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 309, "ts": "2026-10-27T16:56:41.024Z", "t_ms": 49076, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 310, "ts": "2026-10-27T16:56:41.028Z", "t_ms": 49080, "delta": " work"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 311, "ts": "2026-10-27T16:56:41.029Z", "t_ms": 49080, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 312, "ts": "2026-10-27T16:56:41.032Z", "t_ms": 49083, "delta": " ["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 313, "ts": "2026-10-27T16:56:41.032Z", "t_ms": 49084, "delta": "C"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 314, "ts": "2026-10-27T16:56:41.034Z", "t_ms": 49086, "delta": "3"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 315, "ts": "2026-10-27T16:56:41.035Z", "t_ms": 49086, "delta": "]\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 316, "ts": "2026-10-27T16:56:41.107Z", "t_ms": 49158, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 317, "ts": "2026-10-27T16:56:41.107Z", "t_ms": 49159, "delta": "Current"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 318, "ts": "2026-10-27T16:56:41.212Z", "t_ms": 49263, "delta": " web"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 319, "ts": "2026-10-27T16:56:41.212Z", "t_ms": 49264, "delta": " context"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 320, "ts": "2026-10-27T16:56:41.312Z", "t_ms": 49363, "delta": " \u2014"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 321, "ts": "2026-10-27T16:56:41.312Z", "t_ms": 49364, "delta": " retrieved"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 322, "ts": "2026-10-27T16:56:41.315Z", "t_ms": 49366, "delta": " October"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 323, "ts": "2026-10-27T16:56:41.315Z", "t_ms": 49367, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 324, "ts": "2026-10-27T16:56:41.318Z", "t_ms": 49370, "delta": "27"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 325, "ts": "2026-10-27T16:56:41.319Z", "t_ms": 49370, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 326, "ts": "2026-10-27T16:56:41.322Z", "t_ms": 49373, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 327, "ts": "2026-10-27T16:56:41.322Z", "t_ms": 49374, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 328, "ts": "2026-10-27T16:56:41.405Z", "t_ms": 49457, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 329, "ts": "2026-10-27T16:56:41.406Z", "t_ms": 49457, "delta": ":**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 330, "ts": "2026-10-27T16:56:41.407Z", "t_ms": 49459, "delta": " A"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 331, "ts": "2026-10-27T16:56:41.408Z", "t_ms": 49459, "delta": " March"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 332, "ts": "2026-10-27T16:56:41.414Z", "t_ms": 49465, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 333, "ts": "2026-10-27T16:56:41.414Z", "t_ms": 49466, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 334, "ts": "2026-10-27T16:56:41.506Z", "t_ms": 49558, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 335, "ts": "2026-10-27T16:56:41.507Z", "t_ms": 49558, "delta": " survey"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 336, "ts": "2026-10-27T16:56:41.604Z", "t_ms": 49656, "delta": " also"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 337, "ts": "2026-10-27T16:56:41.605Z", "t_ms": 49657, "delta": " discusses"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 338, "ts": "2026-10-27T16:56:41.606Z", "t_ms": 49658, "delta": " separating"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 339, "ts": "2026-10-27T16:56:41.607Z", "t_ms": 49659, "delta": " recall"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 340, "ts": "2026-10-27T16:56:41.614Z", "t_ms": 49666, "delta": " from"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 341, "ts": "2026-10-27T16:56:41.615Z", "t_ms": 49667, "delta": " reasoning"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 342, "ts": "2026-10-27T16:56:41.615Z", "t_ms": 49667, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 343, "ts": "2026-10-27T16:56:41.616Z", "t_ms": 49668, "delta": " extracting"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 344, "ts": "2026-10-27T16:56:41.702Z", "t_ms": 49754, "delta": " reusable"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 345, "ts": "2026-10-27T16:56:41.702Z", "t_ms": 49754, "delta": " heur"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 346, "ts": "2026-10-27T16:56:41.705Z", "t_ms": 49757, "delta": "istics"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 347, "ts": "2026-10-27T16:56:41.706Z", "t_ms": 49757, "delta": " from"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 348, "ts": "2026-10-27T16:56:41.710Z", "t_ms": 49762, "delta": " successful"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 349, "ts": "2026-10-27T16:56:41.711Z", "t_ms": 49762, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 350, "ts": "2026-10-27T16:56:41.714Z", "t_ms": 49766, "delta": " failed"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 351, "ts": "2026-10-27T16:56:41.714Z", "t_ms": 49766, "delta": " trajectories"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 352, "ts": "2026-10-27T16:56:41.718Z", "t_ms": 49769, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 353, "ts": "2026-10-27T16:56:41.718Z", "t_ms": 49770, "delta": " However"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 354, "ts": "2026-10-27T16:56:41.722Z", "t_ms": 49774, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 355, "ts": "2026-10-27T16:56:41.722Z", "t_ms": 49774, "delta": " it"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 356, "ts": "2026-10-27T16:56:41.795Z", "t_ms": 49847, "delta": " attributes"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 357, "ts": "2026-10-27T16:56:41.796Z", "t_ms": 49847, "delta": " Think"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 358, "ts": "2026-10-27T16:56:41.798Z", "t_ms": 49849, "delta": "-in"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 359, "ts": "2026-10-27T16:56:41.798Z", "t_ms": 49850, "delta": "-M"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 360, "ts": "2026-10-27T16:56:41.803Z", "t_ms": 49855, "delta": "emory"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 361, "ts": "2026-10-27T16:56:41.804Z", "t_ms": 49855, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 362, "ts": "2026-10-27T16:56:41.806Z", "t_ms": 49858, "delta": " Ex"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 363, "ts": "2026-10-27T16:56:41.807Z", "t_ms": 49858, "delta": "pe"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 364, "ts": "2026-10-27T16:56:41.891Z", "t_ms": 49942, "delta": "L"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 365, "ts": "2026-10-27T16:56:41.891Z", "t_ms": 49943, "delta": " to"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 366, "ts": "2026-10-27T16:56:41.893Z", "t_ms": 49945, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 367, "ts": "2026-10-27T16:56:41.893Z", "t_ms": 49945, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 368, "ts": "2026-10-27T16:56:41.984Z", "t_ms": 50036, "delta": "4"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 369, "ts": "2026-10-27T16:56:41.985Z", "t_ms": 50037, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 370, "ts": "2026-10-27T16:56:41.989Z", "t_ms": 50041, "delta": " so"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 371, "ts": "2026-10-27T16:56:41.989Z", "t_ms": 50041, "delta": " those"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 372, "ts": "2026-10-27T16:56:41.992Z", "t_ms": 50044, "delta": " should"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 373, "ts": "2026-10-27T16:56:41.993Z", "t_ms": 50044, "delta": " not"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 374, "ts": "2026-10-27T16:56:41.996Z", "t_ms": 50048, "delta": " be"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 375, "ts": "2026-10-27T16:56:41.996Z", "t_ms": 50048, "delta": " presented"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 376, "ts": "2026-10-27T16:56:42.089Z", "t_ms": 50141, "delta": " as"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 377, "ts": "2026-10-27T16:56:42.090Z", "t_ms": 50141, "delta": " new"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 378, "ts": "2026-10-27T16:56:42.097Z", "t_ms": 50148, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 379, "ts": "2026-10-27T16:56:42.097Z", "t_ms": 50149, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 380, "ts": "2026-10-27T16:56:42.101Z", "t_ms": 50152, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 381, "ts": "2026-10-27T16:56:42.101Z", "t_ms": 50153, "delta": " inventions"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 382, "ts": "2026-10-27T16:56:42.104Z", "t_ms": 50156, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 383, "ts": "2026-10-27T16:56:42.105Z", "t_ms": 50157, "delta": " ["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 384, "ts": "2026-10-27T16:56:42.109Z", "t_ms": 50160, "delta": "W"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 385, "ts": "2026-10-27T16:56:42.109Z", "t_ms": 50161, "delta": "3"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 386, "ts": "2026-10-27T16:56:42.114Z", "t_ms": 50165, "delta": "]\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 387, "ts": "2026-10-27T16:56:42.114Z", "t_ms": 50166, "delta": "The"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 388, "ts": "2026-10-27T16:56:42.117Z", "t_ms": 50169, "delta": " available"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 389, "ts": "2026-10-27T16:56:42.117Z", "t_ms": 50169, "delta": " evidence"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 390, "ts": "2026-10-27T16:56:42.180Z", "t_ms": 50232, "delta": " does"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 391, "ts": "2026-10-27T16:56:42.180Z", "t_ms": 50232, "delta": " not"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 392, "ts": "2026-10-27T16:56:42.287Z", "t_ms": 50338, "delta": " answer"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 393, "ts": "2026-10-27T16:56:42.287Z", "t_ms": 50339, "delta": " this"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 394, "ts": "2026-10-27T16:56:42.388Z", "t_ms": 50439, "delta": " exhaust"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 395, "ts": "2026-10-27T16:56:42.388Z", "t_ms": 50440, "delta": "ively"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 396, "ts": "2026-10-27T16:56:42.390Z", "t_ms": 50442, "delta": " through"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 397, "ts": "2026-10-27T16:56:42.390Z", "t_ms": 50442, "delta": " October"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 398, "ts": "2026-10-27T16:56:42.489Z", "t_ms": 50541, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 399, "ts": "2026-10-27T16:56:42.490Z", "t_ms": 50541, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 400, "ts": "2026-10-27T16:56:42.581Z", "t_ms": 50633, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 401, "ts": "2026-10-27T16:56:42.581Z", "t_ms": 50633, "delta": ";"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 402, "ts": "2026-10-27T16:56:42.765Z", "t_ms": 50817, "delta": " later"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 403, "ts": "2026-10-27T16:56:42.766Z", "t_ms": 50818, "delta": "-year"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 404, "ts": "2026-10-27T16:56:42.776Z", "t_ms": 50828, "delta": " primary"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 405, "ts": "2026-10-27T16:56:42.777Z", "t_ms": 50828, "delta": " papers"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 406, "ts": "2026-10-27T16:56:42.861Z", "t_ms": 50912, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 407, "ts": "2026-10-27T16:56:42.861Z", "t_ms": 50913, "delta": " comparative"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 408, "ts": "2026-10-27T16:56:42.872Z", "t_ms": 50924, "delta": " results"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 409, "ts": "2026-10-27T16:56:42.872Z", "t_ms": 50924, "delta": " are"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 410, "ts": "2026-10-27T16:56:42.876Z", "t_ms": 50927, "delta": " missing"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 411, "ts": "2026-10-27T16:56:42.876Z", "t_ms": 50927, "delta": ".\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 412, "ts": "2026-10-27T16:56:42.881Z", "t_ms": 50932, "delta": "###"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 413, "ts": "2026-10-27T16:56:42.881Z", "t_ms": 50933, "delta": " Has"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 414, "ts": "2026-10-27T16:56:42.885Z", "t_ms": 50936, "delta": " Self"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 415, "ts": "2026-10-27T16:56:42.885Z", "t_ms": 50937, "delta": "-R"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 416, "ts": "2026-10-27T16:56:42.961Z", "t_ms": 51012, "delta": "AG"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 417, "ts": "2026-10-27T16:56:42.961Z", "t_ms": 51013, "delta": " been"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 418, "ts": "2026-10-27T16:56:42.965Z", "t_ms": 51017, "delta": " peer"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 419, "ts": "2026-10-27T16:56:42.966Z", "t_ms": 51017, "delta": "-reviewed"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 420, "ts": "2026-10-27T16:56:42.969Z", "t_ms": 51021, "delta": "?\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 421, "ts": "2026-10-27T16:56:42.969Z", "t_ms": 51021, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 422, "ts": "2026-10-27T16:56:42.971Z", "t_ms": 51023, "delta": "Yes"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 423, "ts": "2026-10-27T16:56:42.972Z", "t_ms": 51023, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 424, "ts": "2026-10-27T16:56:43.070Z", "t_ms": 51122, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 425, "ts": "2026-10-27T16:56:43.071Z", "t_ms": 51122, "delta": " *"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 426, "ts": "2026-10-27T16:56:43.074Z", "t_ms": 51126, "delta": "Self"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 427, "ts": "2026-10-27T16:56:43.075Z", "t_ms": 51126, "delta": "-R"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 428, "ts": "2026-10-27T16:56:43.078Z", "t_ms": 51129, "delta": "AG"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 429, "ts": "2026-10-27T16:56:43.078Z", "t_ms": 51130, "delta": ":"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 430, "ts": "2026-10-27T16:56:43.080Z", "t_ms": 51132, "delta": " Learning"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 431, "ts": "2026-10-27T16:56:43.080Z", "t_ms": 51132, "delta": " to"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 432, "ts": "2026-10-27T16:56:43.086Z", "t_ms": 51137, "delta": " Retrieve"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 433, "ts": "2026-10-27T16:56:43.086Z", "t_ms": 51138, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 434, "ts": "2026-10-27T16:56:43.089Z", "t_ms": 51141, "delta": " Generate"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 435, "ts": "2026-10-27T16:56:43.090Z", "t_ms": 51141, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 436, "ts": "2026-10-27T16:56:43.092Z", "t_ms": 51144, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 437, "ts": "2026-10-27T16:56:43.093Z", "t_ms": 51144, "delta": " Crit"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 438, "ts": "2026-10-27T16:56:43.096Z", "t_ms": 51148, "delta": "ique"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 439, "ts": "2026-10-27T16:56:43.097Z", "t_ms": 51148, "delta": " through"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 440, "ts": "2026-10-27T16:56:43.167Z", "t_ms": 51219, "delta": " Self"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 441, "ts": "2026-10-27T16:56:43.168Z", "t_ms": 51220, "delta": "-"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 442, "ts": "2026-10-27T16:56:43.172Z", "t_ms": 51223, "delta": "Reflection"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 443, "ts": "2026-10-27T16:56:43.172Z", "t_ms": 51224, "delta": "*"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 444, "ts": "2026-10-27T16:56:43.179Z", "t_ms": 51230, "delta": " was"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 445, "ts": "2026-10-27T16:56:43.179Z", "t_ms": 51231, "delta": " accepted"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 446, "ts": "2026-10-27T16:56:43.180Z", "t_ms": 51231, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 447, "ts": "2026-10-27T16:56:43.180Z", "t_ms": 51232, "delta": " published"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 448, "ts": "2026-10-27T16:56:43.265Z", "t_ms": 51317, "delta": " at"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 449, "ts": "2026-10-27T16:56:43.266Z", "t_ms": 51317, "delta": " **"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 450, "ts": "2026-10-27T16:56:43.269Z", "t_ms": 51321, "delta": "IC"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 451, "ts": "2026-10-27T16:56:43.269Z", "t_ms": 51321, "delta": "LR"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 452, "ts": "2026-10-27T16:56:43.278Z", "t_ms": 51330, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 453, "ts": "2026-10-27T16:56:43.279Z", "t_ms": 51331, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 454, "ts": "2026-10-27T16:56:43.445Z", "t_ms": 51497, "delta": "4"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 455, "ts": "2026-10-27T16:56:43.446Z", "t_ms": 51498, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 456, "ts": "2026-10-27T16:56:43.454Z", "t_ms": 51506, "delta": "\u2014"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 457, "ts": "2026-10-27T16:56:43.455Z", "t_ms": 51507, "delta": "it"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 458, "ts": "2026-10-27T16:56:43.458Z", "t_ms": 51510, "delta": " is"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 459, "ts": "2026-10-27T16:56:43.458Z", "t_ms": 51510, "delta": " not"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 460, "ts": "2026-10-27T16:56:43.461Z", "t_ms": 51513, "delta": " merely"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 461, "ts": "2026-10-27T16:56:43.462Z", "t_ms": 51513, "delta": " an"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 462, "ts": "2026-10-27T16:56:43.465Z", "t_ms": 51516, "delta": " ar"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 463, "ts": "2026-10-27T16:56:43.465Z", "t_ms": 51517, "delta": "X"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 464, "ts": "2026-10-27T16:56:43.468Z", "t_ms": 51520, "delta": "iv"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 465, "ts": "2026-10-27T16:56:43.469Z", "t_ms": 51520, "delta": " pre"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 466, "ts": "2026-10-27T16:56:43.471Z", "t_ms": 51523, "delta": "print"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 467, "ts": "2026-10-27T16:56:43.472Z", "t_ms": 51524, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 468, "ts": "2026-10-27T16:56:43.546Z", "t_ms": 51598, "delta": " The"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 469, "ts": "2026-10-27T16:56:43.547Z", "t_ms": 51598, "delta": " official"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 470, "ts": "2026-10-27T16:56:43.558Z", "t_ms": 51610, "delta": " proceedings"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 471, "ts": "2026-10-27T16:56:43.559Z", "t_ms": 51610, "delta": " confirm"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 472, "ts": "2026-10-27T16:56:43.561Z", "t_ms": 51612, "delta": " publication"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 473, "ts": "2026-10-27T16:56:43.561Z", "t_ms": 51613, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 474, "ts": "2026-10-27T16:56:43.565Z", "t_ms": 51616, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 475, "ts": "2026-10-27T16:56:43.565Z", "t_ms": 51617, "delta": " the"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 476, "ts": "2026-10-27T16:56:43.652Z", "t_ms": 51704, "delta": " authors"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 477, "ts": "2026-10-27T16:56:43.653Z", "t_ms": 51704, "delta": "\u2019"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 478, "ts": "2026-10-27T16:56:43.665Z", "t_ms": 51716, "delta": " repository"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 479, "ts": "2026-10-27T16:56:43.665Z", "t_ms": 51717, "delta": " identifies"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 480, "ts": "2026-10-27T16:56:43.669Z", "t_ms": 51720, "delta": " it"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 481, "ts": "2026-10-27T16:56:43.669Z", "t_ms": 51721, "delta": " as"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 482, "ts": "2026-10-27T16:56:43.673Z", "t_ms": 51725, "delta": " an"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 483, "ts": "2026-10-27T16:56:43.674Z", "t_ms": 51726, "delta": " **"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 484, "ts": "2026-10-27T16:56:43.760Z", "t_ms": 51812, "delta": "oral"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 485, "ts": "2026-10-27T16:56:43.761Z", "t_ms": 51813, "delta": " presentation"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 486, "ts": "2026-10-27T16:56:43.765Z", "t_ms": 51817, "delta": " (\u201c"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 487, "ts": "2026-10-27T16:56:43.766Z", "t_ms": 51817, "delta": "top"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 488, "ts": "2026-10-27T16:56:43.769Z", "t_ms": 51821, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 489, "ts": "2026-10-27T16:56:43.770Z", "t_ms": 51822, "delta": "1"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 490, "ts": "2026-10-27T16:56:43.773Z", "t_ms": 51824, "delta": "%"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 491, "ts": "2026-10-27T16:56:43.773Z", "t_ms": 51825, "delta": "\u201d)"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 492, "ts": "2026-10-27T16:56:43.870Z", "t_ms": 51921, "delta": "**"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 493, "ts": "2026-10-27T16:56:43.870Z", "t_ms": 51922, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 494, "ts": "2026-10-27T16:56:43.882Z", "t_ms": 51933, "delta": " These"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 495, "ts": "2026-10-27T16:56:43.882Z", "t_ms": 51934, "delta": " web"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 496, "ts": "2026-10-27T16:56:43.981Z", "t_ms": 52033, "delta": " sources"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 497, "ts": "2026-10-27T16:56:43.982Z", "t_ms": 52033, "delta": " were"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 498, "ts": "2026-10-27T16:56:43.984Z", "t_ms": 52036, "delta": " checked"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 499, "ts": "2026-10-27T16:56:43.984Z", "t_ms": 52036, "delta": " on"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 500, "ts": "2026-10-27T16:56:43.989Z", "t_ms": 52041, "delta": " October"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 501, "ts": "2026-10-27T16:56:43.989Z", "t_ms": 52041, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 502, "ts": "2026-10-27T16:56:43.991Z", "t_ms": 52043, "delta": "27"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 503, "ts": "2026-10-27T16:56:43.991Z", "t_ms": 52043, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 504, "ts": "2026-10-27T16:56:43.996Z", "t_ms": 52048, "delta": " "}}
+{"event": "token", "data": {"request_id": "live5", "seq": 505, "ts": "2026-10-27T16:56:43.996Z", "t_ms": 52048, "delta": "202"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 506, "ts": "2026-10-27T16:56:44.000Z", "t_ms": 52051, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 507, "ts": "2026-10-27T16:56:44.000Z", "t_ms": 52052, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 508, "ts": "2026-10-27T16:56:44.076Z", "t_ms": 52128, "delta": " ["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 509, "ts": "2026-10-27T16:56:44.077Z", "t_ms": 52129, "delta": "W"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 510, "ts": "2026-10-27T16:56:44.088Z", "t_ms": 52140, "delta": "6"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 511, "ts": "2026-10-27T16:56:44.088Z", "t_ms": 52140, "delta": "]["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 512, "ts": "2026-10-27T16:56:44.092Z", "t_ms": 52144, "delta": "W"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 513, "ts": "2026-10-27T16:56:44.093Z", "t_ms": 52145, "delta": "8"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 514, "ts": "2026-10-27T16:56:44.096Z", "t_ms": 52147, "delta": "]["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 515, "ts": "2026-10-27T16:56:44.096Z", "t_ms": 52148, "delta": "W"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 516, "ts": "2026-10-27T16:56:44.189Z", "t_ms": 52241, "delta": "7"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 517, "ts": "2026-10-27T16:56:44.190Z", "t_ms": 52241, "delta": "]\n\n"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 518, "ts": "2026-10-27T16:56:44.295Z", "t_ms": 52346, "delta": "For"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 519, "ts": "2026-10-27T16:56:44.295Z", "t_ms": 52347, "delta": " context"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 520, "ts": "2026-10-27T16:56:44.305Z", "t_ms": 52357, "delta": ","}}
+{"event": "token", "data": {"request_id": "live5", "seq": 521, "ts": "2026-10-27T16:56:44.306Z", "t_ms": 52357, "delta": " Self"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 522, "ts": "2026-10-27T16:56:44.369Z", "t_ms": 52421, "delta": "-R"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 523, "ts": "2026-10-27T16:56:44.369Z", "t_ms": 52421, "delta": "AG"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 524, "ts": "2026-10-27T16:56:44.381Z", "t_ms": 52433, "delta": " learns"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 525, "ts": "2026-10-27T16:56:44.381Z", "t_ms": 52433, "delta": " when"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 526, "ts": "2026-10-27T16:56:44.474Z", "t_ms": 52526, "delta": " to"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 527, "ts": "2026-10-27T16:56:44.474Z", "t_ms": 52526, "delta": " retrieve"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 528, "ts": "2026-10-27T16:56:44.481Z", "t_ms": 52532, "delta": " external"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 529, "ts": "2026-10-27T16:56:44.481Z", "t_ms": 52532, "delta": " passages"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 530, "ts": "2026-10-27T16:56:44.484Z", "t_ms": 52536, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 531, "ts": "2026-10-27T16:56:44.485Z", "t_ms": 52536, "delta": " uses"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 532, "ts": "2026-10-27T16:56:44.564Z", "t_ms": 52616, "delta": " reflection"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 533, "ts": "2026-10-27T16:56:44.564Z", "t_ms": 52616, "delta": " tokens"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 534, "ts": "2026-10-27T16:56:44.663Z", "t_ms": 52715, "delta": " to"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 535, "ts": "2026-10-27T16:56:44.664Z", "t_ms": 52715, "delta": " assess"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 536, "ts": "2026-10-27T16:56:44.678Z", "t_ms": 52730, "delta": " retrieved"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 537, "ts": "2026-10-27T16:56:44.679Z", "t_ms": 52731, "delta": " material"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 538, "ts": "2026-10-27T16:56:44.682Z", "t_ms": 52734, "delta": " and"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 539, "ts": "2026-10-27T16:56:44.683Z", "t_ms": 52734, "delta": " its"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 540, "ts": "2026-10-27T16:56:44.767Z", "t_ms": 52819, "delta": " own"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 541, "ts": "2026-10-27T16:56:44.768Z", "t_ms": 52819, "delta": " generations"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 542, "ts": "2026-10-27T16:56:44.774Z", "t_ms": 52825, "delta": "."}}
+{"event": "token", "data": {"request_id": "live5", "seq": 543, "ts": "2026-10-27T16:56:44.774Z", "t_ms": 52826, "delta": " ["}}
+{"event": "token", "data": {"request_id": "live5", "seq": 544, "ts": "2026-10-27T16:56:44.787Z", "t_ms": 52839, "delta": "C"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 545, "ts": "2026-10-27T16:56:44.788Z", "t_ms": 52840, "delta": "7"}}
+{"event": "token", "data": {"request_id": "live5", "seq": 546, "ts": "2026-10-27T16:56:44.790Z", "t_ms": 52842, "delta": "]"}}
+{"event": "llm_result", "data": {"request_id": "live5", "seq": 547, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "decision_id": "44941188", "agent": "synthesizer", "call_site": "synthesize", "provider": "openai", "model_id": "gpt-6.1-sol", "model_returned": "gpt-6.1-sol", "upstream_provider": null, "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 12547, "ttft_ms": 4874, "cost_usd": 0.01816, "cost_source": "estimated", "est_cost_usd": 0.01816, "reported_cost_usd": null, "input_tokens": 5975, "output_tokens": 621, "reasoning_tokens": 111, "cached_input_tokens": 0, "stream_chunks": 501, "max_chunk_gap_ms": 187}}
+{"event": "citation", "data": {"request_id": "live5", "seq": 548, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "cite_id": "C3", "type": "paper_chunk", "label": "Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents \u2014 5 Experiments \u203a 5.1 Experiment Setup", "doc_id": "2606.06036v1", "chunk_id": "2606.06036v1::S5.SS1::000", "href": "/api/source/chunk/2606.06036v1%3A%3AS5.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2606.06036v1#S5.SS1", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "data": {"request_id": "live5", "seq": 549, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "cite_id": "C2", "type": "paper_chunk", "label": "Governed Shared Memory for Multi-Agent LLM Systems \u2014 2 Background and Related Work \u203a 2.4 Memory Governance, Security, and Privacy", "doc_id": "2606.24535v1", "chunk_id": "2606.24535v1::S2.SS4::000", "href": "/api/source/chunk/2606.24535v1%3A%3AS2.SS4%3A%3A000", "source_url": "https://arxiv.org/html/2606.24535v1#S2.SS4", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "data": {"request_id": "live5", "seq": 550, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "cite_id": "W3", "type": "web", "label": "Memory for Autonomous LLM Agents:Mechanisms, Evaluation, and Emerging Frontiers \u2014 web, retrieved 2026-10-27T16:56:03.561Z", "doc_id": "arxiv.org", "chunk_id": "", "href": "https://arxiv.org/html/2603.07670v1", "source_url": "https://arxiv.org/html/2603.07670v1", "retrieved_at": "2026-10-27T16:56:03.561Z", "found_by": "research"}}
+{"event": "citation", "data": {"request_id": "live5", "seq": 551, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "cite_id": "W6", "type": "web", "label": "SELF-RAG: LEARNING TO RETRIEVE, GENERATE, AND ... \u2014 web, retrieved 2026-10-27T16:56:07.197Z", "doc_id": "proceedings.iclr.cc", "chunk_id": "", "href": "https://proceedings.iclr.cc/paper_files/paper/2024/file/25f7be9694d7b32d5cc670927b8091e1-Paper-Conference.pdf", "source_url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/25f7be9694d7b32d5cc670927b8091e1-Paper-Conference.pdf", "retrieved_at": "2026-10-27T16:56:07.197Z", "found_by": "research"}}
+{"event": "citation", "data": {"request_id": "live5", "seq": 552, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "cite_id": "W8", "type": "web", "label": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection \u2014 web, retrieved 2026-10-27T16:56:07.197Z", "doc_id": "proceedings.iclr.cc", "chunk_id": "", "href": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/25f7be9694d7b32d5cc670927b8091e1-Abstract-Conference.html", "source_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/25f7be9694d7b32d5cc670927b8091e1-Abstract-Conference.html", "retrieved_at": "2026-10-27T16:56:07.197Z", "found_by": "research"}}
+{"event": "citation", "data": {"request_id": "live5", "seq": 553, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "cite_id": "W7", "type": "web", "label": "GitHub - AkariAsai/self-rag: This includes the original implementation of SELF-RAG: Learning to Retrieve, Generate and Critique through self-reflection by Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Si \u2014 web, retrieved 2026-10-27T16:56:07.197Z", "doc_id": "github.com", "chunk_id": "", "href": "https://github.com/akariasai/self-rag", "source_url": "https://github.com/akariasai/self-rag", "retrieved_at": "2026-10-27T16:56:07.197Z", "found_by": "research"}}
+{"event": "citation", "data": {"request_id": "live5", "seq": 554, "ts": "2026-10-27T16:56:44.833Z", "t_ms": 52885, "cite_id": "C7", "type": "paper_chunk", "label": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection \u2014 Abstract", "doc_id": "2310.11511v1", "chunk_id": "2310.11511v1::abstract::000", "href": "/api/source/chunk/2310.11511v1%3A%3Aabstract%3A%3A000", "source_url": "https://arxiv.org/html/2310.11511v1", "retrieved_at": null, "found_by": null}}
+{"event": "done", "data": {"request_id": "live5", "seq": 555, "ts": "2026-10-27T16:56:44.834Z", "t_ms": 52886, "status": "done", "plan_source": "llm", "unresolved_citations": [], "dropped_citations": [], "timings": {"retrieval_ms": 1140, "llm_ms_sum": 40350, "ttft_ms": 45212, "total_ms": 52886}, "tokens_by_provider": {"gemini-openrouter": {"input_tokens": 19389, "output_tokens": 781, "calls": 7, "errors": 0, "cost_usd": 0.03494}, "openai": {"input_tokens": 5975, "output_tokens": 621, "calls": 1, "errors": 0, "cost_usd": 0.01816}}, "providers_used": ["gemini-openrouter", "openai"], "fallbacks": 0, "cost_usd": 0.0531, "cost_basis": {"reported": 7, "estimated": 1}}}

@@ -1,0 +1,23 @@
+{
+  "run_id": "phase5-retest2-20261027T1830Z",
+  "mode": "retest",
+  "target_defect": "P5-D3",
+  "source": {"branch": "phase-5-tavily-summary", "head": "4005361", "product_diff_sha256_prefix(app,scripts,Dockerfile,requirements)": "d27f01375ca3ddee",
+             "note": "app/rag.py, app/graph.py, app/agents/summary.py last modified 18:17:57Z, before the 18:19Z image build"},
+  "deployed": {"url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app", "revision": "paper-analyst-00007-kfs", "traffic_percent": 100,
+               "image_digest": "sha256:7e3c853173e477309fbeaef00374dc1d01677f8bf3a6e587c486613bcb00111d",
+               "static_assets_identical": true, "health_live_search": "tavily-remote-mcp", "ROUTER_FORCE_PROVIDER_present": false},
+  "offline": {"phase5_files": "87 passed (incl. new TC-P5-19)", "full": "324 passed, 14 skipped, 1 xfailed",
+              "mutation_check": "old score<0.35 filter monkeypatched in: TC-P5-18 and TC-P5-19 fail, TC-P5-02 passes"},
+  "deployed_runs": {
+    "R5_voyager_rerun2": {"worker": "summary", "worker_evidence": ["C1","C2","C9","C8"], "linked_C": ["C1","C9","C2","C8"],
+                           "low_score_in_paper_linked": {"C2": 0.285, "C9": 0.258}, "excluded_evidence": [], "dropped_citations": [],
+                           "c_resolution_match": "4/4", "cost_usd": 0.043625, "verdict": "pass"},
+    "R1_everest_rerun2": {"worker": "research", "needs_live": true, "corpus_search_called": false, "linked_C": 0, "linked_W": 5,
+                           "excluded_evidence": [], "cost_usd": 0.019466, "verdict": "pass"},
+    "R2_everest_para_rerun2": {"worker": "research", "corpus_search_called": false, "linked_C": 0, "linked_W": 7,
+                                "excluded_evidence": [], "cost_usd": 0.027003, "verdict": "pass (filter path not exercised)"}
+  },
+  "cloud_run_logs_rev00007": {"entries": 34, "logging_error": 0, "tracebacks": 0, "app_access_lines": 13, "app_log_key_shapes": 0},
+  "spend": {"llm_usd_app_reported": 0.090094, "tavily_credits_approx": 4}
+}

@@ -1,0 +1,315 @@
+{
+  "id": "D3p_offtopic_paraphrase",
+  "query": "How hot does water need to get before it boils at the top of Everest?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "c73fa7251ff7"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Find the boiling point of water at the altitude of Mount Everest's summit via live search.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Determine the boiling point of water at the summit of Mount Everest in Celsius and Fahrenheit given the atmospheric pressure at that elevation.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "boiling point of water Mount Everest summit Celsius Fahrenheit atmospheric pressure"
+      }
+    ],
+    [
+      "research",
+      "corpus_search",
+      {
+        "query": "boiling point of water Mount Everest elevation pressure"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "research",
+      "corpus_search",
+      "ok",
+      null,
+      6
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "boiling point of water Mount Everest summit Celsius Fahrenheit atmospheric pressure",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2239,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "www.facebook.com",
+        "www.madsci.org",
+        "www.lpi.usra.edu",
+        "en.wikipedia.org"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3501,
+      "in": 590,
+      "out": 210,
+      "cost_usd": 0.00246
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 6810,
+      "in": 840,
+      "out": 78,
+      "cost_usd": 0.001845
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1665,
+      "in": 2675,
+      "out": 24,
+      "cost_usd": 0.0041925
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3346,
+      "in": 5846,
+      "out": 193,
+      "cost_usd": 0.0102165
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3057,
+      "in": 3647,
+      "out": 192,
+      "cost_usd": 0.0069105
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 547,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1743,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 4083,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 2 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 2,
+        "n_web": 4,
+        "evidence_tokens_est": 1920,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "C1",
+        "C2",
+        "W2",
+        "W4",
+        "W1",
+        "W3"
+      ],
+      "rounds": 3,
+      "tool_calls": 2
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://www.madsci.org/posts/archives/2000-12/976811375.Es.r.html",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:27.254Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W4",
+      "type": "web",
+      "url": "https://en.wikipedia.org/wiki/Boiling_point",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:27.254Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://www.facebook.com/groups/4382588805101476/posts/26454095134190860",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:27.254Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W3",
+      "type": "web",
+      "url": "https://www.lpi.usra.edu/education/explore/ice/background/allAboutWater",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:27.254Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "C1",
+    "C2",
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [
+      "C1",
+      "C2"
+    ],
+    "timings": {
+      "retrieval_ms": 348,
+      "llm_ms_sum": 18379,
+      "ttft_ms": 19627,
+      "total_ms": 21003
+    },
+    "cost_usd": 0.025625,
+    "cost_basis": {
+      "reported": 5
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 8,
+  "distinct_token_arrivals": 8,
+  "first_token_client_ms": 19821,
+  "total_client_ms": 21116,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "The indexed arXiv research papers in the corpus do not contain data regarding the boiling point of water on Mount Everest [C1, C2].\n\nAccording to current web sources retrieved on October 27, 2026:\n\n* At the summit of Mount Everest (elevation 8,848 m / 29,029 ft), atmospheric pressure drops to approximately one-third (about 34%) of sea-level pressure, or roughly 34 kPa (255 Torr) [W2, W4].\n* Under this significantly reduced atmospheric pressure, water boils at approximately 71 °C (160 °F) based on thermodynamic barometric records [W4]. \n* Other sources place the boiling point in the range of approximately 68 °C (154 °F) [W1, W3] to around 72 °C [W2]."
+}

@@ -1,0 +1,102 @@
+[
+  {
+    "query": "How does Self-RAG decide when to retrieve?",
+    "status": "partial",
+    "timings": {
+      "retrieval_ms": 12,
+      "llm_ms_sum": 9032,
+      "ttft_ms": 8988,
+      "total_ms": 9068
+    },
+    "client_first_token_ms": 9114,
+    "worker_spans": [
+      [
+        "t1",
+        "summary",
+        "partial",
+        5305
+      ]
+    ],
+    "calls": [
+      {
+        "call_site": "planner",
+        "agent": "planner",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 2351,
+        "in": 585,
+        "out": 84,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.0015075,
+        "cost_source": "reported",
+        "est_cost_usd": 0.001507,
+        "reported_cost_usd": 0.0015075,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "summary",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1801,
+        "in": 980,
+        "out": 77,
+        "reasoning": 56,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.0020475,
+        "cost_source": "reported",
+        "est_cost_usd": 0.002047,
+        "reported_cost_usd": 0.0020475,
+        "chunks": null
+      },
+      {
+        "call_site": "worker_tool_loop",
+        "agent": "summary",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 3482,
+        "in": 0,
+        "out": 0,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.0,
+        "cost_source": "estimated",
+        "est_cost_usd": 0.0,
+        "reported_cost_usd": null,
+        "chunks": null
+      },
+      {
+        "call_site": "synthesize",
+        "agent": "synthesizer",
+        "provider": "gemini-openrouter",
+        "model": "google/gemini-3.8-flash",
+        "dimension": "cost",
+        "status": "ok",
+        "latency_ms": 1398,
+        "in": 426,
+        "out": 22,
+        "reasoning": 0,
+        "upstream": "Google AI Studio",
+        "cost_usd": 0.000804,
+        "cost_source": "reported",
+        "est_cost_usd": 0.000804,
+        "reported_cost_usd": 0.000804,
+        "chunks": 2
+      }
+    ],
+    "fallbacks": [],
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "cost_usd": 0.00436,
+    "n_citations": 0,
+    "n_tokens": 2
+  }
+]

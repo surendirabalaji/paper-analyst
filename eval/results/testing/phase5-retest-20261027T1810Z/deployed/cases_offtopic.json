@@ -1,0 +1,5 @@
+[
+ {"id": "R1_everest", "query": "At what temperature does water boil on the summit of Mount Everest?"},
+ {"id": "R2_everest_para", "query": "How hot does water need to get before it boils at the top of Everest?"},
+ {"id": "R3_sourdough", "query": "What hydration percentage is typical for a beginner sourdough loaf?"}
+]

@@ -1,0 +1,696 @@
+{
+  "id": "L1_fakekey_sharing",
+  "query": "Explain what the Reflexion paper proposes and whether it was published at a conference, and what newer self-reflection agent methods have appeared recently?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "fe49e25cea57"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Summarise the Reflexion paper and verify its publication status, then research recent follow-up self-reflection agent methods.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "summary",
+        "instruction": "Summarise the core mechanism, architecture, and results of the Reflexion paper (Shinn et al.), and check its publication venue and acceptance status.",
+        "needs_live": true,
+        "depends_on": []
+      },
+      {
+        "id": "t2",
+        "worker": "research",
+        "instruction": "Identify and describe recent follow-up methods and advances in LLM agent self-reflection and self-correction beyond Reflexion.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "summary",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    },
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "summary",
+      "get_paper_outline",
+      {
+        "paper": "Reflexion"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      {
+        "section": "S3",
+        "paper": "2303.11366v4"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      {
+        "paper": "2303.11366v4",
+        "section": "S4"
+      }
+    ],
+    [
+      "summary",
+      "tavily_search",
+      {
+        "query": "\"Reflexion: Language Agents with Verbal Reinforcement Learning\" Noah Shinn conference accepted NeurIPS ICLR ICML"
+      }
+    ],
+    [
+      "research",
+      "corpus_search",
+      {
+        "query": "Reflexion self-reflection self-correction agent follow-up recent methods"
+      }
+    ],
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "\"self-reflection\" OR \"self-correction\" LLM agent methods after Reflexion 2023 2024"
+      }
+    ],
+    [
+      "research",
+      "corpus_search",
+      {
+        "query": "LLM agent self-correction self-reflection reasoning feedback memory"
+      }
+    ],
+    [
+      "research",
+      "corpus_search",
+      {
+        "query": "agent reflection self-correction frameworks CoALA memory reasoning"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "summary",
+      "get_paper_outline",
+      "ok",
+      null,
+      1
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      "ok",
+      null,
+      1
+    ],
+    [
+      "summary",
+      "tavily_search",
+      "error",
+      "auth",
+      0
+    ],
+    [
+      "research",
+      "corpus_search",
+      "ok",
+      null,
+      6
+    ],
+    [
+      "research",
+      "tavily_search",
+      "error",
+      "auth",
+      0
+    ],
+    [
+      "research",
+      "corpus_search",
+      "ok",
+      null,
+      6
+    ],
+    [
+      "research",
+      "corpus_search",
+      "ok",
+      null,
+      6
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "summary",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "check the current status of a specific paper",
+      "query": "\"Reflexion: Language Agents with Verbal Reinforcement Learning\" Noah Shinn conference accepted NeurIPS ICLR ICML",
+      "time_range": null,
+      "status": "error",
+      "error_kind": "auth",
+      "latency_ms": 1974,
+      "w_ids": [],
+      "domains": []
+    },
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "\"self-reflection\" OR \"self-correction\" LLM agent methods after Reflexion 2023 2024",
+      "time_range": null,
+      "status": "error",
+      "error_kind": "auth",
+      "latency_ms": 1062,
+      "w_ids": [],
+      "domains": []
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3410,
+      "in": 602,
+      "out": 131,
+      "cost_usd": 0.0018855
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2099,
+      "in": 1189,
+      "out": 20,
+      "cost_usd": 0.0019335
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2975,
+      "in": 2400,
+      "out": 36,
+      "cost_usd": 0.00387
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2216,
+      "in": 4546,
+      "out": 36,
+      "cost_usd": 0.007089
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2205,
+      "in": 4841,
+      "out": 41,
+      "cost_usd": 0.007569
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4635,
+      "in": 4930,
+      "out": 321,
+      "cost_usd": 0.0098025
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4017,
+      "in": 853,
+      "out": 30,
+      "cost_usd": 0.0015045
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1752,
+      "in": 3388,
+      "out": 45,
+      "cost_usd": 0.0054195
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2031,
+      "in": 3467,
+      "out": 27,
+      "cost_usd": 0.005403
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1954,
+      "in": 6370,
+      "out": 25,
+      "cost_usd": 0.0097425
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 5115,
+      "in": 9448,
+      "out": 333,
+      "cost_usd": 0.0166695
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "upstream": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 16163,
+      "in": 7528,
+      "out": 738,
+      "cost_usd": 0.022436
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 594,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1531,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 3654,
+        "long_source_tokens_est": 2123,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 4,
+        "context_tokens_est": 3869,
+        "long_source_tokens_est": 2338,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Compact findings from evidence already retrieved; low-cost model.",
+      "features": {
+        "round": 5,
+        "context_tokens_est": 3905,
+        "long_source_tokens_est": 2338,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 565,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 3100,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 3118,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 4,
+        "context_tokens_est": 6084,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Compact findings from evidence already retrieved; low-cost model.",
+      "features": {
+        "round": 5,
+        "context_tokens_est": 9019,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "openai",
+      "model_id": "gpt-6.1-sol",
+      "dimension": "capability",
+      "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile; long evidence (~6073 tokens).",
+      "features": {
+        "n_tasks_ok": 2,
+        "n_papers": 2,
+        "n_web": 0,
+        "evidence_tokens_est": 6073,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "summary",
+      "status": "partial",
+      "error_kind": "live_search_unavailable",
+      "evidence_ids": [
+        "C1",
+        "C4",
+        "C2",
+        "C3",
+        "C5",
+        "C6"
+      ],
+      "rounds": 5,
+      "tool_calls": 4
+    },
+    {
+      "task_id": "t2",
+      "agent": "research",
+      "status": "partial",
+      "error_kind": "live_search_unavailable",
+      "evidence_ids": [
+        "C12",
+        "C4",
+        "C5",
+        "C7",
+        "C9",
+        "C14",
+        "C16",
+        "C17",
+        "C18",
+        "C15"
+      ],
+      "rounds": 5,
+      "tool_calls": 4
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "C1",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "Abstract",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — Abstract\nLarge language models (LLMs) have been increasingly used to interact with external\nenvironments (e.g., games, compilers, APIs) as goal-driven agents. However, it\nremai"
+    },
+    {
+      "cite_id": "C12",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "1 Introduction",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 1 Introduction\nRecent works such as ReAct [30], SayCan [1],\nToolformer [22], HuggingGPT [23],\ngenerative agents [19], and WebGPT [17]\nhave demonstrated the feasibility of\nauton"
+    },
+    {
+      "cite_id": "C2",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\nAlgorithm 1 Reinforcement via self-reflection\nInitialize Actor, Evaluator, Self-Reflection:\nM_{a} , M_{e} , M_{sr}\nInitialize p"
+    },
+    {
+      "cite_id": "C3",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\nan observation from the environment o_{t} . We explore various Actor models,\nincluding Chain of Thought [26] and ReAct [30].\nTh"
+    },
+    {
+      "cite_id": "C4",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\ntask, when the agent receives a failure signal, it can infer that a specific\naction a_{i} led to subsequent incorrect actions a"
+    },
+    {
+      "cite_id": "C5",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "3 Reflexion: reinforcement via verbal reflection",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 3 Reflexion: reinforcement via verbal reflection\nfor improvement by an LLM, the Self-Reflection\nmodel analyzes the set of \\{\\tau_{0},r_{0}\\} to produce a summary\nsr_{0} which i"
+    },
+    {
+      "cite_id": "C6",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "4 Experiments",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 4 Experiments\nWe evaluate various natural language RL setups on decision-making, reasoning,\nand code generation tasks. Specifically, we challenge an agent to perform\nsearch-bas"
+    },
+    {
+      "cite_id": "C7",
+      "doc_id": "2303.11366v4",
+      "http": 200,
+      "match": true,
+      "section": "2 Related work",
+      "text_head": "Reflexion: Language Agents with Verbal Reinforcement Learning — 2 Related work\nReasoning and decision-making\nSelf-Refine [15] employs an iterative framework for\nself-refinement to autonomously improve generation through self-evaluation.\nThe"
+    },
+    {
+      "cite_id": "C15",
+      "doc_id": "2309.02427v3",
+      "http": 200,
+      "match": true,
+      "section": "5 Case Studies",
+      "text_head": "Cognitive Architectures for Language Agents — 5 Case Studies\nWith variations and ablations of the memory modules, action space, and decision-making procedures, CoALA can express a wide spectrum of language agents. Table 2 lists some popular"
+    },
+    {
+      "cite_id": "C17",
+      "doc_id": "2309.02427v3",
+      "http": 200,
+      "match": true,
+      "section": "4 Cognitive Architectures for Language Agents (CoALA): A Conceptual Framework",
+      "text_head": "Cognitive Architectures for Language Agents — 4 Cognitive Architectures for Language Agents (CoALA): A Conceptual Framework\nWe present Cognitive Architectures for Language Agents (CoALA) as a framework to organize existing language agents a"
+    },
+    {
+      "cite_id": "C18",
+      "doc_id": "2309.02427v3",
+      "http": 200,
+      "match": true,
+      "section": "4 Cognitive Architectures for Language Agents (CoALA): A Conceptual Framework › 4.4 Reasoning actions",
+      "text_head": "Cognitive Architectures for Language Agents — 4 Cognitive Architectures for Language Agents (CoALA): A Conceptual Framework › 4.4 Reasoning actions\nReasoning allows language agents to process the contents of working memory to generate new i"
+    },
+    {
+      "cite_id": "C16",
+      "doc_id": "2309.02427v3",
+      "http": 200,
+      "match": true,
+      "section": "4 Cognitive Architectures for Language Agents (CoALA): A Conceptual Framework › 4.5 Learning actions",
+      "text_head": "Cognitive Architectures for Language Agents — 4 Cognitive Architectures for Language Agents (CoALA): A Conceptual Framework › 4.5 Learning actions\nUpdating LLM parameters (procedural memory). The LLM weights represent implicit procedural kn"
+    }
+  ],
+  "answer_markers": [
+    "C1",
+    "C12",
+    "C15",
+    "C16",
+    "C17",
+    "C18",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7"
+  ],
+  "done": {
+    "status": "partial",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 1875,
+      "llm_ms_sum": 48572,
+      "ttft_ms": 41878,
+      "total_ms": 53554
+    },
+    "cost_usd": 0.093325,
+    "cost_basis": {
+      "reported": 11,
+      "estimated": 1
+    },
+    "providers_used": [
+      "gemini-openrouter",
+      "openai"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 623,
+  "distinct_token_arrivals": 489,
+  "first_token_client_ms": 41887,
+  "total_client_ms": 53563,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "## What Reflexion proposes\n\n**Reflexion lets an LLM agent learn from failed attempts by changing its memory, rather than its model weights.** The paper calls this “verbal reinforcement learning”: feedback is turned into natural-language lessons that guide the next attempt. [C1, C12]\n\nIts loop has three components:\n1. **Actor:** generates actions or answers, using approaches such as Chain-of-Thought or ReAct.\n2. **Evaluator:** assesses the attempt using task-specific heuristics, exact-match checks, or an LLM.\n3. **Self-Reflection:** examines the attempt and feedback, writes actionable lessons, and stores them in memory for subsequent trials. [C2, C3, C4]\n\nThe important distinction is **persistent feedback across attempts**, not simply asking the model to reconsider its current answer. The trajectory provides short-term context, while saved reflections provide lessons from earlier trials; the implementation usually retains only 1–3 reflective experiences because of context limits. [C4, C5]\n\nThe paper reports **91% pass@1 on HumanEval**, compared with the 80% GPT-4 result cited in its abstract, and improvements over its baselines on ALFWorld and HotPotQA. These are the paper’s reported experimental results, not a current benchmark ranking. [C1, C6]\n\n## Was it published at a conference?\n\n**The available evidence does not answer this.** A verified conference-proceedings entry or authoritative publication record is missing, and the live lookup failed. I therefore cannot confirm a conference venue from the supplied sources.\n\n## What newer self-reflection methods have appeared?\n\n**The available evidence does not answer this for recent developments through October 2026.** Current literature-search results are missing, so the following should be treated as related approaches—not a verified list of newer successors to Reflexion:\n\n- **Self-Refine:** iteratively evaluates and revises a generated output. Reflexion’s related-work section contrasts this single-generation refinement with its own persistent memory across trials. [C7]\n- **Voyager and Generative Agents:** the CoALA paper characterizes Voyager as combining procedural long-term memory with reasoning, retrieval, and learning, while Generative Agents uses episodic and semantic memory with those same internal actions. These illustrate broader memory-based agent designs. [C15]\n- **Tree of Thoughts:** uses reasoning with proposal, evaluation, and selection, rather than the persistent reflection-memory loop central to Reflexion. [C15, C4]\n- **CoALA—Cognitive Architectures for Language Agents:** is an organizing framework rather than a single reflection algorithm. It distinguishes reasoning in working memory from learning that writes to long-term memory, and includes mechanisms for updating prompts or agent code. [C17, C18, C16]\n\nIn short, Reflexion’s central idea is **“try → evaluate → write a lesson → retry with that lesson in memory,” without weight updates**. The conference-status and genuinely recent-successor parts still need verified external sources. [C1, C4]"
+}

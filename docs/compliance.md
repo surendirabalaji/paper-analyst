@@ -11,9 +11,9 @@ Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 |---|---|---|---|---|
 | LangGraph state graph compiles and runs end to end | `app/graph.py` | Integration test + deployed query | Local run 2026-10-27: planner → supervisor → research → supervisor → synthesize, streamed SSE (Self-RAG query, greeting, out-of-corpus query) | implemented |
 | Supervisor pattern | `app/graph.py` | Trace shows supervisor ⇄ workers | `transition` events supervisor → research → supervisor → synthesize | implemented |
-| ≥3 specialized workers (supervisor not counted) | `app/agents/` | Research, Summary, Data each invoked across test queries | | pending |
-| Distinct system prompt per worker | `app/agents/prompts.py` | Code review | | pending |
-| Distinct tool access per worker | `app/agents/*` | Tool lists differ; trace | | pending |
+| ≥3 specialized workers (supervisor not counted) | `app/agents/` | Research, Summary, Data each invoked across test queries | Phase 5: Research and Summary (2 of 3) both invoked by the planner on ordinary questions (`eval/results/phase5/local/`); Data is Phase 6 | in progress (2/3) |
+| Distinct system prompt per worker | `app/agents/prompts.py` | Code review | `RESEARCH_ROLE` (cross-paper, corpus first, web for current developments) vs `SUMMARY_ROLE` (one paper at a time, section by section, web only for status) | implemented (2/3) |
+| Distinct tool access per worker | `app/agents/*` | Tool lists differ; trace | Research: `corpus_search` + shared `tavily_search`; Summary: `get_paper_outline`, `get_paper_section`, `search_within_paper` + shared `tavily_search`. Unit test asserts the bound tool sets | implemented (2/3) |
 | Delegation driven by inspectable state fields | `route_next` | `transition` events carry reasons | Pure function of task status, dependencies, attempts, step count and time budget; unit-tested in `tests/unit/test_phase2_core.py` | implemented |
 | Worker failure does not crash the graph | worker wrapper | Fault-injection test + partial answer | | pending |
 | State schema documented | `docs/architecture.md` §4 | Matches code | | pending |
@@ -30,7 +30,7 @@ Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 | LCEL pipeline | `app/rag.py` | Code review | `make_corpus_search_chain` (retrieve \| register) and `AUGMENT_PROMPT \| chat_model` streaming synthesis | implemented |
 | Augmentation prompt with chunk IDs | `app/rag.py` | Prompt in architecture.md matches code | `AUGMENT_SYSTEM`/`AUGMENT_HUMAN`; evidence items carry cite id and chunk_id | implemented |
 | Citations resolve to source chunks | `/api/source/chunk` | Resolution-rate check | Self-RAG run: 5/5 cited markers resolved, 0 unresolved; unknown or malformed ids give 404 | implemented |
-| Out-of-corpus question → abstain or escalate | Research + synth prompts | System test | AlphaFold 3 query: "The available evidence does not answer this…", no invented sources (local, 2026-10-27) | implemented |
+| Out-of-corpus question → abstain or escalate | Planner `needs_live`, Research web gate (`RAG_MIN_SCORE`), synth prompt | System test | AlphaFold 3 query: abstained, no invented sources (Phase 2). Phase 5 (P2-N8): off-topic questions now escalate to live web search: "capital of Australia" → Research `needs_live` → 4 `W#` web citations; "MCP authorization spec" (best corpus score 0.52) → corpus + web. Abstentions no longer attach unrelated chunks (P3-N3): synthesis gets only evidence a worker cited, and markers attached only to "evidence does not answer" clauses are not linked (`done.dropped_citations`) | implemented |
 | RAGAS: faithfulness, answer relevance, context precision, context recall | `scripts/run_ragas.py` | Numeric results | | pending |
 
 ## LLM routing (15%)
@@ -71,10 +71,12 @@ Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 
 | Requirement | Where | How verified | Evidence | Status |
 |---|---|---|---|---|
-| Tavily Remote MCP, Streamable HTTP, key as query param | `app/mcp_client.py` | `list_tools` + call | Phase 0 spike: list_tools + tavily_search OK 2026-10-27 (app client not built yet) | pending |
-| Same tool used by Research and Summary in different contexts | traces | Deployed SSE log | | pending |
-| Sharing rationale documented | `docs/architecture.md` §8 | | | pending |
-| Key redacted from logs/traces | | grep logs for `tavilyApiKey=` | | pending |
+| Tavily Remote MCP, Streamable HTTP, key as query param | `app/mcp_tavily.py` (`TavilyMCP`) | `list_tools` + real searches | `langchain-mcp-adapters` `MultiServerMCPClient`, transport `streamable_http`, URL `https://mcp.tavily.com/mcp/?tavilyApiKey=…`; unit test asserts the connection has only `transport` and `url`. Live test 2026-10-27: real search parsed with URLs | implemented |
+| Live (current) retrieval distinct from static RAG | Research (`needs_live` or low corpus support) and Summary (status) | Current-information query | Local 2026-10-27: "latest developments in LLM agent memory this year" → web results from 2026 cited as `W#` with retrieval time. Deployed (rev 00005-zc8): "agent frameworks or SDK releases in the past month" → `time_range=month`, 6 `W#` sources dated October 2026 (`eval/results/phase5/deployed/2.events.jsonl`) | implemented (deployed) |
+| Live retrieval failures handled | `TavilyUnavailable` kinds: auth, quota, rate_limit, connection, timeout, empty, budget, disabled | Unit + live fault | Fake key against the real server (local, real providers): 401 → `auth`, Research `partial` / `live_search_unavailable`, corpus-only answer that says web results were unavailable; key absent from debug-level server log and SSE | implemented |
+| Same tool used by Research and Summary in different contexts | `shared_search_tool` (`app/mcp_tavily.py`), traces | Live test + deployed SSE log | Live test 2026-10-27 (`tests/integration/test_phase5_live_mcp_sharing.py`, `eval/results/phase5/live_test_sharing.events.jsonl`): `web_search` events from `research` ("find current developments on the topic") and `summary` ("check the current status of a specific paper") on `tavily-remote-mcp`. Deployed (rev 00005-zc8, `eval/results/phase5/deployed/1.events.jsonl`): `research` 1 call and `summary` 2 calls to `tavily_search`, with distinct purposes and queries. Tester verified independently on rev 00005 (SSE + browser) and rev 00006 (browser) | verified (Phase 5 PASS) |
+| Sharing rationale documented | `docs/architecture.md` §8 | Review | §8 written in Phase 5 | implemented |
+| Key redacted from logs/traces | `app/events.py` (`redact`, `safe_error`, `RedactingFilter`), logger levels in `app/main.py` | Fake-key tests | Unit tests: httpx status error with the key in the URL, ExceptionGroup, URL-encoded key, log args and tracebacks, real MCP client connection failure (error, logs at DEBUG, SSE frames). Local server with `--log-level debug`: 0 occurrences of the fake key or `tavilyApiKey`. Cloud Run (388 entries since the deploy): 0 in application logs; the key appears only in the audit-log `ReplaceService` env vars (P3-N1, accepted) | implemented |
 
 ## Deliverables
 

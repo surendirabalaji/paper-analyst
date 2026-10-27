@@ -1,0 +1,332 @@
+{
+  "id": "R3_sourdough",
+  "query": "What hydration percentage is typical for a beginner sourdough loaf?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "897c951b413f"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Look up typical hydration percentages recommended for beginner sourdough bread baking via web search.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Search the web to determine the typical sourdough hydration percentage recommended for beginners and explain why that range is used.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "typical beginner sourdough hydration percentage range why"
+      }
+    ],
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "\"beginner sourdough\" hydration percentage \"65%\" OR \"70%\" dough handling"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "typical beginner sourdough hydration percentage range why",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1999,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "pantrymama.com",
+        "www.cravethegood.com",
+        "www.sourdough.co.uk",
+        "www.youtube.com"
+      ]
+    },
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "\"beginner sourdough\" hydration percentage \"65%\" OR \"70%\" dough handling",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2667,
+      "w_ids": [
+        "W5",
+        "W6",
+        "W7",
+        "W4"
+      ],
+      "domains": [
+        "flourwise.com",
+        "yeastcoastsourdough.com",
+        "www.theperfectloaf.com",
+        "www.youtube.com"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3015,
+      "in": 585,
+      "out": 156,
+      "cost_usd": 0.0020475
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2406,
+      "in": 832,
+      "out": 24,
+      "cost_usd": 0.001428
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1901,
+      "in": 2140,
+      "out": 34,
+      "cost_usd": 0.003465
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4448,
+      "in": 3698,
+      "out": 300,
+      "cost_usd": 0.007797
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3341,
+      "in": 2401,
+      "out": 267,
+      "cost_usd": 0.005604
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 544,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1630,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 2883,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 4,
+        "evidence_tokens_est": 1184,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W5",
+        "W6",
+        "W7",
+        "W1"
+      ],
+      "rounds": 3,
+      "tool_calls": 2
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W5",
+      "type": "web",
+      "url": "https://flourwise.com/blog/sourdough-hydration-chart",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:42.388Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W6",
+      "type": "web",
+      "url": "https://yeastcoastsourdough.com/blogs/sourdough-chat-recipes-instructions-and-more/sourdough-hydration-levels-explained-from-65-to-85-and-what-it-means-for-your-bread",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:42.388Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W7",
+      "type": "web",
+      "url": "https://www.theperfectloaf.com/dough-hydration",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:42.388Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://pantrymama.com/understanding-hydration-in-sourdough-bread-baking",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:38.483Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W1",
+    "W5",
+    "W6",
+    "W7"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 15111,
+      "ttft_ms": 17657,
+      "total_ms": 19798
+    },
+    "cost_usd": 0.020341,
+    "cost_basis": {
+      "reported": 5
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 12,
+  "distinct_token_arrivals": 12,
+  "first_token_client_ms": 17788,
+  "total_client_ms": 19849,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "Based on current web results retrieved on October 27, 2026, the typical hydration percentage recommended for a beginner sourdough loaf is between 65% and 70% [W5, W6, W7]. Some sources note that the easiest range for beginners to handle can start anywhere from 60% up to 68%–70% [W6, W7], while hydration levels under 70% are generally aimed at novice bakers [W1]. \n\n* **Handling and Structure:** Dough within the 65% to 70% range is balanced, manageable, forgiving, and holds good structural integrity [W6, W7]. It provides beginner-friendly handling and consistent results, allowing new bakers to focus on mastering fermentation timing and shaping fundamentals rather than struggling with overly wet, sticky dough [W5, W6].\n* **Crumb and Progression:** While loaf recipes below 70% hydration may produce a tighter or moderate crumb [W1, W5], experts advise beginners to bake their first 5 to 10 loaves between 65% and 70% before progressively increasing hydration to the standard artisan range of 70% to 75% or higher [W5, W6, W7]."
+}

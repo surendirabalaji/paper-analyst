@@ -49,7 +49,10 @@ function el(tag, cls, text) {
   return n;
 }
 
-function renderAnswer(node, text, registry) {
+const isHttp = (u) => typeof u === "string" && /^https?:\/\//i.test(u);
+
+// `dropped`: markers attached only to statements of missing evidence; shown as plain text, never linked.
+function renderAnswer(node, text, registry, dropped = new Set()) {
   node.replaceChildren();
   let last = 0;
   for (const m of text.matchAll(MARKERS)) {
@@ -58,7 +61,11 @@ function renderAnswer(node, text, registry) {
     m[1].split(/\s*[,;]\s*/).forEach((id, i) => {
       if (i) node.append(document.createTextNode(", "));
       const ref = registry.get(id);
-      if (ref) {
+      if (ref && dropped.has(id)) {
+        const s = el("span", "cite-dropped", id);
+        s.title = "Not linked: attached to a statement that the evidence is missing";
+        node.append(s);
+      } else if (ref) {
         const a = el("a", "cite", id);
         a.href = "#";
         a.title = ref.label;
@@ -78,6 +85,16 @@ async function openSource(ref) {
   showTab("sources");
   const v = $("viewer");
   v.hidden = false;
+  if (ref.type === "web") { // live web result: snippet as retrieved by Tavily, plus the page itself
+    $("viewer-title").textContent = `${ref.cite_id} · ${ref.title || ref.source_url}`;
+    $("viewer-meta").textContent = `web · ${ref.doc_id} · retrieved ${ref.retrieved_at || "?"}` +
+      (ref.found_by || ref.agent ? ` · found by ${ref.found_by || ref.agent} via tavily_search` : "");
+    $("viewer-text").textContent = ref.snippet || "(snippet not available; open the page)";
+    $("viewer-link").textContent = "Open web page";
+    $("viewer-link").href = isHttp(ref.source_url) ? ref.source_url : "#";
+    return;
+  }
+  $("viewer-link").textContent = "Open on arXiv";
   $("viewer-title").textContent = `${ref.cite_id} · ${ref.title || ref.chunk_id}`;
   $("viewer-meta").textContent = `${ref.section || ""} · chunk ${ref.chunk_id}`;
   $("viewer-text").textContent = "Loading…";
@@ -133,6 +150,7 @@ async function ask(query) {
   box.scrollIntoView({ block: "end" });
 
   const registry = new Map();
+  const dropped = new Set();
   const routes = new Map();
   const picks = []; // per-turn routing summary: [{agent, provider, dimension, fallback}]
   const routeLine = el("div", "routing-line");
@@ -160,14 +178,14 @@ async function ask(query) {
   const repaint = () => {
     if (pending) return;
     pending = true;
-    requestAnimationFrame(() => { pending = false; renderAnswer(answer, text, registry); });
+    requestAnimationFrame(() => { pending = false; renderAnswer(answer, text, registry, dropped); });
   };
 
   const handlers = {
     meta: (d) => traceItem(turn, "start", ` request ${d.request_id}, k=${d.k}, workers: ${d.workers.join(", ")}`),
     plan: (d) => {
       traceItem(turn, "plan", ` ${d.plan_summary} (${d.source})`);
-      d.tasks.forEach((t) => traceItem(turn, t.id, ` ${t.worker}: ${t.instruction}` +
+      d.tasks.forEach((t) => traceItem(turn, t.id, ` ${t.worker}${t.needs_live ? " [needs_live]" : ""}: ${t.instruction}` +
         (t.depends_on.length ? ` (after ${t.depends_on.join(", ")})` : "")));
       d.notes.forEach((n) => traceItem(turn, "note", ` ${n}`, "warn"));
       status.textContent = d.tasks.length ? `Plan: ${d.tasks.map((t) => t.worker).join(" → ")}` : "No research needed";
@@ -206,7 +224,21 @@ async function ask(query) {
     },
     tool_call: (d) => traceItem(turn, d.agent, ` calls ${d.tool}(${JSON.stringify(d.args_safe)})`),
     tool_result: (d) => traceItem(turn, d.agent, ` ${d.tool} → ${d.status}` +
+      (d.error_kind ? ` (${d.error_kind}, recoverable)` : "") +
       (d.n_results != null ? `, ${d.n_results} results` : "") + `, ${d.latency_ms} ms`, statusKind(d.status)),
+    tool_gate: (d) => traceItem(turn, d.agent, ` ${d.tool} ${d.enabled ? "enabled" : "not enabled"}: ${d.reason}`,
+      d.enabled ? "mcp" : ""),
+    web_search: (d) => {
+      d.results.forEach((r) => registry.set(r.cite_id, {
+        ...r, type: "web", doc_id: r.domain, source_url: r.url, href: r.url, agent: d.agent,
+        label: `${r.title} — web, retrieved ${r.retrieved_at}`,
+      }));
+      traceItem(turn, `${d.agent} ⇄ MCP`, ` ${d.tool} on ${d.server} (${d.purpose}) "${d.query}": ` +
+        (d.status === "ok"
+          ? d.results.map((r) => `${r.cite_id} ${r.domain}`).join(", ")
+          : `${d.error_kind}, continuing without web evidence (${d.message_safe})`) + `, ${d.latency_ms} ms`,
+        d.status === "ok" ? "mcp" : "warn");
+    },
     retrieval: (d) => {
       d.chunks.forEach((c) => registry.set(c.cite_id, { ...c, label: `${c.title} — ${c.section}` }));
       traceItem(turn, "retrieval", ` "${d.query}": ${d.chunks.map((c) => `${c.cite_id} ${c.doc_id} (${c.score.toFixed(2)})`).join(", ")} in ${d.retrieval_ms} ms`);
@@ -216,12 +248,14 @@ async function ask(query) {
       statusKind(d.status)),
     token: (d) => { text += d.delta; repaint(); },
     citation: (d) => {
-      registry.set(d.cite_id, { ...d });
+      const ref = { ...(registry.get(d.cite_id) || {}), ...d }; // keeps the web snippet from web_search
+      registry.set(d.cite_id, ref);
       const li = el("li");
       const a = el("a", "cite", d.cite_id);
       a.href = "#";
-      a.addEventListener("click", (e) => { e.preventDefault(); openSource(d); });
-      li.append(el("span", "badge", `#${turn}`), a, document.createTextNode(` ${d.label} (arXiv:${d.doc_id})`));
+      a.addEventListener("click", (e) => { e.preventDefault(); openSource(ref); });
+      li.append(el("span", "badge", `#${turn}`), a, document.createTextNode(
+        d.type === "web" ? ` ${d.label} (${d.doc_id})` : ` ${d.label} (arXiv:${d.doc_id})`));
       $("sources").append(li);
       repaint();
     },
@@ -236,7 +270,10 @@ async function ask(query) {
         (d.cost_usd != null ? ` · cost $${d.cost_usd.toFixed(4)}` +
           (d.cost_basis && d.cost_basis.estimated ? ` (${d.cost_basis.estimated} call(s) estimated)` : "") : "") + (d.fallbacks ? ` · ${d.fallbacks} fallback(s)` : "");
       status.textContent = `${d.status} · TTFT ${t.ttft_ms ?? "–"} ms · total ${t.total_ms} ms · retrieval ${t.retrieval_ms} ms · ${tok}` +
-        (d.unresolved_citations.length ? ` · unresolved: ${d.unresolved_citations.join(" ")}` : "");
+        (d.unresolved_citations.length ? ` · unresolved: ${d.unresolved_citations.join(" ")}` : "") +
+        (d.dropped_citations && d.dropped_citations.length ? ` · not linked (missing-evidence statements): ${d.dropped_citations.join(" ")}` : "");
+      d.dropped_citations && d.dropped_citations.forEach((c) => dropped.add(c));
+      repaint();
       if (d.status !== "done") status.classList.add("error");
       traceItem(turn, "done", ` ${d.status} in ${t.total_ms} ms`, statusKind(d.status));
     },
@@ -262,7 +299,7 @@ async function ask(query) {
     box.append(el("div", "status error", `Error: ${e.message}`));
   } finally {
     answer.classList.remove("streaming");
-    renderAnswer(answer, text, registry);
+    renderAnswer(answer, text, registry, dropped);
   }
 }
 

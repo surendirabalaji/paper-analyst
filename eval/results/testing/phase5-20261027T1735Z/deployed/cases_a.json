@@ -1,0 +1,5 @@
+[
+ {"id": "D1_sharing", "query": "Can you summarize what the MetaGPT paper proposes and tell me whether it ended up being accepted at a conference? Also, which multi-agent coding frameworks are people actually adopting right now?"},
+ {"id": "D2_current", "query": "Have there been any new results or leaderboard changes on the GAIA benchmark in the last few weeks?"},
+ {"id": "D3_offtopic", "query": "At what temperature does water boil on the summit of Mount Everest?"}
+]

@@ -100,7 +100,7 @@ def test_tc_p4_03_policy_ignores_agent_identity():
     ("What are the different components of the Voyager agent?", False),         # 'different' is not a cue
     ("Contrast the memory designs in MemGPT and Generative Agents", True),
     ("Summarise the evaluation setup of SWE-agent", False),
-    ("How does AutoGen stack up against CAMEL for role-play?", False),          # known miss: no lexical cue
+    ("How does AutoGen stack up against CAMEL for role-play?", True),           # P4-N3 miss, fixed in Phase 5
 ])
 def test_tc_p4_04_comparison_cue_heldout_phrasings(q, cue):
     assert policy.comparison_cue(q) is cue
@@ -223,8 +223,6 @@ def test_tc_p4_13_non_byok_cost_is_used_and_absent_cost_gives_no_reported_field(
     assert "reported_cost_usd" not in OpenRouterChat._extra(_usage(0, None))
 
 
-@pytest.mark.xfail(strict=True, reason="P4-N6 (latent, Low): if OpenRouter charges a BYOK fee (cost>0) the "
-                   "upstream Google charge is dropped; total spend would be cost + upstream_inference_cost")
 def test_tc_p4_14_byok_fee_plus_upstream_should_both_be_counted():
     extra = OpenRouterChat._extra(_usage(0.000001, 1.95e-05))
     assert extra["reported_cost_usd"] == pytest.approx(0.000001 + 1.95e-05)

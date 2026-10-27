@@ -1,0 +1,1476 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "query": "Briefly summarize the Generative Agents paper and find out where it was eventually published. Also, what are some recent projects that build on simulated agent societies?",
+ "started_utc": "2026-10-27T17:46:33Z",
+ "checks": {
+  "incremental_render": true,
+  "both_agents_mcp_rows": true,
+  "mcp_rows_name_server_and_tool": true,
+  "w_link_opens_viewer": true,
+  "c_link_opens_chunk": true,
+  "no_console_errors": true,
+  "no_secret_shapes_in_dom": true
+ },
+ "final_sample": {
+  "turns": 1,
+  "len": 2082,
+  "streaming": false,
+  "cites": 10,
+  "status": "done · TTFT 38168 ms · total 46652 ms · retrieval 852 ms · Gemini 9 calls, 33711→951 tok; OpenAI 1 calls, 7629→623 tok · cost $0.0792 (1 call(s) estimated)",
+  "trace": 33,
+  "routes": 11,
+  "sources": 7,
+  "sendDisabled": false,
+  "t": 46.83
+ },
+ "samples": [
+  {
+   "t": 0.0,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.21,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.41,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.61,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 0.82,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.02,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.22,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.43,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.63,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 1.83,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.03,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.24,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.44,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.64,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 2.85,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.05,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.25,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.46,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.66,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 3.86,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.07,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.27,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.47,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.68,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 4.88,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.09,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.29,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.49,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.7,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 5.9,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.1,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.31,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.51,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.71,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 6.92,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.12,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.32,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.52,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.73,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 7.93,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.14,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.34,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.54,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.75,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 8.95,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.16,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.36,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.56,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.77,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 9.97,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.18,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.38,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.58,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.79,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 10.99,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.19,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.4,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.6,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 11.8,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.01,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.21,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.41,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.61,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 12.82,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.02,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.23,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.43,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.63,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 13.83,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.04,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.24,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.45,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.65,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 14.85,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.06,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.26,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.47,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.67,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 15.88,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.08,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.28,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.48,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.69,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 16.89,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.1,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.3,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.51,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.71,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 17.91,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.11,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.32,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.52,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.73,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 18.93,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.13,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.34,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.54,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.75,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 19.95,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.15,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.36,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.56,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.77,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 20.97,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.17,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.38,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.58,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.78,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 21.99,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.19,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.39,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.6,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 22.8,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.01,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.21,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.41,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.62,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 23.82,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.02,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.23,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.43,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.64,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 24.84,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.05,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.25,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.45,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.66,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 25.86,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.06,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.27,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.47,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.68,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 26.88,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.08,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.29,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.49,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.7,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 27.9,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.1,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.31,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.51,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.71,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 28.92,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.12,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.32,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.53,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.73,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 29.94,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.14,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.34,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.55,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.75,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 30.95,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.16,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.36,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.56,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.77,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 31.97,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.17,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.38,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.58,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.78,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 32.99,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.19,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.39,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.6,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 33.8,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.01,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.21,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.41,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.62,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 34.82,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.03,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.23,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.43,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.64,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 35.84,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.04,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.25,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.45,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.65,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 36.86,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 37.06,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 37.27,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 37.47,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 37.67,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 37.88,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 38.08,
+   "len": 0,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 38.29,
+   "len": 60,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 38.49,
+   "len": 102,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 38.69,
+   "len": 156,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 38.9,
+   "len": 212,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 39.1,
+   "len": 246,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 39.3,
+   "len": 307,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 39.51,
+   "len": 330,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 39.71,
+   "len": 403,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 39.92,
+   "len": 420,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 40.12,
+   "len": 447,
+   "streaming": true,
+   "cites": 0
+  },
+  {
+   "t": 40.33,
+   "len": 454,
+   "streaming": true,
+   "cites": 1
+  },
+  {
+   "t": 40.53,
+   "len": 533,
+   "streaming": true,
+   "cites": 1
+  },
+  {
+   "t": 40.73,
+   "len": 557,
+   "streaming": true,
+   "cites": 1
+  },
+  {
+   "t": 40.94,
+   "len": 574,
+   "streaming": true,
+   "cites": 1
+  },
+  {
+   "t": 41.14,
+   "len": 650,
+   "streaming": true,
+   "cites": 1
+  },
+  {
+   "t": 41.34,
+   "len": 675,
+   "streaming": true,
+   "cites": 1
+  },
+  {
+   "t": 41.54,
+   "len": 694,
+   "streaming": true,
+   "cites": 2
+  },
+  {
+   "t": 41.75,
+   "len": 694,
+   "streaming": true,
+   "cites": 2
+  },
+  {
+   "t": 41.95,
+   "len": 801,
+   "streaming": true,
+   "cites": 2
+  },
+  {
+   "t": 42.16,
+   "len": 857,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 42.36,
+   "len": 880,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 42.56,
+   "len": 946,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 42.77,
+   "len": 1045,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 42.97,
+   "len": 1085,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 43.17,
+   "len": 1133,
+   "streaming": true,
+   "cites": 3
+  },
+  {
+   "t": 43.38,
+   "len": 1160,
+   "streaming": true,
+   "cites": 5
+  },
+  {
+   "t": 43.58,
+   "len": 1268,
+   "streaming": true,
+   "cites": 5
+  },
+  {
+   "t": 43.78,
+   "len": 1323,
+   "streaming": true,
+   "cites": 5
+  },
+  {
+   "t": 43.98,
+   "len": 1359,
+   "streaming": true,
+   "cites": 5
+  },
+  {
+   "t": 44.19,
+   "len": 1387,
+   "streaming": true,
+   "cites": 5
+  },
+  {
+   "t": 44.39,
+   "len": 1450,
+   "streaming": true,
+   "cites": 5
+  },
+  {
+   "t": 44.6,
+   "len": 1493,
+   "streaming": true,
+   "cites": 7
+  },
+  {
+   "t": 44.8,
+   "len": 1541,
+   "streaming": true,
+   "cites": 7
+  },
+  {
+   "t": 45.01,
+   "len": 1618,
+   "streaming": true,
+   "cites": 8
+  },
+  {
+   "t": 45.21,
+   "len": 1709,
+   "streaming": true,
+   "cites": 8
+  },
+  {
+   "t": 45.41,
+   "len": 1714,
+   "streaming": true,
+   "cites": 9
+  },
+  {
+   "t": 45.62,
+   "len": 1788,
+   "streaming": true,
+   "cites": 9
+  },
+  {
+   "t": 45.82,
+   "len": 1817,
+   "streaming": true,
+   "cites": 9
+  },
+  {
+   "t": 46.02,
+   "len": 1929,
+   "streaming": true,
+   "cites": 9
+  },
+  {
+   "t": 46.22,
+   "len": 1992,
+   "streaming": true,
+   "cites": 10
+  },
+  {
+   "t": 46.42,
+   "len": 2029,
+   "streaming": true,
+   "cites": 10
+  },
+  {
+   "t": 46.63,
+   "len": 2064,
+   "streaming": true,
+   "cites": 10
+  },
+  {
+   "t": 46.83,
+   "len": 2082,
+   "streaming": false,
+   "cites": 10
+  }
+ ],
+ "chat_stream_chunks": 348,
+ "chat_stream_arrival_span_s": 46.65,
+ "streamed_lengths": 41,
+ "answer_links": [
+  "C1",
+  "C1",
+  "C2",
+  "W1",
+  "W3",
+  "W5",
+  "W6",
+  "W7",
+  "W7",
+  "W5"
+ ],
+ "unlinked_markers": [],
+ "mcp_trace_rows": [
+  "#1 summary ⇄ MCP tavily_search on tavily-remote-mcp (check the current status of a specific paper) \"\"Generative Agents: Interactive Simulacra of Human Behavior\" Joon Sung Park publication venue\": W1 github.com, W2 www.joonsungpark.com, W3 dl.acm.org, W4 gonzoml.substack.com, 2022 ms",
+  "#1 research ⇄ MCP tavily_search on tavily-remote-mcp (find current developments on the topic) \"\"Generative Agents\" \"simulated\" agent societies recent research projects 2023 2024\": W5 societies.ai, W6 www.academia.edu, W7 www.alphaxiv.org, W1 github.com, 2061 ms"
+ ],
+ "gate_rows": [
+  "#1 summary tavily_search enabled: planner marked the task needs_live",
+  "#1 research tavily_search enabled: planner marked the task needs_live"
+ ],
+ "routing_rows": [
+  "Turn #1: Briefly summarize the Generative Agents paper and find out where it was eventually published. Also, what are some recent projects that build on simulated agent societies?",
+  "#1planner / plannerGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Short structured planning (JSON task list); the low-cost model is sufficient.inputs: qu",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1summary / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fast",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1research / worker_tool_loopGoogle Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: lowcost: Tool selection and search-query writing with short outputs; the low-cost, fas",
+  "#1synthesizer / synthesizeOpenAI (direct API) · gpt-6.1-solcapability: Multi-source synthesis needs the stronger model: 2 worker results to reconcile; evidence spans 3 papers; long evidence (~6596 tok"
+ ],
+ "sources": [
+  "#1C1 Generative Agents: Interactive Simulacra of Human Behavior — Abstract (arXiv:2304.03442v2)",
+  "#1C2 Generative Agents: Interactive Simulacra of Human Behavior — 8 Discussion › 8.2 Future Work and Limitations (arXiv:2304.03442v2)",
+  "#1W1 GitHub - joonspk-research/generative_agents: Generative Agents: Interactive Simulacra of Human Behavior · GitHub — web, retrieved 2026-10-27T17:46:42.030Z (github.com)",
+  "#1W3 Generative Agents: Interactive Simulacra of Human Behavior | Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology — web, retrieved 2026-10-27T17:46:42.030Z (dl.acm.org)",
+  "#1W5 Generative Agents Explained: Research and Simulations — web, retrieved 2026-10-27T17:46:54.900Z (societies.ai)",
+  "#1W6 In Silico Society: A Comprehensive Analysis of Generative Agent Simulations at Population Scale In Silico Society: A Comprehensive Analysis of Generative Agent Simulations at Population Scale (PDF) |  — web, retrieved 2026-10-27T17:46:54.900Z (www.academia.edu)",
+  "#1W7 AgentSociety: Large-Scale Simulation of LLM-Driven Generative Agents Advances Understanding of Human Behaviors and Society | alphaXiv — web, retrieved 2026-10-27T17:46:54.900Z (www.alphaxiv.org)"
+ ],
+ "w_viewer": {
+  "title": "W1 · GitHub - joonspk-research/generative_agents: Generative Agents: Interactive Simulacra of Human Behavior · GitHub",
+  "meta": "web · github.com · retrieved 2026-10-27T17:46:42.030Z · found by summary via tavily_search",
+  "text": "@inproceedings{Park2023GenerativeAgents, author = {Park, Joon Sung and O'Brien, Joseph C. and Cai, Carrie J. and Morris, Meredith Ringel and Liang, Percy and Bernstein, Michael S.}, title = {Generative Agents: Interactive Simulacra of Human Behavior}, year = {2023}, publisher = {",
+  "link": "https://github.com/joonspk-research/generative_agents",
+  "linkText": "Open web page"
+ },
+ "c_viewer": {
+  "title": "C1 · Generative Agents: Interactive Simulacra of Human Behavior",
+  "meta": "arXiv:2304.03442v2 · Abstract · published 2023-04-07 · chunk 2304.03442v2::abstract::000",
+  "text": "Generative Agents: Interactive Simulacra of Human Behavior — Abstract\nBelievable proxies of human behavior can empower interactive applications ranging from immersive environments to rehearsal spaces for interpersonal communication to prototyping tools. In this paper, we introduce generative agents:",
+  "link": "https://arxiv.org/html/2304.03442v2",
+  "linkText": "Open on arXiv"
+ },
+ "dom_secret_shapes": 0,
+ "console_errors": []
+}

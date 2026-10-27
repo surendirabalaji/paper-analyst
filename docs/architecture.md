@@ -18,7 +18,7 @@ It is **stateless and single-turn**: each question is answered independently. No
 ```mermaid
 flowchart TD
     U[Browser: vanilla HTML/JS] -->|POST /api/chat| API[FastAPI]
-    API -->|SSE: plan, transition, llm_route, tool_call, retrieval, token, citation, done| U
+    API -->|SSE: plan, transition, llm_route, tool_gate, tool_call, retrieval, web_search, token, citation, done| U
     API --> P[planner<br/>LLM: task DAG]
     P --> S{supervisor<br/>deterministic route_next}
     S -->|task ready| R[Research Agent]
@@ -34,6 +34,7 @@ flowchart TD
 
     R -.corpus_search.-> CH[(Chroma index)]
     SM -.paper outline / section.-> CH
+    SM -.paper metadata read-only.-> DB
     D -.run_sql read-only.-> DB[(SQLite metadata)]
     C -.list / read / grep.-> RS[(Repo snapshots)]
     R -.tavily_search.-> T[[Tavily Remote MCP]]
@@ -69,7 +70,7 @@ class AnalystState(TypedDict, total=False):
     k: int                                   # retrieval top-k (default 6, request may set 3-10)
     plan_summary: str                        # short operational rationale from the planner
     plan_source: str                         # "llm" or "fallback" (planner failed -> one Research task)
-    tasks: list[dict]                        # id, worker, instruction, depends_on, status, attempts, error_kind
+    tasks: list[dict]                        # id, worker, instruction, needs_live, depends_on, status, attempts, error_kind
     worker_results: dict[str, dict]          # task_id -> {status, findings_md, evidence_ids, error_kind, rounds, tool_calls}
     next: str                                # node chosen by route_next
     active_task: str | None
@@ -79,22 +80,29 @@ class AnalystState(TypedDict, total=False):
     final_answer: str
     status: str                              # done | partial | failed
     unresolved_citations: list[str]
+    dropped_citations: list[str]             # markers attached only to "evidence does not answer" clauses (not linked)
 ```
 
-The evidence registry (`C#` → chunk) and the event emitter are per-request objects in `RequestContext` (`app/context.py`), passed to nodes through the LangGraph config rather than stored in graph state. Routing decisions are emitted as `llm_route` events. Nothing is shared between requests except read-only handles (Chroma client, LLM clients).
+The evidence registry (`C#` → chunk, `W#` → web result) and the event emitter are per-request objects in `RequestContext` (`app/context.py`), passed to nodes through the LangGraph config rather than stored in graph state. Routing decisions are emitted as `llm_route` events. Nothing is shared between requests except read-only handles (Chroma client, LLM clients, and the Tavily MCP tool definition; each search opens its own MCP session).
 
 Task status values: `pending | running | done | partial | failed | skipped`.
 
-## 5. Agents: responsibilities, prompts and tools *(planned)*
+## 5. Agents: responsibilities, prompts and tools *(Research and Summary built; Data in Phase 6)*
 
 | Agent | Responsibility | Distinguishing tools | Shared MCP tool |
 |---|---|---|---|
-| **Research** | Conceptual and cross-paper questions; current developments | `corpus_search(query, k)`: vector top-k via the LCEL retriever | `tavily_search`: "what is new about X" |
-| **Summary** | Faithful per-paper summaries and comparisons, keeping citations; a paper's current status | `get_paper_outline(id)`, `get_paper_section(id, section)`, `search_within_paper(id, query, k)` | `tavily_search`: "venue, acceptance or follow-ups of paper P" |
+| **Research** *(built)* | Conceptual and cross-paper questions; current developments; off-topic factual questions (web) | `corpus_search(query, k)`: vector top-k across all papers via the LCEL retriever | `tavily_search`, purpose "find current developments on the topic". Unlocked when the planner sets `needs_live`, or when corpus support is low (best similarity < `RAG_MIN_SCORE` = 0.55) |
+| **Summary** *(built, Phase 5)* | Faithful per-paper summaries, one paper at a time, keeping citations; a paper's current status | `get_paper_outline(paper)` (SQLite metadata + ordered section list + abstract as C#), `get_paper_section(paper, section)` (every chunk of a section in reading order, ≤ 3,500 tokens), `search_within_paper(paper, query, k)` (vector search filtered to one paper). `paper` = arXiv id or a title fragment such as "Self-RAG" | `tavily_search`, purpose "check the current status of a specific paper". Unlocked when the planner sets `needs_live` or the task asks about status (venue, accepted, follow-ups, latest …; `status_cue`) |
 | **Data** | Exact metadata questions: counts, dates, authors, categories, repos | `get_schema()`, `run_sql(select)`: read-only, SELECT only, row and time limits | none |
 | **Code** *(stretch)* | Paper-to-code tracing over pinned repo snapshots | `find_repo(id)`, `list_repo_files`, `read_repo_file`, `grep_repo` | none |
 
 The supervisor/planner is orchestration and does not count toward the worker floor. Provider choice is made per call by the router (section 6), not fixed per agent.
+
+**Prompts** (`app/agents/prompts.py`): each worker's role paragraph fills the shared augmentation system prompt (§7), so every worker gets the same grounding rules plus its own job. Research: cross-paper synthesis from `corpus_search`, at most 3 corpus and 2 web searches, web points labelled as current. Summary: outline first, then the needed sections, never merge claims across papers, web only for status and never presented as the paper's content. Both are told to work only on their own supervisor task, so in a two-task plan Research and Summary search for different things.
+
+**Tool gating is state-driven and traced.** The worker loop (`run_tool_loop(gate=…)`) re-evaluates the available tools before every round. Research starts with `corpus_search` only unless the task is `needs_live`. After a search whose best similarity is below 0.55, the next round also binds `tavily_search` and tells the model why. Each decision is a `tool_gate` event ("planner marked the task needs_live", "low corpus support: best similarity 0.21 < RAG_MIN_SCORE 0.55"). The 0.55 threshold was calibrated on 2026-10-27 with 16 queries: in-domain top-1 scores were 0.62–0.81, off-topic ones 0.18–0.26, and adjacent but uncovered topics ("MCP authorization spec", "what did OpenAI release this week") 0.50–0.52.
+
+**Worker outcomes.** Research is `partial` with `live_search_unavailable` when the web failed but corpus evidence exists, and `failed` only when it has nothing to cite. Summary is `partial` with `paper_not_found` for papers outside the corpus (the resolver lists candidates for ambiguous fragments; "Agent" does not silently pick "AgentBench"), and `partial` with `live_search_unavailable` when only the status check failed.
 
 ## 6. LLM routing *(built in Phase 4)*
 
@@ -102,20 +110,21 @@ The supervisor/planner is orchestration and does not count toward the worker flo
 
 **Providers:** OpenAI direct (`gpt-6.1-sol`) is the capability side. Google Gemini (`google/gemini-3.8-flash`), served through OpenRouter's OpenAI-compatible API, is the cost side. OpenRouter reports the upstream that served each call; it was "Google AI Studio" on every call measured on 2026-10-27, and it is recorded per call. Both are called through `langchain-openai` `ChatOpenAI`. The OpenRouter client is a small subclass (`OpenRouterChat`) that keeps the `provider` and cost fields LangChain drops.
 
-**Decision inputs (observable features, computed in code):** call site, round, tool calls so far, context-token estimate (tool loop); completed tasks, distinct papers in the cited evidence, evidence-token estimate and a comparison cue (regex over the question: compare / vs / difference / contrast / trade-off …) (synthesis); providers that already failed in this request.
+**Decision inputs (observable features, computed in code):** call site, round, tool calls so far, context-token estimate, tokens of full-section text read (tool loop); completed tasks, distinct papers in the cited evidence, evidence-token estimate and a comparison cue (regex over the question: compare / vs / difference / contrast / trade-off …) (synthesis); providers that already failed in this request.
 
 | Call site | Condition | Dimension | Provider / model | Rationale shown in the UI |
 |---|---|---|---|---|
 | planner | always | cost | Gemini via OpenRouter, `google/gemini-3.8-flash` | Short structured planning (JSON task list); low-cost model is sufficient |
-| worker_tool_loop | always | cost | Gemini via OpenRouter | Tool selection and search-query writing with short outputs |
-| worker_final | always (tool budget reached) | cost | Gemini via OpenRouter | Compact findings from evidence already retrieved |
+| worker_tool_loop / worker_final | ≥ 3,000 estimated tokens of full paper sections in context (`long_source_tokens_est`, from tools tagged `reads_full_text`), or ≥ 10,000 tokens of context | capability | OpenAI, `gpt-6.1-sol` | "Faithful condensation of long source text needs the stronger model: ~N tokens of full paper sections in context" |
+| worker_tool_loop | otherwise | cost | Gemini via OpenRouter | Tool selection and search-query writing with short outputs |
+| worker_final | otherwise (tool budget reached) | cost | Gemini via OpenRouter | Compact findings from evidence already retrieved |
 | synthesize_no_task | greeting / out-of-scope, no evidence | cost | Gemini via OpenRouter | Short reply with no evidence to reconcile |
 | synthesize | ≥ 2 completed tasks, or ≥ 3 distinct papers, or a comparison question over ≥ 2 papers, or ≥ 6,000 evidence tokens | capability | OpenAI, `gpt-6.1-sol` | "Multi-source synthesis needs the stronger model: …" plus the features that triggered it |
 | synthesize | otherwise | cost | Gemini via OpenRouter | Grounded answer from N paper(s) and one worker result |
 | any | the chosen provider already failed in this request | availability | the other provider | Policy picked X, but it already failed in this request (error kind) |
 | any | `ROUTER_FORCE_PROVIDER` set (evaluation runs only; not in the deploy allowlist) | forced | that provider | Evaluation override |
 
-**Prices** (per 1M tokens in/out, checked 2026-10-27): `gpt-6.1-sol` $2.00 / $10.00 (OpenAI pricing page, standard tier, short context); `google/gemini-3.8-flash` $1.50 / $7.50. The Gemini calls run with the student's own Google key through OpenRouter (BYOK: OpenRouter bills $0 and reports the upstream cost). That reported cost matched $1.50 / $7.50 exactly on every measured call (tester P4-D1). The OpenRouter catalog price ($0.825 / $4.125) does not apply to BYOK calls. Google's page lists $0.75 / $3.75 through 2026-12-31 and $1.50 / $7.50 from 2027-01-01; we keep the conservative reported rate until a Google bill confirms which applies. Prices live in `policy.PRICES`, keyed by exact model ID and dated. Each `llm_result` carries `cost_usd` with `cost_source`: "reported" (OpenRouter's figure, Gemini) or "estimated" (tokens × price table, OpenAI, which returns no per-call cost), plus both raw values `est_cost_usd` and `reported_cost_usd`.
+**Prices** (per 1M tokens in/out, checked 2026-10-27): `gpt-6.1-sol` $2.00 / $10.00 (OpenAI pricing page, standard tier, short context); `google/gemini-3.8-flash` $1.50 / $7.50. The Gemini calls run with the student's own Google key through OpenRouter (BYOK: OpenRouter bills $0 and reports the upstream cost). That reported cost matched $1.50 / $7.50 exactly on every measured call (tester P4-D1). The OpenRouter catalog price ($0.825 / $4.125) does not apply to BYOK calls. Google's page lists $0.75 / $3.75 through 2026-12-31 and $1.50 / $7.50 from 2027-01-01; we keep the conservative reported rate until a Google bill confirms which applies. Because the calls use the student's own Google key, Google's free tier for that key could also cover some or all of them (P4-N7). Gemini costs here are therefore a dated upper bound, to be reconciled with the Google bill in Phase 9. Prices live in `policy.PRICES`, keyed by exact model ID and dated. Each `llm_result` carries `cost_usd` with `cost_source`: "reported" (OpenRouter's figure, Gemini) or "estimated" (tokens × price table, OpenAI, which returns no per-call cost), plus both raw values `est_cost_usd` and `reported_cost_usd`.
 
 **Reasoning control:** Gemini 3.8 Flash rejects `reasoning.enabled=false` ("Reasoning is mandatory"). With `reasoning.effort=low` the measured reasoning tokens were 0 and synthesis TTFT 1.3–1.7 s. The Phase 0 default used 412–507 reasoning tokens with TTFT 5.6–6.1 s. OpenAI keeps its default effort on the capability side.
 
@@ -133,6 +142,10 @@ The supervisor/planner is orchestration and does not count toward the worker flo
 - `llm_result`, emitted for **every** attempt including cancelled ones (P2-N4): status `ok`/`error`/`cancelled`, attempt number, error kind, tokens (input, output, reasoning, cached), latency, TTFT and stream chunk stats for synthesis, model returned, OpenRouter upstream provider, `cost_usd` with `cost_source` (reported or estimated), and the raw `est_cost_usd` and `reported_cost_usd`.
 - `done`: adds `providers_used`, `fallbacks`, `cost_usd` and `cost_basis` (number of calls priced from reported vs estimated cost).
 - UI: the Routing tab groups rows per turn and highlights fallback rows. Each answer also shows a one-line routing summary, e.g. "planner → Gemini (cost) · research → Gemini ×4 (cost) · synthesizer → OpenAI (capability)".
+
+**Worker-side switching (Phase 5, tester note P4-N2).** Before Phase 5, only synthesis varied by features and every worker call went to Gemini. The worker rule is feature-based, not tied to an agent. In practice it fires when Summary has read whole sections. Measured locally on 2026-10-27: "Summarize the method and experiments of the Reflexion paper" ran its first three tool-loop rounds on Gemini (context 585 → 3,645 tokens). Once 3,317 tokens of section text were in context, round 4 and the final write-up went to OpenAI (capability). "How does Self-RAG decide when to retrieve?" switched to OpenAI for the final write-up at 3,289 section tokens. A status-only Summary task (outline + one web search) stays on Gemini throughout.
+
+**Known limit of the comparison cue (P4-N3).** It is a regex. Phase 5 added "stack(s) up", "outperform", "head-to-head", "as opposed to", "unlike" and "distinguish between". A comparison phrased without any cue word still reaches the capability side when the evidence spans ≥ 3 papers or ≥ 6,000 tokens.
 
 **Ordinary workloads that pick each provider (measured 2026-10-27, local):** "How does Self-RAG decide when to retrieve?" synthesizes on Gemini (1 paper). "Compare how Reflexion and Self-Refine use feedback to improve outputs." synthesizes on OpenAI (comparison over 2 papers). "Why do multi-agent LLM systems fail?" stays on Gemini, because its cited evidence came from one paper (MAST).
 
@@ -184,19 +197,36 @@ Upstream results: {upstream_findings_or_"none"}
 | Marker | Source | Resolves to |
 |---|---|---|
 | `C#` | Paper chunk | `/api/source/chunk/{chunk_id}` and the arXiv HTML section anchor |
-| `W#` | Web (Tavily) | The page URL |
+| `W#` | Web (Tavily, via the shared `tavily_search` MCP tool) | The page URL; the viewer shows the snippet, retrieval time and the agent that found it |
 | `D#` | SQLite row | The arXiv abstract page; the SQL is shown in the trace |
 | `R#` | Repo file lines | `/api/source/repo/...` and the GitHub permalink at the pinned commit |
 
 Markers that are not in the registry are reported as `unresolved_citations` and never rendered as links.
 
-## 8. Live retrieval and MCP tool sharing *(planned)*
+**Abstentions (P3-N3).** Synthesis receives only the evidence that worker findings actually cited. A worker that found nothing relevant therefore gives the synthesizer no evidence, instead of every retrieved chunk. The synthesis prompt forbids markers on "the evidence does not answer" sentences. As a code-level backstop, a marker that appears only in such clauses (`abstention_only_markers`) gets no `citation` event, is listed in `done.dropped_citations`, and is rendered as plain, struck-through text. Off-topic corpus hits are filtered as well (P5-D1). A chunk the workers cited is withheld from synthesis and never linked if it was found **only** by corpus-wide `corpus_search` and its strongest similarity there was below 0.35; off-topic questions score 0.16–0.26 and in-domain top-k ≥ 0.58. Such chunks are reported in `done.excluded_evidence`. Chunks that Summary read or searched inside a named paper are never filtered (P5-D3), because scoped keyword searches legitimately score 0.20–0.45.
 
-- **Endpoint:** Tavily Remote MCP over Streamable HTTP at `https://mcp.tavily.com/mcp/?tavilyApiKey=<key>` (key as a query parameter, per the assignment spec), via `langchain-mcp-adapters`.
-- **Sharing (rubric option: MCP tool sharing):** the same `tavily_search` tool is given to **Research** (finding current developments on a topic) and **Summary** (checking a specific paper's venue, acceptance or follow-ups). Each call is traced with the agent's identity.
-- **Why share:** one connection, one quota and one redaction path. Each agent keeps its own distinguishing tools and a prompt-defined purpose for the search.
-- **Safety:** the URL is never logged; httpx/httpcore loggers are set to WARNING; error strings are redacted (`tavilyApiKey=REDACTED`). Failures produce partial results, not crashes.
-- **Deployed evidence:** *(pending)* SSE log excerpts from Cloud Run showing `agent=research` and `agent=summary` each calling `tavily_search`.
+## 8. Live retrieval and MCP tool sharing *(built in Phase 5)*
+
+**Rubric option chosen: MCP tool sharing (Option A).** A2A is not used.
+
+- **Endpoint and transport** (`app/mcp_tavily.py`): hosted Tavily Remote MCP over **Streamable HTTP** at `https://mcp.tavily.com/mcp/?tavilyApiKey=<key>`, through `langchain-mcp-adapters` `MultiServerMCPClient` (`mcp==1.30.0`). The key is sent only as the `tavilyApiKey` query parameter. It is never placed in a header or request body, and the connection config has exactly two fields, `transport` and `url`.
+- **Lifecycle:** one `TavilyMCP` per process loads the server's tool list once (lazily, under a lock) and keeps only the `tavily_search` tool. Each search opens its own short MCP session, so concurrent requests share no mutable session state. Bounds: 15 s per call (`TAVILY_TIMEOUT_S`), one retry only for connection errors, `max_results` ≤ 4 (`TAVILY_MAX_RESULTS`), and at most 2 web searches per worker task.
+- **Server tools (re-listed 2026-10-27):** `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`. Only `tavily_search` is exposed to the agents, with args `query`, `max_results` and an optional `time_range` (day/week/month/year).
+- **Sharing.** `shared_search_tool(ctx, agent, purpose)` wraps the **same** MCP tool object for each agent. Research's purpose is "find current developments on the topic"; Summary's is "check the current status of a specific paper". Each call emits a `tool_call`/`tool_result` pair and a `web_search` event with `agent`, `tool=tavily_search`, `server=tavily-remote-mcp`, `transport`, `purpose`, the query, latency and the `W#` results. The browser Trace tab shows these as "research ⇄ MCP" and "summary ⇄ MCP" rows.
+- **Why share:** one connection setup, one quota, and one place for result parsing, failure classification and credential redaction. Specialization survives. Research still answers from `corpus_search` and uses the web for topic-level news. Summary still reads papers section by section and uses the web only to check one named paper's status. Each tool is unlocked by different state (§5).
+- **Web evidence:** each result becomes a `W#` entry in the request-wide evidence registry, with URL, title, snippet (≤ 1,200 characters), Tavily score, `retrieved_at` (UTC time of the call; Tavily returns no reliable publish date) and the agent that found it. A URL found by both agents keeps one `W#`. In the prompt, web items are `<item type="web" source="URL" retrieved_at="…">`. In the UI, a `W#` opens the viewer with the snippet, retrieval time and finding agent, plus an "Open web page" link.
+- **Result parsing (P0-D1, P0-I4):** Tavily returns auth and quota failures as ordinary tool results (`{"error": …, "status": 401}`). A call is successful only if it parses into at least one result with an http(s) URL. Error payloads, non-JSON text and zero results raise `TavilyUnavailable` with a kind: `auth` (401/403), `quota` (402/432/433), `rate_limit` (429), `upstream_error`, `connection`, `timeout`, `empty`, `budget` or `disabled`.
+- **Failure handling:** the worker loop catches the error, gives the model a short redacted message, and records `tool_result status=error, error_kind, recoverable=true` plus a `web_search status=error` event. Research continues from corpus evidence and ends `partial` (`live_search_unavailable`); the final answer says web results were unavailable. Verified locally against the real server with a fake key (401 → `auth`).
+- **Redaction:** `httpx`, `httpcore`, `mcp` and `langchain_mcp_adapters` loggers stay at WARNING. `RedactingFilter` is attached to every handler and rewrites messages and tracebacks. Every error string passes through `safe_error` (which also unwraps anyio `ExceptionGroup`s) before it reaches logs, SSE or the model. Tests use a fake key and check exceptions, log records at DEBUG, and SSE frames.
+- **Out-of-domain questions (P2-N8):** the planner now sends reasonable factual questions outside the corpus to Research with `needs_live`. If it does not, the low-support gate unlocks the web after the first corpus search. Only greetings and non-lookup requests get no tasks.
+- **Empty completions:** on Cloud Run, Gemini via OpenRouter twice returned HTTP 200 with no text, no tool calls and no usage. The worker then looked as if it had abstained. The router now treats an empty completion as a transient `empty_response`: `llm_result status=error`, one retry, then fallback to the other provider, all traced.
+- **Deployed evidence (revision `paper-analyst-00005-zc8`, 2026-10-27, `eval/results/phase5/deployed/`):**
+  - "What are the most recent developments in LLM agent memory this year, and has the Self-RAG paper been accepted at a peer-reviewed venue?" → plan Research (`needs_live`) + Summary (`needs_live`).
+    - `research` called `tavily_search` once ("LLM agent memory architecture developments …").
+    - `summary` called it twice ("Self-RAG … venue OR accepted", "… ICLR 2024 openreview"), with ICLR proceedings as `W8`.
+    - Synthesis ran on OpenAI (capability); total 53.4 s.
+  - The current-information question "What new LLM agent frameworks or major agent SDK releases came out in the past month?" → Research with `time_range=month` and 6 `W#` sources dated October 2026; 21.1 s.
+  - Cloud Run application logs since the deploy contain neither the Tavily key nor `tavilyApiKey`. The key appears only in the Cloud Audit Log `ReplaceService` entries, which record the service's env vars (P3-N1, accepted).
 
 ## 9. State and deployment
 

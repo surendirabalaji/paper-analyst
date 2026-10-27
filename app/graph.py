@@ -1,6 +1,6 @@
 """LangGraph supervisor graph.
 
-    START -> planner -> supervisor --route_next--> research | synthesize
+    START -> planner -> supervisor --route_next--> research | summary | synthesize
                          ^              |
                          +--- worker ---+          synthesize -> END
 
@@ -8,13 +8,14 @@ The planner is one structured-output LLM call that produces a small task list. T
 deterministic: `route_next` reads task statuses, dependencies, retry counts and the request budget,
 and every decision is emitted as a `transition` event with its reason. Workers always return to the
 supervisor, and an exception or timeout inside a worker becomes a recorded `failed` result.
-Phase 2 registers one worker (Research); Summary and Data are added in Phases 5 and 6.
+Workers: Research (Phase 2) and Summary (Phase 5); Data is added in Phase 6.
 """
 
 from __future__ import annotations
 
 import asyncio
 import operator
+import re
 from typing import Annotated, Any, Awaitable, Callable, TypedDict
 
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -23,6 +24,7 @@ from pydantic import BaseModel, Field
 
 from app.agents.prompts import PLANNER_SYSTEM, SYNTH_NO_TASK_ROLE, SYNTH_ROLE
 from app.agents.research import run_research
+from app.agents.summary import run_summary
 from app.context import RequestContext, ctx_of
 from app.events import safe_error, utc_now
 from app.llm.policy import approx_tokens, comparison_cue
@@ -39,7 +41,13 @@ WORKERS: dict[str, tuple[WorkerFn, str]] = {
     "research": (
         run_research,
         "research: answers conceptual and cross-paper questions by vector search over the full text of the "
-        "indexed papers, with citations.",
+        "indexed papers, with citations; with needs_live it also searches the live web (current developments, "
+        "or topics the corpus does not cover).",
+    ),
+    "summary": (
+        run_summary,
+        "summary: summarises or explains one or two specific named papers section by section, with citations; "
+        "with needs_live it also checks a paper's current status on the web (venue, acceptance, follow-ups).",
     ),
 }
 
@@ -50,7 +58,7 @@ class AnalystState(TypedDict, total=False):
     k: int
     plan_summary: str
     plan_source: str  # "llm" or "fallback"
-    tasks: list[dict]  # {id, worker, instruction, depends_on, status, attempts, error_kind}
+    tasks: list[dict]  # {id, worker, instruction, needs_live, depends_on, status, attempts, error_kind}
     worker_results: dict[str, dict]
     next: str
     active_task: str | None
@@ -60,6 +68,8 @@ class AnalystState(TypedDict, total=False):
     final_answer: str
     status: str
     unresolved_citations: list[str]
+    dropped_citations: list[str]
+    excluded_evidence: list[str]
 
 
 # ---------------------------------------------------------------- planner
@@ -69,6 +79,7 @@ class PlannedTask(BaseModel):
     worker: str = Field(..., description="Name of an available worker")
     instruction: str = Field(..., description="What this worker should find or produce")
     depends_on: list[int] = Field(default_factory=list, description="0-based indices of earlier tasks it needs")
+    needs_live: bool = Field(False, description="True if the task needs current information from the live web")
 
 
 class Plan(BaseModel):
@@ -94,6 +105,7 @@ def validate_plan(plan: Plan, query: str) -> tuple[list[dict], list[str]]:
                 "id": tid,
                 "worker": t.worker,
                 "instruction": (t.instruction or query).strip()[:600],
+                "needs_live": bool(t.needs_live),
                 "depends_on": deps,
                 "status": "pending",
                 "attempts": 0,
@@ -105,8 +117,8 @@ def validate_plan(plan: Plan, query: str) -> tuple[list[dict], list[str]]:
 
 def fallback_tasks(query: str) -> list[dict]:
     return [
-        {"id": "t1", "worker": "research", "instruction": query, "depends_on": [], "status": "pending",
-         "attempts": 0, "error_kind": None}
+        {"id": "t1", "worker": "research", "instruction": query, "needs_live": True, "depends_on": [],
+         "status": "pending", "attempts": 0, "error_kind": None}
     ]
 
 
@@ -139,7 +151,7 @@ async def planner(state: AnalystState, config) -> dict:
         plan_summary=summary,
         source=source,
         notes=notes,
-        tasks=[{k: t[k] for k in ("id", "worker", "instruction", "depends_on")} for t in tasks],
+        tasks=[{k: t[k] for k in ("id", "worker", "instruction", "needs_live", "depends_on")} for t in tasks],
     )
     return {"tasks": tasks, "plan_summary": summary, "plan_source": source, "worker_results": {},
             "step_count": 0, "errors": errors}
@@ -268,6 +280,7 @@ async def synthesize(state: AnalystState, config) -> dict:
         ctx.ttft_ms = ctx.ttft_ms or ctx.emitter.elapsed_ms()
         return {"final_answer": answer, "status": "failed"}
 
+    off_ids: set[str] = set()
     if not tasks:
         role, refs, upstream = SYNTH_NO_TASK_ROLE, [], "none"
     else:
@@ -276,7 +289,12 @@ async def synthesize(state: AnalystState, config) -> dict:
         for t in tasks:
             for c in results.get(t["id"], {}).get("evidence_ids", []):
                 ids.setdefault(c, None)
-        refs = [ctx.registry.get(c) for c in ids] if ids else list(ctx.registry.by_cite.values())
+        # Only evidence the workers actually cited. A worker that abstained cited nothing, so synthesis gets
+        # no evidence rather than every retrieved (and possibly unrelated) chunk (P3-N3). Corpus chunks with
+        # off-topic similarity are dropped too: a worker cites them only to say the corpus lacks the answer
+        # (P5-D1). They are never linked and are reported in done.dropped_citations.
+        off_ids = {c for c in ids if ctx.registry.corpus_off_topic(c, LOW_RELEVANCE_SCORE)}
+        refs = [ctx.registry.get(c) for c in ids if c not in off_ids]
         upstream = "\n\n".join(
             f"[{t['id']} {t['worker']} ({t['status']})]\n{results.get(t['id'], {}).get('findings_md') or '(no findings)'}"
             for t in tasks
@@ -294,7 +312,8 @@ async def synthesize(state: AnalystState, config) -> dict:
         "n_tasks": len(tasks),
         "n_tasks_ok": sum(1 for x in statuses if x in DONE_LIKE),
         "n_evidence": len(refs),
-        "n_papers": len({r.doc_id for r in refs}),
+        "n_papers": len({r.doc_id for r in refs if r.type == "paper_chunk"}),
+        "n_web": sum(1 for r in refs if r.type == "web"),
         "evidence_tokens_est": sum(approx_tokens(r.text) for r in refs),
         "comparison": comparison_cue(state["query"]),
         "statuses": statuses,
@@ -310,13 +329,61 @@ async def synthesize(state: AnalystState, config) -> dict:
 
     used = cited_ids(answer)
     unresolved = [c for c in used if not ctx.registry.get(c)]
+    dropped = abstention_only_markers(answer) | (set(used) & off_ids)
     for c in used:
         ref = ctx.registry.get(c)
-        if ref:
+        if ref and c not in dropped:
             ctx.emitter.emit("citation", cite_id=c, type=ref.type, label=f"{ref.title} — {ref.section}",
-                             doc_id=ref.doc_id, chunk_id=ref.chunk_id, href=ref.href, source_url=ref.source_url)
+                             doc_id=ref.doc_id, chunk_id=ref.chunk_id, href=ref.href, source_url=ref.source_url,
+                             retrieved_at=ref.retrieved_at or None, found_by=ref.agent or None)
     status = "done" if all(s == "done" for s in statuses) else "partial"
-    return {"final_answer": answer, "status": status, "unresolved_citations": unresolved}
+    return {"final_answer": answer, "status": status, "unresolved_citations": unresolved,
+            "dropped_citations": [c for c in used if c in dropped], "excluded_evidence": sorted(off_ids)}
+
+
+# A statement that the *evidence* (papers, corpus, passages, sources) lacks something. The subject is required,
+# so a supported claim such as "standard RAG cannot address noisy passages [C2]" is not an abstention (P5-N3).
+_SOURCES = r"(evidence|papers?|corpus|passages?|sources?|documents?|excerpts?|context|literature|results)"
+_ABSTAIN = re.compile(
+    _SOURCES + r"\b[^.;]{0,40}?\b(does not|doesn't|do not|don't|cannot|can't|did not|fail to)\s+"
+    r"(answer|cover|address|contain|include|mention|say|describe|discuss|support|provide|report)"
+    r"|not (covered|found|available|addressed|mentioned|reported) (in|by) (the )?" + _SOURCES
+    + r"|no (relevant |such )?(evidence|information|data) (was |is )?(found|available|retrieved)|no relevant evidence"
+    r"|evidence is insufficient|insufficient evidence|not in the (corpus|indexed papers|evidence)",
+    re.I,
+)
+_CLAUSE_SPLIT = re.compile(r"(?<=[.!?])\s+|\n+|(;)\s*|,?\s+but\s+", re.I)
+_CONTINUES = re.compile(r"^\s*(thus|so|therefore|hence|consequently|as a result|instead)\b", re.I)
+
+
+# Applies only to chunks found solely by corpus-wide search (off-topic questions score 0.16-0.26 there,
+# in-domain top-k >= 0.58). Chunks Summary read or searched inside a named paper are never filtered: scoped
+# keyword searches legitimately score 0.20-0.45 (tester P5-D3).
+LOW_RELEVANCE_SCORE = 0.35
+
+
+def abstention_only_markers(answer: str) -> set[str]:
+    """Markers that appear only in clauses saying the evidence does not answer something. They are not
+    linked as citations (P3-N3): a statement of missing evidence is not supported by the passage.
+    A clause after ';' that continues an abstention ("…do not contain X; thus, figures come from the web
+    [C1], [W1]") inherits it for paper markers (C#); web markers there still count as support (P5-D1)."""
+    support: dict[str, bool] = {}
+    parts = _CLAUSE_SPLIT.split(answer or "")
+    prev_abstains, after_semicolon = False, False
+    for part in parts:
+        if part is None:
+            continue
+        if part == ";":
+            after_semicolon = True
+            continue
+        abstains = bool(_ABSTAIN.search(part))
+        inherited = after_semicolon and prev_abstains and bool(_CONTINUES.match(part))
+        for c in cited_ids(part):
+            unsupported = abstains or (inherited and c.startswith("C"))
+            support[c] = support.get(c, False) or not unsupported
+        if part.strip():
+            prev_abstains, after_semicolon = abstains, False
+    return {c for c, ok in support.items() if not ok}
 
 
 # ---------------------------------------------------------------- graph
@@ -363,6 +430,8 @@ async def run_request(ctx: RequestContext) -> dict[str, Any]:
         status=status,
         plan_source=final.get("plan_source"),
         unresolved_citations=final.get("unresolved_citations", []),
+        dropped_citations=final.get("dropped_citations", []),
+        excluded_evidence=final.get("excluded_evidence", []),  # worker-cited but off-topic, withheld from synthesis
         timings={
             "retrieval_ms": ctx.retrieval_ms_sum,
             "llm_ms_sum": ctx.llm_ms_sum,
