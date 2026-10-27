@@ -37,12 +37,12 @@ Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 
 | Requirement | Where | How verified | Evidence | Status |
 |---|---|---|---|---|
-| 2 different providers wired (OpenAI direct + Gemini via OpenRouter) | `app/llm/router.py` | Real calls to both | | pending |
-| Both selected under ordinary queries | router | Provider share over eval set | | pending |
-| Decision visible in UI/trace with rationale | `llm_route` event, Routing tab | Screenshot / SSE log | | pending |
-| Rationale documented (hybrid) | `docs/architecture.md` §6 | | | pending |
-| Exact verified model IDs in source + `.env.example` | `.env.example` | API check | `gpt-6.1-sol` (OpenAI /v1/models) and `google/gemini-3.8-flash` (OpenRouter catalog) both answered real streaming + tool calls 2026-10-27; `docs/testing/phase0_service_check.json` | implemented |
-| Fallback traced separately | `fallback` event | Fault test | | pending |
+| 2 different providers wired (OpenAI direct + Gemini via OpenRouter) | `app/llm/router.py` (`Router.client`, `OpenRouterChat`) | Real calls to both | `tests/integration/test_phase4_live_routing.py` passed 2026-10-27 (both providers status ok; Gemini upstream "Google AI Studio" recorded per call); `eval/results/phase4/after/` | implemented |
+| Both selected under ordinary queries | `app/llm/policy.py` | Two ordinary questions; provider share over eval set in Phase 9 | 2026-10-27 local: Self-RAG question synthesized on Gemini (cost, 1 paper); Reflexion vs Self-Refine on OpenAI (capability, comparison over 2 papers); live test asserts this | implemented (deployed 2026-10-27: Reflexion vs Self-Refine and tree-search questions on OpenAI, P3-N2 question on Gemini; `eval/results/phase4/deployed/`) |
+| Decision visible in UI/trace with rationale | `llm_route` event, Routing tab, per-answer routing line | SSE log + browser | `llm_route` carries agent, call site, provider, exact model ID, decision inputs, dimension, rationale; browser check by tester pending | implemented |
+| Rationale documented (hybrid) | `docs/architecture.md` §6 | Review | Routing table, features, thresholds, prices, fallback rules | implemented |
+| Exact verified model IDs in source + `.env.example` | `.env.example`, `app/config.py`, `app/llm/policy.py` PRICES | API check | `gpt-6.1-sol` (OpenAI /v1/models) and `google/gemini-3.8-flash` (OpenRouter catalog) both answered real streaming + tool calls 2026-10-27; re-verified with prices 2026-10-27 (Phase 4): OpenAI pricing page $2/$10, OpenRouter catalog $0.825/$4.125 | implemented |
+| Fallback traced separately | `fallback` event (`original_decision_id`) | Fault test | Unit tests (retry, then fallback; auth error, direct fallback; stream falls back only before first token; cancel still emits `llm_result`); live test: invalid Gemini model ID gives a real OpenRouter error, then OpenAI ok (2026-10-27) | implemented |
 
 ## Frontend (15%)
 
@@ -61,7 +61,7 @@ Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 | Public Cloud Run URL | README | Browser check | https://paper-analyst-g7b7dxmyuq-uw.a.run.app deployed 2026-10-27; corpus question answered after a measured cold start (17.9 s health, then 307 tokens / 5 citations); browser check pending (tester) | implemented |
 | Arbitrary reasonable queries | | Unrehearsed queries | | pending |
 | Cold start without failure | `scripts/probe_remote.py` | First request after the instance logged shutdown | 2026-10-27 07:39 UTC: health 17.9 s, then a corpus answer (TTFT 27.8 s, total 33.3 s); Cloud Run startup_latencies 17.6 s. One sample; more in Phase 9 | implemented |
-| Credentials outside source | `scripts/env_to_yaml.py` temp env-vars file outside the repo | Secret scan | Image: no `.env*`; Cloud Build upload is an allowlist of 31 files; deploy log has no key values; temp dir deleted (2026-10-27) | implemented |
+| Credentials outside source | `scripts/env_to_yaml.py` temp env-vars file outside the repo | Secret scan | Image: no `.env*`; Cloud Build upload is an allowlist of 31 files; deploy log has no key values; temp dir deleted (2026-10-27). P3-N1 (keys are plain Cloud Run env vars, readable via `gcloud run services describe` and in deploy audit logs) **accepted by the student 2026-10-27**; no Secret Manager | implemented (P3-N1 accepted) |
 | Multi-stage python:3.13-slim, non-root, `$PORT` | `Dockerfile` | Container run as uid 10001 | Local 2026-10-27: `id` = 10001; PORT=9090 honored, default 8080; real query against the baked index as uid 10001 (non-owner uid fails: P2-N6 fix verified) | implemented |
 | `==` pins in requirements.txt | `requirements.txt` | grep for `>=`/`~=` | 148 packages, all `==`; installs on py3.13.16 and all key imports incl. ragas succeed (2026-10-27) | implemented |
 | Fresh-project deploy docs | README, `scripts/deploy.sh` | Dry run + real deploy | README *Deploy to a fresh GCP project*; script used for the first deploy 2026-10-27 (into an existing project, so the enable-API step was not exercised) | implemented |

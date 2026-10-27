@@ -96,23 +96,45 @@ Task status values: `pending | running | done | partial | failed | skipped`.
 
 The supervisor/planner is orchestration and does not count toward the worker floor. Provider choice is made per call by the router (section 6), not fixed per agent.
 
-## 6. LLM routing *(planned)*
+## 6. LLM routing *(built in Phase 4)*
 
-Hybrid (cost and capability) routing per call. Features are computed in code: call site, worker, number of distinct sources, evidence token count, number of workers completed, whether web and corpus evidence are mixed, whether it is a multi-paper comparison, and whether code evidence is present.
+**Policy:** hybrid cost/capability, decided per call in code (`app/llm/policy.py`, pure functions). No LLM takes part in the routing decision. Workers are not tied to providers. The same Research worker's calls go to Gemini, while synthesis goes to Gemini or OpenAI depending on the evidence it has to reconcile.
 
-| Condition | Dimension | Provider / model | Rationale shown in UI |
-|---|---|---|---|
-| planner | Cost | Gemini via OpenRouter, `google/gemini-3.8-flash` | Short structured planning; low-cost model is sufficient |
-| SQL generation, or a tool loop with < 4k evidence tokens | Cost | Gemini via OpenRouter | Short structured lookup |
-| Summary of one long paper (≥ 12k tokens) | Capability (long context) and cost | Gemini via OpenRouter | Long single-document context at low per-token cost |
-| synthesize, single source | Cost | Gemini via OpenRouter | Single-source grounded answer |
-| synthesize, ≥ 2 workers / web and corpus mix / multi-paper | Capability | OpenAI, `gpt-6.1-sol` | Multi-source reconciliation needs stronger reasoning |
-| Code loop over long source | Capability | OpenAI | Code reasoning over long files |
-| Provider error after 1 retry | Availability fallback | the other provider | Logged as `fallback`, separate from routing |
+**Providers:** OpenAI direct (`gpt-6.1-sol`) is the capability side. Google Gemini (`google/gemini-3.8-flash`), served through OpenRouter's OpenAI-compatible API, is the cost side. OpenRouter reports the upstream that served each call; it was "Google AI Studio" on every call measured on 2026-10-27, and it is recorded per call. Both are called through `langchain-openai` `ChatOpenAI`. The OpenRouter client is a small subclass (`OpenRouterChat`) that keeps the `provider` and cost fields LangChain drops.
 
-Prices (OpenRouter catalog, 2026-10-26, per 1M tokens in/out): Gemini 3.8 Flash $0.83/$4.13; GPT-6.1 Sol $2/$10. *Re-verify on each provider's pricing page before submission.*
+**Decision inputs (observable features, computed in code):** call site, round, tool calls so far, context-token estimate (tool loop); completed tasks, distinct papers in the cited evidence, evidence-token estimate and a comparison cue (regex over the question: compare / vs / difference / contrast / trade-off …) (synthesis); providers that already failed in this request.
 
-Gemini is accessed through **OpenRouter** (OpenAI-compatible API). OpenAI is accessed directly.
+| Call site | Condition | Dimension | Provider / model | Rationale shown in the UI |
+|---|---|---|---|---|
+| planner | always | cost | Gemini via OpenRouter, `google/gemini-3.8-flash` | Short structured planning (JSON task list); low-cost model is sufficient |
+| worker_tool_loop | always | cost | Gemini via OpenRouter | Tool selection and search-query writing with short outputs |
+| worker_final | always (tool budget reached) | cost | Gemini via OpenRouter | Compact findings from evidence already retrieved |
+| synthesize_no_task | greeting / out-of-scope, no evidence | cost | Gemini via OpenRouter | Short reply with no evidence to reconcile |
+| synthesize | ≥ 2 completed tasks, or ≥ 3 distinct papers, or a comparison question over ≥ 2 papers, or ≥ 6,000 evidence tokens | capability | OpenAI, `gpt-6.1-sol` | "Multi-source synthesis needs the stronger model: …" plus the features that triggered it |
+| synthesize | otherwise | cost | Gemini via OpenRouter | Grounded answer from N paper(s) and one worker result |
+| any | the chosen provider already failed in this request | availability | the other provider | Policy picked X, but it already failed in this request (error kind) |
+| any | `ROUTER_FORCE_PROVIDER` set (evaluation runs only; not in the deploy allowlist) | forced | that provider | Evaluation override |
+
+**Prices** (per 1M tokens in/out, checked 2026-10-27): `gpt-6.1-sol` $2.00 / $10.00 (OpenAI pricing page, standard tier, short context); `google/gemini-3.8-flash` $1.50 / $7.50. The Gemini calls run with the student's own Google key through OpenRouter (BYOK: OpenRouter bills $0 and reports the upstream cost). That reported cost matched $1.50 / $7.50 exactly on every measured call (tester P4-D1). The OpenRouter catalog price ($0.825 / $4.125) does not apply to BYOK calls. Google's page lists $0.75 / $3.75 through 2026-12-31 and $1.50 / $7.50 from 2027-01-01; we keep the conservative reported rate until a Google bill confirms which applies. Prices live in `policy.PRICES`, keyed by exact model ID and dated. Each `llm_result` carries `cost_usd` with `cost_source`: "reported" (OpenRouter's figure, Gemini) or "estimated" (tokens × price table, OpenAI, which returns no per-call cost), plus both raw values `est_cost_usd` and `reported_cost_usd`.
+
+**Reasoning control:** Gemini 3.8 Flash rejects `reasoning.enabled=false` ("Reasoning is mandatory"). With `reasoning.effort=low` the measured reasoning tokens were 0 and synthesis TTFT 1.3–1.7 s. The Phase 0 default used 412–507 reasoning tokens with TTFT 5.6–6.1 s. OpenAI keeps its default effort on the capability side.
+
+**Timeouts, retries and fallback** (`app/llm/router.py`):
+- Per-attempt timeouts: planner 20 s, tool-loop calls 25 s, synthesis 60 s. SDK retries are disabled so all retries are visible.
+- Transient errors (timeout, 429, 5xx, connection) get one retry with jittered backoff, traced as `llm_retry`. Then the call falls back to the other provider.
+- Configuration errors (401/403/404/400) fall back immediately.
+- The fallback is a **separate** `fallback` event carrying `original_decision_id`, `from_provider`, `to_provider`, `error_kind` and the new decision (dimension `availability fallback`). The original `llm_route` is never rewritten.
+- A stream falls back only before its first token. A failure mid-stream ends the request with an error, because a second answer must not be spliced onto a partial one.
+- Non-provider errors (for example a parsing bug) are not retried on the other provider.
+- If both providers fail, the error propagates and is reported; no successful call is ever faked.
+
+**Trace contract.**
+- `llm_route`: decision ID, agent, call site, provider, exact model ID, decision inputs, dimension, rationale, reasoning effort, timeout, price date.
+- `llm_result`, emitted for **every** attempt including cancelled ones (P2-N4): status `ok`/`error`/`cancelled`, attempt number, error kind, tokens (input, output, reasoning, cached), latency, TTFT and stream chunk stats for synthesis, model returned, OpenRouter upstream provider, `cost_usd` with `cost_source` (reported or estimated), and the raw `est_cost_usd` and `reported_cost_usd`.
+- `done`: adds `providers_used`, `fallbacks`, `cost_usd` and `cost_basis` (number of calls priced from reported vs estimated cost).
+- UI: the Routing tab groups rows per turn and highlights fallback rows. Each answer also shows a one-line routing summary, e.g. "planner → Gemini (cost) · research → Gemini ×4 (cost) · synthesizer → OpenAI (capability)".
+
+**Ordinary workloads that pick each provider (measured 2026-10-27, local):** "How does Self-RAG decide when to retrieve?" synthesizes on Gemini (1 paper). "Compare how Reflexion and Self-Refine use feedback to improve outputs." synthesizes on OpenAI (comparison over 2 papers). "Why do multi-agent LLM systems fail?" stays on Gemini, because its cited evidence came from one paper (MAST).
 
 ## 7. RAG pipeline *(ingestion built in Phase 1; retrieval chain planned)*
 

@@ -15,12 +15,15 @@ import sys
 from pathlib import Path
 
 REQUIRED = {"OPENAI_API_KEY"}
-# Used by later phases (router, Tavily MCP); warned about, not required, in Phase 3.
+# Warned about here, not required, so the converter stays usable on its own. scripts/deploy.sh separately
+# requires OPENROUTER_API_KEY, because the Phase 4 router needs both providers.
 OPTIONAL_SECRETS = {"OPENROUTER_API_KEY", "TAVILY_API_KEY"}
+# ROUTER_FORCE_PROVIDER is deliberately absent: it is an evaluation-only override, so the deployed
+# service always routes by policy.
 SETTINGS = {
-    "OPENAI_MODEL", "OPENROUTER_BASE_URL", "GEMINI_MODEL", "DEFAULT_PROVIDER", "OPENAI_EMBEDDING_MODEL",
+    "OPENAI_MODEL", "OPENROUTER_BASE_URL", "GEMINI_MODEL", "OPENAI_EMBEDDING_MODEL",
     "CHROMA_COLLECTION", "RAG_TOP_K", "MAX_SUPERVISOR_STEPS", "MAX_TOOL_ROUNDS", "WORKER_TIMEOUT_S",
-    "REQUEST_BUDGET_S", "LLM_TIMEOUT_S",
+    "REQUEST_BUDGET_S", "LLM_TIMEOUT_S", "GEMINI_REASONING_EFFORT", "OPENAI_REASONING_EFFORT", "LLM_FALLBACK",
 }
 ALLOWED = REQUIRED | OPTIONAL_SECRETS | SETTINGS
 PLACEHOLDER = "REPLACE_ME"

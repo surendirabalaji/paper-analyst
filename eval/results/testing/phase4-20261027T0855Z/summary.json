@@ -1,0 +1,20 @@
+{
+  "run_id": "phase4-20261027T0855Z",
+  "source": {"head": "fb4fbe0", "dirty_diff_sha256_16": "fc3d7ee00701b606", "requirements_sha256_16": "906af62081f5634e"},
+  "deployed": {"url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app", "revision": "paper-analyst-00002-sbd",
+               "image_tag": "20261027-084606-fb4fbe0-dirty", "static_assets_match_local": true,
+               "python_mtimes_before_deploy": true, "router_force_provider_in_env": false},
+  "offline": {"suite": "229 passed, 11 skipped (live opt-in), 1 xfailed", "tester_unit_file": "tests/unit/test_phase4_tester_routing.py", "tester_unit": "23 passed"},
+  "live_local_faults": {"file": "tests/integration/test_phase4_tester_live_faults.py", "final": "3 passed",
+                        "history": ["run1: F2 failed (test flaw: patched timeout also hit fallback)",
+                                    "run2/3: F2/F3 failed on stale pooled httpx connection across pytest event loops (harness artifact; router retried correctly)",
+                                    "run4: 3 passed after tolerating that artifact"]},
+  "deployed_ordinary": {"synth_gemini_cost": ["MemGPT context window", "Lost in the Middle", "sample many agents + vote", "greeting (synthesize_no_task)"],
+                        "synth_openai_capability": ["ReAct vs Toolformer (comparison, 2 papers)", "long-term memory approaches (4 papers, no comparison cue)"],
+                        "orphan_routes": 0, "fallbacks": 0},
+  "deployed_broad_worker_span_ms": [11780, 11786, 12542], "worker_timeout_s": 45,
+  "browser": {"turns": 2, "ui_rows_match_sse": [true, true], "answer_growth_samples": [14, 26]},
+  "cost_basis_check": {"gemini_calls_with_reported_cost": 75, "matching_1.50_7.50_per_1M": 75,
+                       "policy_PRICES": "0.825/4.125 (OpenRouter catalog, non-BYOK)", "underestimate_factor": 0.55},
+  "spend_usd_estimate": {"deployed_est_reported_by_app": 0.257, "corrected_for_gemini_basis": 0.39, "local_live_faults": 0.16, "total": 0.55}
+}

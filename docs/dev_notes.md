@@ -103,3 +103,79 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - **P3-N5 (Polish):** no server log line for worker errors, blank log severity, `/favicon.ico` 404, public `/docs`, raw traceback on a missing key. The stdout/stderr comment in `main.py` was corrected.
   - **P3-N6/N7 (test hygiene, evidence caveat):** opening the index changes `chroma.sqlite3` bytes; the planner named target papers from its own knowledge, so rewording robustness of pure vector retrieval is not yet shown.
   - Not covered: fresh-project deploy (README lacks Cloud Build service-account IAM notes), concurrency. Phase 3 marked done.
+
+### Phase 4: Routing (branch `phase-4-routing`, from `origin/main` at fb4fbe0)
+
+- **Student decision recorded:** P3-N1 (keys as plain Cloud Run env vars, visible in `services describe` and deploy audit logs) is **accepted**. No Secret Manager. Recorded in README and compliance. Live test budget for Phase 4: $1.50 across both providers.
+- **Models and prices re-verified 2026-10-27:**
+  - `gpt-6.1-sol` returned by OpenAI `/v1/models`. The [OpenAI pricing page](https://developers.openai.com/api/docs/pricing) (standard tier) lists $2.00 in / $0.10 cached / $10.00 out per 1M tokens, and $4 / $15 over 272k context. That matches the OpenRouter listing.
+  - `google/gemini-3.8-flash` in the OpenRouter catalog (`/api/v1/models`): $0.825 / $4.125 per 1M tokens, reasoning billed as output, 1,048,576 context, `reasoning` and `reasoning_effort` supported.
+  - Cost ordering holds: Gemini is cheaper.
+- **Spike findings (Gemini via OpenRouter, 150-word answer):**
+  - Default settings: 507 of 703 output tokens were reasoning, TTFT 6.1 s.
+  - `reasoning.effort=low` and `minimal`: 0 reasoning tokens, TTFT 2.5 s and 1.9 s.
+  - `reasoning.enabled=false` is rejected with 400 "Reasoning is mandatory for this endpoint".
+  - Streaming arrives in chunks of about 25 tokens with gaps of 0.3–0.5 s, so it is incremental once reasoning is controlled. The Phase 0 "3 chunks" result came from reasoning plus a one-sentence answer.
+  - Chose `low` for all Gemini calls.
+  - Tool calling and structured output work at low effort.
+- **Upstream provider:** OpenRouter returns `provider` ("Google AI Studio") and `usage.cost_details`, but LangChain drops both. Added `OpenRouterChat`, a `ChatOpenAI` subclass that copies them into `response_metadata`. It attaches them only on the usage chunk, because LangChain concatenates string metadata across stream chunks (we saw `model_name` doubled). OpenRouter also reports `is_byok: true`: the account calls Google with the student's own key, so OpenRouter's `cost` is 0 and the upstream cost is reported separately.
+- **Built:**
+  - `app/llm/policy.py`: pure hybrid policy, dated price table, comparison cue, cost estimate.
+  - `app/llm/router.py` rewrite: `decide`, `fallback_decision`, `call_llm` and `stream_llm` with per-attempt timeouts. SDK retries are off; one jittered retry on transient errors, then fallback to the other provider. Every attempt emits `llm_result` with status `ok`, `error` or `cancelled` (fixes P2-N4).
+  - The worker loop, planner and synthesizer now call the router.
+  - `done` gains `providers_used`, `fallbacks` and `est_cost_usd`.
+  - Routing tab: per-turn header, decision inputs, reasoning effort, upstream provider, cost, fallback rows. Each answer gets a routing summary line.
+  - `scripts/measure_routing.py`: before/after measurements.
+  - Deploy preflight now requires `OPENROUTER_API_KEY`. The allowlist gains the routing settings; `ROUTER_FORCE_PROVIDER` is excluded, so the deployed service always routes by policy.
+- **Latency (P2-N1/P3-N2):** levers were routing the planner and tool-loop calls to Gemini at low effort, plus a compact worker hand-off (≤ 8 bullets, ~200 words, ≤ 3 searches) instead of a prose draft. Measured locally, same three questions, 2026-10-27:
+
+  | Question | Before (all OpenAI): worker span / TTFT / total | After (routed): worker span / TTFT / total | Synthesis provider after |
+  |---|---|---|---|
+  | Why do multi-agent LLM systems fail? | 45.0 s timeout ×2, **failed**, 96.6 s total | 11.3 s / 15.2 s / 20.5 s, done, 8 citations | Gemini (1 paper: MAST) |
+  | How does Self-RAG decide when to retrieve? | 14.6 s / 20.0 s / 25.7 s | 11.7 s / 15.9 s / 19.2 s | Gemini (1 paper) |
+  | Compare how Reflexion and Self-Refine use feedback… | 33.2 s / 39.9 s / 47.3 s (the draft call alone 24.3 s, 1,053 output tokens) | 8.5 s / 12.7 s / 20.0 s | OpenAI (comparison, 2 papers) |
+
+  Gemini tool-loop calls take 1.3–2.1 s each, against 2.1–5.0 s on OpenAI. Synthesis TTFT is 1.3–1.7 s on both. The longest gap between Gemini synthesis chunks was 354 ms. One sample per question, local machine; Phase 9 measures properly. Raw events: `eval/results/phase4/{before,after}/`.
+- **The baseline also reproduced P2-N4:** the two timed-out worker attempts left 2 `llm_route` events without results. After the fix, a unit test covers a worker timeout cancelling an in-flight call, and its route still gets `llm_result status=cancelled`.
+- **Tests:**
+  - `tests/unit/test_phase4_routing.py`: 38 tests covering the policy table and boundaries, overrides, the comparison cue, cost, retry → fallback, auth → direct fallback, both providers failing, fallback disabled, non-provider errors, per-attempt timeouts, cancellation, and the stream-fallback rules. Graph-level tests check that a single-paper question goes to Gemini and a multi-paper question to OpenAI.
+  - Offline suite: 206 passed, 6 skipped, 1 xfailed.
+  - `tests/integration/test_phase4_live_routing.py` (RUN_LIVE=1): 2 passed. Two ordinary questions picked different synthesis providers with all calls `ok`. An invalid Gemini model ID produced a real OpenRouter error, then a fallback to OpenAI.
+  - I removed `DEFAULT_PROVIDER` from `Settings`, and one line in `tests/phase2_fakes.py` that passed it. That is an interface change, not a weakened test.
+- **Bug in my own test:** a scripted `corpus_search` query of "q" failed the tool's 2-character minimum, so the worker failed and synthesis never ran. The test data was wrong, not the product.
+- **Live spend so far:** about $0.29 (before/after runs $0.21, live tests about $0.06, spikes about $0.01).
+- **Local browser check (headless Chrome, tester's `phase3_browser_deployed.py`):** 0 console errors. The routing line under each answer and the per-turn Routing tab rendered correctly: decision inputs, reasoning effort, "served by Google AI Studio", and cost.
+- **Deploy (student approved), 2026-10-27 08:46 UTC:** revision `paper-analyst-00002-sbd`, image `paper-analyst:20261027-084606-fb4fbe0-dirty`, same settings as Phase 3. Smoke test passed (Gemini only, Self-RAG question, 0 failed attempts).
+- **Deployed routing check (warm, `scripts/measure_routing.py`, `eval/results/phase4/deployed/`):**
+
+  | Question | Synthesis | Worker span | TTFT / total | Citations | Est. cost |
+  |---|---|---|---|---|---|
+  | Compare Reflexion and Self-Refine feedback | OpenAI (capability: comparison, 2 papers) | 10.5 s | 14.6 s / 22.9 s | 8 | $0.024 |
+  | Why do multi-agent LLM systems fail? (P3-N2 question) | Gemini (cost: 1 paper) | **8.4 s** (was 43.6 s in the Phase 3 tester run) | 13.0 s / 17.8 s | 5 | $0.013 |
+  | Tree search vs. chain-of-thought trade-offs (unrehearsed) | OpenAI (capability) | 10.9 s | 14.9 s / 27.6 s | 10 | $0.037 |
+
+  Every attempt returned `ok` with no fallbacks. Every Gemini call recorded the upstream "Google AI Studio". **Exit check met on the deployed URL:** two ordinary questions picked different synthesis providers, each with a visible rationale.
+- **Live spend after deploy checks:** about $0.44 of $1.50.
+- **Tester Phase 4 gate: PHASE PASS** (`docs/testing/phase-4-20261027T0855Z.md`). The exit check passed on the deployed URL with 8 unrehearsed questions: Gemini/cost for single-source questions and the greeting, OpenAI/capability for ReAct vs Toolformer and a 4-paper memory question. A headless browser on the deployed UI showed Routing-tab rows and routing lines that match the SSE stream. 0 route/result orphans; a real cancellation produced a `cancelled` result. Real fallbacks: an invalid OpenRouter key gave a 401, then OpenAI; a real 50 ms timeout gave a retry, then OpenAI. Deployed Gemini streaming is incremental. P3-N2 retest: worker spans 11.8–12.5 s against the 45 s timeout (resolved). Offline: 229 passed, 11 skipped, 1 xfailed. Tester spend about $0.55. Findings:
+  - **P4-D1 (Major, open): Gemini cost estimates are about 45% too low.** OpenRouter's reported cost equals **$1.50 in / $7.50 out per 1M** on every BYOK call (I confirmed on my deployed events, e.g. 360 in / 112 out: estimated $0.000759, reported $0.00138). The catalog's $0.825 / $4.125 is not what Google bills on the student's own key. Routing is unaffected (still cheaper than gpt-6.1-sol). Affected: Routing-tab costs, `done.est_cost_usd`, README/architecture/.env.example prices, budget tracking. **Corrected Phase 4 spend estimate: about $1.05–1.10 of $1.50.**
+  - P4-N1 (Phase 7): per-attempt timeouts are not capped by the remaining request budget (a hung synthesis can overrun 120 s by about 30–55 s).
+  - P4-N2: only synthesis switches provider by features; planner and worker calls are always Gemini. Revisit when Summary and Data arrive.
+  - P4-N3: the comparison regex misses wordings like "stack up against".
+  - P4-N4 (tests): live tests share a pooled client across pytest event loops.
+  - P4-N5: OpenAI synthesis took up to 23 s against its 60 s stream timeout.
+- **P4-D1 fix (student asked for fix, retest and redeploy, 2026-10-27):**
+  - Gemini price in `policy.PRICES` changed to $1.50 / $7.50 (cached $0.15).
+  - Each `llm_result` now has `cost_usd` and `cost_source`. The reported cost is preferred; the dated estimate is used when the provider reports none (OpenAI). `done` reports `cost_usd` and `cost_basis`. The UI labels each cost "reported" or "est.".
+  - **Pricing ambiguity found while fixing:** [Google's pricing page](https://ai.google.dev/gemini-api/docs/pricing) (checked 2026-10-27) lists Gemini 3.8 Flash at **$0.75 / $3.75 through 2026-12-31** and $1.50 / $7.50 from 2027-01-01, but OpenRouter's reported BYOK upstream cost uses $1.50 / $7.50. Without the student's Google billing data I cannot tell which is actually charged today. I chose the conservative, higher reported rate and documented the discrepancy (README, architecture §6, `.env.example`). The student can check the Google Cloud / AI Studio bill to settle it.
+  - Tests: 3 new regression tests (price matches the observed reported costs; reported cost preferred and labelled; estimate used when nothing is reported). I also corrected one of my own earlier tests that hard-coded the old cached price. Offline suite: 232 passed, 11 skipped, 1 xfailed.
+  - **Local verification:** the first rerun hit a local network outage. Every call failed on both providers (connection errors, OpenRouter timeout), and the app retried, fell back and ended `failed` honestly, with no faked answer (`eval/results/phase4/d1_fix_local_network_outage/`). Network checked with curl, then rerun: "What is the difference between ReAct and Reflexion?" ran Gemini planner and tool loop, then OpenAI synthesis (capability: comparison). Every Gemini `est_cost_usd` equals `reported_cost_usd` (for example 0.006387 = 0.006387); OpenAI is labelled estimated. Total $0.0336.
+- **Redeploy after P4-D1 fix:** 2026-10-27 16:27 UTC, revision `paper-analyst-00003-vxz`, image `paper-analyst:20261027-162642-fb4fbe0-dirty`. Smoke test passed (Gemini, 0 failed attempts).
+- **Tester retest after P4-D1: PHASE PASS, P4-D1 fixed** (`docs/testing/phase-4-retest-20261027T1645Z.md`).
+  - Raw OpenRouter responses show `cost: 0`, `is_byok: true`, and an upstream cost at exactly $1.50 / $7.50.
+  - Deployed revision 00003-vxz, unrehearsed question comparing Voyager and Generative Agents: Gemini reported $0.018264 and OpenAI estimated $0.012344, each equal to the token formula. `done.cost_basis` = {reported: 4, estimated: 1}. The UI labels each cost "(reported)" or "(est.)".
+  - Offline: 236 passed, 11 skipped, 2 xfailed. Tester spend about $0.031.
+  - The tester points out that OpenRouter's "reported" BYOK cost is its own tokens × rate calculation, not Google's invoice. Reported and estimated therefore agree by construction; the figure is a conservative upper bound.
+  - New Low notes:
+    - **P4-N6:** `_extra` should add `usage.cost` and `upstream_inference_cost` when `is_byok` (strict xfail TC-P4-14).
+    - **P4-N7 (docs, before Phase 9):** mention that Google's Gemini free tier could apply; reword the `.env.example` "billed via BYOK" comment; in Phase 9, label Gemini cost as a dated upper bound and reconcile it with the Google bill.
+- **Phase 4 live spend, final:** about $1.19 of $1.50 (corrected for P4-D1).

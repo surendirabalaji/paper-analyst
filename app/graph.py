@@ -15,10 +15,8 @@ from __future__ import annotations
 
 import asyncio
 import operator
-import time
 from typing import Annotated, Any, Awaitable, Callable, TypedDict
 
-import openai
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field
@@ -27,7 +25,8 @@ from app.agents.prompts import PLANNER_SYSTEM, SYNTH_NO_TASK_ROLE, SYNTH_ROLE
 from app.agents.research import run_research
 from app.context import RequestContext, ctx_of
 from app.events import safe_error, utc_now
-from app.llm.router import record_llm_result, text_of, traced_invoke
+from app.llm.policy import approx_tokens, comparison_cue
+from app.llm.router import call_llm, classify_error, stream_llm
 from app.rag import AUGMENT_PROMPT, cited_ids, format_evidence
 
 MAX_TASKS = 4
@@ -114,14 +113,15 @@ def fallback_tasks(query: str) -> list[dict]:
 async def planner(state: AnalystState, config) -> dict:
     ctx = ctx_of(config)
     ctx.emitter.emit("transition", **{"from": "start", "to": "planner", "reason": "new request", "step": 0})
-    decision = ctx.router.decide("planner", "planner", {"query_chars": len(state["query"])})
+    decision = ctx.route("planner", "planner", {"query_chars": len(state["query"]),
+                                                "comparison": comparison_cue(state["query"])})
     system = PLANNER_SYSTEM.format(max_tasks=MAX_TASKS, workers="\n".join(f"- {d}" for _, d in WORKERS.values()))
-    llm = ctx.router.client(decision.provider).with_structured_output(Plan, method="function_calling", include_raw=True)
     errors, source = [], "llm"
     try:
-        out = await asyncio.wait_for(
-            traced_invoke(ctx, decision, llm, [SystemMessage(system), HumanMessage(state["query"])]),
-            timeout=ctx.settings.llm_timeout_s,
+        out = await call_llm(
+            ctx, decision,
+            lambda c: c.with_structured_output(Plan, method="function_calling", include_raw=True),
+            [SystemMessage(system), HumanMessage(state["query"])],
         )
         plan = out.get("parsed")
         if plan is None:
@@ -192,16 +192,6 @@ async def supervisor(state: AnalystState, config) -> dict:
 
 
 # ---------------------------------------------------------------- workers
-
-
-def classify_error(e: BaseException) -> str:
-    if isinstance(e, (asyncio.TimeoutError, openai.APITimeoutError)):
-        return "timeout"
-    if isinstance(e, openai.RateLimitError):
-        return "rate_limit"
-    if isinstance(e, (openai.APIConnectionError, openai.InternalServerError)):
-        return "provider_unavailable"
-    return "worker_error"
 
 
 def upstream_text(state: AnalystState, task: dict) -> str:
@@ -300,25 +290,23 @@ async def synthesize(state: AnalystState, config) -> dict:
         "upstream": upstream,
         "evidence": format_evidence(refs),
     }
-    features = {"n_evidence": len(refs), "n_tasks": len(tasks),
-                "n_papers": len({r.doc_id for r in refs}), "statuses": statuses}
-    decision = ctx.router.decide("synthesize", "synthesizer", features)
-    ctx.emitter.emit("llm_route", **decision.public())
-    chain = AUGMENT_PROMPT | ctx.router.client(decision.provider)
+    features = {
+        "n_tasks": len(tasks),
+        "n_tasks_ok": sum(1 for x in statuses if x in DONE_LIKE),
+        "n_evidence": len(refs),
+        "n_papers": len({r.doc_id for r in refs}),
+        "evidence_tokens_est": sum(approx_tokens(r.text) for r in refs),
+        "comparison": comparison_cue(state["query"]),
+        "statuses": statuses,
+    }
+    decision = ctx.route("synthesize" if tasks else "synthesize_no_task", "synthesizer", features)
 
-    t0 = time.perf_counter()
-    first_ms, gathered, parts = None, None, []
-    async for chunk in chain.astream(inputs):
-        gathered = chunk if gathered is None else gathered + chunk
-        delta = text_of(chunk.content)
-        if delta:
-            if first_ms is None:
-                first_ms = int((time.perf_counter() - t0) * 1000)
-                ctx.ttft_ms = ctx.emitter.elapsed_ms()
-            parts.append(delta)
-            ctx.emitter.emit("token", delta=delta)
-    record_llm_result(ctx, decision, gathered, t0, ttft_ms=first_ms)
-    answer = "".join(parts)
+    def on_delta(delta: str) -> None:
+        if ctx.ttft_ms is None:
+            ctx.ttft_ms = ctx.emitter.elapsed_ms()
+        ctx.emitter.emit("token", delta=delta)
+
+    answer = await stream_llm(ctx, decision, lambda c: AUGMENT_PROMPT | c, inputs, on_delta)
 
     used = cited_ids(answer)
     unresolved = [c for c in used if not ctx.registry.get(c)]
@@ -382,6 +370,10 @@ async def run_request(ctx: RequestContext) -> dict[str, Any]:
             "total_ms": total_ms,
         },
         tokens_by_provider=ctx.tokens_by_provider,
+        providers_used=sorted(p for p, v in ctx.tokens_by_provider.items() if v["calls"] > v["errors"]),
+        fallbacks=ctx.fallbacks,
+        cost_usd=round(sum(v.get("cost_usd", 0.0) for v in ctx.tokens_by_provider.values()), 6),
+        cost_basis=ctx.cost_basis,
     )
     em.close()
     return final
