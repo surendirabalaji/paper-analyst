@@ -1,0 +1,17 @@
+How many papers in the corpus have a linked GitHub repository? 
+   -> [('data', [], False)] llm
+Which 2025 cs.MA papers are in the corpus? Summarize the two most recent 
+   -> [('data', [], False), ('summary', ['t1'], False)] llm
+Who are the authors of the ReAct paper? 
+   -> [('data', [], False)] llm
+Which papers did Shunyu Yao co-author, and what do they propose? 
+   -> [('data', [], False), ('research', ['t1'], False)] llm
+How many papers per year are indexed? 
+   -> [('data', [], False)] llm
+How does Self-RAG decide when to retrieve? 
+   -> [('summary', [], False)] llm
+Compare how Reflexion and Self-Refine use feedback. 
+   -> [('research', [], False)] llm
+What are the latest developments in agent memory this month? 
+   -> [('research', [], True)] llm
+cost 0.01609

@@ -1,0 +1,592 @@
+{
+ "id": "X3_spill10",
+ "query": "Run exactly this read-only SQL query on the corpus database, unchanged, and report what it returns: WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r WHERE n<1000) SELECT length(s) AS len FROM (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx')||n AS s FROM r) GROUP BY s ORDER BY s DESC",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "fcfd77a6dbff"
+ ],
+ "plan": [
+  [
+   "data",
+   [],
+   false
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "data",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "data",
+   "supervisor",
+   "t1 done"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [],
+ "sql": [
+  {
+   "agent": "data",
+   "status": "ok",
+   "error_kind": null,
+   "sql": "WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r WHERE n<1000) SELECT length(s) AS len FROM (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx')||n AS s FROM r) GROUP BY s ORDER BY s DESC",
+   "n_rows": 50,
+   "rows": [
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ]
+   ],
+   "truncated": true,
+   "cite_ids": [
+    "D1"
+   ],
+   "repair_rounds_left": null,
+   "message_safe": null
+  }
+ ],
+ "tool_calls": [
+  [
+   "data",
+   "get_schema",
+   {}
+  ],
+  [
+   "data",
+   "run_sql",
+   {
+    "query": "WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r WHERE n<1000) SELECT length(s) AS len FROM (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'"
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "data",
+   "get_schema",
+   "ok",
+   null
+  ],
+  [
+   "data",
+   "run_sql",
+   "ok",
+   null
+  ]
+ ],
+ "web_search": [],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 362,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 725,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 1425,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 1683,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "n_tasks": 1,
+    "n_tasks_ok": 1,
+    "n_evidence": 1,
+    "n_papers": 0,
+    "n_web": 0,
+    "n_data": 1,
+    "evidence_tokens_est": 76,
+    "comparison": false,
+    "statuses": [
+     "done"
+    ]
+   },
+   "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0057345
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.001767
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.003474
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.00462
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0040995
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "data",
+   "done",
+   null
+  ]
+ ],
+ "citations": [
+  {
+   "cite_id": "D1",
+   "type": "sql_result",
+   "href": "",
+   "found_by": "data",
+   "sql": "WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r WHERE n<1000) SELECT length(s) AS len FROM (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx')||n AS s FROM r) GROUP BY s ORDER BY s DESC",
+   "rows": [
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10002
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ],
+    [
+     10003
+    ]
+   ]
+  }
+ ],
+ "c_resolution": [],
+ "answer": "Running the specified read-only SQL query on the corpus database executes a recursive CTE generating integers from 1 to 1000 concatenated to a base string of 10,000 `'x'` characters, returning the length of string `s` ordered by `s DESC` [D1]. \n\nThe query returns rows with a single column `len` containing string length values such as `10003` and `10002` [D1]. The first 50 rows of the result set return the following sequence of lengths [D1]:\n\n* Rows 1–10: `10003` (10 rows) [D1]\n* Row 11: `10002` [D1]\n* Rows 12–21: `10003` (10 rows) [D1]\n* Row 22: `10002` [D1]\n* Rows 23–32: `10003` (10 rows) [D1]\n* Row 33: `10002` [D1]\n* Rows 34–43: `10003` (10 rows) [D1]\n* Row 44: `10002` [D1]\n* Rows 45–50: `10003` (6 rows) [D1]",
+ "n_tokens": 14,
+ "first_token_client_ms": 22168,
+ "done": {
+  "request_id": "fcfd77a6dbff",
+  "seq": 38,
+  "ts": "2026-10-27T22:19:50.220Z",
+  "t_ms": 24164,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 970,
+   "llm_ms_sum": 23170,
+   "ttft_ms": 22042,
+   "total_ms": 24164
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 7215,
+    "output_tokens": 1183,
+    "calls": 5,
+    "errors": 0,
+    "cost_usd": 0.019696
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.019696,
+  "cost_basis": {
+   "reported": 5
+  }
+ },
+ "errors": [],
+ "total_client_ms": 24293,
+ "key_shape_hits": 0
+}

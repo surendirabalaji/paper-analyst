@@ -1,0 +1,657 @@
+{
+ "id": "H_handoff_summary",
+ "query": "Give me a quick summary of whatever the earliest 2024 paper in the index is.",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "0405e422128d"
+ ],
+ "plan": [
+  [
+   "data",
+   [],
+   false
+  ],
+  [
+   "summary",
+   [
+    "t1"
+   ],
+   false
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "data",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "data",
+   "supervisor",
+   "t1 done"
+  ],
+  [
+   "supervisor",
+   "summary",
+   "task t2 ready (after t1)"
+  ],
+  [
+   "summary",
+   "supervisor",
+   "t2 done"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [
+  {
+   "request_id": "0405e422128d",
+   "seq": 21,
+   "ts": "2026-10-27T19:26:17.458Z",
+   "t_ms": 21195,
+   "to_task": "t2",
+   "to_agent": "summary",
+   "from_tasks": [
+    "t1"
+   ],
+   "papers": [
+    {
+     "arxiv_id": "2402.01680",
+     "title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+     "cite_id": "D1",
+     "from_task": "t1"
+    },
+    {
+     "arxiv_id": "2401.15884",
+     "title": "Corrective Retrieval Augmented Generation",
+     "cite_id": "D2",
+     "from_task": "t1"
+    },
+    {
+     "arxiv_id": "2401.18059",
+     "title": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval",
+     "cite_id": "D3",
+     "from_task": "t1"
+    },
+    {
+     "arxiv_id": "2402.01030",
+     "title": "Executable Code Actions Elicit Better LLM Agents",
+     "cite_id": "D4",
+     "from_task": "t1"
+    },
+    {
+     "arxiv_id": "2402.05120",
+     "title": "More Agents Is All You Need",
+     "cite_id": "D5",
+     "from_task": "t1"
+    }
+   ],
+   "evidence_ids": [
+    "D1"
+   ]
+  }
+ ],
+ "sql": [
+  {
+   "agent": "data",
+   "status": "ok",
+   "error_kind": null,
+   "sql": "SELECT arxiv_id, title, published, topic FROM papers WHERE year = 2024 ORDER BY published ASC LIMIT 5",
+   "n_rows": 5,
+   "rows": [
+    [
+     "2402.01680",
+     "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+     "2024-01-21",
+     "multi-agent-systems"
+    ],
+    [
+     "2401.15884",
+     "Corrective Retrieval Augmented Generation",
+     "2024-01-29",
+     "rag"
+    ],
+    [
+     "2401.18059",
+     "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval",
+     "2024-01-31",
+     "rag"
+    ],
+    [
+     "2402.01030",
+     "Executable Code Actions Elicit Better LLM Agents",
+     "2024-02-01",
+     "reasoning-and-acting"
+    ],
+    [
+     "2402.05120",
+     "More Agents Is All You Need",
+     "2024-02-03",
+     "multi-agent-systems"
+    ]
+   ],
+   "truncated": false,
+   "cite_ids": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5"
+   ],
+   "repair_rounds_left": null,
+   "message_safe": null
+  }
+ ],
+ "tool_calls": [
+  [
+   "data",
+   "get_schema",
+   {}
+  ],
+  [
+   "data",
+   "run_sql",
+   {
+    "query": "SELECT arxiv_id, title, published, topic FROM papers WHERE year = 2024 ORDER BY published ASC LIMIT 5"
+   }
+  ],
+  [
+   "summary",
+   "get_paper_outline",
+   {
+    "paper": "2402.01680"
+   }
+  ],
+  [
+   "summary",
+   "get_paper_section",
+   {
+    "section": "S1",
+    "paper": "2402.01680"
+   }
+  ],
+  [
+   "summary",
+   "get_paper_section",
+   {
+    "section": "S6",
+    "paper": "2402.01680"
+   }
+  ],
+  [
+   "summary",
+   "get_paper_section",
+   {
+    "paper": "2402.01680",
+    "section": "S7"
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "data",
+   "get_schema",
+   "ok",
+   null
+  ],
+  [
+   "data",
+   "run_sql",
+   "ok",
+   null
+  ],
+  [
+   "summary",
+   "get_paper_outline",
+   "ok",
+   null
+  ],
+  [
+   "summary",
+   "get_paper_section",
+   "ok",
+   null
+  ],
+  [
+   "summary",
+   "get_paper_section",
+   "ok",
+   null
+  ],
+  [
+   "summary",
+   "get_paper_section",
+   "ok",
+   null
+  ]
+ ],
+ "web_search": [],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 76,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 598,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 1298,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 1785,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 892,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 2114,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 3828,
+    "long_source_tokens_est": 1714,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 4,
+    "tool_calls_so_far": 3,
+    "context_tokens_est": 3973,
+    "long_source_tokens_est": 1859,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_final",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 5,
+    "tool_calls_so_far": 4,
+    "context_tokens_est": 4286,
+    "long_source_tokens_est": 2154,
+    "comparison": false,
+    "reason": "tool round cap reached"
+   },
+   "rationale": "Compact findings from evidence already retrieved; low-cost model.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "dimension": "capability",
+   "features": {
+    "n_tasks": 2,
+    "n_tasks_ok": 2,
+    "n_evidence": 7,
+    "n_papers": 1,
+    "n_web": 0,
+    "n_data": 1,
+    "evidence_tokens_est": 2222,
+    "comparison": false,
+    "statuses": [
+     "done",
+     "done"
+    ]
+   },
+   "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile.",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0019575
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.001242
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.00135225
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.004614
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.002346
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0048975
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0073005
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.00399915
+  },
+  {
+   "call_site": "worker_final",
+   "agent": "summary",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.010773
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "model_returned": "gpt-6.1-sol",
+   "upstream_provider": null,
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.008562
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "data",
+   "done",
+   null
+  ],
+  [
+   "t2",
+   "summary",
+   "done",
+   null
+  ]
+ ],
+ "citations": [
+  {
+   "cite_id": "D1",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2402.01680",
+   "found_by": "data",
+   "sql": "SELECT arxiv_id, title, published, topic FROM papers WHERE year = 2024 ORDER BY published ASC LIMIT 5",
+   "rows": [
+    [
+     "2402.01680",
+     "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+     "2024-01-21",
+     "multi-agent-systems"
+    ]
+   ]
+  },
+  {
+   "cite_id": "C1",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2402.01680v2%3A%3Aabstract%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C2",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2402.01680v2%3A%3AS1%3A%3A000",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C4",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2402.01680v2%3A%3AS1%3A%3A002",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  },
+  {
+   "cite_id": "C3",
+   "type": "paper_chunk",
+   "href": "/api/source/chunk/2402.01680v2%3A%3AS1%3A%3A001",
+   "found_by": null,
+   "sql": null,
+   "rows": null
+  }
+ ],
+ "c_resolution": [
+  {
+   "cite_id": "C1",
+   "status": 200
+  },
+  {
+   "cite_id": "C2",
+   "status": 200
+  },
+  {
+   "cite_id": "C4",
+   "status": 200
+  },
+  {
+   "cite_id": "C3",
+   "status": 200
+  }
+ ],
+ "answer": "The earliest 2024 paper in the index is **“Large Language Model based Multi-Agents: A Survey of Progress and Challenges”** (arXiv:2402.01680), dated **January 21, 2024** in the index. [D1]\n\n- **Main idea:** It surveys systems where multiple LLM-powered agents—with different roles and capabilities—communicate and collaborate on tasks or simulate complex environments. [C1, C2]\n- **Organizing framework:** It breaks these systems into four parts: interaction with the environment, agent profiles, communication, and how agents acquire capabilities. [C4]\n- **Applications:** It groups research into **problem-solving** and **world simulation**, with examples including software development, multi-robot systems, and social or policy simulations. [C3, C4]\n- **Practical value:** It maps the field and collects implementation frameworks, datasets, and benchmarks—a broad orientation to multi-agent AI rather than a paper introducing one new system. [C3, C4]",
+ "n_tokens": 212,
+ "first_token_client_ms": 38482,
+ "done": {
+  "request_id": "0405e422128d",
+  "seq": 267,
+  "ts": "2026-10-27T19:26:39.708Z",
+  "t_ms": 43444,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 24,
+   "llm_ms_sum": 43376,
+   "ttft_ms": 38303,
+   "total_ms": 43444
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 24860,
+    "output_tokens": 820,
+    "calls": 9,
+    "errors": 0,
+    "cost_usd": 0.038483
+   },
+   "openai": {
+    "input_tokens": 3206,
+    "output_tokens": 215,
+    "calls": 1,
+    "errors": 0,
+    "cost_usd": 0.008562
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter",
+   "openai"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.047045,
+  "cost_basis": {
+   "reported": 9,
+   "estimated": 1
+  }
+ },
+ "errors": [],
+ "total_client_ms": 43855,
+ "key_shape_hits": 0
+}

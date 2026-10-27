@@ -81,10 +81,27 @@ function renderAnswer(node, text, registry, dropped = new Set()) {
   node.append(document.createTextNode(text.slice(last)));
 }
 
+const isSql = (t) => t === "sql_row" || t === "sql_result";
+const sqlTable = (cols, rows) => [(cols || []).join(" | "),
+  ...(rows || []).map((r) => r.map((v) => (v == null ? "" : String(v))).join(" | "))].join("\n");
+
 async function openSource(ref) {
   showTab("sources");
   const v = $("viewer");
   v.hidden = false;
+  $("viewer-link").hidden = false;
+  if (isSql(ref.type)) { // database record: the SQL that produced it and the row(s), from the sql_result event
+    const rows = ref.rows || [];
+    $("viewer-title").textContent = `${ref.cite_id} · ${ref.title}`;
+    $("viewer-meta").textContent = `corpus metadata DB (papers.db, read-only) · ${ref.type === "sql_row" ? "one paper's row" :
+      `${rows.length} row(s)`} · found by ${ref.found_by || ref.agent || "data"} via run_sql`;
+    $("viewer-text").textContent = `SQL:\n${ref.sql || "?"}\n\n` +
+      (rows.length ? `Result:\n${sqlTable(ref.columns, rows)}` : "Result: 0 rows (no such records in the corpus)");
+    $("viewer-link").textContent = "Open arXiv abstract page";
+    $("viewer-link").href = isHttp(ref.source_url) ? ref.source_url : "#";
+    $("viewer-link").hidden = !isHttp(ref.source_url);
+    return;
+  }
   if (ref.type === "web") { // live web result: snippet as retrieved by Tavily, plus the page itself
     $("viewer-title").textContent = `${ref.cite_id} · ${ref.title || ref.source_url}`;
     $("viewer-meta").textContent = `web · ${ref.doc_id} · retrieved ${ref.retrieved_at || "?"}` +
@@ -243,6 +260,21 @@ async function ask(query) {
       d.chunks.forEach((c) => registry.set(c.cite_id, { ...c, label: `${c.title} — ${c.section}` }));
       traceItem(turn, "retrieval", ` "${d.query}": ${d.chunks.map((c) => `${c.cite_id} ${c.doc_id} (${c.score.toFixed(2)})`).join(", ")} in ${d.retrieval_ms} ms`);
     },
+    sql_result: (d) => {
+      (d.refs || []).forEach((r) => registry.set(r.cite_id, {
+        ...r, sql: d.sql, columns: d.columns, source_url: r.href, agent: d.agent,
+        label: `${r.title} — corpus metadata (SQL)`,
+      }));
+      traceItem(turn, `${d.agent} ⇄ SQLite`, d.status === "ok"
+        ? ` run_sql (read-only) ${d.sql} → ${d.n_rows} row(s)${d.truncated ? " (capped at 50)" : ""} in ${d.elapsed_ms} ms: ` +
+          (d.cite_ids.length ? d.cite_ids.join(" ") : "none")
+        : ` run_sql ${d.error_kind}: ${d.message_safe} · SQL: ${d.sql}` +
+          (d.repair_rounds_left ? " · one repair round left" : " · no repair rounds left"),
+        d.status === "ok" ? "mcp" : "warn");
+    },
+    handoff: (d) => traceItem(turn, "handoff", ` ${d.from_tasks.join(", ")} → ${d.to_task} ${d.to_agent}: ` +
+      (d.papers.length ? d.papers.map((p) => `arXiv:${p.arxiv_id}${p.cite_id ? ` [${p.cite_id}]` : ""}`).join(", ")
+        : "no paper ids") + (d.evidence_ids.length ? ` · upstream evidence ${d.evidence_ids.join(" ")}` : "")),
     worker_result: (d) => traceItem(turn, d.agent, ` ${d.task_id} ${d.status}` +
       (d.error_kind ? ` (${d.error_kind})` : "") + (d.evidence_ids && d.evidence_ids.length ? `, cites ${d.evidence_ids.join(" ")}` : ""),
       statusKind(d.status)),
@@ -255,7 +287,7 @@ async function ask(query) {
       a.href = "#";
       a.addEventListener("click", (e) => { e.preventDefault(); openSource(ref); });
       li.append(el("span", "badge", `#${turn}`), a, document.createTextNode(
-        d.type === "web" ? ` ${d.label} (${d.doc_id})` : ` ${d.label} (arXiv:${d.doc_id})`));
+        d.type === "web" ? ` ${d.label} (${d.doc_id})` : d.type === "sql_result" ? ` ${d.label}` : ` ${d.label} (arXiv:${d.doc_id})`));
       $("sources").append(li);
       repaint();
     },

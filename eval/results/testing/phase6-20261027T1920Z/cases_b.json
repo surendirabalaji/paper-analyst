@@ -1,0 +1,5 @@
+[
+ {"id": "H_handoff_summary", "query": "Give me a quick summary of whatever the earliest 2024 paper in the index is."},
+ {"id": "J_sharing_regression", "query": "What has happened recently with tool-using LLM agent benchmarks, and did the ReAct paper end up at a major conference?"},
+ {"id": "K_corpus_regression", "query": "In plain terms, how does corrective RAG decide whether retrieved documents are good enough?"}
+]

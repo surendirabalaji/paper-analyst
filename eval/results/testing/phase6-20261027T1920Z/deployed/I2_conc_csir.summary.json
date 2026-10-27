@@ -1,0 +1,414 @@
+{
+ "id": "I2_conc_csir",
+ "query": "List the indexed papers whose primary category is cs.IR, with their posting dates.",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "480f1f5b910c"
+ ],
+ "plan": [
+  [
+   "data",
+   [],
+   false
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "data",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "data",
+   "supervisor",
+   "t1 done"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [],
+ "sql": [
+  {
+   "agent": "data",
+   "status": "ok",
+   "error_kind": null,
+   "sql": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC",
+   "n_rows": 6,
+   "rows": [
+    [
+     "2212.10496",
+     "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+     "2022-12-20",
+     "cs.IR"
+    ],
+    [
+     "2410.05779",
+     "LightRAG: Simple and Fast Retrieval-Augmented Generation",
+     "2024-10-08",
+     "cs.IR"
+    ],
+    [
+     "2505.15872",
+     "InfoDeepSeek: Benchmarking Agentic Information Seeking for Retrieval-Augmented Generation",
+     "2025-05-21",
+     "cs.IR"
+    ],
+    [
+     "2506.16988",
+     "RAGentA: Multi-Agent Retrieval-Augmented Generation for Attributed Question Answering",
+     "2025-06-20",
+     "cs.IR"
+    ],
+    [
+     "2508.12752",
+     "Deep Research: A Survey of Autonomous Research Agents",
+     "2025-08-18",
+     "cs.IR"
+    ],
+    [
+     "2511.05385",
+     "TeaRAG: A Token-Efficient Agentic Retrieval-Augmented Generation Framework",
+     "2025-11-07",
+     "cs.IR"
+    ]
+   ],
+   "truncated": false,
+   "cite_ids": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6"
+   ],
+   "repair_rounds_left": null,
+   "message_safe": null
+  }
+ ],
+ "tool_calls": [
+  [
+   "data",
+   "get_schema",
+   {}
+  ],
+  [
+   "data",
+   "run_sql",
+   {
+    "query": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC"
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "data",
+   "get_schema",
+   "ok",
+   null
+  ],
+  [
+   "data",
+   "run_sql",
+   "ok",
+   null
+  ]
+ ],
+ "web_search": [],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 82,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 608,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 1308,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 1972,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "n_tasks": 1,
+    "n_tasks_ok": 1,
+    "n_evidence": 6,
+    "n_papers": 0,
+    "n_web": 0,
+    "n_data": 6,
+    "evidence_tokens_est": 222,
+    "comparison": false,
+    "statuses": [
+     "done"
+    ]
+   },
+   "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.001713
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0012465
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0027885
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.006552
+  },
+  {
+   "call_site": "synthesize",
+   "agent": "synthesizer",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0049395
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "data",
+   "done",
+   null
+  ]
+ ],
+ "citations": [
+  {
+   "cite_id": "D1",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2212.10496",
+   "found_by": "data",
+   "sql": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC",
+   "rows": [
+    [
+     "2212.10496",
+     "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+     "2022-12-20",
+     "cs.IR"
+    ]
+   ]
+  },
+  {
+   "cite_id": "D2",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2410.05779",
+   "found_by": "data",
+   "sql": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC",
+   "rows": [
+    [
+     "2410.05779",
+     "LightRAG: Simple and Fast Retrieval-Augmented Generation",
+     "2024-10-08",
+     "cs.IR"
+    ]
+   ]
+  },
+  {
+   "cite_id": "D3",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2505.15872",
+   "found_by": "data",
+   "sql": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC",
+   "rows": [
+    [
+     "2505.15872",
+     "InfoDeepSeek: Benchmarking Agentic Information Seeking for Retrieval-Augmented Generation",
+     "2025-05-21",
+     "cs.IR"
+    ]
+   ]
+  },
+  {
+   "cite_id": "D4",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2506.16988",
+   "found_by": "data",
+   "sql": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC",
+   "rows": [
+    [
+     "2506.16988",
+     "RAGentA: Multi-Agent Retrieval-Augmented Generation for Attributed Question Answering",
+     "2025-06-20",
+     "cs.IR"
+    ]
+   ]
+  },
+  {
+   "cite_id": "D5",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2508.12752",
+   "found_by": "data",
+   "sql": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC",
+   "rows": [
+    [
+     "2508.12752",
+     "Deep Research: A Survey of Autonomous Research Agents",
+     "2025-08-18",
+     "cs.IR"
+    ]
+   ]
+  },
+  {
+   "cite_id": "D6",
+   "type": "sql_row",
+   "href": "https://arxiv.org/abs/2511.05385",
+   "found_by": "data",
+   "sql": "SELECT arxiv_id, title, published, primary_category FROM papers WHERE primary_category = 'cs.IR' ORDER BY published ASC",
+   "rows": [
+    [
+     "2511.05385",
+     "TeaRAG: A Token-Efficient Agentic Retrieval-Augmented Generation Framework",
+     "2025-11-07",
+     "cs.IR"
+    ]
+   ]
+  }
+ ],
+ "c_resolution": [],
+ "answer": "There are 6 indexed papers whose primary arXiv category is `cs.IR`, listed below with their posting dates:\n\n- **Precise Zero-Shot Dense Retrieval without Relevance Labels** (arXiv: 2212.10496) — Posted: 2022-12-20 [D1]\n- **LightRAG: Simple and Fast Retrieval-Augmented Generation** (arXiv: 2410.05779) — Posted: 2024-10-08 [D2]\n- **InfoDeepSeek: Benchmarking Agentic Information Seeking for Retrieval-Augmented Generation** (arXiv: 2505.15872) — Posted: 2025-05-21 [D3]\n- **RAGentA: Multi-Agent Retrieval-Augmented Generation for Attributed Question Answering** (arXiv: 2506.16988) — Posted: 2025-06-20 [D4]\n- **Deep Research: A Survey of Autonomous Research Agents** (arXiv: 2508.12752) — Posted: 2025-08-18 [D5]\n- **TeaRAG: A Token-Efficient Agentic Retrieval-Augmented Generation Framework** (arXiv: 2511.05385) — Posted: 2025-11-07 [D6]",
+ "n_tokens": 14,
+ "first_token_client_ms": 12525,
+ "done": {
+  "request_id": "480f1f5b910c",
+  "seq": 43,
+  "ts": "2026-10-27T19:27:46.596Z",
+  "t_ms": 14119,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 0,
+   "llm_ms_sum": 14098,
+   "ttft_ms": 12413,
+   "total_ms": 14119
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 7418,
+    "output_tokens": 815,
+    "calls": 5,
+    "errors": 0,
+    "cost_usd": 0.01724
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.01724,
+  "cost_basis": {
+   "reported": 5
+  }
+ },
+ "errors": [],
+ "total_client_ms": 14228,
+ "key_shape_hits": 0
+}

@@ -5,6 +5,8 @@ Every generation call is routed from features computed in code (never by an LLM)
   call site          | rule                                                        | dimension  | provider
   -------------------+-------------------------------------------------------------+------------+------------------
   planner            | always                                                      | cost       | Gemini/OpenRouter
+  worker_tool_loop / | a tool call in this task failed on invalid input (SQL error | capability | OpenAI
+  worker_final       | or refused query): the repair round (`repair_round`)        |            |
   worker_tool_loop / | >= 3k tokens of full paper sections read, or >= 10k tokens  | capability | OpenAI
   worker_final       | of context (faithful condensation of long source text)      |            |
   worker_tool_loop   | otherwise (tool choice and query writing, short outputs)    | cost       | Gemini/OpenRouter
@@ -106,8 +108,14 @@ def _synth_reasons(f: dict) -> list[str]:
     return reasons
 
 
+# Tool error kinds that mean the model's own input was wrong and must be rewritten (the Data agent's SQL).
+REPAIRABLE_TOOL_ERRORS = frozenset({"sql_error", "sql_rejected", "sql_timeout"})
+
+
 def _worker_reasons(f: dict) -> list[str]:
     reasons = []
+    if f.get("repair_round"):
+        reasons.append(f"repair round after a failed query ({f['repair_round']})")
     if f.get("long_source_tokens_est", 0) >= WORKER_LONG_SOURCE_TOKENS:
         reasons.append(f"~{f['long_source_tokens_est']} tokens of full paper sections in context")
     if f.get("context_tokens_est", 0) >= WORKER_LONG_CONTEXT_TOKENS:
@@ -122,8 +130,10 @@ def base_choice(call_site: str, f: dict) -> Choice:
     if call_site in ("worker_tool_loop", "worker_final"):
         reasons = _worker_reasons(f)
         if reasons:
-            return Choice(OPENAI, "capability", "Faithful condensation of long source text needs the stronger "
-                                                "model: " + "; ".join(reasons) + ".")
+            what = ("Faithful condensation of long source text needs the stronger model" if not f.get("repair_round")
+                    else "Rewriting a failed query needs the stronger model" if len(reasons) == 1
+                    else "The stronger model is needed")
+            return Choice(OPENAI, "capability", what + ": " + "; ".join(reasons) + ".")
     if call_site == "worker_tool_loop":
         return Choice(GEMINI, "cost", "Tool selection and search-query writing with short outputs; "
                                       "the low-cost, fast model is sufficient.")

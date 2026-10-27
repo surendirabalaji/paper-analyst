@@ -205,6 +205,15 @@ def summary_tools(ctx: RequestContext) -> list[StructuredTool]:
     ]
 
 
+def handoff_line(papers: list[dict] | None) -> str:
+    """Upstream paper ids (from the Data agent) as one line of the task input."""
+    if not papers:
+        return "none"
+    return "; ".join(f"arXiv:{p['arxiv_id']} \"{p.get('title') or ''}\""
+                     + (f" (published {p['published']})" if p.get("published") else "")
+                     + (f" [{p['cite_id']}]" if p.get("cite_id") else "") for p in papers)
+
+
 async def run_summary(ctx: RequestContext, task: dict, upstream: str) -> dict:
     live = bool(task.get("needs_live")) or status_cue(task["instruction"])
     tools = summary_tools(ctx)
@@ -219,7 +228,8 @@ async def run_summary(ctx: RequestContext, task: dict, upstream: str) -> dict:
         retrieved_at=datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
     )
     user = (f"Question: {ctx.query}\nSupervisor task: {task['instruction']}\n"
-            f"Web status check available: {'yes' if live else 'no'}\nUpstream results: {upstream or 'none'}")
+            f"Web status check available: {'yes' if live else 'no'}\n"
+            f"Papers handed off: {handoff_line(task.get('upstream_papers'))}\nUpstream results: {upstream or 'none'}")
     loop = await run_tool_loop(ctx, agent=AGENT, system=system, user=user, tools=tools,
                                max_rounds=ctx.settings.max_tool_rounds)
     used = [c for c in cited_ids(loop.text) if ctx.registry.get(c)]

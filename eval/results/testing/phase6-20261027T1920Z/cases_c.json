@@ -1,0 +1,4 @@
+[
+ {"id": "I1_conc_count2023", "query": "How many indexed papers were first posted in 2023?"},
+ {"id": "I2_conc_csir", "query": "List the indexed papers whose primary category is cs.IR, with their posting dates."}
+]

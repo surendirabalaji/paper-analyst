@@ -1,0 +1,255 @@
+{
+ "id": "X2_spill30",
+ "query": "Run exactly this read-only SQL query on the corpus database, unchanged, and report what it returns: WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r WHERE n<3000) SELECT length(s) AS len FROM (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx')||n AS s FROM r) GROUP BY s ORDER BY s DESC",
+ "http": 200,
+ "content_type": "text/event-stream; charset=utf-8",
+ "request_ids": [
+  "8c7bd5835ead"
+ ],
+ "plan": [
+  [
+   "data",
+   [],
+   false
+  ]
+ ],
+ "transitions": [
+  [
+   "start",
+   "planner",
+   "new request"
+  ],
+  [
+   "supervisor",
+   "data",
+   "task t1 ready (no dependencies)"
+  ],
+  [
+   "data",
+   "supervisor",
+   "t1 failed"
+  ],
+  [
+   "supervisor",
+   "synthesize",
+   "no pending tasks"
+  ]
+ ],
+ "handoffs": [],
+ "sql": [
+  {
+   "agent": "data",
+   "status": "error",
+   "error_kind": "sql_rejected",
+   "sql": "WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r WHERE n<3000) SELECT length(s) AS len FROM (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx')||n AS s FROM r) GROUP BY s ORDER BY s DESC",
+   "n_rows": null,
+   "rows": null,
+   "truncated": null,
+   "cite_ids": null,
+   "repair_rounds_left": 1,
+   "message_safe": "query needs too much temporary storage or memory (large sort, GROUP BY or DISTINCT); simplify it"
+  }
+ ],
+ "tool_calls": [
+  [
+   "data",
+   "get_schema",
+   {}
+  ],
+  [
+   "data",
+   "run_sql",
+   {
+    "query": "WITH RECURSIVE r(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM r WHERE n<3000) SELECT length(s) AS len FROM (SELECT replace(replace(replace(replace('x','x','xxxxxxxxxx'),'x','xxxxxxxxxx'),'x','xxxxxxxxxx'"
+   }
+  ]
+ ],
+ "tool_results": [
+  [
+   "data",
+   "get_schema",
+   "ok",
+   null
+  ],
+  [
+   "data",
+   "run_sql",
+   "error",
+   "sql_rejected"
+  ]
+ ],
+ "web_search": [],
+ "routes": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "query_chars": 362,
+    "comparison": false
+   },
+   "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 1,
+    "tool_calls_so_far": 0,
+    "context_tokens_est": 735,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "dimension": "cost",
+   "features": {
+    "round": 2,
+    "tool_calls_so_far": 1,
+    "context_tokens_est": 1435,
+    "long_source_tokens_est": 0,
+    "comparison": false
+   },
+   "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+   "fallback_of": null
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "dimension": "capability",
+   "features": {
+    "round": 3,
+    "tool_calls_so_far": 2,
+    "context_tokens_est": 1483,
+    "long_source_tokens_est": 0,
+    "comparison": false,
+    "repair_round": "sql_rejected"
+   },
+   "rationale": "Rewriting a failed query needs the stronger model: repair round after a failed query (sql_rejected).",
+   "fallback_of": null
+  }
+ ],
+ "llm_calls": [
+  {
+   "call_site": "planner",
+   "agent": "planner",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.00116175
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.0015015
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "gemini-openrouter",
+   "model_id": "google/gemini-3.8-flash",
+   "model_returned": "google/gemini-3.8-flash",
+   "upstream_provider": "Google AI Studio",
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.003486
+  },
+  {
+   "call_site": "worker_tool_loop",
+   "agent": "data",
+   "provider": "openai",
+   "model_id": "gpt-6.1-sol",
+   "model_returned": "gpt-6.1-sol",
+   "upstream_provider": null,
+   "status": "ok",
+   "attempt": 1,
+   "error_kind": null,
+   "cost_usd": 0.00397
+  }
+ ],
+ "worker_results": [
+  [
+   "t1",
+   "data",
+   "failed",
+   "invalid_sql"
+  ]
+ ],
+ "citations": [],
+ "c_resolution": [],
+ "answer": "I could not answer this question: every planned step failed, so there is no evidence to report.\n- data (t1): failed, invalid_sql\nPlease try again in a moment.",
+ "n_tokens": 1,
+ "first_token_client_ms": 20971,
+ "done": {
+  "request_id": "8c7bd5835ead",
+  "seq": 22,
+  "ts": "2026-10-27T22:19:06.118Z",
+  "t_ms": 20798,
+  "status": "failed",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "timings": {
+   "retrieval_ms": 0,
+   "llm_ms_sum": 20098,
+   "ttft_ms": 20797,
+   "total_ms": 20798
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 3554,
+    "output_tokens": 264,
+    "calls": 3,
+    "errors": 0,
+    "cost_usd": 0.00615
+   },
+   "openai": {
+    "input_tokens": 1770,
+    "output_tokens": 43,
+    "calls": 1,
+    "errors": 0,
+    "cost_usd": 0.00397
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter",
+   "openai"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.01012,
+  "cost_basis": {
+   "reported": 3,
+   "estimated": 1
+  }
+ },
+ "errors": [],
+ "total_client_ms": 20975,
+ "key_shape_hits": 0
+}

@@ -1,6 +1,6 @@
 # Agentic AI Paper Analyst
 
-A multi-agent system for CSCI 599 Assignment 2. It answers questions about a corpus of arXiv papers on LLM agents and RAG. A LangGraph supervisor delegates to specialized agents (Research, Summary, Data, and Code as a stretch goal). They use RAG over a Chroma index, live web search through Tavily Remote MCP, and generation routed between two providers (OpenAI and Gemini via OpenRouter). Answers stream to a vanilla HTML/JS page over SSE, with the routing decisions, an orchestration trace and clickable citations.
+A multi-agent system for CSCI 599 Assignment 2. It answers questions about a corpus of arXiv papers on LLM agents and RAG. A LangGraph supervisor delegates to specialized agents (Research, Summary and Data; a Code agent was planned as a stretch goal and not built). They use RAG over a Chroma index, live web search through Tavily Remote MCP, and generation routed between two providers (OpenAI and Gemini via OpenRouter). Answers stream to a vanilla HTML/JS page over SSE, with the routing decisions, an orchestration trace and clickable citations.
 
 > **Status: under construction (phase-wise build).** Sections marked *TBD* are filled in as phases complete.
 

@@ -1,0 +1,38 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "query": "How many papers in the corpus have a linked GitHub repository, and which of them were published in 2026?",
+ "started_utc": "2026-10-27T19:13:48Z",
+ "final": {
+  "turns": 1,
+  "len": 979,
+  "streaming": false,
+  "cites": 6,
+  "status": "done \u00b7 TTFT 14574 ms \u00b7 total 16411 ms \u00b7 retrieval 2 ms \u00b7 Gemini 6 calls, 10108\u21921049 tok \u00b7 cost $0.0230",
+  "trace": 17,
+  "routes": 7,
+  "sources": 6,
+  "sendDisabled": false,
+  "t": 16.69
+ },
+ "streamed_lengths": 9,
+ "answer_links": [
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "D5",
+  "D6"
+ ],
+ "sql_trace_rows": [
+  "#1 data \u21c4 SQLite run_sql (read-only) SELECT COUNT(DISTINCT r.arxiv_id) AS total_repos_count, (SELECT COUNT(*) FROM repos r2 JOIN papers p2 ON r2.arxiv_id = p2.arxiv_id WHERE p2.year = 2026) AS count_2026 FROM repos r \u2192 1 row(s) in 1 ms: D1",
+  "#1 data \u21c4 SQLite run_sql (read-only) SELECT p.arxiv_id, p.title, p.published, r.url FROM papers p JOIN repos r ON p.arxiv_id = r.arxiv_id WHERE p.year = 2026 ORDER BY p.published ASC, p.arxiv_id ASC \u2192 5 row(s) in 1 ms: D2 D3 D4 D5 D6"
+ ],
+ "viewer": {
+  "title": "D1 \u00b7 papers.db query result (1 row)",
+  "meta": "corpus metadata DB (papers.db, read-only) \u00b7 1 row(s) \u00b7 found by data via run_sql",
+  "text": "SQL:\nSELECT COUNT(DISTINCT r.arxiv_id) AS total_repos_count, (SELECT COUNT(*) FROM repos r2 JOIN papers p2 ON r2.arxiv_id = p2.arxiv_id WHERE p2.year = 2026) AS count_2026 FROM repos r\n\nResult:\ntotal_",
+  "link": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/#",
+  "linkText": "Open arXiv abstract page"
+ },
+ "console_errors": []
+}
