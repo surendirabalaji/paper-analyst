@@ -1,0 +1,6 @@
+[
+ {"id": "D4_abstain", "query": "What GPU hardware and how many training hours did the Voyager paper use to fine-tune its policy network?"},
+ {"id": "D5_summary", "query": "Walk me through the Toolformer paper section by section: the motivation, how the approach works, what the experiments showed, and its limitations."},
+ {"id": "D6_notincorpus", "query": "Give me a summary of the paper 'Attention Is All You Need'."},
+ {"id": "D7_offtopic2", "query": "Who was the architect of the Sydney Opera House, and when did it open?"}
+]

@@ -1,0 +1,4 @@
+[
+ {"id": "R4_indomain_research", "query": "How does ReAct interleave reasoning traces with actions, and what benefit did that give on HotpotQA compared with chain-of-thought alone?"},
+ {"id": "R5_voyager_rerun", "query": "What GPU hardware and how many training hours did the Voyager paper use to fine-tune its policy network?"}
+]

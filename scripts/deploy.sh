@@ -69,6 +69,9 @@ done
 # The router needs both generation providers (OpenAI direct + Gemini via OpenRouter).
 grep -Eq '^[[:space:]]*(export[[:space:]]+)?OPENROUTER_API_KEY=.+' "$ENV_FILE" && ! grep -Eq '^[[:space:]]*(export[[:space:]]+)?OPENROUTER_API_KEY=.*REPLACE_ME' "$ENV_FILE" \
   || die "OPENROUTER_API_KEY missing or placeholder in $ENV_FILE (needed for Gemini routing)"
+# Live retrieval and the shared MCP tool (Phase 5) need the Tavily key.
+grep -Eq '^[[:space:]]*(export[[:space:]]+)?TAVILY_API_KEY=.+' "$ENV_FILE" && ! grep -Eq '^[[:space:]]*(export[[:space:]]+)?TAVILY_API_KEY=.*REPLACE_ME' "$ENV_FILE" \
+  || die "TAVILY_API_KEY missing or placeholder in $ENV_FILE (needed for Tavily Remote MCP)"
 for n in "$CONCURRENCY" "$TIMEOUT" "$MIN_INSTANCES" "$MAX_INSTANCES"; do
   case "$n" in ''|*[!0-9]*) die "CONCURRENCY, TIMEOUT, MIN_INSTANCES and MAX_INSTANCES must be integers" ;; esac
 done

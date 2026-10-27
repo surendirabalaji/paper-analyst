@@ -1,0 +1,44 @@
+{
+ "base": "http://localhost:8765",
+ "query": "Has the ReAct paper been published at a peer-reviewed venue, and what is its core idea?",
+ "started_utc": "2026-10-27T17:01:24Z",
+ "final": {
+  "turns": 1,
+  "len": 1369,
+  "streaming": false,
+  "cites": 10,
+  "status": "done \u00b7 TTFT 18779 ms \u00b7 total 21022 ms \u00b7 retrieval 26 ms \u00b7 Gemini 6 calls, 16871\u2192798 tok \u00b7 cost $0.0313",
+  "trace": 19,
+  "routes": 7,
+  "sources": 5,
+  "sendDisabled": false,
+  "t": 21.08
+ },
+ "streamed_lengths": 9,
+ "answer_links": [
+  "W1",
+  "W2",
+  "C1",
+  "C2",
+  "C2",
+  "C1",
+  "C2",
+  "C3",
+  "C1",
+  "C3"
+ ],
+ "mcp_trace_rows": [
+  "#1 summary tavily_search enabled: planner marked the task needs_live",
+  "#1 summary calls tavily_search({\"query\":\"\\\"ReAct: Synergizing Reasoning and Acting in Language Models\\\" venue publication ICLR\"})",
+  "#1 summary \u21c4 MCP tavily_search on tavily-remote-mcp (check the current status of a specific paper) \"\"ReAct: Synergizing Reasoning and Acting in Language Models\" venue publication ICLR\": W1 collaborate.princeton.edu, W2 arxiv.org, W3 github.com, W4 research.google, 3191 ms",
+  "#1 summary tavily_search \u2192 ok, 4 results, 3193 ms"
+ ],
+ "viewer": {
+  "title": "W1 \u00b7 REACT: SYNERGIZING REASONING AND ACTING IN LANGUAGE MODELS - Princeton University",
+  "meta": "web \u00b7 collaborate.princeton.edu \u00b7 retrieved 2026-10-27T17:01:34.212Z \u00b7 found by summary via tavily_search",
+  "text": "Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K., & Cao, Y. (2023). REACT: SYNERGIZING REASONING AND ACTING IN LANGUAGE MODELS. Paper presented at 11th International Conference on Learni",
+  "link": "https://collaborate.princeton.edu/en/publications/react-synergizing-reasoning-and-acting-in-language-models",
+  "linkText": "Open web page"
+ },
+ "console_errors": []
+}

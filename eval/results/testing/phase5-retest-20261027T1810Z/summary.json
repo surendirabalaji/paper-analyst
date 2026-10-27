@@ -1,0 +1,26 @@
+{
+  "run_id": "phase5-retest-20261027T1810Z",
+  "mode": "retest",
+  "source": {"branch": "phase-5-tavily-summary", "head": "4005361", "dirty_diff_sha256_prefix": "3154648a10f6bd7f",
+             "note": "diff hash taken before tester added TC-P5-18; no app/ file newer than the 18:03Z image build"},
+  "deployed": {"url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app", "revision": "paper-analyst-00006-227",
+               "image_digest": "sha256:3ada976b4d2fc8e88a8fae21e8b1e1fddfda92e5fc5be89b271a2b0ac0091a3f",
+               "static_assets_identical": true},
+  "offline": {"targeted": "83 passed + TC-P5-18 failed", "full": "320 passed, 14 skipped, 1 xfailed, 1 failed (TC-P5-18, new P5-D3)"},
+  "deployed_runs": {
+    "R1_everest": {"linked_C": 0, "linked_W": 7, "cost_usd": 0.018767},
+    "R2_everest_para": {"linked_C": 0, "linked_W": 3, "corpus_search_best": 0.2162, "cost_usd": 0.021341},
+    "R3_sourdough": {"linked_C": 0, "linked_W": 4, "cost_usd": 0.020341},
+    "R4_indomain_research": {"worker": "summary", "linked_C": 6, "excluded_presynthesis": [], "cost_usd": 0.047227},
+    "R5_voyager_rerun": {"worker": "summary", "worker_evidence": ["C1","C10","C4","C8","C9"],
+                          "excluded_presynthesis_lt_0.35": {"C4": 0.2912, "C9": 0.2013, "C10": 0.2001},
+                          "linked_C": ["C1","C8"], "done.dropped_citations": [], "cost_usd": 0.043924, "defect": "P5-D3"},
+    "B_browser_reflexion": {"checks_all_true": true, "mcp_agents": ["summary","research"], "streamed_lengths": 26,
+                            "cost_usd": 0.0681}
+  },
+  "cloud_run_logs_rev00006": {"entries": 64, "logging_error": 0, "tracebacks": 0, "uvicorn_access_lines": 28,
+                              "canary_access_line_redacted": true, "app_log_key_shapes": 0,
+                              "audit_log_key_shapes": "3 in 1 system_event (env vars, P3-N1 accepted)",
+                              "platform_request_log_shows_raw_query_string": true},
+  "spend": {"llm_usd_app_reported": 0.2196, "tavily_credits_approx": 8}
+}

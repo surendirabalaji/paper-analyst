@@ -1,0 +1,420 @@
+{
+  "id": "D5_summary",
+  "query": "Walk me through the Toolformer paper section by section: the motivation, how the approach works, what the experiments showed, and its limitations.",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "1231a1fdc918"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Summarise the Toolformer paper section by section, detailing its motivation, methodology, experimental results, and limitations.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "summary",
+        "instruction": "Provide a section-by-section breakdown of the Toolformer paper (Schick et al., 2023), covering motivation, the self-supervised tool-use learning approach, experimental results, and limitations.",
+        "needs_live": false,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "summary",
+      "enabled": false,
+      "reason": "no status or live cue in the task",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "summary",
+      "get_paper_outline",
+      {
+        "paper": "Toolformer"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      {
+        "paper": "Toolformer",
+        "section": "S1"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      {
+        "section": "S2",
+        "paper": "Toolformer"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      {
+        "paper": "Toolformer",
+        "section": "S3"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "summary",
+      "get_paper_outline",
+      "ok",
+      null,
+      1
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      "ok",
+      null,
+      2
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "summary",
+      "get_paper_section",
+      "ok",
+      null,
+      2
+    ]
+  ],
+  "web_searches": [],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3063,
+      "in": 602,
+      "out": 95,
+      "cost_usd": 0.0016155
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2259,
+      "in": 1013,
+      "out": 19,
+      "cost_usd": 0.001662
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1862,
+      "in": 2140,
+      "out": 26,
+      "cost_usd": 0.003405
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1857,
+      "in": 3350,
+      "out": 26,
+      "cost_usd": 0.00522
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "upstream": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2747,
+      "in": 5256,
+      "out": 111,
+      "cost_usd": 0.011622
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "summary",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "upstream": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 7931,
+      "in": 6273,
+      "out": 369,
+      "cost_usd": 0.006392
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 8506,
+      "in": 5249,
+      "out": 730,
+      "cost_usd": 0.0133485
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 603,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1381,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 2533,
+        "long_source_tokens_est": 1152,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "openai",
+      "model_id": "gpt-6.1-sol",
+      "dimension": "capability",
+      "rationale": "Faithful condensation of long source text needs the stronger model: ~3067 tokens of full paper sections in context.",
+      "features": {
+        "round": 4,
+        "context_tokens_est": 4448,
+        "long_source_tokens_est": 3067,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "summary",
+      "provider": "openai",
+      "model_id": "gpt-6.1-sol",
+      "dimension": "capability",
+      "rationale": "Faithful condensation of long source text needs the stronger model: ~3921 tokens of full paper sections in context.",
+      "features": {
+        "round": 5,
+        "context_tokens_est": 5371,
+        "long_source_tokens_est": 3921,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 1 paper and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 1,
+        "n_web": 0,
+        "evidence_tokens_est": 3768,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "summary",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C9",
+        "C1"
+      ],
+      "rounds": 5,
+      "tool_calls": 4
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "C2",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "1 Introduction",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 1 Introduction\nLarge language models achieve impressive zero- and few-shot results on a variety of natural language processing tasks (Brown et al., 2020; Chowdhery et al., 2022"
+    },
+    {
+      "cite_id": "C3",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "1 Introduction",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 1 Introduction\nTherefore, we propose Toolformer, a model that learns to use tools in a novel way, which fulfills the following desiderata:\n•\nThe use of tools should be learned "
+    },
+    {
+      "cite_id": "C4",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "2 Approach",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 2 Approach\nOur aim is to equip a language model M with the ability to use different tools by means of API calls. We require that inputs and outputs for each API can be represen"
+    },
+    {
+      "cite_id": "C5",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "2 Approach",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 2 Approach\nSampling API Calls\nFor each API, we write a prompt P(\\mathbf{x}) that encourages the LM to annotate an example \\mathbf{x}=x_{1},\\ldots,x_{n} with API calls. An examp"
+    },
+    {
+      "cite_id": "C6",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "2 Approach",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 2 Approach\nFiltering API Calls\nLet i be the position of the API call c_{i} in the sequence \\mathbf{x}=x_{1},\\ldots,x_{n} , and let r_{i} be the response from the API. Further, "
+    },
+    {
+      "cite_id": "C7",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "2 Approach",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 2 Approach\nL_{i}^{-}-L_{i}^{+}\\geq\\tau_{f}\nholds, i.e., adding the API call and its result reduces the loss by at least \\tau_{f} , compared to not doing any API call or obtaini"
+    },
+    {
+      "cite_id": "C8",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "3 Tools",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 3 Tools\nWe explore a variety of tools to address different shortcomings of regular LMs. The only constraints we impose on these tools is that (i) both their inputs and outputs "
+    },
+    {
+      "cite_id": "C9",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "3 Tools",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — 3 Tools\nMachine Translation System\nOur fourth tool is a machine translation system based on a LM that can translate a phrase from any language into English. More concretely, we"
+    },
+    {
+      "cite_id": "C1",
+      "doc_id": "2302.04761v1",
+      "http": 200,
+      "match": true,
+      "section": "Abstract",
+      "text_head": "Toolformer: Language Models Can Teach Themselves to Use Tools — Abstract\nLanguage models (LMs) exhibit remarkable abilities to solve new tasks from just a few examples or textual instructions, especially at scale. They also, paradoxically, "
+    }
+  ],
+  "answer_markers": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 38,
+      "llm_ms_sum": 28225,
+      "ttft_ms": 21678,
+      "total_ms": 28311
+    },
+    "cost_usd": 0.043264,
+    "cost_basis": {
+      "reported": 5,
+      "estimated": 2
+    },
+    "providers_used": [
+      "gemini-openrouter",
+      "openai"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 28,
+  "distinct_token_arrivals": 28,
+  "first_token_client_ms": 21731,
+  "total_client_ms": 28366,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "### §1: Motivation\nLarge language models struggle with basic tasks such as accessing up-to-date information, avoiding factual hallucinations, understanding low-resource languages, performing precise arithmetic calculations, and tracking the progression of time [C2]. Existing approaches address this by providing access to external tools, but they typically depend on extensive human annotations or are restricted to task-specific settings [C2]. Toolformer aims to overcome these limitations by teaching language models general-purpose tool use in a self-supervised way, enabling the model to autonomously choose when and how to invoke tools without large-scale human supervision [C3].\n\n### §2: Approach\n* **Tool Representation:** Tools are accessed via API calls whose inputs and outputs are represented as text sequences delimited by special tokens (e.g., `<API>`, `</API>`, and `->`) [C4].\n* **Sampling Candidate Calls:** Starting with an ordinary text dataset, the model is prompted with a handful of human demonstrations for each API [C3][C5]. The model computes the probability of starting an API call at different positions and samples candidate calls where the probability exceeds a threshold [C5]. \n* **Execution & Filtering:** The candidate API calls are executed to obtain their text responses [C5]. Calls are retained only if providing both the call and its result reduces the weighted cross-entropy loss over subsequent tokens by at least a threshold $\\tau_f$ compared to the best alternative of either making no call or making the call without its response [C6].\n* **Finetuning & Inference:** Kept calls and their outputs are interleaved directly into the original training text, and the model is finetuned on this augmented dataset using a standard language modeling objective [C7]. At inference time, decoding continues normally until the model generates the `->` token; generation is then paused, the external API is queried, the response and closing token are inserted, and decoding resumes [C7].\n\n### §3: Tools\nThe authors evaluate five specific tools, requiring only that their inputs and outputs be text strings and that a few demonstrations can be provided [C8]:\n* **Question Answering:** Based on Atlas, a retrieval-augmented model finetuned on Natural Questions [C8].\n* **Calculator:** Performs simple calculations limited to four basic arithmetic operations, with results rounded to two decimal places [C8].\n* **Wikipedia Search:** Uses a BM25 retriever over the KILT Wikipedia dump to retrieve short text snippets [C8].\n* **Machine Translation:** Uses the 600M-parameter NLLB model to translate from 200 languages into English, with source languages detected by fastText [C9].\n* **Calendar:** Takes no input and returns the current date to provide temporal awareness [C8][C9].\n\n### §4: Experiments\nToolformer is built upon a 6.7B-parameter GPT-J model and achieves substantially improved zero-shot performance across various downstream tasks, outperforming a much larger GPT-3 model and other baselines without sacrificing its core language modeling capabilities [C1][C3]. \n\nThe available evidence does not answer detailed benchmark-level experimental outcomes, specific downstream metrics, or ablation studies because those experimental sections are missing.\n\n### §7: Limitations\nThe verified scope restrictions of the evaluated tools include supporting only four-operation arithmetic rounded to two decimal places and translation strictly into English [C8][C9]. \n\nThe available evidence does not answer the contents of the paper's dedicated limitations section."
+}

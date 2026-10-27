@@ -1,0 +1,362 @@
+{
+  "id": "R1_everest",
+  "query": "At what temperature does water boil on the summit of Mount Everest?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "f0b6fd4dab04"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Search the web to determine the boiling point of water at the summit of Mount Everest.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find the atmospheric pressure and boiling point of water at the summit of Mount Everest.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "boiling point of water summit Mount Everest atmospheric pressure"
+      }
+    ],
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "Mount Everest summit atmospheric pressure hPa torr kPa"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "boiling point of water summit Mount Everest atmospheric pressure",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3964,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "staging.baroquehair.co.uk",
+        "www.madsci.org",
+        "www.instagram.com",
+        "www.lpi.usra.edu"
+      ]
+    },
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "Mount Everest summit atmospheric pressure hPa torr kPa",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2596,
+      "w_ids": [
+        "W5",
+        "W6",
+        "W7",
+        "W8"
+      ],
+      "domains": [
+        "mountainmedicineblog.7thwave.io",
+        "hypertextbook.com",
+        "www.vaia.com",
+        "pubmed.ncbi.nlm.nih.gov"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4223,
+      "in": 587,
+      "out": 163,
+      "cost_usd": 0.002103
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1576,
+      "in": 829,
+      "out": 27,
+      "cost_usd": 0.001446
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2088,
+      "in": 1968,
+      "out": 26,
+      "cost_usd": 0.003147
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4762,
+      "in": 3126,
+      "out": 233,
+      "cost_usd": 0.0064365
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4394,
+      "in": 2471,
+      "out": 257,
+      "cost_usd": 0.005634
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 533,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1525,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 2447,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 7,
+        "evidence_tokens_est": 1145,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W6",
+        "W7",
+        "W8",
+        "W4"
+      ],
+      "rounds": 3,
+      "tool_calls": 2
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://staging.baroquehair.co.uk/signal/boiling-point-of-water-on-mount-everest-17u6pwq",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:00.329Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://www.madsci.org/posts/archives/2000-12/976811375.Es.r.html",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:00.329Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W3",
+      "type": "web",
+      "url": "https://www.instagram.com/p/DOY94aICNin?hl=en",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:00.329Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W4",
+      "type": "web",
+      "url": "https://www.lpi.usra.edu/education/explore/ice/background/allAboutWater",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:00.329Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W6",
+      "type": "web",
+      "url": "https://hypertextbook.com/facts/2001/JaredGoldberger.shtml",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:06.384Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W7",
+      "type": "web",
+      "url": "https://www.vaia.com/en-us/textbooks/chemistry/chemistry-the-central-science-13-edition/chapter-10/problem-19-the-typical-atmospheric-pressure-on-top-of-mt-eve",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:06.384Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W8",
+      "type": "web",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/6863078",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:11:06.384Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W6",
+    "W7",
+    "W8"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 17043,
+      "ttft_ms": 21535,
+      "total_ms": 23624
+    },
+    "cost_usd": 0.018767,
+    "cost_basis": {
+      "reported": 5
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 12,
+  "distinct_token_arrivals": 12,
+  "first_token_client_ms": 21654,
+  "total_client_ms": 23745,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "Current web sources retrieved on 2026-10-27 report that water boils on the summit of Mount Everest at approximately 68 °C to 72 °C (154 °F to 158 °F), most commonly cited around 70 °C (158 °F) [W1, W2, W3, W4].\n\nThis substantial decrease from the standard sea-level boiling point of 100 °C occurs because boiling takes place when water's vapor pressure equals the surrounding atmospheric pressure [W1, W3]. At the summit of Everest (approximately 8,848 meters / 29,028 feet), atmospheric pressure drops to roughly one-third (about 33–34%) of sea-level pressure—averaging around 30 to 33.7 kPa (~300 mbar or ~265 torr) [W1, W2, W3, W6, W7]. Because less heat energy is required for water molecules to escape into vapor under this reduced pressure, the boiling point is significantly lower, with minor variations occurring due to local weather and seasonal pressure changes [W1, W8]."
+}

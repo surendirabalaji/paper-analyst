@@ -1,0 +1,267 @@
+{
+  "id": "D3r_offtopic_repeat",
+  "query": "At what temperature does water boil on the summit of Mount Everest?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "59deccc2f542"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Search the web to find the boiling point of water at the summit of Mount Everest.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Find the boiling point of water (temperature in Celsius and Fahrenheit) at the summit of Mount Everest due to low atmospheric pressure.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "boiling point of water at summit of Mount Everest Celsius Fahrenheit"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "boiling point of water at summit of Mount Everest Celsius Fahrenheit",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2269,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "www.facebook.com",
+        "www.ck12.org",
+        "www.engineeringtoolbox.com",
+        "www.madsci.org"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2472,
+      "in": 587,
+      "out": 178,
+      "cost_usd": 0.0022155
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1952,
+      "in": 838,
+      "out": 29,
+      "cost_usd": 0.0014745
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3000,
+      "in": 2553,
+      "out": 220,
+      "cost_usd": 0.0054795
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4217,
+      "in": 2302,
+      "out": 208,
+      "cost_usd": 0.005013
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 545,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1444,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 4,
+        "evidence_tokens_est": 642,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "rounds": 2,
+      "tool_calls": 1
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://www.facebook.com/groups/4382588805101476/posts/26454095134190860",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:21.381Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://www.ck12.org/flexi/chemistry/vapor-pressure-curves/why-can't-we-boil-an-egg-on-mount-everest",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:21.381Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W3",
+      "type": "web",
+      "url": "https://www.engineeringtoolbox.com/boiling-points-water-altitude-d_1344.html",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:21.381Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W4",
+      "type": "web",
+      "url": "https://www.madsci.org/posts/archives/2000-12/976811375.Es.r.html",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T17:40:21.381Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 11641,
+      "ttft_ms": 12634,
+      "total_ms": 13939
+    },
+    "cost_usd": 0.014183,
+    "cost_basis": {
+      "reported": 4
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 8,
+  "distinct_token_arrivals": 8,
+  "first_token_client_ms": 12776,
+  "total_client_ms": 14082,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "Current web results retrieved in October 2026 report that the boiling point of water on the summit of Mount Everest (altitude 8,848 m) is between approximately 68°C and 72°C (154°F to 161.5°F) [W1], [W2], [W3], [W4]:\n\n* Some educational sources cite the boiling point at the summit as approximately 68°C (154°F) [W1], [W2].\n* Engineering and physical calculation references state it is approximately 72°C (161.5°F), corresponding to an atmospheric pressure of about 34% of sea level [W3], [W4].\n\nThis is lower than the standard sea-level boiling point of 100°C (212°F) due to the reduced atmospheric pressure at high altitude [W1], [W2], [W4]."
+}

@@ -40,6 +40,13 @@ class Settings:
     openai_reasoning_effort: str = ""  # empty = model default (the capability side keeps its reasoning)
     router_force_provider: str = ""  # evaluation-only override: "openai" or "gemini-openrouter"
     fallback_enabled: bool = True
+    # Live retrieval (Phase 5): Tavily Remote MCP, key sent only as the tavilyApiKey query parameter.
+    tavily_api_key: str = ""
+    tavily_mcp_base_url: str = "https://mcp.tavily.com/mcp/"
+    tavily_timeout_s: float = 15.0
+    tavily_max_results: int = 4
+    rag_min_score: float = 0.55  # best corpus similarity below this = low corpus support (calibrated 2026-10-27)
+    sqlite_path: Path = ROOT / "data" / "papers.db"
 
 
 def load_settings() -> Settings:
@@ -64,4 +71,10 @@ def load_settings() -> Settings:
         openai_reasoning_effort=env("OPENAI_REASONING_EFFORT", ""),
         router_force_provider=env("ROUTER_FORCE_PROVIDER", ""),
         fallback_enabled=env("LLM_FALLBACK", "1") != "0",
+        tavily_api_key=env("TAVILY_API_KEY", ""),
+        tavily_mcp_base_url=env("TAVILY_MCP_BASE_URL", "https://mcp.tavily.com/mcp/"),
+        tavily_timeout_s=float(env("TAVILY_TIMEOUT_S", "15")),
+        tavily_max_results=int(env("TAVILY_MAX_RESULTS", "4")),
+        rag_min_score=float(env("RAG_MIN_SCORE", "0.55")),
+        sqlite_path=_path(env("SQLITE_PATH", "./data/papers.db")),
     )

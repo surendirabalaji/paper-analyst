@@ -47,3 +47,5 @@ tr.fallback td { background: color-mix(in srgb, var(--warn) 12%, transparent); }
 tr.fallback td:first-child::before { content: "↪ "; color: var(--warn); }
 .res-warn { color: var(--warn); } .res-bad { color: var(--bad); }
 td .muted { font-size: 11px; margin: 0; }
+.badge.mcp { color: var(--accent); font-weight: 600; }
+.cite-dropped { opacity: 0.6; text-decoration: line-through dotted; cursor: help; }

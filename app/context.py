@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from app.config import Settings
 from app.events import Emitter
 from app.llm.router import RouteDecision, Router
+from app.mcp_tavily import TavilyMCP
 from app.rag import EvidenceRegistry, Retriever
 
 
@@ -21,6 +22,7 @@ class RequestContext:
     retriever: Retriever
     emitter: Emitter
     registry: EvidenceRegistry = field(default_factory=EvidenceRegistry)
+    tavily: TavilyMCP | None = None  # process-wide MCP handle; each call opens its own session
     started: float = field(default_factory=time.perf_counter)
     retrieval_ms_sum: int = 0
     llm_ms_sum: int = 0

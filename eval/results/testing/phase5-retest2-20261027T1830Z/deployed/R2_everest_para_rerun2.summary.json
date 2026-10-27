@@ -1,0 +1,362 @@
+{
+  "id": "R2_everest_para_rerun2",
+  "query": "How hot does water need to get before it boils at the top of Everest?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "3e3ea9e9423c"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Find the boiling point of water at the summit of Mount Everest using live web search.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Determine the boiling point temperature of water at the atmospheric pressure found at the top of Mount Everest.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "research",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "boiling point of water at the top of Mount Everest Celsius Fahrenheit"
+      }
+    ],
+    [
+      "research",
+      "tavily_search",
+      {
+        "query": "atmospheric pressure summit mount everest boiling point water torr kPa"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "research",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "boiling point of water at the top of Mount Everest Celsius Fahrenheit",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2424,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "www.facebook.com",
+        "www.engineeringtoolbox.com",
+        "www.madsci.org",
+        "www.ck12.org"
+      ]
+    },
+    {
+      "agent": "research",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "find current developments on the topic",
+      "query": "atmospheric pressure summit mount everest boiling point water torr kPa",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2046,
+      "w_ids": [
+        "W5",
+        "W6",
+        "W3",
+        "W7"
+      ],
+      "domains": [
+        "watercalculator.us",
+        "en.wikipedia.org",
+        "www.madsci.org",
+        "www.northridgepumps.com"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2969,
+      "in": 590,
+      "out": 205,
+      "cost_usd": 0.0024225
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1794,
+      "in": 835,
+      "out": 30,
+      "cost_usd": 0.0014775
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1973,
+      "in": 3090,
+      "out": 28,
+      "cost_usd": 0.004845
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3594,
+      "in": 4888,
+      "out": 302,
+      "cost_usd": 0.009597
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3992,
+      "in": 4274,
+      "out": 300,
+      "cost_usd": 0.008661
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 539,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 1753,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "research",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 3161,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 7,
+        "evidence_tokens_est": 1838,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "research",
+      "status": "done",
+      "error_kind": null,
+      "evidence_ids": [
+        "W3",
+        "W5",
+        "W6",
+        "W1",
+        "W2",
+        "W4",
+        "W7"
+      ],
+      "rounds": 3,
+      "tool_calls": 2
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W3",
+      "type": "web",
+      "url": "https://www.madsci.org/posts/archives/2000-12/976811375.Es.r.html",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:30:01.161Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W5",
+      "type": "web",
+      "url": "https://watercalculator.us/calculators/science/water-boiling-point-at-altitude-calculator",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:30:05.561Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W6",
+      "type": "web",
+      "url": "https://en.wikipedia.org/wiki/Boiling_point",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:30:05.561Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://www.facebook.com/groups/4382588805101476/posts/26454095134190860",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:30:01.161Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://www.engineeringtoolbox.com/boiling-points-water-altitude-d_1344.html",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:30:01.161Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W4",
+      "type": "web",
+      "url": "https://www.ck12.org/flexi/chemistry/vapor-pressure-curves/why-can't-we-boil-an-egg-on-mount-everest",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:30:01.161Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W7",
+      "type": "web",
+      "url": "https://www.northridgepumps.com/article-2_boil-egg-on-everest",
+      "found_by": "research",
+      "retrieved_at": "2026-10-27T18:30:05.561Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W1",
+    "W2",
+    "W3",
+    "W4",
+    "W5",
+    "W6",
+    "W7"
+  ],
+  "done": {
+    "status": "done",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 14322,
+      "ttft_ms": 16676,
+      "total_ms": 18809
+    },
+    "cost_usd": 0.027003,
+    "cost_basis": {
+      "reported": 5
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 13,
+  "distinct_token_arrivals": 13,
+  "first_token_client_ms": 16818,
+  "total_client_ms": 18953,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "Current web sources (retrieved October 27, 2026) show that at the summit of Mount Everest (elevation ~8,848–8,849 m / 29,029–29,032 ft), atmospheric pressure drops to approximately 34 kPa (about 255 Torr, or roughly one-third of sea-level pressure) [W3], [W5], [W6].\n\nBecause of this substantially lower pressure, water boils at approximately **68 °C to 72 °C (154 °F to 161.5 °F)**, depending on the atmospheric model and barometric conditions [W1], [W2], [W3], [W4], [W5], [W6], [W7]:\n\n- A widely cited standard-atmosphere value is **71 °C (160 °F)** at ~34 kPa [W6].\n- Elevation and vapor-pressure calculations typically place it between **70 °C and 70.3 °C (158.5 °F)** [W5], [W7] and approximately **72 °C (161.5 °F)** [W2], [W3].\n- Other educational sources report it as approximately **68 °C (154 °F)** [W1], [W4]."
+}

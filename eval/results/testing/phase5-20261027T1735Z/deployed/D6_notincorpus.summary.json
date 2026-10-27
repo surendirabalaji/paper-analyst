@@ -1,0 +1,434 @@
+{
+  "id": "D6_notincorpus",
+  "query": "Give me a summary of the paper 'Attention Is All You Need'.",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "e4eeb1676b2d"
+  ],
+  "plan": {
+    "source": "llm",
+    "summary": "Summarise the paper 'Attention Is All You Need' covering its core architecture, contributions, and key results.",
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "summary",
+        "instruction": "Summarise the paper 'Attention Is All You Need', explaining the Transformer architecture, self-attention mechanism, and its main findings and impact.",
+        "needs_live": true,
+        "depends_on": []
+      }
+    ]
+  },
+  "tool_gates": [
+    {
+      "agent": "summary",
+      "enabled": true,
+      "reason": "planner marked the task needs_live",
+      "best_corpus_score": null
+    }
+  ],
+  "tool_calls": [
+    [
+      "summary",
+      "get_paper_outline",
+      {
+        "paper": "Attention Is All You Need"
+      }
+    ],
+    [
+      "summary",
+      "get_paper_outline",
+      {
+        "paper": "1706.03762"
+      }
+    ],
+    [
+      "summary",
+      "tavily_search",
+      {
+        "query": "\"Attention Is All You Need\" Vaswani paper status venue"
+      }
+    ],
+    [
+      "summary",
+      "tavily_search",
+      {
+        "query": "\"Attention Is All You Need\" \"BLEU\" \"WMT\" results Vaswani"
+      }
+    ]
+  ],
+  "tool_results": [
+    [
+      "summary",
+      "get_paper_outline",
+      "error",
+      "paper_not_found",
+      0
+    ],
+    [
+      "summary",
+      "get_paper_outline",
+      "error",
+      "paper_not_found",
+      0
+    ],
+    [
+      "summary",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ],
+    [
+      "summary",
+      "tavily_search",
+      "ok",
+      null,
+      4
+    ]
+  ],
+  "web_searches": [
+    {
+      "agent": "summary",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "check the current status of a specific paper",
+      "query": "\"Attention Is All You Need\" Vaswani paper status venue",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2241,
+      "w_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "domains": [
+        "sparsenotes.com",
+        "www.alphaxiv.org",
+        "en.wikipedia.org",
+        "papers.neurips.cc"
+      ]
+    },
+    {
+      "agent": "summary",
+      "tool": "tavily_search",
+      "server": "tavily-remote-mcp",
+      "transport": "streamable_http",
+      "purpose": "check the current status of a specific paper",
+      "query": "\"Attention Is All You Need\" \"BLEU\" \"WMT\" results Vaswani",
+      "time_range": null,
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2539,
+      "w_ids": [
+        "W5",
+        "W6",
+        "W4",
+        "W7"
+      ],
+      "domains": [
+        "harbisingh.wordpress.com",
+        "www.thesify.ai",
+        "papers.neurips.cc",
+        "inspirehep.net"
+      ]
+    }
+  ],
+  "llm_calls": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3196,
+      "in": 588,
+      "out": 85,
+      "cost_usd": 0.0015195
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 1772,
+      "in": 1173,
+      "out": 22,
+      "cost_usd": 0.0019245
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2532,
+      "in": 1239,
+      "out": 27,
+      "cost_usd": 0.002061
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 3927,
+      "in": 1310,
+      "out": 57,
+      "cost_usd": 0.0023925
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 2317,
+      "in": 2618,
+      "out": 35,
+      "cost_usd": 0.0041895
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 4886,
+      "in": 3910,
+      "out": 409,
+      "cost_usd": 0.0089325
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "error_kind": null,
+      "latency_ms": 5093,
+      "in": 2854,
+      "out": 411,
+      "cost_usd": 0.0073635
+    }
+  ],
+  "routes": [
+    {
+      "call_site": "planner",
+      "agent": "planner",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "features": {
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 1,
+        "context_tokens_est": 570,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 2,
+        "context_tokens_est": 601,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 3,
+        "context_tokens_est": 623,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_tool_loop",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "features": {
+        "round": 4,
+        "context_tokens_est": 1645,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "worker_final",
+      "agent": "summary",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Compact findings from evidence already retrieved; low-cost model.",
+      "features": {
+        "round": 5,
+        "context_tokens_est": 2700,
+        "long_source_tokens_est": 0,
+        "comparison": false
+      }
+    },
+    {
+      "call_site": "synthesize",
+      "agent": "synthesizer",
+      "provider": "gemini-openrouter",
+      "model_id": "google/gemini-3.8-flash",
+      "dimension": "cost",
+      "rationale": "Grounded answer from 0 papers and one worker result; the low-cost model is sufficient.",
+      "features": {
+        "n_tasks_ok": 1,
+        "n_papers": 0,
+        "n_web": 6,
+        "evidence_tokens_est": 1362,
+        "comparison": false
+      }
+    }
+  ],
+  "fallbacks": [],
+  "worker_results": [
+    {
+      "task_id": "t1",
+      "agent": "summary",
+      "status": "partial",
+      "error_kind": "paper_not_found",
+      "evidence_ids": [
+        "W1",
+        "W2",
+        "W3",
+        "W5",
+        "W6",
+        "W7"
+      ],
+      "rounds": 5,
+      "tool_calls": 4
+    }
+  ],
+  "citations": [
+    {
+      "cite_id": "W1",
+      "type": "web",
+      "url": "https://sparsenotes.com/posts/2026/05/papers/2026-05-30-attention-is-all-you-need",
+      "found_by": "summary",
+      "retrieved_at": "2026-10-27T17:39:31.869Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W2",
+      "type": "web",
+      "url": "https://www.alphaxiv.org/abs/1706.03762",
+      "found_by": "summary",
+      "retrieved_at": "2026-10-27T17:39:31.869Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W3",
+      "type": "web",
+      "url": "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
+      "found_by": "summary",
+      "retrieved_at": "2026-10-27T17:39:31.869Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W5",
+      "type": "web",
+      "url": "https://harbisingh.wordpress.com/2025/08/12/review-of-attention-is-all-you-need-vaswani-et-al-2017",
+      "found_by": "summary",
+      "retrieved_at": "2026-10-27T17:39:36.431Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W6",
+      "type": "web",
+      "url": "https://www.thesify.ai/examples/attention-is-all-you-need/summary",
+      "found_by": "summary",
+      "retrieved_at": "2026-10-27T17:39:36.431Z",
+      "in_mcp_results_of_this_request": true
+    },
+    {
+      "cite_id": "W7",
+      "type": "web",
+      "url": "https://inspirehep.net/literature/2702854",
+      "found_by": "summary",
+      "retrieved_at": "2026-10-27T17:39:36.431Z",
+      "in_mcp_results_of_this_request": true
+    }
+  ],
+  "answer_markers": [
+    "W1",
+    "W2",
+    "W3",
+    "W5",
+    "W6",
+    "W7"
+  ],
+  "done": {
+    "status": "partial",
+    "unresolved_citations": [],
+    "dropped_citations": [],
+    "timings": {
+      "retrieval_ms": 0,
+      "llm_ms_sum": 23723,
+      "ttft_ms": 25644,
+      "total_ms": 28535
+    },
+    "cost_usd": 0.028383,
+    "cost_basis": {
+      "reported": 7
+    },
+    "providers_used": [
+      "gemini-openrouter"
+    ],
+    "fallbacks": 0
+  },
+  "n_token_events": 17,
+  "distinct_token_arrivals": 16,
+  "first_token_client_ms": 25698,
+  "total_client_ms": 28588,
+  "errors": [],
+  "secret_shape_hits_in_stream": 0,
+  "answer": "*Attention Is All You Need* is not indexed in the local paper corpus; the following summary is derived from web sources retrieved on 2026-10-27 [W1, W2].\n\n* **Overview and Authorship**: Authored by Ashish Vaswani et al. (affiliated with Google Brain, Google Research, and the University of Toronto), the paper was published at NeurIPS 2017 (as a spotlight) under arXiv identifier 1706.03762 [W1, W2, W3].\n* **Core Architecture**: The paper introduces the Transformer architecture, which completely eliminates recurrence (RNNs) and convolutions in favor of stacked self-attention mechanisms and positional encodings, overcoming the sequential computation bottlenecks that limit GPU throughput [W1, W3].\n* **Benchmark Performance**: \n  * On the WMT 2014 English-to-German translation benchmark, the Transformer achieved a state-of-the-art BLEU score of 28.4, outperforming prior models (including ensembles) by over 2.0 BLEU [W5, W6, W7].\n  * On the WMT 2014 English-to-French benchmark, it established a single-model state-of-the-art BLEU score of 41.8 (with 41.0 reported for the big model variant) after 3.5 days of training on eight GPUs, requiring a fraction of the training cost of earlier models [W5, W6, W7].\n* **Limitations and Impact**: Transformers are noted to be data-hungry, requiring massive training sets (such as the 36-million-sentence WMT 2014 English-French dataset) and risking overfitting on smaller datasets [W5]. Despite this, the architecture has become the primary foundation for modern artificial intelligence systems, including large language models [W1, W3]."
+}
