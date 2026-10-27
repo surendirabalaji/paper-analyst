@@ -4,7 +4,7 @@
 
 ## 1. What the system does
 
-The Paper Analyst answers questions about a corpus of about 80 arXiv papers on LLM agents, tool use, multi-agent systems and RAG. It can:
+The Paper Analyst answers questions about a corpus of 89 arXiv papers (88 with full text) on LLM agents, tool use, multi-agent systems and RAG. It can:
 
 - explain and compare what papers claim, with citations to exact paper sections;
 - answer exact metadata questions (authors, dates, categories, which papers have code);
@@ -110,12 +110,15 @@ Prices (OpenRouter catalog, 2026-10-26, per 1M tokens in/out): Gemini 3.8 Flash 
 
 Gemini is accessed through **OpenRouter** (OpenAI-compatible API). OpenAI is accessed directly.
 
-## 7. RAG pipeline *(planned)*
+## 7. RAG pipeline *(ingestion built in Phase 1; retrieval chain planned)*
 
-- **Corpus:** about 80 arXiv papers (cs.CL/AI/LG/MA/IR, 2023–2026) on agents, tool use, multi-agent systems, RAG, memory and evaluation. Full text comes from **arXiv HTML** (LaTeXML), not PDF. Papers without usable HTML are kept in SQLite only. Provenance goes in `data/corpus_manifest.json`.
-- **Chunking:** section-aware; `RecursiveCharacterTextSplitter.from_tiktoken_encoder`, 500 tokens with 75 overlap; chunks never cross section boundaries; each chunk is prefixed with `title — section`.
-- **IDs:** `chunk_id = "{arxiv_id}v{n}::{section_id}::{nnn}"`. Ingestion upserts by ID and skips unchanged chunks by content hash, so re-running adds no duplicates.
-- **Embeddings:** OpenAI `text-embedding-3-small` (1536 dimensions). The model name is stored in collection metadata and checked at startup.
+- **Corpus:** 89 arXiv papers (88 with full text) on LLM agents: reasoning and acting, tool use, multi-agent systems, RAG, agentic search, memory, training, benchmarks and MCP. They span 2022-12 (ReAct, IRCoT, HyDE) to 2026-08. The list is `data/corpus_seed.json`: about 59 foundational papers chosen by hand and checked by ID against the arXiv API, plus 30 papers from 2025–2026 picked from arXiv title searches on the same topics, so cross-paper comparisons have answers. Full text comes from **arXiv HTML** (LaTeXML), not PDF. A paper is indexed only if its HTML parses to at least 3,000 words; 2506.16988 (2,721 words) is kept in SQLite as metadata only. Provenance (version, fetch time, word/chunk counts, status, repo link) is in `data/corpus_manifest.json`.
+- **Parsing:** units are LaTeXML `section`/`subsection`/`subsubsection`/`appendix` elements, keyed by their stable anchors (`S3.SS2`, `A1.SS3`). Run-in paragraphs fold into their parent. Math becomes its LaTeX alttext. Inline TikZ token boxes keep their label; diagrams, bibliography, footnotes, navigation and acknowledgments are dropped. Acknowledgments are removed as headed sections ("Acknowledgments and …" too), as `ltx_acknowledgements` blocks, and as bold "Acknowledgement" pseudo-headings with the paragraphs after them. Inline elements are joined without separators, so small-caps headings stay whole.
+- **Chunking:** `RecursiveCharacterTextSplitter.from_tiktoken_encoder` (`cl100k_base`), 500 tokens with 75 overlap, run separately on each section, so chunks never cross section boundaries. Each chunk is prefixed with `"{title} — {section breadcrumb}"` (e.g. `… — 3 Self-Rag › 3.3 Self-Rag Inference`), and the prefix is embedded. Result: 4,521 chunks (1.62M tokens), median 400 tokens, max 544 including the prefix.
+- **IDs and metadata:** `chunk_id = "{arxiv_id}v{n}::{section_id}::{nnn}"`. Metadata: arxiv_id, doc_id, title, section_id, section_title, section_path, section_number, section_order, chunk_index, published, html_anchor_url (deep link `https://arxiv.org/html/<doc_id>#<section_id>`), n_tokens, content_sha256.
+- **Re-indexing:** per paper, the index is synced to exactly the new chunk set. New IDs are embedded, IDs whose content hash changed are re-embedded, and IDs no longer produced (old versions, parser changes) are deleted. Unchanged chunks are never re-embedded, so a repeat run adds 0. Versions are pinned by the manifest.
+- **SQLite (`data/papers.db`, for the Data agent):** `papers` (89), `authors` (621), `paper_authors` (730, with author position), `paper_categories` (192, with primary flag), `repos` (58 GitHub links found in the arXiv comment, abstract, or paper front matter/introduction near release wording; links only, no code snapshots).
+- **Embeddings:** OpenAI `text-embedding-3-small` (1536 dimensions, $0.02 per 1M tokens, checked 2026-10-26; full build $0.032). The model name and dimensions are stored in the collection metadata; ingestion refuses a mismatched model unless `--rebuild` is given (on create or rebuild it measures the model's real dimensions before dropping anything), and the app will check it at startup (Phase 2).
 - **Store:** Chroma embedded, baked read-only into the image. `RAG_TOP_K=6` (configurable 3–10).
 - **LCEL chain:** retriever with scores → register citation IDs → augmentation prompt → routed LLM → parser.
 

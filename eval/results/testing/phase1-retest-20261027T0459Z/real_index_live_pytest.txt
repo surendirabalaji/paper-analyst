@@ -1,0 +1,22 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/surensfolder/Desktop/Agentic AI/assignment2
+plugins: langsmith-0.14.12, anyio-4.15.1
+collecting ... collected 13 items
+
+tests/integration/test_phase1_real_index.py::test_T1_REAL_counts_consistent PASSED [  7%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_chunk_ids_and_metadata PASSED [ 15%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_chunk_versions_match_manifest_and_db PASSED [ 23%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_chunk_token_bounds PASSED [ 30%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_anchors_exist_in_cached_html_and_version_in_page PASSED [ 38%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_no_parser_noise PASSED [ 46%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_embeddings_dims_and_model PASSED [ 53%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_sqlite_matches_independent_truth PASSED [ 61%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_generated_artifacts_ignored PASSED [ 69%]
+tests/integration/test_phase1_real_index.py::test_T1_LIVE_selfrag_retrieval PASSED [ 76%]
+tests/integration/test_phase1_real_index.py::test_T1_LIVE_low_overlap_paraphrase[what failure categories cause teams of cooperating LLM agents to break down?-2503.13657-3-3] PASSED [ 84%]
+tests/integration/test_phase1_real_index.py::test_T1_LIVE_low_overlap_paraphrase[what signal tells an LM trained with reflection tokens to fetch passages on demand?-2310.11511-8-3] PASSED [ 92%]
+tests/integration/test_phase1_real_index.py::test_T1_REAL_rerun_ingest_adds_zero PASSED [100%]
+
+============================= 13 passed in 25.66s ==============================

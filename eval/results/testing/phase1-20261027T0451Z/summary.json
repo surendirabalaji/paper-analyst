@@ -1,0 +1,13 @@
+{
+  "run_id": "phase1-20261027T0451Z",
+  "utc": "2026-10-27T04:51Z",
+  "source_revision": "2541d9ff2930cbc806311b333ced14c97d506169 + uncommitted phase-1 working tree (tracked diff sha256[:16] d9d21309eb8b36b6)",
+  "hashes_sha256_16": {"data/corpus_seed.json": "b02307d6ca54a675", "requirements.txt": "906af62081f5634e", "ingest/store.py": "3971abf921bff613", "ingest/chunking.py": "71a5e8ce035aaa18", "ingest/html_parser.py": "a994b6d5d1c13141", "scripts/ingest.py": "17022df2806f3305"},
+  "corpus": {"papers": 89, "fulltext_indexed": 88, "metadata_only": 1, "chunks": 4523, "chunk_tokens": 1618024, "words_indexed": 912104, "topics": 9, "years": {"2022": 3, "2023": 39, "2024": 14, "2025": 19, "2026": 14}, "papers_with_repo": 58},
+  "chroma": {"collection": "arxiv_agents", "count": 4523, "unique_ids": 4523, "embedding_model": "text-embedding-3-small", "dims": 1536, "space": "cosine", "token_median": 401, "token_max": 544},
+  "sqlite": {"papers": 89, "authors": 621, "paper_authors": 730, "paper_categories": 192, "repos": 58, "integrity_check": "ok"},
+  "real_ingest_reruns": [{"by": "tester manual", "added": 0, "updated": 0, "deleted": 0, "unchanged": 4523, "embedded_tokens": 0, "arxiv_requests": 0}, {"by": "T1-REAL-rerun pytest", "result": "pass"}],
+  "pytest": {"full_suite_default": "104 passed, 6 skipped, 4 xfailed", "real_index_with_RUN_LIVE_and_RUN_REAL_INGEST": "13 passed"},
+  "live_spend": {"openai_embedding_calls": 7, "approx_usd": "< 0.0001", "arxiv_requests": 0},
+  "defects": ["P1-D1 medium", "P1-D2 low", "P1-D3 low", "P1-D4 low", "P1-N1 info", "P1-N2 info"]
+}

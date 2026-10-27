@@ -1,0 +1,114 @@
+[  1/89] 2210.03629v3   indexed       words= 14447 chunks=  66 repo=- 
+[  2/89] 2303.11366v4   indexed       words=  7729 chunks=  40 repo=y 
+[  3/89] 2305.10601v2   indexed       words=  6492 chunks=  29 repo=y 
+[  4/89] 2310.04406v3   indexed       words= 11871 chunks=  57 repo=y 
+[  5/89] 2305.18323v1   indexed       words= 10473 chunks=  50 repo=y 
+[  6/89] 2305.04091v3   indexed       words=  9338 chunks=  41 repo=y 
+[  7/89] 2303.17651v2   indexed       words= 16869 chunks=  85 repo=- 
+[  8/89] 2402.01030v4   indexed       words= 10250 chunks=  57 repo=y 
+[  9/89] 2302.04761v1   indexed       words=  8682 chunks=  44 repo=- 
+[ 10/89] 2303.17580v4   indexed       words=  8190 chunks=  40 repo=y 
+[ 11/89] 2307.16789v2   indexed       words= 10334 chunks=  53 repo=y 
+[ 12/89] 2305.15334v1   indexed       words=  6093 chunks=  30 repo=- 
+[ 13/89] 2304.08354v3   indexed       words= 21920 chunks=  84 repo=y 
+[ 14/89] 2604.00835v2   indexed       words= 11209 chunks=  52 repo=- 
+[ 15/89] 2607.04686v1   indexed       words=  8706 chunks=  54 repo=y 
+[ 16/89] 2308.08155v2   indexed       words= 18821 chunks=  78 repo=y 
+[ 17/89] 2308.00352v7   indexed       words=  7249 chunks=  39 repo=y 
+[ 18/89] 2307.07924v5   indexed       words=  4615 chunks=  22 repo=y 
+[ 19/89] 2303.17760v2   indexed       words=  9259 chunks=  52 repo=y 
+[ 20/89] 2308.10848v3   indexed       words=  9457 chunks=  44 repo=y 
+[ 21/89] 2402.01680v2   indexed       words=  8005 chunks=  44 repo=y 
+[ 22/89] 2305.14325v1   indexed       words=  5519 chunks=  24 repo=- 
+[ 23/89] 2406.04692v1   indexed       words=  5545 chunks=  28 repo=y 
+[ 24/89] 2402.05120v2   indexed       words=  6090 chunks=  35 repo=y 
+[ 25/89] 2308.07201v1   indexed       words=  6178 chunks=  29 repo=y 
+[ 26/89] 2307.05300v4   indexed       words=  6124 chunks=  32 repo=y 
+[ 27/89] 2503.13657v3   indexed       words= 15308 chunks=  86 repo=y 
+[ 28/89] 2501.06322v1   indexed       words= 15210 chunks=  68 repo=- 
+[ 29/89] 2503.03686v1   indexed       words=  8946 chunks=  48 repo=y 
+[ 30/89] 2606.24535v1   indexed       words=  8814 chunks=  54 repo=- 
+[ 31/89] 2606.19494v1   indexed       words=  6648 chunks=  44 repo=- 
+[ 32/89] 2510.01279v1   indexed       words=  7958 chunks=  44 repo=- 
+[ 33/89] 2310.11511v1   indexed       words= 11015 chunks=  54 repo=- 
+[ 34/89] 2401.15884v3   indexed       words=  6953 chunks=  36 repo=y 
+[ 35/89] 2312.10997v5   indexed       words= 10036 chunks=  59 repo=y 
+[ 36/89] 2305.06983v2   indexed       words=  5916 chunks=  35 repo=y 
+[ 37/89] 2212.10509v2   indexed       words= 11481 chunks=  51 repo=y 
+[ 38/89] 2404.16130v2   indexed       words= 10720 chunks=  53 repo=y 
+[ 39/89] 2403.14403v2   indexed       words=  7649 chunks=  43 repo=y 
+[ 40/89] 2401.18059v1   indexed       words=  8473 chunks=  43 repo=y 
+[ 41/89] 2212.10496v1   indexed       words=  3628 chunks=  25 repo=y 
+[ 42/89] 2307.03172v3   indexed       words=  6817 chunks=  35 repo=- 
+[ 43/89] 2410.05779v3   indexed       words=  7407 chunks=  42 repo=y 
+[ 44/89] 2501.09136v4   indexed       words= 10198 chunks=  72 repo=y 
+[ 45/89] 2604.18509v2   indexed       words=  5239 chunks=  29 repo=- 
+[ 46/89] 2506.16988v2   metadata_only words=  2641 chunks=   0 repo=- parsed text 2641 words < 3000
+[ 47/89] 2511.05385v2   indexed       words= 14393 chunks=  80 repo=y 
+[ 48/89] 2603.08329v1   indexed       words=  5313 chunks=  33 repo=y 
+[ 49/89] 2501.15228v2   indexed       words=  7945 chunks=  49 repo=y 
+[ 50/89] 2504.12330v1   indexed       words=  5391 chunks=  31 repo=y 
+[ 51/89] 2501.05366v1   indexed       words=  6746 chunks=  36 repo=y 
+[ 52/89] 2503.09516v5   indexed       words= 12421 chunks=  62 repo=y 
+[ 53/89] 2505.15872v2   indexed       words= 13259 chunks=  67 repo=- 
+[ 54/89] 2508.12752v1   indexed       words=  7767 chunks=  35 repo=- 
+[ 55/89] 2508.10152v2   indexed       words=  4796 chunks=  22 repo=- 
+[ 56/89] 2603.04384v3   indexed       words=  7122 chunks=  39 repo=- 
+[ 57/89] 2602.18940v1   indexed       words= 11851 chunks=  58 repo=- 
+[ 58/89] 2304.03442v2   indexed       words= 16218 chunks=  75 repo=y 
+[ 59/89] 2310.08560v2   indexed       words=  6729 chunks=  31 repo=- 
+[ 60/89] 2309.02427v3   indexed       words= 10996 chunks=  49 repo=y 
+[ 61/89] 2404.13501v1   indexed       words= 14904 chunks=  74 repo=y 
+[ 62/89] 2403.16971v5   indexed       words=  9682 chunks=  61 repo=y 
+[ 63/89] 2502.12110v11  indexed       words= 10309 chunks=  51 repo=y 
+[ 64/89] 2601.02553v3   indexed       words=  6646 chunks=  39 repo=y 
+[ 65/89] 2507.05257v4   indexed       words= 12559 chunks=  85 repo=y 
+[ 66/89] 2606.06036v1   indexed       words=  9365 chunks=  62 repo=y 
+[ 67/89] 2607.26637v1   indexed       words= 33499 chunks= 137 repo=- 
+[ 68/89] 2310.12823v2   indexed       words=  5656 chunks=  34 repo=y 
+[ 69/89] 2310.05915v1   indexed       words=  9924 chunks=  52 repo=- 
+[ 70/89] 2305.16291v2   indexed       words= 12121 chunks=  69 repo=- 
+[ 71/89] 2308.03688v3   indexed       words= 21716 chunks= 105 repo=y 
+[ 72/89] 2310.06770v3   indexed       words= 18667 chunks=  98 repo=- 
+[ 73/89] 2405.15793v3   indexed       words= 18621 chunks=  76 repo=- 
+[ 74/89] 2307.13854v4   indexed       words=  8546 chunks=  40 repo=- 
+[ 75/89] 2306.06070v3   indexed       words=  8865 chunks=  37 repo=- 
+[ 76/89] 2406.12045v1   indexed       words= 16151 chunks= 100 repo=y 
+[ 77/89] 2311.12983v1   indexed       words=  7548 chunks=  28 repo=- 
+[ 78/89] 2407.01502v1   indexed       words= 14215 chunks=  57 repo=- 
+[ 79/89] 2309.15217v2   indexed       words=  3642 chunks=  15 repo=y 
+[ 80/89] 2311.09476v2   indexed       words=  7636 chunks=  38 repo=y 
+[ 81/89] 2603.15798v1   indexed       words=  5712 chunks=  24 repo=y 
+[ 82/89] 2607.12338v1   indexed       words=  7447 chunks=  30 repo=- 
+[ 83/89] 2503.23278v3   indexed       words= 16718 chunks=  69 repo=y 
+[ 84/89] 2509.25292v3   indexed       words=  9900 chunks=  41 repo=y 
+[ 85/89] 2606.05339v2   indexed       words=  9363 chunks=  40 repo=- 
+[ 86/89] 2508.16260v2   indexed       words=  6006 chunks=  35 repo=y 
+[ 87/89] 2310.03714v1   indexed       words= 13121 chunks=  56 repo=y 
+[ 88/89] 2308.11432v7   indexed       words= 15923 chunks=  64 repo=y 
+[ 89/89] 2309.07864v3   indexed       words= 28223 chunks= 107 repo=y 
+
+Papers: 89 | indexed: 88 | chunks: 4521 | chunk tokens: 1,617,041 | arXiv requests: 0
+Full re-embed cost estimate: $0.0323 at $0.02/1M tokens
+{
+  "last_run": {
+    "finished_at": "2026-10-27T04:59:08Z",
+    "seconds": 21.1,
+    "chunks_before": 4521,
+    "chunks_after": 4521,
+    "added": 0,
+    "updated": 0,
+    "deleted": 0,
+    "unchanged": 4521,
+    "embedded_tokens": 0,
+    "pruned_other_papers": 0,
+    "embedding_cost_usd": 0.0
+  },
+  "sqlite": {
+    "papers": 89,
+    "authors": 621,
+    "paper_authors": 730,
+    "paper_categories": 192,
+    "repos": 58
+  }
+}

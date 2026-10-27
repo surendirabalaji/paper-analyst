@@ -3,7 +3,7 @@
 Working aid, not a graded deliverable. Source of truth: `Assignment_2_Description.pdf`.
 Status values: **pending**, **implemented** (not yet verified), **verified** (evidence recorded), **blocked**, **n/a** (with justification).
 
-Last updated: 2026-10-27 (Phase 0 service checks; no application code yet).
+Last updated: 2026-10-27 (Phase 1 corpus built; no application code yet).
 
 ## Orchestration (25%)
 
@@ -22,10 +22,10 @@ Last updated: 2026-10-27 (Phase 0 service checks; no application code yet).
 
 | Requirement | Where | How verified | Evidence | Status |
 |---|---|---|---|---|
-| Substantial corpus (not a toy) | `data/corpus_manifest.json` | Paper and chunk counts | | pending |
-| Ingestion → chunks → embeddings | `scripts/ingest.py` | Ingest log | | pending |
-| Stored in Chroma | `data/chroma_index` | Collection count | | pending |
-| Re-indexing adds no duplicates | `scripts/ingest.py` | Second run adds 0 | | pending |
+| Substantial corpus (not a toy) | `data/corpus_seed.json`, `data/corpus_manifest.json` | Paper and chunk counts | 89 arXiv papers (88 full text, 1 metadata only), 912k words, 4,521 chunks, 1.62M tokens; 9 topic groups, 2022-12 to 2026-08 (2026-10-27) | verified |
+| Ingestion → chunks → embeddings | `scripts/ingest.py`, `ingest/` | Ingest log | LaTeXML HTML → section records → 500/75-token section-bounded chunks → `text-embedding-3-small` (1536 d); first build embedded 4,523 chunks, $0.032; total spend about $0.035 | verified |
+| Stored in Chroma | `data/chroma_index` (collection `arxiv_agents`, cosine) | Collection count | count 4,521 = manifest chunk total = Σ DB n_chunks (tester-verified); ids unique; `scripts/query_index.py` returns relevant sections; paraphrase queries retrieve the right paper | verified |
+| Re-indexing adds no duplicates | `ingest/store.py` `sync_paper_chunks` | Second run adds 0 | Run 2: 0 added/0 updated/4,523 unchanged. After a parser change: 254 updated, 2 added, 2 deleted, count unchanged; next run 0 changes. After the acknowledgment fix: 4 updated, 2 deleted (4,521); next run 0 changes (2026-10-27). Tester Phase 1: PHASE PASS | verified |
 | Top-k vector retrieval, k configurable | `app/rag.py` | Unit test | | pending |
 | LCEL pipeline | `app/rag.py` | Code review | | pending |
 | Augmentation prompt with chunk IDs | `app/rag.py` | Prompt in architecture.md matches code | | pending |

@@ -1,0 +1,22 @@
+{
+  "run_id": "phase1-retest-20261027T0459Z",
+  "mode": "retest",
+  "phase": 1,
+  "head": "2541d9ff2930cbc806311b333ced14c97d506169 + uncommitted phase-1-corpus working tree",
+  "file_sha256_16": {
+    "ingest/html_parser.py": "cdaca95c32cc9fdd",
+    "ingest/store.py": "029c4589a0da8ddf",
+    "scripts/ingest.py": "265be8d9d831f411",
+    "scripts/query_index.py": "97ae958b2b1dc85b",
+    "data/corpus_manifest.json": "5cf6c026e77d5ff7",
+    "data/papers.db (full sha256, unchanged by rerun)": "8e9e5d54504c199d9fe85406e601c63b7d6baf20e865123a366a25bb9a745093"
+  },
+  "pytest_offline": "113 passed, 6 skipped, 1 xfailed (P0-I4)",
+  "pytest_live_full": "120 passed, 1 xfailed (P0-I4)",
+  "real_index_live": "14 passed (13 prior + T1-REAL no_acknowledgment_chunks)",
+  "real_ingest_rerun": {"exit": 0, "added": 0, "updated": 0, "deleted": 0, "unchanged": 4521, "embedded_tokens": 0, "arxiv_requests": 0, "manifest_diff": "timestamps only", "papers_db": "byte-identical"},
+  "index": {"count": 4521, "unique_ids": 4521, "model": "text-embedding-3-small", "dims": 1536},
+  "defects": {"P1-D1": "VERIFIED FIXED", "P1-D2": "VERIFIED FIXED", "P1-D3": "VERIFIED FIXED", "P1-D4": "VERIFIED FIXED"},
+  "secret_scan": {"key_values": 3, "files": 59, "hits": 0},
+  "live_spend_usd": "<0.0001 (embedding queries in T1-LIVE tests only)"
+}

@@ -1,0 +1,5 @@
+........................................................................ [ 59%]
+.x...............................................                        [100%]
+=========================== short test summary info ============================
+XFAIL tests/unit/test_phase0_check_safety.py::test_check_tavily_plain_text_error_with_url_is_not_ok - non-JSON error text containing a URL is accepted as success (P0-I4, low)
+120 passed, 1 xfailed in 35.11s

@@ -9,6 +9,8 @@ import sys
 import pytest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:  # make `ingest` (and later `app`) importable
+    sys.path.insert(0, str(ROOT))
 
 
 def pytest_collection_modifyitems(config, items):

@@ -40,7 +40,17 @@ uv pip compile requirements.in --python-version 3.13 \
 
 ## Corpus ingestion
 
-*TBD (Phase 1)*
+The corpus is defined by `data/corpus_seed.json` (committed list of arXiv IDs, topic groups and selection method). `scripts/ingest.py` builds everything from it:
+
+```bash
+.venv/bin/python scripts/ingest.py --dry-run   # fetch + parse + chunk; prints counts and embedding cost, writes nothing
+.venv/bin/python scripts/ingest.py             # build or incrementally update the index (needs OPENAI_API_KEY)
+.venv/bin/python scripts/query_index.py "how does Self-RAG decide when to retrieve?"   # retrieval smoke test
+```
+
+- **Source:** arXiv LaTeXML HTML (`https://arxiv.org/html/<id>v<n>`) plus arXiv API metadata. Requests go through one connection with a 3.5 s minimum gap and back off on HTTP 429 (arXiv's API terms: at most one request every 3 s). A cold fetch of the full corpus takes several minutes; raw HTML is cached in `data/raw/` (git-ignored).
+- **Outputs:** Chroma index in `data/chroma_index/` (collection `arxiv_agents`), SQLite metadata in `data/papers.db` (`papers`, `authors`, `paper_authors`, `paper_categories`, `repos`), and the provenance manifest `data/corpus_manifest.json` (committed). The index and DB are git-ignored and excluded from the submission zip; they are baked into the container image.
+- **Re-running is safe:** chunk IDs are deterministic (`{doc_id}::{section_id}::{nnn}`) and unchanged chunks are skipped by content hash, so a second run embeds nothing and adds 0 chunks. Paper versions are pinned by the manifest; `--update-versions` moves to newer arXiv versions (old-version chunks are deleted). `--rebuild` drops the collection and re-embeds everything (required if the embedding model changes; the script refuses to mix models).
 
 ## Run locally
 
