@@ -1,0 +1,27 @@
+# Cloud Build upload filter (separate from .dockerignore, which filters the Docker build context).
+# Allowlist: data/chroma_index and data/papers.db ARE uploaded because the image bakes them in.
+# .env, *.env.yaml, data/raw, docs, tests, eval and reference are never uploaded.
+*
+!Dockerfile
+!.dockerignore
+!requirements.txt
+!app/
+!app/**
+!ingest/
+!ingest/**
+!data/
+!data/papers.db
+!data/chroma_index/
+!data/chroma_index/**
+# `!data/` re-includes the whole folder, so drop everything else in it again.
+data/raw/
+data/raw/**
+data/*.json
+data/repos/
+data/*.tmp
+**/__pycache__
+**/__pycache__/**
+**/*.pyc
+**/.DS_Store
+**/.env
+**/.env.*

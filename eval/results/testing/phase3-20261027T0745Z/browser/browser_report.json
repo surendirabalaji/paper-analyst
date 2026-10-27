@@ -1,0 +1,152 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "started_utc": "2026-10-27T07:59:54Z",
+ "checks": {
+  "page_load_s": 35.1,
+  "page_title": "Paper Analyst",
+  "location": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/",
+  "stylesheet_applied": "pointer|1",
+  "turn1": {
+   "query": "Which paper fine-tunes a LLaMA model to write correct API calls and trains it together with a document retriever so it hallucinates fewer APIs?",
+   "final": {
+    "turns": 1,
+    "len": 530,
+    "streaming": false,
+    "cites": 2,
+    "status": "done · TTFT 22910 ms · total 24315 ms · retrieval 1915 ms · openai 6 calls, 14856→637 tok",
+    "trace": 18,
+    "routes": 6,
+    "sources": 2,
+    "sendDisabled": false,
+    "t": 24.58
+   },
+   "distinct_answer_lengths_while_streaming": 7,
+   "first_text_at_s": 23.15,
+   "streaming_ended_at_s": 24.58,
+   "send_disabled_during_stream": true,
+   "wall_s": 24.6,
+   "answer_text": "The paper is **“Gorilla: Large Language Model Connected with Massive APIs”** ([arXiv:2305.15334v1](https://arxiv.org/abs/2305.15334v1)). It introduces a fine-tuned LLaMA model for generating accurate API calls while reducing hallucinations. [C1]\n\nSpecifically, Gorilla fine-tunes **LLaMA-7B** using **retriever-aware training**, which adds API documentation to training prompts so the model learns to use it when generating calls; the paper reports reduced hallucination errors and better adaptation to documentation changes. [C3]",
+   "cite_hrefs": [
+    "C1 #",
+    "C3 #"
+   ]
+  },
+  "routing_rows": [
+   "#1planner / plannerOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.382→115 · 4509 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.512→43 · 2207 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.2931→45 · 2673 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.3822→61 · 3360 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.5306→241 · 6106 ms",
+   "#1synthesizer / synthesizeOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.1903→132 · 3425 ms (TTFT 2022)"
+  ],
+  "trace_items": [
+   "#1 start request eec5cd8aff3d, k=6, workers: research",
+   "#1 → start → planner: new request",
+   "#1 plan Identify the paper matching LLaMA API-call fine-tuning and retriever-aware training, with supporting citations. (llm)",
+   "#1 t1 research: Find the indexed paper that fine-tunes a LLaMA model to generate correct API calls and trains it with a document retriever to reduce hallucinated APIs. Check Gorilla as a likely match;",
+   "#1 → supervisor → research: task t1 ready (no dependencies)",
+   "#1 research calls corpus_search({\"query\":\"Gorilla Large Language Model Connected Massive APIs authors LLaMA retriever aware training hallucination API calls\",\"k\":6})",
+   "#1 retrieval \"Gorilla Large Language Model Connected Massive APIs authors LLaMA retriever aware training hallucination API calls\": C1 2305.15334v1 (0.78), C2 2305.15334v1 (0.77), C3 2305.15334v1 (0.76",
+   "#1 research corpus_search → ok, 6 results, 783 ms",
+   "#1 research calls corpus_search({\"query\":\"Gorilla Large Language Model Connected with Massive APIs Shishir Patil Tianjun Zhang Xin Wang Joseph Gonzalez authors\",\"k\":3})",
+   "#1 retrieval \"Gorilla Large Language Model Connected with Massive APIs Shishir Patil Tianjun Zhang Xin Wang Joseph Gonzalez authors\": C1 2305.15334v1 (0.78), C7 2305.15334v1 (0.72), C4 2305.15334v1 (0",
+   "#1 research corpus_search → ok, 3 results, 469 ms",
+   "#1 research calls corpus_search({\"query\":\"\\\"Gorilla\\\" \\\"Patil\\\" \\\"Zhang\\\" \\\"Gonzalez\\\"\",\"k\":3})",
+   "#1 retrieval \"\"Gorilla\" \"Patil\" \"Zhang\" \"Gonzalez\"\": C8 2305.15334v1 (0.40), C9 2305.15334v1 (0.38), C6 2305.15334v1 (0.72) in 673 ms",
+   "#1 research corpus_search → ok, 3 results, 681 ms",
+   "#1 research t1 done, cites C1 C3 C6",
+   "#1 → research → supervisor: t1 done",
+   "#1 → supervisor → synthesize: no pending tasks",
+   "#1 done done in 24315 ms"
+  ],
+  "citation_click": {
+   "clicked": "C1",
+   "viewer_title": "C1 · 2305.15334v1::abstract::000",
+   "viewer_meta": "arXiv:2305.15334v1 · Abstract · published 2023-05-24 · chunk 2305.15334v1::abstract::000",
+   "viewer_tab": "sources",
+   "viewer_hidden": false,
+   "viewer_text_equals_api": true,
+   "viewer_text_head": "Gorilla: Large Language Model Connected with Massive APIs — Abstract\nLarge Language Models (LLMs) have seen an impressive wave of advances recently, with models now excelling in a variety of tasks, such as mathematical reasoning and program synthesis. However, their potential to effectively use tools via API calls remains unfulfilled. This is a challenging task even for today’s state-of-the-art LL",
+   "viewer_link": "https://arxiv.org/html/2305.15334v1",
+   "link_equals_anchor": true,
+   "chunk_id": "2305.15334v1::abstract::000",
+   "api_doc_id": "2305.15334v1"
+  },
+  "turn2": {
+   "query": "Can you suggest a good hydration ratio for a sourdough starter?",
+   "final": {
+    "turns": 2,
+    "len": 255,
+    "streaming": false,
+    "cites": 0,
+    "status": "done · TTFT 3155 ms · total 4106 ms · retrieval 0 ms · openai 2 calls, 700→94 tok",
+    "trace": 23,
+    "routes": 8,
+    "sources": 2,
+    "sendDisabled": false,
+    "t": 4.26
+   },
+   "answer_text": "The available evidence does not answer this; sourdough starter guidance is missing.\n\nI answer questions about indexed arXiv papers on LLM agents, tool use, multi-agent systems, and RAG. For example, try: “How do LLM agents use tools to improve retrieval?”",
+   "cite_links": 0,
+   "status": [
+    "done · TTFT 3155 ms · total 4106 ms · retrieval 0 ms · openai 2 calls, 700→94 tok"
+   ]
+  },
+  "routing_rows_after_turn2": [
+   "#1planner / plannerOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.382→115 · 4509 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.512→43 · 2207 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.2931→45 · 2673 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.3822→61 · 3360 ms",
+   "#1research / worker_tool_loopOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.5306→241 · 6106 ms",
+   "#1synthesizer / synthesizeOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.1903→132 · 3425 ms (TTFT 2022)",
+   "#2planner / plannerOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.364→33 · 2011 ms",
+   "#2synthesizer / synthesizeOpenAI (direct API) · gpt-6.1-solfixed default: Phase 2 build: every call uses the configured default provider; cost/capability routing is not implemented yet.336→61 · 2085 ms (TTFT 1136)"
+  ]
+ },
+ "responses": [
+  {
+   "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/",
+   "status": 200,
+   "mime": "text/html",
+   "protocol": "h2"
+  },
+  {
+   "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/static/styles.css",
+   "status": 200,
+   "mime": "text/css",
+   "protocol": "h3"
+  },
+  {
+   "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/static/app.js",
+   "status": 200,
+   "mime": "text/javascript",
+   "protocol": "h3"
+  },
+  {
+   "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/favicon.ico",
+   "status": 404,
+   "mime": "application/json",
+   "protocol": "h3"
+  },
+  {
+   "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/api/chat",
+   "status": 200,
+   "mime": "text/event-stream",
+   "protocol": "h3"
+  },
+  {
+   "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/api/source/chunk/2305.15334v1%3A%3Aabstract%3A%3A000",
+   "status": 200,
+   "mime": "application/json",
+   "protocol": "h3"
+  },
+  {
+   "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/api/chat",
+   "status": 200,
+   "mime": "text/event-stream",
+   "protocol": "h3"
+  }
+ ],
+ "non_origin_responses": [],
+ "console_errors": []
+}

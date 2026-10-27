@@ -1,0 +1,14 @@
+2026-10-27T07:22:38.982875Z	d;5;d;3;2;5;5;0	Starting new instance. Reason: DEPLOYMENT_ROLLOUT - Instance started due to traffic shifting between revisions due to deployment, traffic split adjustment, 
+2026-10-27T07:22:50.934866Z	d;5;d;3;2;5;5;0	INFO:     Started server process [1]
+2026-10-27T07:22:55.483521Z	d;5;d;3;2;5;5;0	INFO:     paper_analyst: index ready: 4521 chunks, 1536-d, startup 4.55s
+2026-10-27T07:22:55.486220Z	d;5;d;3;2;5;5;0	Default STARTUP TCP probe succeeded after 1 attempt for container "paper-analyst-1" on port 8080.
+2026-10-27T07:38:41.984152Z	d;5;d;3;2;5;5;0	INFO:     Finished server process [1]
+2026-10-27T07:39:47.597673Z	b;9;a;3;7;2;7;e	Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU utilization, request throughput, etc.) or no exist
+2026-10-27T07:40:00.418933Z	b;9;a;3;7;2;7;e	INFO:     Started server process [1]
+2026-10-27T07:40:05.321151Z	b;9;a;3;7;2;7;e	INFO:     paper_analyst: index ready: 4521 chunks, 1536-d, startup 4.90s
+2026-10-27T07:40:05.323380Z	b;9;a;3;7;2;7;e	Default STARTUP TCP probe succeeded after 1 attempt for container "paper-analyst-1" on port 8080.
+2026-10-27T07:59:21.965383Z	b;9;a;3;7;2;7;e	INFO:     Finished server process [1]
+2026-10-27T07:59:56.193585Z	9;9;1;f;1;7;6;f	Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU utilization, request throughput, etc.) or no exist
+2026-10-27T08:00:23.267353Z	9;9;1;f;1;7;6;f	INFO:     Started server process [1]
+2026-10-27T08:00:30.678827Z	9;9;1;f;1;7;6;f	INFO:     paper_analyst: index ready: 4521 chunks, 1536-d, startup 7.41s
+2026-10-27T08:00:30.681359Z	9;9;1;f;1;7;6;f	Default STARTUP TCP probe succeeded after 1 attempt for container "paper-analyst-1" on port 8080.
