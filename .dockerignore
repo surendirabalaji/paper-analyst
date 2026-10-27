@@ -1,19 +1,15 @@
-# Keep secrets and dev clutter out of the image.
-.env
-.env.*
-*.env.yaml
-.git
-.claude
-.venv
-__pycache__
+# Allowlist: the build context holds only what the Dockerfile copies.
+# Secrets (.env, *.env.yaml), data/raw, docs, tests, eval, reference and dev clutter are never sent.
+*
+!Dockerfile
+!requirements.txt
+!app/
+!ingest/
+!data/papers.db
+!data/chroma_index/
+# Re-exclude clutter inside allowed folders.
+**/__pycache__
 **/*.pyc
-.pytest_cache
-.DS_Store
-docs/
-eval/
-tests/
-data/raw/
-*.pdf
-*.zip
-# data/chroma_index, data/papers.db and data/repos ARE included: the service needs them.
-reference/
+**/.DS_Store
+**/.env
+**/.env.*

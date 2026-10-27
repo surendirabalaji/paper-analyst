@@ -58,13 +58,13 @@ Last updated: 2026-10-27 (Phase 2 first slice built; tester PHASE PASS).
 
 | Requirement | Where | How verified | Evidence | Status |
 |---|---|---|---|---|
-| Public Cloud Run URL | README | Browser check | | pending |
+| Public Cloud Run URL | README | Browser check | https://paper-analyst-g7b7dxmyuq-uw.a.run.app deployed 2026-10-27; corpus question answered after a measured cold start (17.9 s health, then 307 tokens / 5 citations); browser check pending (tester) | implemented |
 | Arbitrary reasonable queries | | Unrehearsed queries | | pending |
-| Cold start without failure | | First request after idle | | pending |
-| Credentials outside source | env vars file | Secret scan | | pending |
-| Multi-stage python:3.13-slim, non-root, `$PORT` | `Dockerfile` | Container run as uid 10001 | | pending |
+| Cold start without failure | `scripts/probe_remote.py` | First request after the instance logged shutdown | 2026-10-27 07:39 UTC: health 17.9 s, then a corpus answer (TTFT 27.8 s, total 33.3 s); Cloud Run startup_latencies 17.6 s. One sample; more in Phase 9 | implemented |
+| Credentials outside source | `scripts/env_to_yaml.py` temp env-vars file outside the repo | Secret scan | Image: no `.env*`; Cloud Build upload is an allowlist of 31 files; deploy log has no key values; temp dir deleted (2026-10-27) | implemented |
+| Multi-stage python:3.13-slim, non-root, `$PORT` | `Dockerfile` | Container run as uid 10001 | Local 2026-10-27: `id` = 10001; PORT=9090 honored, default 8080; real query against the baked index as uid 10001 (non-owner uid fails: P2-N6 fix verified) | implemented |
 | `==` pins in requirements.txt | `requirements.txt` | grep for `>=`/`~=` | 148 packages, all `==`; installs on py3.13.16 and all key imports incl. ragas succeed (2026-10-27) | implemented |
-| Fresh-project deploy docs | README | | | pending |
+| Fresh-project deploy docs | README, `scripts/deploy.sh` | Dry run + real deploy | README *Deploy to a fresh GCP project*; script used for the first deploy 2026-10-27 (into an existing project, so the enable-API step was not exercised) | implemented |
 | Durable state | | | Stateless single-turn; no persistence claimed | n/a |
 
 ## MCP tool sharing (10%)

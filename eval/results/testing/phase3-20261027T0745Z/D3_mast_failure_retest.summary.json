@@ -1,0 +1,253 @@
+{
+  "id": "D3_mast_failure_retest",
+  "query": "Why do multi-agent LLM systems fail?",
+  "http_status": 200,
+  "content_type": "text/event-stream; charset=utf-8",
+  "request_ids": [
+    "3709b3d19f09"
+  ],
+  "event_counts": {
+    "_comment": 2,
+    "citation": 10,
+    "done": 1,
+    "llm_result": 5,
+    "llm_route": 5,
+    "meta": 1,
+    "plan": 1,
+    "retrieval": 4,
+    "token": 679,
+    "tool_call": 4,
+    "tool_result": 4,
+    "transition": 4,
+    "worker_result": 1
+  },
+  "plan": {
+    "request_id": "3709b3d19f09",
+    "seq": 5,
+    "ts": "2026-10-27T08:01:42.618Z",
+    "t_ms": 5444,
+    "plan_summary": "Search the indexed papers and synthesize the main failure modes of multi-agent LLM systems with supporting citations.",
+    "source": "llm",
+    "notes": [],
+    "tasks": [
+      {
+        "id": "t1",
+        "worker": "research",
+        "instruction": "Answer why multi-agent LLM systems fail using vector search over the indexed papers. Find empirical failure analyses and synthesize a clear taxonomy of failure mechanisms, including individual-agent limitations, coordination and communication breakdowns, task decomposition and role assignment, error propagation, shared context or memory issues, and evaluation or environmental limitations where supported. Distinguish failures specific to multi-agent interaction from inherited single-agent weaknesses, explain when adding agents worsens outcomes, and summarize evidence-backed mitigations and open",
+        "depends_on": []
+      }
+    ]
+  },
+  "transitions": [
+    "start->planner: new request",
+    "supervisor->research: task t1 ready (no dependencies)",
+    "research->supervisor: t1 done",
+    "supervisor->synthesize: no pending tasks"
+  ],
+  "tool_calls": [
+    {
+      "query": "Why Do Multi-Agent LLM Systems Fail empirical failure taxonomy specification inter agent misalignment verification termination",
+      "k": 8
+    },
+    {
+      "query": "multi agent LLM failure adding agents error propagation communication memory coordination empirical evaluation",
+      "k": 8
+    },
+    {
+      "query": "\"Why Do Multi-Agent LLM Systems Fail?\" dataset 1600 14 failure specification context limitations",
+      "k": 5
+    },
+    {
+      "query": "multi agent scaling empirical more agents worse error amplification centralized decentralized coordination overhead",
+      "k": 7
+    }
+  ],
+  "retrieved_docs": [
+    "2309.07864v3",
+    "2402.01680v2",
+    "2402.05120v2",
+    "2501.06322v1",
+    "2503.13657v3",
+    "2606.24535v1"
+  ],
+  "llm_calls": [
+    {
+      "agent": "planner",
+      "call_site": "planner",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 359,
+      "output_tokens": 167,
+      "latency_ms": 5439
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 522,
+      "output_tokens": 88,
+      "latency_ms": 2832
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 6583,
+      "output_tokens": 150,
+      "latency_ms": 4027
+    },
+    {
+      "agent": "research",
+      "call_site": "worker_tool_loop",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 11325,
+      "output_tokens": 1518,
+      "latency_ms": 34424
+    },
+    {
+      "agent": "synthesizer",
+      "call_site": "synthesize",
+      "provider": "openai",
+      "model_returned": "gpt-6.1-sol",
+      "input_tokens": 6583,
+      "output_tokens": 682,
+      "latency_ms": 14932
+    }
+  ],
+  "answer": "Multi-agent LLM systems fail because **adding agents does not remove model errors—it adds new ways for those errors to be communicated, amplified, or left unchecked.** Reliability depends on both the underlying models and the design of the whole workflow. [C1][C2][C17]\n\nThe paper *Why Do Multi-Agent LLM Systems Fail?* developed its initial failure taxonomy through six experts examining 150 execution traces from five frameworks on programming and mathematical problem-solving tasks. [C14] Its findings highlight several recurring mechanisms:\n\n- **Requirements do not become effective responsibilities.** Agents may fail to implement the user’s intent even after clarification; in one example, ChatDev repeatedly violated a Wordle requirement, while improving agent role specifications helped without changing the model or user prompt. [C7]\n- **Communication happens, but collaboration fails.** Agents proceed without clarification, omit information teammates need, ignore recommendations, or drift away from the objective; these failures occurred even within the same framework using natural-language messages, so compatible message formats alone are insufficient. [C3][C7]\n- **Context and progress get lost.** Unnecessary conversation resets can discard prior work, while context mismanagement can leave agents without crucial information; superficially similar failures can therefore have different underlying causes. [C3][C7]\n- **Errors spread between agents.** Hallucinations and misunderstandings can distort information as it propagates, and incomplete verification lets errors pass undetected. [C17][C2]\n- **Review checks the wrong thing—or stops too early.** Systems may terminate before meeting objectives, skip verification, or incorrectly approve results; one generated chess program passed superficial checks such as compilation but remained unusable because runtime behavior and game rules were not adequately tested. [C2][C5]\n\nThe key distinction is **an agent making a mistake versus a team failing to catch and contain it**: a reviewer’s presence is not enough if it performs superficial checks or fails to validate the actual objective. [C2][C5]\n\n**More agents are not automatically worse—or better.** Larger interacting teams can increase computational costs, communication complexity, coordination difficulty, and the risk of distorted information propagation. [C17] But *More Agents Is All You Need* found that generating multiple outputs and aggregating them by majority vote generally improved performance across its evaluated tasks; that is a different mechanism from relying on increasingly complex collaboration. [C15]\n\nThe clearest tested improvements in the failure-analysis paper were **better role specifications**, with a reported **+9.4% success-rate increase** for ChatDev, and **high-level objective verification**, with a reported **+15.6% improvement** on ProgramDev. [C7][C5] Structured messages, selective information sharing, confidence-based clarification, and improved state management are additional proposed directions, rather than equally established fixes in the cited evidence. [C8]\n\nThese findings are not a universal ranking of architectures: the initial analysis covered limited task categories, and the evaluated frameworks’ failure rates used different benchmarks and are not directly comparable. [C14][C6] The practical takeaway is to design for **clear responsibilities, useful information exchange, preserved context, and verification of actual task completion**, rather than treating agent count as a proxy for reliability. [C7][C8][C5][C17]",
+  "citations": [
+    {
+      "cite_id": "C1",
+      "chunk_id": "2503.13657v3::A6::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "F Understanding Failures: The Impact of Different LLMs and Agent Architectures",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — F Understanding Failures: The Impact of Different LLMs and Agent Architectures\nThis may stem from the fact that in MetaGPT, the adherence to task specifications and role specifications ar done mostly through SoPs, demonstrating strong performance in FC1 especia"
+    },
+    {
+      "cite_id": "C2",
+      "chunk_id": "2503.13657v3::A1.SS3::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "A MAST Failure Categories: Deep Dive › A.3 FC3. Task Verification",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — A MAST Failure Categories: Deep Dive › A.3 FC3. Task Verification\nThis category includes failures resulting from premature execution termination, as well as insufficient mechanisms to guarantee the accuracy, completeness, and reliability of interactions, decisi"
+    },
+    {
+      "cite_id": "C17",
+      "chunk_id": "2309.07864v3::S6.SS4::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2309.07864v3",
+      "section": "6 Discussion › 6.4 Scaling Up the Number of Agents",
+      "text_head": "The Rise and Potential of Large Language Model Based Agents: A Survey — 6 Discussion › 6.4 Scaling Up the Number of Agents\nFor example, the computational burden will increase with the large number of deployed AI agents, calling for better architectural design and computational optimization to ensure"
+    },
+    {
+      "cite_id": "C14",
+      "chunk_id": "2503.13657v3::S3.SS1::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "3 The Multi-Agent Systems Dataset › 3.1 Data Collection with Grounded Theory Analysis",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — 3 The Multi-Agent Systems Dataset › 3.1 Data Collection with Grounded Theory Analysis\nTo uncover a comprehensive set of failure patterns that are both diverse and generalizable to standardize failure labels which we detail further in Section 3.2, we first colle"
+    },
+    {
+      "cite_id": "C7",
+      "chunk_id": "2503.13657v3::S4::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "4 The Multi-Agent System Failure Taxonomy",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — 4 The Multi-Agent System Failure Taxonomy\nFor instance, when ChatDev is tasked to create a Wordle game with the prompt a standard wordle game by providing a daily 5-letter..., the generated program uses a fixed word dictionary. Even with a more explicit prompt "
+    },
+    {
+      "cite_id": "C3",
+      "chunk_id": "2503.13657v3::A1.SS2::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "A MAST Failure Categories: Deep Dive › A.2 FC2. Inter-Agent Misalignment",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — A MAST Failure Categories: Deep Dive › A.2 FC2. Inter-Agent Misalignment\nThis category includes failures arising from ineffective communication, poor collaboration, conflicting behaviors among agents, and gradual derailment from the initial task.\nWe identify si"
+    },
+    {
+      "cite_id": "C5",
+      "chunk_id": "2503.13657v3::S4::002",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "4 The Multi-Agent System Failure Taxonomy",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — 4 The Multi-Agent System Failure Taxonomy\nFC3 failures are related to the quality control of the final output, including premature termination (FM-3.1, 6.20%), no or incomplete verification (FM-3.2, 8.20%), or incorrect verification (FM-3.3, 9.10%). These highl"
+    },
+    {
+      "cite_id": "C15",
+      "chunk_id": "2402.05120v2::S1::001",
+      "http": 200,
+      "match": true,
+      "doc_id": "2402.05120v2",
+      "section": "1 Introduction",
+      "text_head": "More Agents Is All You Need — 1 Introduction\nHowever, since the scaling property of “raw” agents is not the focus of these works, the scenarios/tasks and experiments considered are limited.\nSo far, there lacks a dedicated in-depth study on such a phenomenon.\nHence, a natural question arises:\nDoes th"
+    },
+    {
+      "cite_id": "C8",
+      "chunk_id": "2503.13657v3::A7.SS2::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "G Approaches and strategies to improve MASs › G.2 Structural Strategies",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — G Approaches and strategies to improve MASs › G.2 Structural Strategies\nApart from the tactical approaches we discussed above, there exist a need for more involved solutions that will shape the structure of the MAS at hand.\nWe first observe the critical role of"
+    },
+    {
+      "cite_id": "C6",
+      "chunk_id": "2503.13657v3::A2::000",
+      "http": 200,
+      "match": true,
+      "doc_id": "2503.13657v3",
+      "section": "B Details of Multi-Agent Systems Evaluated",
+      "text_head": "Why Do Multi-Agent LLM Systems Fail? — B Details of Multi-Agent Systems Evaluated\nIn this section, we provide details on MAS we evaluated during this study and their performance benchmark evaluation.\nFigure 5: Failure rates of six popular Multi-Agent LLM Systems with GPT-4o and Claude-3.7-Sonnet. Pe"
+    }
+  ],
+  "cited_docs": [
+    "2309.07864v3",
+    "2402.05120v2",
+    "2503.13657v3"
+  ],
+  "done": {
+    "request_id": "3709b3d19f09",
+    "seq": 719,
+    "ts": "2026-10-27T08:02:41.197Z",
+    "t_ms": 64023,
+    "status": "done",
+    "plan_source": "llm",
+    "unresolved_citations": [],
+    "timings": {
+      "retrieval_ms": 2335,
+      "llm_ms_sum": 61654,
+      "ttft_ms": 50423,
+      "total_ms": 64023
+    },
+    "tokens_by_provider": {
+      "openai": {
+        "input_tokens": 25372,
+        "output_tokens": 2605,
+        "calls": 5
+      }
+    }
+  },
+  "last_event": "done",
+  "n_token_events": 679,
+  "n_distinct_reads_with_tokens": 664,
+  "first_token_client_ms": 50475,
+  "last_token_client_ms": 63999,
+  "first_token_server_ms": 50424,
+  "last_token_server_ms": 63949,
+  "done_client_ms": 64075,
+  "total_client_ms": 64077,
+  "expect_docs": [
+    "2503.13657v3"
+  ],
+  "expect_abstain": false
+}

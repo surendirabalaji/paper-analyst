@@ -4,7 +4,7 @@ A multi-agent system for CSCI 599 Assignment 2. It answers questions about a cor
 
 > **Status: under construction (phase-wise build).** Sections marked *TBD* are filled in as phases complete.
 
-- **Live URL:** *TBD*
+- **Live URL:** https://paper-analyst-g7b7dxmyuq-uw.a.run.app (Cloud Run, us-west1; first deployed 2026-10-27)
 - **Architecture:** [docs/architecture.md](docs/architecture.md)
 - **Evaluation:** [docs/evaluation.md](docs/evaluation.md)
 - **Build plan:** [docs/plan.md](docs/plan.md)
@@ -68,9 +68,47 @@ Endpoints: `POST /api/chat` (SSE stream of `meta`, `plan`, `transition`, `llm_ro
 
 The app is single-turn: each question is answered independently.
 
+## Run in a container (local)
+
+```bash
+docker build -t paper-analyst .
+docker run --rm -p 8080:8080 --env-file .env paper-analyst      # PORT defaults to 8080
+docker run --rm -e PORT=9090 -p 9090:9090 --env-file .env paper-analyst   # Cloud Run-style injected PORT
+```
+
+The image (multi-stage `python:3.13-slim`) installs the pinned requirements into `/opt/venv`, runs as the non-root user `app` (uid 10001), and starts `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}`. It bakes in `data/chroma_index/` and `data/papers.db`, so build the index first (see *Corpus ingestion*). The index directory is owned by uid 10001 because Chroma opens `chroma.sqlite3` read-write even for queries; everything else is root-owned and read-only. Secrets are never copied into the image: `.dockerignore` and `.gcloudignore` are allowlists, and keys are passed at run time.
+
 ## Deploy to a fresh GCP project
 
-*TBD (Phase 3)*
+Prerequisites: the [gcloud CLI](https://cloud.google.com/sdk/docs/install), a GCP project with billing enabled (or credits), the built index in `data/` (see *Corpus ingestion*), and a filled-in `.env` (at least `OPENAI_API_KEY`; `OPENROUTER_API_KEY` and `TAVILY_API_KEY` are used from Phases 4 and 5).
+
+```bash
+# 1. Authenticate and pick the project
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
+
+# 2. Enable the three APIs the deploy needs (one time per project)
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
+
+# 3. Build with Cloud Build, deploy to Cloud Run, smoke-test the URL
+GCP_PROJECT_ID=YOUR_PROJECT_ID scripts/deploy.sh            # asks for confirmation; --yes skips it
+GCP_PROJECT_ID=YOUR_PROJECT_ID scripts/deploy.sh --dry-run  # print the commands, change nothing
+```
+
+`scripts/deploy.sh`:
+
+1. Checks the tools, the index files, the active gcloud account and that the three APIs are enabled (it does not enable them for you).
+2. Converts an allowlist of `.env` keys into a Cloud Run `--env-vars-file` (`scripts/env_to_yaml.py`), written with mode 0600 into a `mktemp` directory **outside the repo** and deleted on exit. Placeholder values (`REPLACE_ME`) are rejected.
+3. Creates the Artifact Registry Docker repo `paper-analyst` in the region if it does not exist.
+4. Runs `gcloud builds submit` (linux/amd64 build, so it also works from Apple Silicon). `.gcloudignore` uploads only 31 files: the Dockerfile, requirements, `app/`, `ingest/`, the Chroma index and `papers.db`.
+5. Deploys the service with `--allow-unauthenticated --memory 2Gi --cpu 1 --cpu-boost --concurrency 10 --timeout 300 --min-instances 0 --max-instances 3`.
+6. Smoke-tests `GET /health` and one streamed `/api/chat` corpus question (requires tokens, citations and a `done` event with no `error`).
+
+Overrides (environment variables): `GCP_REGION` (default `us-west1`), `CLOUD_RUN_SERVICE` (`paper-analyst`), `AR_REPO` (`paper-analyst`), `ENV_FILE` (`.env`), `MEMORY`, `CPU`, `CONCURRENCY`, `TIMEOUT`, `MIN_INSTANCES`, `MAX_INSTANCES`.
+
+Credentials end up as Cloud Run environment variables on the service (visible to project members with Cloud Run access), not in the image or the repo. To rotate a key, edit `.env` and rerun the script.
+
+Time a deployed instance from the client (health, TTFT, total): `.venv/bin/python scripts/probe_remote.py https://YOUR-SERVICE-URL`.
 
 ## Evaluation
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import time
 import uuid
 from contextlib import asynccontextmanager
 
@@ -26,15 +27,25 @@ KEEPALIVE_S = 15
 for name in ("httpx", "httpcore"):
     logging.getLogger(name).setLevel(logging.WARNING)
 log = logging.getLogger("paper_analyst")
+if not log.handlers:  # uvicorn only configures its own loggers; send ours to stderr (Cloud Run captures it)
+    _h = logging.StreamHandler()
+    _h.setFormatter(logging.Formatter("%(levelname)s:     %(name)s: %(message)s"))
+    log.addHandler(_h)
+    log.setLevel(logging.INFO)
+    log.propagate = False
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    t0 = time.perf_counter()
     settings = load_settings()
     app.state.settings = settings
     app.state.retriever = Retriever(settings)  # refuses to start on an embedding-model mismatch
     app.state.router = Router(settings)
-    log.info("index ready: %s chunks, %s-d", app.state.retriever.count, app.state.retriever.dims)
+    log.info(
+        "index ready: %s chunks, %s-d, startup %.2fs",
+        app.state.retriever.count, app.state.retriever.dims, time.perf_counter() - t0,
+    )
     yield
 
 

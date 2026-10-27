@@ -1,0 +1,2 @@
+[{"id":"D2_unsupported_alphafold","query":"What GPU hardware and total training time did the AlphaFold 3 paper report?","expect_docs":[],"expect_abstain":true},
+ {"id":"D3_mast_failure_retest","query":"Why do multi-agent LLM systems fail?","expect_docs":["2503.13657v3"],"expect_abstain":false}]
