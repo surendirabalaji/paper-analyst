@@ -170,7 +170,8 @@ Per-request cost is computed by the server from recorded tokens. Tavily searches
 
 **Phase 9 spend** (estimates, all runs including pilots and the tester): **$8.74** in total.
 - System runs: $2.89.
-- RAGAS judge: $5.50. This splits into main 4 metrics $2.88 (including the P9-D1 rescore), forced runs (2 metrics) $1.25 + $1.20, and pilot $0.16. Context precision makes one judge call per retrieved context, which is most of the judge cost.
+- RAGAS judge: $5.49. This splits into main 4 metrics $2.88 (including the P9-D1 rescore), forced runs (2 metrics) $1.25 (Gemini, including the rescore) + $1.20 (OpenAI), and pilot $0.16.
+- Tester (phase gate): $0.21; the retest made no paid calls. Context precision makes one judge call per retrieved context, which is most of the judge cost.
 - Planner effort probe: $0.15.
 - Tavily: 10 `tavily_search` calls.
 
@@ -213,6 +214,10 @@ ROUTER_FORCE_PROVIDER=openai .venv/bin/uvicorn app.main:app --port 8765 &
 # scoring (requirements-eval.txt) and checks
 .venv/bin/python scripts/ragas_eval.py eval/results/phase9/routed-deployed
 .venv/bin/python scripts/ragas_eval.py eval/results/phase9/forced-openai-local --metrics faithfulness answer_relevancy
+.venv/bin/python scripts/ragas_eval.py eval/results/phase9/forced-gemini-local --metrics faithfulness answer_relevancy
+# P9-D1 rescore of the items with web results (context-dependent metrics only, merged into ragas.json)
+.venv/bin/python scripts/ragas_eval.py eval/results/phase9/routed-deployed --ids c06 --metrics faithfulness context_precision context_recall --merge
+.venv/bin/python scripts/ragas_eval.py eval/results/phase9/forced-gemini-local --ids c06 p02 --metrics faithfulness --merge
 .venv/bin/python scripts/check_system.py eval/results/phase9/routed-deployed
 .venv/bin/python scripts/summarize_phase9.py
 # cold start: wait >= 20 min idle and confirm "Finished server process" in Cloud Run logs first

@@ -91,13 +91,19 @@ def recompute_row(path: Path) -> dict:
     results_ = [e["data"] for e in E if e["event"] == "llm_result"]
     ret_order, seen = [], set()
     for e in E:
-        if e["event"] != "retrieval":
+        # Retest 20261028T0815Z: the documented method (evaluation.md §3 after P9-D1) counts Tavily results,
+        # which arrive in `web_search` events (status ok), as contexts, keyed by url.
+        if e["event"] == "retrieval":
+            items = [(c.get("chunk_id") or c.get("source_url") or c.get("cite_id"), c.get("type"))
+                     for c in e["data"].get("chunks", [])]
+        elif e["event"] == "web_search" and e["data"].get("status") == "ok":
+            items = [(r.get("url") or r.get("cite_id"), "web") for r in e["data"].get("results", [])]
+        else:
             continue
-        for c in e["data"].get("chunks", []):
-            k = c.get("chunk_id") or c.get("source_url") or c.get("cite_id")
+        for k, typ in items:
             if k and k not in seen:
                 seen.add(k)
-                ret_order.append((k, c.get("type")))
+                ret_order.append((k, typ))
     rids = {e["data"].get("request_id") for e in E if isinstance(e.get("data"), dict)}
     return {"E": E, "answer": "".join(t["data"]["delta"] for t in tok),
             "first_token_s": tok[0]["client_s"] if tok else None,

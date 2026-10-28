@@ -187,7 +187,7 @@ async def main() -> int:
     t_start = time.perf_counter()
     rows = await asyncio.gather(*(score(r) for r in rows_in))
     await http.aclose()
-    prev_cost, rescored = 0.0, []
+    prev_cost, prev_wall, rescored = 0.0, 0.0, []
     if a.merge and (run_dir / a.out).exists():
         prev = json.loads((run_dir / a.out).read_text())
         new_ids = {(r["id"], r["run"]) for r in rows}
@@ -198,6 +198,7 @@ async def main() -> int:
         rows = [r for r in prev["rows"] if (r["id"], r["run"]) not in new_ids] + rows
         rows.sort(key=lambda r: [x["id"] for x in meta["results"]].index(r["id"]) if any(x["id"] == r["id"] for x in meta["results"]) else 0)
         prev_cost = prev["summary"].get("judge_cost_usd_est", 0.0)
+        prev_wall = prev["summary"].get("wall_s", 0.0)
 
     summary_metrics = [m for m in METRICS if any(m in r for r in rows)]
 
@@ -225,7 +226,7 @@ async def main() -> int:
         "judge_cost_usd_est": round(prev_cost + (judge_cost or 0) + u["embed_tokens"] * EMBED_PRICE_PER_1M / 1e6, 4),
         "contexts": "retrieval + web_search events (P9-D1 fix)",
         **({"rescored_after_P9_D1": rescored} if rescored else {}),
-        "wall_s": round(time.perf_counter() - t_start, 1),
+        "wall_s": round(prev_wall + time.perf_counter() - t_start, 1),  # merge adds the rescore time (P9R-N1)
     }
     (run_dir / a.out).write_text(json.dumps({"summary": summary, "rows": rows}, indent=1, ensure_ascii=False))
     print(json.dumps(summary, indent=1))

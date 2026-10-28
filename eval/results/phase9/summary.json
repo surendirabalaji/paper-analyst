@@ -597,7 +597,7 @@
    "rescored_after_P9_D1": [
     "c06.run1"
    ],
-   "wall_s": 90.9
+   "wall_s": 683.1
   },
   "forced-openai-local": {
    "run_dir": "eval/results/phase9/forced-openai-local",
@@ -788,7 +788,7 @@
     "c06.run1",
     "p02.run1"
    ],
-   "wall_s": 27.0
+   "wall_s": 263.8
   }
  },
  "provider_comparison": {

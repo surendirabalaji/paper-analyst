@@ -1,0 +1,469 @@
+{
+ "checks": [
+  {
+   "id": "RT9-routed-deployed-keys same row set before/after",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-routed-deployed-W rescored rows == rows with ok web_search results",
+   "pass": true,
+   "detail": {
+    "rescored": [
+     [
+      "c06",
+      1
+     ]
+    ],
+    "web": [
+     [
+      "c06",
+      1
+     ]
+    ]
+   }
+  },
+  {
+   "id": "RT9-routed-deployed-L summary rescored list matches rows",
+   "pass": true,
+   "detail": [
+    "c06.run1"
+   ]
+  },
+  {
+   "id": "RT9-routed-deployed-U non-rescored rows unchanged",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-routed-deployed-R rescored rows: only listed context metrics changed, AR kept, contexts = chunks + web",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-forced-openai-local-keys same row set before/after",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-forced-openai-local-W rescored rows == rows with ok web_search results",
+   "pass": true,
+   "detail": {
+    "rescored": [],
+    "web": []
+   }
+  },
+  {
+   "id": "RT9-forced-openai-local-L summary rescored list matches rows",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-forced-openai-local-U non-rescored rows unchanged",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-forced-openai-local-R rescored rows: only listed context metrics changed, AR kept, contexts = chunks + web",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-forced-gemini-local-keys same row set before/after",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-forced-gemini-local-W rescored rows == rows with ok web_search results",
+   "pass": true,
+   "detail": {
+    "rescored": [
+     [
+      "c06",
+      1
+     ],
+     [
+      "p02",
+      1
+     ]
+    ],
+    "web": [
+     [
+      "c06",
+      1
+     ],
+     [
+      "p02",
+      1
+     ]
+    ]
+   }
+  },
+  {
+   "id": "RT9-forced-gemini-local-L summary rescored list matches rows",
+   "pass": true,
+   "detail": [
+    "c06.run1",
+    "p02.run1"
+   ]
+  },
+  {
+   "id": "RT9-forced-gemini-local-U non-rescored rows unchanged",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-forced-gemini-local-R rescored rows: only listed context metrics changed, AR kept, contexts = chunks + web",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "RT9-SUM summary.json changed only in context-metric / judge-cost / provenance leaves",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "passed": 16,
+ "total": 16,
+ "base": "765584c",
+ "configs": {
+  "routed-deployed": {
+   "rescored": {
+    "c06.run1": {
+     "rescored_metrics": [
+      "context_precision",
+      "context_recall",
+      "faithfulness"
+     ],
+     "changed": {
+      "faithfulness": [
+       0.8077,
+       0.8333
+      ],
+      "context_precision": [
+       0.9866,
+       0.9595
+      ],
+      "context_recall": [
+       0.7143,
+       0.8333
+      ],
+      "n_contexts": [
+       14,
+       18
+      ],
+      "n_contexts_all": [
+       14,
+       18
+      ]
+     },
+     "indep_paper": 14,
+     "indep_web": 4
+    }
+   },
+   "judge_cost_old": 2.803,
+   "judge_cost_new": 2.8848,
+   "all_old": {
+    "n_items": 32,
+    "faithfulness": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.981,
+     "median": 1.0,
+     "min": 0.8077,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.8277,
+     "median": 0.8521,
+     "min": 0.5398,
+     "max": 0.971
+    },
+    "context_precision": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.7135,
+     "median": 0.7038,
+     "min": 0.2083,
+     "max": 1.0
+    },
+    "context_recall": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.9135,
+     "median": 1.0,
+     "min": 0.25,
+     "max": 1.0
+    }
+   },
+   "all_new": {
+    "n_items": 32,
+    "faithfulness": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.9818,
+     "median": 1.0,
+     "min": 0.8333,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.8277,
+     "median": 0.8521,
+     "min": 0.5398,
+     "max": 0.971
+    },
+    "context_precision": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.7126,
+     "median": 0.7038,
+     "min": 0.2083,
+     "max": 1.0
+    },
+    "context_recall": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.9172,
+     "median": 1.0,
+     "min": 0.25,
+     "max": 1.0
+    }
+   }
+  },
+  "forced-openai-local": {
+   "rescored": {},
+   "judge_cost_old": 1.1999,
+   "judge_cost_new": 1.1999,
+   "all_old": {
+    "n_items": 32,
+    "faithfulness": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.9937,
+     "median": 1.0,
+     "min": 0.9167,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.7365,
+     "median": 0.756,
+     "min": 0.0,
+     "max": 0.9653
+    }
+   },
+   "all_new": {
+    "n_items": 32,
+    "faithfulness": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.9937,
+     "median": 1.0,
+     "min": 0.9167,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.7365,
+     "median": 0.756,
+     "min": 0.0,
+     "max": 0.9653
+    }
+   }
+  },
+  "forced-gemini-local": {
+   "rescored": {
+    "c06.run1": {
+     "rescored_metrics": [
+      "faithfulness"
+     ],
+     "changed": {
+      "faithfulness": [
+       0.8571,
+       0.9655
+      ],
+      "n_contexts": [
+       14,
+       18
+      ],
+      "n_contexts_all": [
+       14,
+       18
+      ]
+     },
+     "indep_paper": 14,
+     "indep_web": 4
+    },
+    "p02.run1": {
+     "rescored_metrics": [
+      "faithfulness"
+     ],
+     "changed": {
+      "faithfulness": [
+       0.7083,
+       0.9583
+      ],
+      "n_contexts": [
+       14,
+       18
+      ],
+      "n_contexts_all": [
+       14,
+       18
+      ]
+     },
+     "indep_paper": 14,
+     "indep_web": 4
+    }
+   },
+   "judge_cost_old": 1.1603,
+   "judge_cost_new": 1.2458,
+   "all_old": {
+    "n_items": 32,
+    "faithfulness": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.966,
+     "median": 1.0,
+     "min": 0.7083,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.8021,
+     "median": 0.8352,
+     "min": 0.0,
+     "max": 0.9729
+    }
+   },
+   "all_new": {
+    "n_items": 32,
+    "faithfulness": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.9772,
+     "median": 1.0,
+     "min": 0.8824,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 32,
+     "n_failed": 0,
+     "mean": 0.8021,
+     "median": 0.8352,
+     "min": 0.0,
+     "max": 0.9729
+    }
+   }
+  }
+ },
+ "summary_changed_leaves": {
+  "/ragas/forced-gemini-local/all/faithfulness/mean": [
+   0.966,
+   0.9772
+  ],
+  "/ragas/forced-gemini-local/all/faithfulness/min": [
+   0.7083,
+   0.8824
+  ],
+  "/ragas/forced-gemini-local/by_category/rag_compare/faithfulness/mean": [
+   0.9762,
+   0.9942
+  ],
+  "/ragas/forced-gemini-local/by_category/rag_compare/faithfulness/min": [
+   0.8571,
+   0.9655
+  ],
+  "/ragas/forced-gemini-local/by_category/rag_hard/faithfulness/mean": [
+   0.9151,
+   0.9568
+  ],
+  "/ragas/forced-gemini-local/by_category/rag_hard/faithfulness/median": [
+   0.95,
+   0.9542
+  ],
+  "/ragas/forced-gemini-local/by_category/rag_hard/faithfulness/min": [
+   0.7083,
+   0.8824
+  ],
+  "/ragas/forced-gemini-local/contexts": [
+   null,
+   "retrieval + web_search events (P9-D1 fix)"
+  ],
+  "/ragas/forced-gemini-local/judge_cost_usd_est": [
+   1.1603,
+   1.2458
+  ],
+  "/ragas/forced-gemini-local/rescored_after_P9_D1[0]": [
+   null,
+   "c06.run1"
+  ],
+  "/ragas/forced-gemini-local/rescored_after_P9_D1[1]": [
+   null,
+   "p02.run1"
+  ],
+  "/ragas/forced-gemini-local/wall_s": [
+   236.8,
+   27.0
+  ],
+  "/ragas/routed-deployed/all/context_precision/mean": [
+   0.7135,
+   0.7126
+  ],
+  "/ragas/routed-deployed/all/context_recall/mean": [
+   0.9135,
+   0.9172
+  ],
+  "/ragas/routed-deployed/all/faithfulness/mean": [
+   0.981,
+   0.9818
+  ],
+  "/ragas/routed-deployed/all/faithfulness/min": [
+   0.8077,
+   0.8333
+  ],
+  "/ragas/routed-deployed/by_category/rag_compare/context_precision/mean": [
+   0.9094,
+   0.9049
+  ],
+  "/ragas/routed-deployed/by_category/rag_compare/context_recall/mean": [
+   0.7746,
+   0.7944
+  ],
+  "/ragas/routed-deployed/by_category/rag_compare/context_recall/median": [
+   0.6905,
+   0.75
+  ],
+  "/ragas/routed-deployed/by_category/rag_compare/faithfulness/mean": [
+   0.9613,
+   0.9656
+  ],
+  "/ragas/routed-deployed/by_category/rag_compare/faithfulness/min": [
+   0.8077,
+   0.8333
+  ],
+  "/ragas/routed-deployed/contexts": [
+   null,
+   "retrieval + web_search events (P9-D1 fix)"
+  ],
+  "/ragas/routed-deployed/judge_cost_usd_est": [
+   2.803,
+   2.8848
+  ],
+  "/ragas/routed-deployed/rescored_after_P9_D1[0]": [
+   null,
+   "c06.run1"
+  ],
+  "/ragas/routed-deployed/wall_s": [
+   592.2,
+   90.9
+  ]
+ }
+}

@@ -472,3 +472,11 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - **P9-N2:** the doubly rounded figures were recomputed from the unrounded values; "~12 %" corrected to "about 15 %" (14.6 %).
   - **P9-N3:** `started_utc` is now taken before the request. P9-N1 (a citation marker after the final period is dropped when the next sentence is an abstention; 1 of 119 runs) is noted, not fixed. P9-N4 belongs to Phase 10.
   - Full suite: 542 passed, 37 skipped, 1 xfailed. Phase 9 spend so far, including the tester: about $8.74 of $9.
+- **Tester retest: PHASE PASS** (`docs/testing/phase-9-retest-20261028T0815Z.md`, $0).
+  - Evidence verifier 72/72: one expected value updated, because its context count now includes web results.
+  - New merge-integrity test 16/16 against 765584c: only the 3 rows changed, answer relevance kept. The new unit tests fail on the pre-fix code. Full suite 542 passed, 37 skipped, 1 xfailed.
+  - Notes fixed afterwards:
+    - P9R-N1: `--merge` now adds the rescore time to `wall_s`; the two merged files' wall times were restored to original + rescore.
+    - P9R-N2: judge cost $5.49 and the tester's $0.21 listed.
+    - P9R-N3: reproduction commands for the forced-Gemini scoring and the merge rescores added.
+  - **Phase 9 marked done.** Spend about $8.74 of the $9 budget. Open: P9-N1 (citation after the final period, noted), P9-N4 (compliance.md, Phase 10), Phase 8b N1 and N2.
