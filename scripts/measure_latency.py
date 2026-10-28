@@ -106,9 +106,9 @@ def main() -> int:
             run_one(client, url, QUESTIONS[0][2], out / "warmup.events.jsonl")
         for i in range(a.runs):
             for cat, key, q in qs:
+                started = datetime.now(timezone.utc).isoformat(timespec="seconds")  # before the request (P9-N3)
                 r = run_one(client, url, q, out / f"{key}.run{i + 1}.events.jsonl")
-                r.update({"category": cat, "key": key, "query": q, "run": i + 1,
-                          "started_utc": datetime.now(timezone.utc).isoformat(timespec="seconds")})
+                r.update({"category": cat, "key": key, "query": q, "run": i + 1, "started_utc": started})
                 results.append(r)
                 print(json.dumps({k: r[k] for k in ("category", "key", "run", "ttft_s", "total_s", "status",
                                                     "workers", "providers_used", "cost_usd", "errors")}),

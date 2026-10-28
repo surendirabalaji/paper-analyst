@@ -1,0 +1,63 @@
+[
+ {
+  "http_status": 200,
+  "first_byte_s": 23.136,
+  "ttft_s": 30.807,
+  "total_s": 35.449,
+  "server_timings": {
+   "retrieval_ms": 645,
+   "llm_ms_sum": 11987,
+   "ttft_ms": 7781,
+   "total_ms": 12408
+  },
+  "status": "done",
+  "workers": [
+   "research"
+  ],
+  "providers_used": [
+   "gemini-openrouter",
+   "openai"
+  ],
+  "llm_calls": [
+   "planner:planner:gemini-openrouter",
+   "research:worker_tool_loop:gemini-openrouter",
+   "synthesizer:synthesize:openai"
+  ],
+  "cost_usd": 0.024623,
+  "n_citations": 4,
+  "n_tokens": 261,
+  "errors": [],
+  "raw": "q1_hyde_paraphrase.events.jsonl",
+  "key": "q1_hyde_paraphrase"
+ },
+ {
+  "http_status": 200,
+  "first_byte_s": 0.05,
+  "ttft_s": 8.611,
+  "total_s": 10.914,
+  "server_timings": {
+   "retrieval_ms": 261,
+   "llm_ms_sum": 10561,
+   "ttft_ms": 8563,
+   "total_ms": 10863
+  },
+  "status": "done",
+  "workers": [
+   "summary"
+  ],
+  "providers_used": [
+   "gemini-openrouter"
+  ],
+  "llm_calls": [
+   "planner:planner:gemini-openrouter",
+   "summary:worker_tool_loop:gemini-openrouter",
+   "synthesizer:synthesize:gemini-openrouter"
+  ],
+  "cost_usd": 0.014819,
+  "n_citations": 7,
+  "n_tokens": 11,
+  "errors": [],
+  "raw": "q2_reflexion.events.jsonl",
+  "key": "q2_reflexion"
+ }
+]

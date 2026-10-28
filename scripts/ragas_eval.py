@@ -74,14 +74,19 @@ class Usage:
 
 
 def contexts_of(events: list[dict], collection) -> list[str]:
-    web = {e["data"].get("cite_id"): e["data"] for e in events if e["event"] == "citation" and e["data"].get("type") == "web"}
+    """Every piece of evidence the workers received, in arrival order: `retrieval` events (paper chunks,
+    SQL rows) and `web_search` events (Tavily results, which never appear in `retrieval`; tester P9-D1)."""
     out, seen, chunk_ids = [], set(), []
     order = []
     for e in events:
-        if e["event"] != "retrieval":
+        if e["event"] == "retrieval":
+            items = e["data"].get("chunks", [])
+        elif e["event"] == "web_search" and e["data"].get("status") == "ok":
+            items = [{**r, "type": "web"} for r in e["data"].get("results", [])]
+        else:
             continue
-        for c in e["data"].get("chunks", []):
-            key = c.get("chunk_id") or c.get("source_url") or c.get("cite_id")
+        for c in items:
+            key = c.get("chunk_id") or c.get("url") or c.get("source_url") or c.get("cite_id")
             if not key or key in seen:
                 continue
             seen.add(key)
@@ -97,8 +102,7 @@ def contexts_of(events: list[dict], collection) -> list[str]:
             if c.get("chunk_id") in texts:
                 out.append(texts[c["chunk_id"]])
         elif c.get("type") == "web":
-            w = web.get(c.get("cite_id"), c)
-            out.append(f"{w.get('title', '')}: {w.get('snippet', '')}")
+            out.append(f"{c.get('title', '')}: {c.get('snippet', '')}")
         elif c.get("rows") is not None:
             out.append(f"SQL: {c.get('sql', '')}\ncolumns: {c.get('columns')}\nrows: {c.get('rows')}")
     return out
@@ -112,6 +116,8 @@ async def main() -> int:
     ap.add_argument("--max-contexts", type=int, default=None)
     ap.add_argument("--concurrency", type=int, default=4)
     ap.add_argument("--out", default="ragas.json")
+    ap.add_argument("--merge", action="store_true",
+                    help="rescore only --ids and merge them into the existing OUT file (summary recomputed over all rows)")
     a = ap.parse_args()
 
     s = load_settings()
@@ -181,10 +187,23 @@ async def main() -> int:
     t_start = time.perf_counter()
     rows = await asyncio.gather(*(score(r) for r in rows_in))
     await http.aclose()
+    prev_cost, rescored = 0.0, []
+    if a.merge and (run_dir / a.out).exists():
+        prev = json.loads((run_dir / a.out).read_text())
+        new_ids = {(r["id"], r["run"]) for r in rows}
+        rescored = sorted(f"{i}.run{n}" for i, n in new_ids)
+        old_by = {(r["id"], r["run"]): r for r in prev["rows"]}
+        # keep the previous values of metrics not rescored in this call; rescored metrics replace them
+        rows = [{**old_by.get((r["id"], r["run"]), {}), **r, "rescored_metrics": list(a.metrics)} for r in rows]
+        rows = [r for r in prev["rows"] if (r["id"], r["run"]) not in new_ids] + rows
+        rows.sort(key=lambda r: [x["id"] for x in meta["results"]].index(r["id"]) if any(x["id"] == r["id"] for x in meta["results"]) else 0)
+        prev_cost = prev["summary"].get("judge_cost_usd_est", 0.0)
+
+    summary_metrics = [m for m in METRICS if any(m in r for r in rows)]
 
     def summ(sel: list[dict]) -> dict:
         out = {"n_items": len(sel)}
-        for m in a.metrics:
+        for m in summary_metrics:
             vals = [x[m] for x in sel if x.get(m) is not None]
             out[m] = {"n": len(vals), "n_failed": len(sel) - len(vals),
                       "mean": round(statistics.mean(vals), 4) if vals else None,
@@ -203,7 +222,9 @@ async def main() -> int:
         "all": summ(rows),
         "by_category": {c: summ([x for x in rows if x["category"] == c]) for c in sorted({x["category"] for x in rows})},
         "judge_usage": u,
-        "judge_cost_usd_est": round((judge_cost or 0) + u["embed_tokens"] * EMBED_PRICE_PER_1M / 1e6, 4),
+        "judge_cost_usd_est": round(prev_cost + (judge_cost or 0) + u["embed_tokens"] * EMBED_PRICE_PER_1M / 1e6, 4),
+        "contexts": "retrieval + web_search events (P9-D1 fix)",
+        **({"rescored_after_P9_D1": rescored} if rescored else {}),
         "wall_s": round(time.perf_counter() - t_start, 1),
     }
     (run_dir / a.out).write_text(json.dumps({"summary": summary, "rows": rows}, indent=1, ensure_ascii=False))

@@ -455,9 +455,9 @@
     "faithfulness": {
      "n": 32,
      "n_failed": 0,
-     "mean": 0.981,
+     "mean": 0.9818,
      "median": 1.0,
-     "min": 0.8077,
+     "min": 0.8333,
      "max": 1.0
     },
     "answer_relevancy": {
@@ -471,7 +471,7 @@
     "context_precision": {
      "n": 32,
      "n_failed": 0,
-     "mean": 0.7135,
+     "mean": 0.7126,
      "median": 0.7038,
      "min": 0.2083,
      "max": 1.0
@@ -479,7 +479,7 @@
     "context_recall": {
      "n": 32,
      "n_failed": 0,
-     "mean": 0.9135,
+     "mean": 0.9172,
      "median": 1.0,
      "min": 0.25,
      "max": 1.0
@@ -491,9 +491,9 @@
      "faithfulness": {
       "n": 6,
       "n_failed": 0,
-      "mean": 0.9613,
+      "mean": 0.9656,
       "median": 1.0,
-      "min": 0.8077,
+      "min": 0.8333,
       "max": 1.0
      },
      "answer_relevancy": {
@@ -507,7 +507,7 @@
      "context_precision": {
       "n": 6,
       "n_failed": 0,
-      "mean": 0.9094,
+      "mean": 0.9049,
       "median": 0.9086,
       "min": 0.7994,
       "max": 1.0
@@ -515,8 +515,8 @@
      "context_recall": {
       "n": 6,
       "n_failed": 0,
-      "mean": 0.7746,
-      "median": 0.6905,
+      "mean": 0.7944,
+      "median": 0.75,
       "min": 0.6,
       "max": 1.0
      }
@@ -592,8 +592,12 @@
      }
     }
    },
-   "judge_cost_usd_est": 2.803,
-   "wall_s": 592.2
+   "judge_cost_usd_est": 2.8848,
+   "contexts": "retrieval + web_search events (P9-D1 fix)",
+   "rescored_after_P9_D1": [
+    "c06.run1"
+   ],
+   "wall_s": 90.9
   },
   "forced-openai-local": {
    "run_dir": "eval/results/phase9/forced-openai-local",
@@ -705,9 +709,9 @@
     "faithfulness": {
      "n": 32,
      "n_failed": 0,
-     "mean": 0.966,
+     "mean": 0.9772,
      "median": 1.0,
-     "min": 0.7083,
+     "min": 0.8824,
      "max": 1.0
     },
     "answer_relevancy": {
@@ -725,9 +729,9 @@
      "faithfulness": {
       "n": 6,
       "n_failed": 0,
-      "mean": 0.9762,
+      "mean": 0.9942,
       "median": 1.0,
-      "min": 0.8571,
+      "min": 0.9655,
       "max": 1.0
      },
      "answer_relevancy": {
@@ -744,9 +748,9 @@
      "faithfulness": {
       "n": 6,
       "n_failed": 0,
-      "mean": 0.9151,
-      "median": 0.95,
-      "min": 0.7083,
+      "mean": 0.9568,
+      "median": 0.9542,
+      "min": 0.8824,
       "max": 1.0
      },
      "answer_relevancy": {
@@ -778,8 +782,13 @@
      }
     }
    },
-   "judge_cost_usd_est": 1.1603,
-   "wall_s": 236.8
+   "judge_cost_usd_est": 1.2458,
+   "contexts": "retrieval + web_search events (P9-D1 fix)",
+   "rescored_after_P9_D1": [
+    "c06.run1",
+    "p02.run1"
+   ],
+   "wall_s": 27.0
   }
  },
  "provider_comparison": {

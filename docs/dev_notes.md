@@ -460,3 +460,15 @@ Factual log of what happened during development. It is the source for `PROCESS_L
 - `docs/evaluation.md` written from `summary.json` (`scripts/summarize_phase9.py`).
   - Self-review corrections before commit: the paraphrase comparison (p01 is an exception), "routed between forced runs" was wrong for answer relevance, an unverified client-location detail removed, two unverified causal explanations removed, and the spend sum fixed to $2.89 system.
 - Spend: $8.36 of the student-raised $9 (system $2.89, judge $5.33, probe $0.15), plus 10 Tavily searches. About $0.6 left for the tester.
+- **Tester Phase 9 gate: PHASE FAIL** (`docs/testing/phase-9-20261028T0737Z.md`). It ran 72 offline recompute checks (all hold), took a second cold sample on rev 00018 (TTFT 30.8 s), and spent about $0.21.
+  - **P9-D1 (Medium):** RAGAS contexts left out Tavily results, which arrive in `web_search` events, not `retrieval` events.
+    - Fixed in `scripts/ragas_eval.py` `contexts_of`, with a `--merge` mode that rescores chosen items and metrics and keeps the rest.
+    - New `tests/unit/test_phase9_ragas_contexts.py` (4 tests).
+    - Affected items, confirmed independently: routed c06, and forced-Gemini c06 and p02. They were rescored on the context-dependent metrics only:
+      - routed c06: F 0.808→0.833, CP 0.987→0.960, CR 0.714→0.833;
+      - Gemini c06: F 0.857→0.966; Gemini p02: F 0.708→0.958.
+    - New means: main F 0.982, CP 0.713, CR 0.917 (AR unchanged 0.828); Gemini F 0.977 (was 0.966). Rescore cost about $0.17.
+  - **P9-D2 (Low):** the evaluation.md §1 "not used for any tuning" was reworded to disclose the post-freeze lookup fix.
+  - **P9-N2:** the doubly rounded figures were recomputed from the unrounded values; "~12 %" corrected to "about 15 %" (14.6 %).
+  - **P9-N3:** `started_utc` is now taken before the request. P9-N1 (a citation marker after the final period is dropped when the next sentence is an abstention; 1 of 119 runs) is noted, not fixed. P9-N4 belongs to Phase 10.
+  - Full suite: 542 passed, 37 skipped, 1 xfailed. Phase 9 spend so far, including the tester: about $8.74 of $9.

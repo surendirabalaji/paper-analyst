@@ -23,7 +23,7 @@ All numbers below come from recorded runs in `eval/results/phase9/`, measured 20
 | `multi` (Data → Summary hand-off) | 2 | hand-off assertions and a required-fact keyword rubric |
 | `system` (out-of-corpus, missing paper, live web, MCP sharing, insufficient evidence, adversarial) | 6 | trace assertions |
 
-- **Held out:** papers used by the Phase 8b tuning questions (Self-RAG, ReAct, AgentBench, CRAG) are excluded from the sampled chunks. The set was not used for any tuning.
+- **Held out:** papers used by the Phase 8b tuning questions (Self-RAG, ReAct, AgentBench, CRAG) are excluded from the sampled chunks. No prompt or retrieval setting was tuned on it. One product fix was made after the freeze: pilot item s01 exposed the paper-lookup gap (§9). The fix went in before any reported run, and the test set was not changed.
 - **End to end:** the system receives only the question. Reference answers and reference chunk ids are never sent. RAGAS contexts are the chunks the workers actually received in that run.
 
 ## 2. Configurations
@@ -44,7 +44,11 @@ The forced runs ran one after the other, never at the same time. The forced over
 - Judge: OpenAI `gpt-6.1-sol`, with the reasoning-model parameter fix: `max_completion_tokens` instead of `max_tokens`, temperature 1.0.
 - Embeddings: `text-embedding-3-small`.
 
-**Contexts:** every chunk in the run's `retrieval` events, de-duplicated and in first-seen order. These come from `corpus_search` hits, paper outlines (abstracts) and section reads.
+**Contexts:** every piece of evidence the workers received, de-duplicated and in first-seen order:
+- `retrieval` events: `corpus_search` hits, paper outlines (abstracts) and section reads;
+- `web_search` events: Tavily results.
+
+Live search stayed on, as in the deployed system; the design proposal had planned it off for RAGAS runs. Web results reached 3 scored items: routed c06, and forced-Gemini c06 and p02. The first scoring left the web results out (tester P9-D1). Those 3 items were rescored with them for the context-dependent metrics, and their answer relevance was kept.
 
 **Aggregation:** arithmetic mean over items. A failed score is counted, never imputed; there were 0 failures in every run.
 
@@ -52,21 +56,21 @@ The forced runs ran one after the other, never at the same time. The forced over
 
 | Metric (PDF name) | ragas 0.4.3 class | Mean | Median | Min | n |
 |---|---|---|---|---|---|
-| Faithfulness | `Faithfulness` | **0.981** | 1.000 | 0.808 | 32 |
+| Faithfulness | `Faithfulness` | **0.982** | 1.000 | 0.833 | 32 |
 | Answer relevance | `AnswerRelevancy` (strictness 3) | **0.828** | 0.852 | 0.540 | 32 |
-| Context precision | `ContextPrecision` (the reference-based variant, a.k.a. `ContextPrecisionWithReference`) | **0.714** | 0.704 | 0.208 | 32 |
-| Context recall | `ContextRecall` (LLM-based, against the reference answer) | **0.914** | 1.000 | 0.250 | 32 |
+| Context precision | `ContextPrecision` (the reference-based variant, a.k.a. `ContextPrecisionWithReference`) | **0.713** | 0.704 | 0.208 | 32 |
+| Context recall | `ContextRecall` (LLM-based, against the reference answer) | **0.917** | 1.000 | 0.250 | 32 |
 
 By category (means):
 
 | Category | n | Faithfulness | Answer relevance | Context precision | Context recall |
 |---|---|---|---|---|---|
 | Single paper | 20 | 0.984 | 0.845 | 0.716 | 0.992 |
-| Comparison | 6 | 0.961 | 0.850 | 0.909 | 0.775 |
+| Comparison | 6 | 0.966 | 0.850 | 0.905 | 0.794 |
 | Hard (paraphrase, hard negative, mixed) | 6 | 0.992 | 0.749 | 0.509 | 0.792 |
 
 **Reading the numbers:**
-- **Faithfulness is high everywhere.** The minimum is c06 at 0.808; the lowest single-paper item is s18 at 0.857.
+- **Faithfulness is high everywhere.** The minimum is c06 at 0.833; the lowest single-paper item is s18 at 0.857.
 - **Context precision is lowered by a structural effect.**
   - The Summary agent's first context is always the paper's abstract, from `get_paper_outline`. The judge often rates that first context irrelevant to a narrow question.
   - An item whose relevant section comes second therefore scores 0.50 even when retrieval is otherwise exact. This happened for s04, s06, s10 and s14, each with 2–7 contexts and a context recall of 1.0.
@@ -164,9 +168,9 @@ Per-request cost is computed by the server from recorded tokens. Tavily searches
 | Multi-agent | 8 | $0.055 | $0.065 |
 | System items | 6 | $0.024 | $0.033 |
 
-**Phase 9 spend** (estimates, all runs including pilots): **$8.36** in total.
+**Phase 9 spend** (estimates, all runs including pilots and the tester): **$8.74** in total.
 - System runs: $2.89.
-- RAGAS judge: $5.33. This splits into main 4 metrics $2.80, forced runs (2 metrics) $1.16 + $1.20, and pilot $0.16. Context precision makes one judge call per retrieved context, which is most of the judge cost.
+- RAGAS judge: $5.50. This splits into main 4 metrics $2.88 (including the P9-D1 rescore), forced runs (2 metrics) $1.25 + $1.20, and pilot $0.16. Context precision makes one judge call per retrieved context, which is most of the judge cost.
 - Planner effort probe: $0.15.
 - Tavily: 10 `tavily_search` calls.
 
@@ -175,8 +179,8 @@ Per-request cost is computed by the server from recorded tokens. Tavily searches
 | | OpenAI `gpt-6.1-sol` (forced) | Gemini `google/gemini-3.8-flash` via OpenRouter (forced) | Routed (deployed, for reference) |
 |---|---|---|---|
 | Status | 31 done, 1 partial (h01) | 32 done | 32 done |
-| Faithfulness (mean / min) | **0.994** / 0.917 | 0.966 / 0.708 | 0.981 / 0.808 |
-| Answer relevance (mean / median) | 0.737 / 0.756 | **0.802** / 0.835 | 0.828 / 0.852 |
+| Faithfulness (mean / min) | **0.994** / 0.917 | 0.977 / 0.882 | 0.982 / 0.833 |
+| Answer relevance (mean / median) | 0.736 / 0.756 | **0.802** / 0.835 | 0.828 / 0.852 |
 | Reference chunks retrieved | **40 / 49** | 30 / 49 | 33 / 49 |
 | TTFT median / p90 | **6.77 s** / 9.18 s | 7.28 s / 10.66 s (max 37.7 s) | 7.47 s / 9.90 s |
 | Total median / p90 | 12.18 s / 17.88 s | **10.84 s** / 16.02 s | 10.72 s / 16.76 s |
@@ -184,16 +188,16 @@ Per-request cost is computed by the server from recorded tokens. Tavily searches
 | Cost per query, mean (est.) | $0.024 | **$0.021** | $0.022 |
 
 - **Quality:**
-  - OpenAI is slightly more faithful (Gemini's lowest items are p02 at 0.71 and p04 at 0.88, paraphrased questions).
+  - OpenAI is slightly more faithful (0.994 vs 0.977). Gemini's lowest items are p04 (0.88), s09 (0.90), and s15 and s18 (0.92).
   - The OpenAI-forced run also retrieved more of the reference chunks (40 vs 30 of 49). The workers' own queries and section choices drive retrieval, so the generation provider affects it; the cause per item was not analysed.
   - Gemini scores higher on answer relevance (0.80 vs 0.74).
   - The reason was not analysed. Treat it with care: there is a single judge (`gpt-6.1-sol`, which is also the OpenAI generator) and one sample per item.
 - **Latency:** within about ±1 s at the median. Gemini has the heavier tail: the planner timeout on c01 and the slow embedding on p04, which is not Gemini's fault.
-- **Cost:** Gemini is ~12 % cheaper per query at the rates above.
+- **Cost:** Gemini is about 15 % cheaper per query at the rates above (mean $0.0208 vs $0.0244).
 - **Routed policy:**
   - It uses Gemini for the planner, worker tool rounds and short single-paper synthesis.
   - It uses OpenAI for capability cases: multi-source or comparison synthesis, ≥ 3 papers, 2 worker results, and long-evidence write-ups.
-  - Its faithfulness (0.981) lies between the two forced runs and its answer relevance (0.828) is the highest of the three. The reference-chunk count (33 / 49) lies between, and the cost is near Gemini's.
+  - Its faithfulness (0.982) lies between the two forced runs and its answer relevance (0.828) is the highest of the three. The reference-chunk count (33 / 49) lies between, and the cost is near Gemini's.
   - Over the 50 deployed requests, 217 LLM calls succeeded: 190 Gemini, 27 OpenAI. Synthesis ran on Gemini 31 times and OpenAI 19 times. 19 requests used both providers.
 - **h01 (forced OpenAI) ended `partial`:** the planner gave the comparison to Summary, and R1-Searcher has no paper of its own. Routed and Gemini runs gave it to Research. All three answers describe Search-R1 and state that the evidence lacks R1-Searcher's training method; none retrieved the TeaRAG chunk that describes it. RAGAS answer relevance scores both forced h01 answers 0. ragas sets the score to 0 when its judge marks an answer noncommittal, which fits these answers.
 

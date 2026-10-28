@@ -16,9 +16,9 @@
    "faithfulness": {
     "n": 32,
     "n_failed": 0,
-    "mean": 0.981,
+    "mean": 0.9818,
     "median": 1.0,
-    "min": 0.8077,
+    "min": 0.8333,
     "max": 1.0
    },
    "answer_relevancy": {
@@ -32,7 +32,7 @@
    "context_precision": {
     "n": 32,
     "n_failed": 0,
-    "mean": 0.7135,
+    "mean": 0.7126,
     "median": 0.7038,
     "min": 0.2083,
     "max": 1.0
@@ -40,7 +40,7 @@
    "context_recall": {
     "n": 32,
     "n_failed": 0,
-    "mean": 0.9135,
+    "mean": 0.9172,
     "median": 1.0,
     "min": 0.25,
     "max": 1.0
@@ -52,9 +52,9 @@
     "faithfulness": {
      "n": 6,
      "n_failed": 0,
-     "mean": 0.9613,
+     "mean": 0.9656,
      "median": 1.0,
-     "min": 0.8077,
+     "min": 0.8333,
      "max": 1.0
     },
     "answer_relevancy": {
@@ -68,7 +68,7 @@
     "context_precision": {
      "n": 6,
      "n_failed": 0,
-     "mean": 0.9094,
+     "mean": 0.9049,
      "median": 0.9086,
      "min": 0.7994,
      "max": 1.0
@@ -76,8 +76,8 @@
     "context_recall": {
      "n": 6,
      "n_failed": 0,
-     "mean": 0.7746,
-     "median": 0.6905,
+     "mean": 0.7944,
+     "median": 0.75,
      "min": 0.6,
      "max": 1.0
     }
@@ -154,15 +154,19 @@
    }
   },
   "judge_usage": {
-   "chat_in": 921855,
-   "chat_out": 102844,
-   "chat_cached": 36414,
-   "reasoning": 3847,
-   "calls": 505,
-   "embed_tokens": 3100
+   "chat_in": 39930,
+   "chat_out": 4179,
+   "chat_cached": 20995,
+   "reasoning": 211,
+   "calls": 21,
+   "embed_tokens": 0
   },
-  "judge_cost_usd_est": 2.803,
-  "wall_s": 592.2
+  "judge_cost_usd_est": 2.8848,
+  "contexts": "retrieval + web_search events (P9-D1 fix)",
+  "rescored_after_P9_D1": [
+   "c06.run1"
+  ],
+  "wall_s": 90.9
  },
  "rows": [
   {
@@ -595,17 +599,22 @@
    "run": 1,
    "category": "rag_compare",
    "status": "done",
-   "n_contexts": 14,
-   "n_contexts_all": 14,
+   "n_contexts": 18,
+   "n_contexts_all": 18,
    "answer_chars": 2579,
-   "faithfulness": 0.8077,
-   "faithfulness_s": 25.6,
+   "faithfulness": 0.8333,
+   "faithfulness_s": 24.1,
    "answer_relevancy": 0.8516,
    "answer_relevancy_s": 7.3,
-   "context_precision": 0.9866,
-   "context_precision_s": 42.4,
-   "context_recall": 0.7143,
-   "context_recall_s": 11.6
+   "context_precision": 0.9595,
+   "context_precision_s": 56.1,
+   "context_recall": 0.8333,
+   "context_recall_s": 10.3,
+   "rescored_metrics": [
+    "faithfulness",
+    "context_precision",
+    "context_recall"
+   ]
   },
   {
    "id": "p01",

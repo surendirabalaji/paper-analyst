@@ -16,9 +16,9 @@
    "faithfulness": {
     "n": 32,
     "n_failed": 0,
-    "mean": 0.966,
+    "mean": 0.9772,
     "median": 1.0,
-    "min": 0.7083,
+    "min": 0.8824,
     "max": 1.0
    },
    "answer_relevancy": {
@@ -36,9 +36,9 @@
     "faithfulness": {
      "n": 6,
      "n_failed": 0,
-     "mean": 0.9762,
+     "mean": 0.9942,
      "median": 1.0,
-     "min": 0.8571,
+     "min": 0.9655,
      "max": 1.0
     },
     "answer_relevancy": {
@@ -55,9 +55,9 @@
     "faithfulness": {
      "n": 6,
      "n_failed": 0,
-     "mean": 0.9151,
-     "median": 0.95,
-     "min": 0.7083,
+     "mean": 0.9568,
+     "median": 0.9542,
+     "min": 0.8824,
      "max": 1.0
     },
     "answer_relevancy": {
@@ -90,15 +90,20 @@
    }
   },
   "judge_usage": {
-   "chat_in": 291162,
-   "chat_out": 65281,
-   "chat_cached": 39398,
-   "reasoning": 1278,
-   "calls": 160,
-   "embed_tokens": 3104
+   "chat_in": 17328,
+   "chat_out": 5088,
+   "chat_cached": 0,
+   "reasoning": 131,
+   "calls": 4,
+   "embed_tokens": 0
   },
-  "judge_cost_usd_est": 1.1603,
-  "wall_s": 236.8
+  "judge_cost_usd_est": 1.2458,
+  "contexts": "retrieval + web_search events (P9-D1 fix)",
+  "rescored_after_P9_D1": [
+   "c06.run1",
+   "p02.run1"
+  ],
+  "wall_s": 27.0
  },
  "rows": [
   {
@@ -431,13 +436,16 @@
    "run": 1,
    "category": "rag_compare",
    "status": "done",
-   "n_contexts": 14,
-   "n_contexts_all": 14,
+   "n_contexts": 18,
+   "n_contexts_all": 18,
    "answer_chars": 2964,
-   "faithfulness": 0.8571,
-   "faithfulness_s": 30.6,
+   "faithfulness": 0.9655,
+   "faithfulness_s": 24.4,
    "answer_relevancy": 0.9036,
-   "answer_relevancy_s": 7.2
+   "answer_relevancy_s": 7.2,
+   "rescored_metrics": [
+    "faithfulness"
+   ]
   },
   {
    "id": "p01",
@@ -457,13 +465,16 @@
    "run": 1,
    "category": "rag_hard",
    "status": "done",
-   "n_contexts": 14,
-   "n_contexts_all": 14,
+   "n_contexts": 18,
+   "n_contexts_all": 18,
    "answer_chars": 2809,
-   "faithfulness": 0.7083,
-   "faithfulness_s": 26.9,
+   "faithfulness": 0.9583,
+   "faithfulness_s": 26.6,
    "answer_relevancy": 0.7991,
-   "answer_relevancy_s": 8.2
+   "answer_relevancy_s": 8.2,
+   "rescored_metrics": [
+    "faithfulness"
+   ]
   },
   {
    "id": "p03",
