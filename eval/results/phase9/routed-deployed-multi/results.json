@@ -1,0 +1,2374 @@
+{
+ "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "label": "routed, deployed rev 00018, warm, multi-agent repeats",
+ "testset_sha256": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382",
+ "results": [
+  {
+   "http_status": 200,
+   "first_byte_s": 0.148,
+   "ttft_s": 32.127,
+   "total_s": 34.422,
+   "server_timings": {
+    "retrieval_ms": 1580,
+    "llm_ms_sum": 32646,
+    "ttft_ms": 31981,
+    "total_ms": 34274
+   },
+   "status": "done",
+   "workers": [
+    "data",
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2889,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 117,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0022365,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1848,
+     "ttft_ms": null,
+     "input_tokens": 780,
+     "output_tokens": 46,
+     "reasoning_tokens": 36,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001515,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2414,
+     "ttft_ms": null,
+     "input_tokens": 1643,
+     "output_tokens": 78,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0030495,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2239,
+     "ttft_ms": null,
+     "input_tokens": 3609,
+     "output_tokens": 44,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0057435,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2230,
+     "ttft_ms": null,
+     "input_tokens": 3891,
+     "output_tokens": 61,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006294,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4474,
+     "ttft_ms": null,
+     "input_tokens": 4228,
+     "output_tokens": 206,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.007887,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2140,
+     "ttft_ms": null,
+     "input_tokens": 1692,
+     "output_tokens": 27,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0027405,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2220,
+     "ttft_ms": null,
+     "input_tokens": 2956,
+     "output_tokens": 102,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005199,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2099,
+     "ttft_ms": null,
+     "input_tokens": 5226,
+     "output_tokens": 98,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011432,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6313,
+     "ttft_ms": null,
+     "input_tokens": 5401,
+     "output_tokens": 333,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 5223,
+     "cost_usd": 0.004208,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3780,
+     "ttft_ms": 1491,
+     "input_tokens": 3493,
+     "output_tokens": 295,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009936,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.060243,
+   "n_citations": 7,
+   "n_tokens": 292,
+   "errors": [],
+   "raw": "m01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2606.05339v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2606.05339v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S8::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {},
+   "reference_chunk_hit": null,
+   "reference_doc_hit": null,
+   "cited": [
+    "D1",
+    "C3",
+    "C7",
+    "D10",
+    "C1",
+    "C4",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Compact findings from evidence already retrieved; low-cost model."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Faithful condensation of long source text needs the stronger model: ~3091 tokens of full paper sections in context."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Faithful condensation of long source text needs the stronger model: ~3091 tokens of full paper sections in context."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "data",
+     "tool": "get_schema",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": false,
+   "id": "m01",
+   "run": 1,
+   "category": "multi",
+   "latency_category": "multi",
+   "query": "What is the most recent paper in the corpus about the Model Context Protocol, and what does it find?",
+   "started_utc": "2026-10-28T07:21:49+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.074,
+   "ttft_s": 26.884,
+   "total_s": 32.43,
+   "server_timings": {
+    "retrieval_ms": 1071,
+    "llm_ms_sum": 31242,
+    "ttft_ms": 26814,
+    "total_ms": 32353
+   },
+   "status": "done",
+   "workers": [
+    "data",
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2673,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 101,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0021165,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2217,
+     "ttft_ms": null,
+     "input_tokens": 780,
+     "output_tokens": 67,
+     "reasoning_tokens": 57,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0016725,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2114,
+     "ttft_ms": null,
+     "input_tokens": 1643,
+     "output_tokens": 65,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002952,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1958,
+     "ttft_ms": null,
+     "input_tokens": 2420,
+     "output_tokens": 44,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00396,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4313,
+     "ttft_ms": null,
+     "input_tokens": 2697,
+     "output_tokens": 336,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0065655,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1870,
+     "ttft_ms": null,
+     "input_tokens": 1651,
+     "output_tokens": 27,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002679,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2935,
+     "ttft_ms": null,
+     "input_tokens": 2718,
+     "output_tokens": 105,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0048645,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6430,
+     "ttft_ms": null,
+     "input_tokens": 4875,
+     "output_tokens": 552,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0114525,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6732,
+     "ttft_ms": 1196,
+     "input_tokens": 4146,
+     "output_tokens": 483,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013122,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.049384,
+   "n_citations": 9,
+   "n_tokens": 480,
+   "errors": [],
+   "raw": "m02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2601.02553v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2601.02553v3::S2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 6,
+   "reference_ranks": {},
+   "reference_chunk_hit": null,
+   "reference_doc_hit": null,
+   "cited": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "C1",
+    "C2",
+    "C6",
+    "C3",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "data",
+     "tool": "get_schema",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": false,
+   "id": "m02",
+   "run": 1,
+   "category": "multi",
+   "latency_category": "multi",
+   "query": "Which 2026 papers in the corpus are about agent memory? Summarize the earliest one.",
+   "started_utc": "2026-10-28T07:22:24+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.055,
+   "ttft_s": 33.151,
+   "total_s": 36.424,
+   "server_timings": {
+    "retrieval_ms": 1581,
+    "llm_ms_sum": 34713,
+    "ttft_ms": 33098,
+    "total_ms": 36340
+   },
+   "status": "done",
+   "workers": [
+    "data",
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2166,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 96,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002079,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1783,
+     "ttft_ms": null,
+     "input_tokens": 780,
+     "output_tokens": 10,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001245,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2016,
+     "ttft_ms": null,
+     "input_tokens": 1643,
+     "output_tokens": 86,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0031095,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2014,
+     "ttft_ms": null,
+     "input_tokens": 3689,
+     "output_tokens": 44,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0058635,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4546,
+     "ttft_ms": null,
+     "input_tokens": 3971,
+     "output_tokens": 155,
+     "reasoning_tokens": 77,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.007119,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4034,
+     "ttft_ms": null,
+     "input_tokens": 4410,
+     "output_tokens": 277,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0086925,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2571,
+     "ttft_ms": null,
+     "input_tokens": 1762,
+     "output_tokens": 27,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0028455,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2124,
+     "ttft_ms": null,
+     "input_tokens": 3026,
+     "output_tokens": 102,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005304,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2948,
+     "ttft_ms": null,
+     "input_tokens": 5285,
+     "output_tokens": 98,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01155,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5983,
+     "ttft_ms": null,
+     "input_tokens": 5460,
+     "output_tokens": 326,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 5282,
+     "cost_usd": 0.004144,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4528,
+     "ttft_ms": 1288,
+     "input_tokens": 3273,
+     "output_tokens": 302,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009566,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.061518,
+   "n_citations": 6,
+   "n_tokens": 299,
+   "errors": [],
+   "raw": "m01.run2.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2606.05339v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2606.05339v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S8::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {},
+   "reference_chunk_hit": null,
+   "reference_doc_hit": null,
+   "cited": [
+    "D1",
+    "C7",
+    "C3",
+    "D10",
+    "C4",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Compact findings from evidence already retrieved; low-cost model."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Faithful condensation of long source text needs the stronger model: ~3091 tokens of full paper sections in context."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Faithful condensation of long source text needs the stronger model: ~3091 tokens of full paper sections in context."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "data",
+     "tool": "get_schema",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": false,
+   "id": "m01",
+   "run": 2,
+   "category": "multi",
+   "latency_category": "multi",
+   "query": "What is the most recent paper in the corpus about the Model Context Protocol, and what does it find?",
+   "started_utc": "2026-10-28T07:22:56+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.118,
+   "ttft_s": 32.425,
+   "total_s": 39.099,
+   "server_timings": {
+    "retrieval_ms": 1607,
+    "llm_ms_sum": 37376,
+    "ttft_ms": 32361,
+    "total_ms": 39030
+   },
+   "status": "done",
+   "workers": [
+    "data",
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2377,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 101,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0021165,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1936,
+     "ttft_ms": null,
+     "input_tokens": 779,
+     "output_tokens": 45,
+     "reasoning_tokens": 35,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001506,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2019,
+     "ttft_ms": null,
+     "input_tokens": 1642,
+     "output_tokens": 65,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0029505,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2472,
+     "ttft_ms": null,
+     "input_tokens": 2419,
+     "output_tokens": 39,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.003921,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1993,
+     "ttft_ms": null,
+     "input_tokens": 4351,
+     "output_tokens": 44,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0068565,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4582,
+     "ttft_ms": null,
+     "input_tokens": 4643,
+     "output_tokens": 363,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009687,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2329,
+     "ttft_ms": null,
+     "input_tokens": 1941,
+     "output_tokens": 27,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.003114,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2844,
+     "ttft_ms": null,
+     "input_tokens": 3008,
+     "output_tokens": 107,
+     "reasoning_tokens": 2,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0053145,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2454,
+     "ttft_ms": null,
+     "input_tokens": 5165,
+     "output_tokens": 38,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0080325,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6068,
+     "ttft_ms": null,
+     "input_tokens": 5231,
+     "output_tokens": 566,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 3141,
+     "cost_usd": 0.00785115,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 8302,
+     "ttft_ms": 1636,
+     "input_tokens": 4191,
+     "output_tokens": 517,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013552,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.064901,
+   "n_citations": 9,
+   "n_tokens": 514,
+   "errors": [],
+   "raw": "m02.run2.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2601.02553v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2601.02553v3::S2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 6,
+   "reference_ranks": {},
+   "reference_chunk_hit": null,
+   "reference_doc_hit": null,
+   "cited": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "C1",
+    "C6",
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Compact findings from evidence already retrieved; low-cost model."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "data",
+     "tool": "get_schema",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": false,
+   "id": "m02",
+   "run": 2,
+   "category": "multi",
+   "latency_category": "multi",
+   "query": "Which 2026 papers in the corpus are about agent memory? Summarize the earliest one.",
+   "started_utc": "2026-10-28T07:23:33+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.056,
+   "ttft_s": 37.233,
+   "total_s": 40.573,
+   "server_timings": {
+    "retrieval_ms": 1613,
+    "llm_ms_sum": 38862,
+    "ttft_ms": 37178,
+    "total_ms": 40520
+   },
+   "status": "done",
+   "workers": [
+    "data",
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 7230,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 484,
+     "reasoning_tokens": 394,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.004989,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2001,
+     "ttft_ms": null,
+     "input_tokens": 776,
+     "output_tokens": 10,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001239,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2271,
+     "ttft_ms": null,
+     "input_tokens": 1639,
+     "output_tokens": 67,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002961,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2397,
+     "ttft_ms": null,
+     "input_tokens": 3289,
+     "output_tokens": 44,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0052635,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3346,
+     "ttft_ms": null,
+     "input_tokens": 3571,
+     "output_tokens": 76,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0059265,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4337,
+     "ttft_ms": null,
+     "input_tokens": 3975,
+     "output_tokens": 250,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0078375,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2331,
+     "ttft_ms": null,
+     "input_tokens": 1690,
+     "output_tokens": 27,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0027375,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2516,
+     "ttft_ms": null,
+     "input_tokens": 2954,
+     "output_tokens": 102,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005196,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2051,
+     "ttft_ms": null,
+     "input_tokens": 6662,
+     "output_tokens": 29,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013614,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6073,
+     "ttft_ms": null,
+     "input_tokens": 6718,
+     "output_tokens": 339,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 6659,
+     "cost_usd": 0.004174,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4309,
+     "ttft_ms": 970,
+     "input_tokens": 3804,
+     "output_tokens": 324,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010848,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.064786,
+   "n_citations": 5,
+   "n_tokens": 321,
+   "errors": [],
+   "raw": "m01.run3.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2606.05339v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2606.05339v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S1::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S6::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S6::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S6::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2606.05339v2::S8::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 9,
+   "reference_ranks": {},
+   "reference_chunk_hit": null,
+   "reference_doc_hit": null,
+   "cited": [
+    "D1",
+    "C1",
+    "C6",
+    "C8",
+    "C9"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_final",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Compact findings from evidence already retrieved; low-cost model."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Faithful condensation of long source text needs the stronger model: ~5033 tokens of full paper sections in context."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Faithful condensation of long source text needs the stronger model: ~5033 tokens of full paper sections in context."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "data",
+     "tool": "get_schema",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": false,
+   "id": "m01",
+   "run": 3,
+   "category": "multi",
+   "latency_category": "multi",
+   "query": "What is the most recent paper in the corpus about the Model Context Protocol, and what does it find?",
+   "started_utc": "2026-10-28T07:24:12+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.057,
+   "ttft_s": 35.18,
+   "total_s": 40.008,
+   "server_timings": {
+    "retrieval_ms": 534,
+    "llm_ms_sum": 39381,
+    "ttft_ms": 35125,
+    "total_ms": 39951
+   },
+   "status": "done",
+   "workers": [
+    "data",
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2997,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 102,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002124,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 13215,
+     "ttft_ms": null,
+     "input_tokens": 740,
+     "output_tokens": 43,
+     "reasoning_tokens": 33,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00071625,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2409,
+     "ttft_ms": null,
+     "input_tokens": 1643,
+     "output_tokens": 62,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0029295,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3626,
+     "ttft_ms": null,
+     "input_tokens": 2402,
+     "output_tokens": 301,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0058605,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1956,
+     "ttft_ms": null,
+     "input_tokens": 1616,
+     "output_tokens": 27,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0026265,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2805,
+     "ttft_ms": null,
+     "input_tokens": 2683,
+     "output_tokens": 105,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.004812,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6562,
+     "ttft_ms": null,
+     "input_tokens": 4840,
+     "output_tokens": 557,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0114375,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5811,
+     "ttft_ms": 988,
+     "input_tokens": 3729,
+     "output_tokens": 506,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.012518,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.043025,
+   "n_citations": 8,
+   "n_tokens": 503,
+   "errors": [],
+   "raw": "m02.run3.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2601.02553v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2601.02553v3::S2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S3.SS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2601.02553v3::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 6,
+   "reference_ranks": {},
+   "reference_chunk_hit": null,
+   "reference_doc_hit": null,
+   "cited": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "C1",
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "data",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "cost",
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "capability",
+     "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "data",
+     "tool": "get_schema",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "data",
+     "tool": "run_sql",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": false,
+   "id": "m02",
+   "run": 3,
+   "category": "multi",
+   "latency_category": "multi",
+   "query": "Which 2026 papers in the corpus are about agent memory? Summarize the earliest one.",
+   "started_utc": "2026-10-28T07:24:52+00:00"
+  }
+ ]
+}

@@ -1,0 +1,6706 @@
+{
+ "url": "http://localhost:8766",
+ "label": "forced gemini-openrouter, local, code 85e6649",
+ "testset_sha256": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382",
+ "results": [
+  {
+   "http_status": 200,
+   "first_byte_s": 0.028,
+   "ttft_s": 9.615,
+   "total_s": 12.487,
+   "server_timings": {
+    "retrieval_ms": 1173,
+    "llm_ms_sum": 11564,
+    "ttft_ms": 9608,
+    "total_ms": 12480
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3316,
+     "ttft_ms": null,
+     "input_tokens": 899,
+     "output_tokens": 90,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0020235,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2801,
+     "ttft_ms": null,
+     "input_tokens": 6063,
+     "output_tokens": 94,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0097995,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5447,
+     "ttft_ms": 2579,
+     "input_tokens": 5021,
+     "output_tokens": 407,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010584,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.022407,
+   "n_citations": 3,
+   "n_tokens": 17,
+   "errors": [],
+   "raw": "s01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2501.15228v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S4.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::A8.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S4.SS4::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::A4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S4.SS4::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 10,
+   "reference_ranks": {
+    "2501.15228v2::S3.SS3.SSS3::000": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C2",
+    "C7"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s01",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "In MMOA-RAG, how is the Generator agent rewarded?",
+   "started_utc": "2026-10-28T06:58:39+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.006,
+   "ttft_s": 6.633,
+   "total_s": 8.166,
+   "server_timings": {
+    "retrieval_ms": 206,
+    "llm_ms_sum": 7920,
+    "ttft_ms": 6629,
+    "total_ms": 8161
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1888,
+     "ttft_ms": null,
+     "input_tokens": 907,
+     "output_tokens": 67,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001863,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2844,
+     "ttft_ms": null,
+     "input_tokens": 3120,
+     "output_tokens": 125,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0056175,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3188,
+     "ttft_ms": 1659,
+     "input_tokens": 8092,
+     "output_tokens": 224,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013818,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.021299,
+   "n_citations": 2,
+   "n_tokens": 9,
+   "errors": [],
+   "raw": "s02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2511.05385v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::004",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::005",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::006",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS5.SSS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 11,
+   "reference_ranks": {
+    "2511.05385v2::S5.SS1.SSS2::001": 3
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s02",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Which iterative RAG baselines does TeaRAG compare against, and what retriever do the baselines use?",
+   "started_utc": "2026-10-28T06:58:52+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 5.731,
+   "total_s": 7.767,
+   "server_timings": {
+    "retrieval_ms": 63,
+    "llm_ms_sum": 7675,
+    "ttft_ms": 5728,
+    "total_ms": 7764
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2669,
+     "ttft_ms": null,
+     "input_tokens": 904,
+     "output_tokens": 78,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001941,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1765,
+     "ttft_ms": null,
+     "input_tokens": 2438,
+     "output_tokens": 108,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.004467,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3241,
+     "ttft_ms": 1207,
+     "input_tokens": 2015,
+     "output_tokens": 299,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005265,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.011673,
+   "n_citations": 2,
+   "n_tokens": 14,
+   "errors": [],
+   "raw": "s03.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2307.03172v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2307.03172v3::S3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.03172v3::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.03172v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2307.03172v3::S3.SS2::000": 4
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s03",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How do language models perform on the synthetic key-value retrieval task in Lost in the Middle?",
+   "started_utc": "2026-10-28T06:59:00+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 8.788,
+   "total_s": 10.235,
+   "server_timings": {
+    "retrieval_ms": 12,
+    "llm_ms_sum": 10189,
+    "ttft_ms": 8785,
+    "total_ms": 10233
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3471,
+     "ttft_ms": null,
+     "input_tokens": 901,
+     "output_tokens": 80,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0019515,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3037,
+     "ttft_ms": null,
+     "input_tokens": 2824,
+     "output_tokens": 37,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0045135,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3681,
+     "ttft_ms": 2235,
+     "input_tokens": 1921,
+     "output_tokens": 240,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0046815,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.011145,
+   "n_citations": 1,
+   "n_tokens": 11,
+   "errors": [],
+   "raw": "s04.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2404.16130v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2404.16130v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2404.16130v2::S3.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 3,
+   "reference_ranks": {
+    "2404.16130v2::S3.SS2::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s04",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does GraphRAG generate the global sensemaking questions it uses for evaluation?",
+   "started_utc": "2026-10-28T06:59:08+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 5.822,
+   "total_s": 7.636,
+   "server_timings": {
+    "retrieval_ms": 472,
+    "llm_ms_sum": 7447,
+    "ttft_ms": 5820,
+    "total_ms": 7633
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2136,
+     "ttft_ms": null,
+     "input_tokens": 901,
+     "output_tokens": 79,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001944,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1711,
+     "ttft_ms": null,
+     "input_tokens": 6504,
+     "output_tokens": 1,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0097635,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3600,
+     "ttft_ms": 1789,
+     "input_tokens": 5030,
+     "output_tokens": 208,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009105,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.020812,
+   "n_citations": 2,
+   "n_tokens": 10,
+   "errors": [],
+   "raw": "s05.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2305.14325v1::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::A1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.12338v1::S2.SSx2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.12338v1::S6::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::A3::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S5::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 10,
+   "reference_ranks": {
+    "2305.14325v1::S3.SS1::000": 1
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "s05",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "On which reasoning tasks is multiagent debate evaluated, and against which baselines?",
+   "started_utc": "2026-10-28T06:59:18+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.842,
+   "total_s": 8.875,
+   "server_timings": {
+    "retrieval_ms": 300,
+    "llm_ms_sum": 8546,
+    "ttft_ms": 6840,
+    "total_ms": 8872
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1935,
+     "ttft_ms": null,
+     "input_tokens": 894,
+     "output_tokens": 74,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001896,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1923,
+     "ttft_ms": null,
+     "input_tokens": 1929,
+     "output_tokens": 73,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.003441,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4688,
+     "ttft_ms": 2660,
+     "input_tokens": 3542,
+     "output_tokens": 238,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.007098,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.012435,
+   "n_citations": 1,
+   "n_tokens": 11,
+   "errors": [],
+   "raw": "s06.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2307.07924v5::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2307.07924v5::S6::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.07924v5::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2307.07924v5::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2307.07924v5::S4.SS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2307.07924v5::S1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2307.07924v5::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {
+    "2307.07924v5::S6::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s06",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "What limitations do the ChatDev authors acknowledge?",
+   "started_utc": "2026-10-28T06:59:26+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.006,
+   "ttft_s": 7.617,
+   "total_s": 11.94,
+   "server_timings": {
+    "retrieval_ms": 506,
+    "llm_ms_sum": 11686,
+    "ttft_ms": 7613,
+    "total_ms": 11936
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3127,
+     "ttft_ms": null,
+     "input_tokens": 904,
+     "output_tokens": 82,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001971,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2314,
+     "ttft_ms": null,
+     "input_tokens": 6000,
+     "output_tokens": 1,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0090075,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6245,
+     "ttft_ms": 1924,
+     "input_tokens": 3656,
+     "output_tokens": 589,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0099015,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.02088,
+   "n_citations": 4,
+   "n_tokens": 24,
+   "errors": [],
+   "raw": "s07.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2406.04692v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S3.SS3::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {
+    "2406.04692v1::S2.SS2::000": 1
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C3",
+    "C6",
+    "C2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "s07",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How is a Mixture-of-Agents layer structured, and how are the layer outputs combined?",
+   "started_utc": "2026-10-28T06:59:35+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 7.669,
+   "total_s": 10.166,
+   "server_timings": {
+    "retrieval_ms": 937,
+    "llm_ms_sum": 9511,
+    "ttft_ms": 7666,
+    "total_ms": 10163
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3473,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 114,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002214,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1929,
+     "ttft_ms": null,
+     "input_tokens": 4454,
+     "output_tokens": 35,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0069435,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4109,
+     "ttft_ms": 1616,
+     "input_tokens": 6037,
+     "output_tokens": 345,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011643,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.0208,
+   "n_citations": 8,
+   "n_tokens": 15,
+   "errors": [],
+   "raw": "s08.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2402.05120v2::S4::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::A1.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::A1.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S4::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.05915v1::A1.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S5::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.05915v1::A1.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S5::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S5::004",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 13,
+   "reference_ranks": {
+    "2402.05120v2::S5.SS2::000": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C3",
+    "C4",
+    "C2",
+    "C1",
+    "C8",
+    "C10",
+    "C12",
+    "C13"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s08",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Does the sampling-and-voting method from More Agents Is All You Need combine well with other methods?",
+   "started_utc": "2026-10-28T06:59:47+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 7.419,
+   "total_s": 12.459,
+   "server_timings": {
+    "retrieval_ms": 41,
+    "llm_ms_sum": 12387,
+    "ttft_ms": 7416,
+    "total_ms": 12457
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2687,
+     "ttft_ms": null,
+     "input_tokens": 899,
+     "output_tokens": 103,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002121,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2773,
+     "ttft_ms": null,
+     "input_tokens": 2681,
+     "output_tokens": 111,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.004854,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6927,
+     "ttft_ms": 1890,
+     "input_tokens": 5830,
+     "output_tokens": 533,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0127425,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.019717,
+   "n_citations": 6,
+   "n_tokens": 21,
+   "errors": [],
+   "raw": "s09.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2405.15793v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2405.15793v3::S3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::S3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::S3::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::S5.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::S5.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::S5.SS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 10,
+   "reference_ranks": {
+    "2405.15793v3::S5.SS2::000": 5
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C5",
+    "C8",
+    "C2",
+    "C9",
+    "C10",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s09",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "What problem-solving patterns does SWE-agent show when fixing issues?",
+   "started_utc": "2026-10-28T06:59:57+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 8.286,
+   "total_s": 10.067,
+   "server_timings": {
+    "retrieval_ms": 50,
+    "llm_ms_sum": 9989,
+    "ttft_ms": 8284,
+    "total_ms": 10064
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4283,
+     "ttft_ms": null,
+     "input_tokens": 900,
+     "output_tokens": 73,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0018975,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1970,
+     "ttft_ms": null,
+     "input_tokens": 2729,
+     "output_tokens": 111,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.004926,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3736,
+     "ttft_ms": 1959,
+     "input_tokens": 2095,
+     "output_tokens": 176,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0044625,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.011287,
+   "n_citations": 3,
+   "n_tokens": 8,
+   "errors": [],
+   "raw": "s10.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2310.06770v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2310.06770v3::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2310.06770v3::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2310.06770v3::A3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2310.06770v3::S4.SS1::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s10",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does SWE-bench choose which files to give the model as context?",
+   "started_utc": "2026-10-28T07:00:09+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 7.491,
+   "total_s": 10.901,
+   "server_timings": {
+    "retrieval_ms": 827,
+    "llm_ms_sum": 10348,
+    "ttft_ms": 7488,
+    "total_ms": 10898
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3315,
+     "ttft_ms": null,
+     "input_tokens": 907,
+     "output_tokens": 112,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0022005,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1830,
+     "ttft_ms": null,
+     "input_tokens": 7353,
+     "output_tokens": 43,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011352,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5203,
+     "ttft_ms": 1796,
+     "input_tokens": 3984,
+     "output_tokens": 500,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009726,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.023279,
+   "n_citations": 4,
+   "n_tokens": 20,
+   "errors": [],
+   "raw": "s11.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2306.06070v3::S4.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2306.06070v3::A4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2306.06070v3::A3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2306.06070v3::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2306.06070v3::S4.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.12823v2::A4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {
+    "2306.06070v3::S4.SS3::001": 1
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C3",
+    "C2",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s11",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How do GPT-3.5 and GPT-4 perform on Mind2Web with in-context learning?",
+   "started_utc": "2026-10-28T07:00:19+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.161,
+   "total_s": 13.138,
+   "server_timings": {
+    "retrieval_ms": 544,
+    "llm_ms_sum": 12883,
+    "ttft_ms": 6158,
+    "total_ms": 13134
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2373,
+     "ttft_ms": null,
+     "input_tokens": 906,
+     "output_tokens": 89,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0020265,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1616,
+     "ttft_ms": null,
+     "input_tokens": 7907,
+     "output_tokens": 1,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011868,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 8894,
+     "ttft_ms": 1923,
+     "input_tokens": 5781,
+     "output_tokens": 705,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013959,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.027854,
+   "n_citations": 8,
+   "n_tokens": 29,
+   "errors": [],
+   "raw": "s12.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2607.26637v1::S4.SS4::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS4::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS2::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S3::004",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS4::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::A2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::A4.SS7::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::A4.SS1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 9,
+   "reference_ranks": {
+    "2607.26637v1::S4.SS4::002": 6
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C5",
+    "C6",
+    "C1",
+    "C4",
+    "C7",
+    "C8",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "s12",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "In the filesystem-based memory study, how do curated stores and the episode log differ as memory grows?",
+   "started_utc": "2026-10-28T07:00:30+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.005,
+   "ttft_s": 7.132,
+   "total_s": 9.682,
+   "server_timings": {
+    "retrieval_ms": 40,
+    "llm_ms_sum": 9606,
+    "ttft_ms": 7129,
+    "total_ms": 9679
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2176,
+     "ttft_ms": null,
+     "input_tokens": 898,
+     "output_tokens": 63,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0018195,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3051,
+     "ttft_ms": null,
+     "input_tokens": 2343,
+     "output_tokens": 108,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0043245,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4379,
+     "ttft_ms": 1832,
+     "input_tokens": 2172,
+     "output_tokens": 303,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0055305,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.011675,
+   "n_citations": 3,
+   "n_tokens": 14,
+   "errors": [],
+   "raw": "s13.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2502.12110v11::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2502.12110v11::S3.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2502.12110v11::S3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2502.12110v11::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2502.12110v11::S3.SS4::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C1",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s13",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does A-MEM retrieve relevant memories for a new interaction?",
+   "started_utc": "2026-10-28T07:00:43+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 6.158,
+   "total_s": 10.232,
+   "server_timings": {
+    "retrieval_ms": 32,
+    "llm_ms_sum": 10172,
+    "ttft_ms": 6156,
+    "total_ms": 10230
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1844,
+     "ttft_ms": null,
+     "input_tokens": 896,
+     "output_tokens": 68,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001854,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2221,
+     "ttft_ms": null,
+     "input_tokens": 2817,
+     "output_tokens": 111,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005058,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6107,
+     "ttft_ms": 2038,
+     "input_tokens": 2886,
+     "output_tokens": 590,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008754,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.015666,
+   "n_citations": 5,
+   "n_tokens": 24,
+   "errors": [],
+   "raw": "s14.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2403.16971v5::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2403.16971v5::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2403.16971v5::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2403.16971v5::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2403.16971v5::S4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 5,
+   "reference_ranks": {
+    "2403.16971v5::S4.SS2::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C4",
+    "C5",
+    "C1",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s14",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Does running agents on AIOS change their benchmark performance?",
+   "started_utc": "2026-10-28T07:00:53+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 10.048,
+   "total_s": 11.704,
+   "server_timings": {
+    "retrieval_ms": 21,
+    "llm_ms_sum": 11656,
+    "ttft_ms": 10045,
+    "total_ms": 11701
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6467,
+     "ttft_ms": null,
+     "input_tokens": 903,
+     "output_tokens": 479,
+     "reasoning_tokens": 392,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.004947,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1819,
+     "ttft_ms": null,
+     "input_tokens": 2478,
+     "output_tokens": 34,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.003972,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3370,
+     "ttft_ms": 1716,
+     "input_tokens": 2293,
+     "output_tokens": 213,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005037,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.013956,
+   "n_citations": 2,
+   "n_tokens": 10,
+   "errors": [],
+   "raw": "s15.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2303.17651v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2303.17651v2::A7::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2303.17651v2::A7::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2303.17651v2::A7::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2303.17651v2::S4::003": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s15",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Does Self-Refine work with weaker models such as Vicuna-13B?",
+   "started_utc": "2026-10-28T07:01:03+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 6.214,
+   "total_s": 9.325,
+   "server_timings": {
+    "retrieval_ms": 32,
+    "llm_ms_sum": 9269,
+    "ttft_ms": 6212,
+    "total_ms": 9323
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2332,
+     "ttft_ms": null,
+     "input_tokens": 900,
+     "output_tokens": 79,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0019425,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2031,
+     "ttft_ms": null,
+     "input_tokens": 2388,
+     "output_tokens": 111,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0044145,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4906,
+     "ttft_ms": 1798,
+     "input_tokens": 2265,
+     "output_tokens": 411,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00648,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.012837,
+   "n_citations": 4,
+   "n_tokens": 16,
+   "errors": [],
+   "raw": "s16.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2305.18323v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2305.18323v1::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2305.18323v1::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2305.18323v1::A2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2305.18323v1::S2.SS3::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C2",
+    "C4",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s16",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does ReWOO use specialization to make a small model plan well?",
+   "started_utc": "2026-10-28T07:01:15+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.451,
+   "total_s": 9.881,
+   "server_timings": {
+    "retrieval_ms": 25,
+    "llm_ms_sum": 9829,
+    "ttft_ms": 6448,
+    "total_ms": 9879
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2435,
+     "ttft_ms": null,
+     "input_tokens": 896,
+     "output_tokens": 76,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001914,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2275,
+     "ttft_ms": null,
+     "input_tokens": 2316,
+     "output_tokens": 108,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.004284,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5119,
+     "ttft_ms": 1691,
+     "input_tokens": 4506,
+     "output_tokens": 434,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010014,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.016212,
+   "n_citations": 5,
+   "n_tokens": 17,
+   "errors": [],
+   "raw": "s17.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2302.04761v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2302.04761v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2302.04761v1::S4.SS2::000": 8
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C5",
+    "C3",
+    "C8",
+    "C1",
+    "C7"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s17",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How is Toolformer decoded and evaluated on downstream tasks?",
+   "started_utc": "2026-10-28T07:01:24+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 7.489,
+   "total_s": 8.715,
+   "server_timings": {
+    "retrieval_ms": 638,
+    "llm_ms_sum": 8321,
+    "ttft_ms": 7487,
+    "total_ms": 8712
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2578,
+     "ttft_ms": null,
+     "input_tokens": 899,
+     "output_tokens": 84,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0019785,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2343,
+     "ttft_ms": null,
+     "input_tokens": 5758,
+     "output_tokens": 28,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008847,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3400,
+     "ttft_ms": 2176,
+     "input_tokens": 6109,
+     "output_tokens": 220,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0108135,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.021638,
+   "n_citations": 2,
+   "n_tokens": 9,
+   "errors": [],
+   "raw": "s18.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2607.04686v1::S5.SS5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::S6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::S2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::S1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::A1.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::A5.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.04686v1::A1.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2602.18940v1::A4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2602.18940v1::A4.SS3::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2602.18940v1::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 12,
+   "reference_ranks": {
+    "2607.04686v1::S5.SS5::000": 1
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s18",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does tool-result faithfulness vary by domain in ToolFailBench?",
+   "started_utc": "2026-10-28T07:01:34+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.012,
+   "total_s": 9.08,
+   "server_timings": {
+    "retrieval_ms": 704,
+    "llm_ms_sum": 8628,
+    "ttft_ms": 6010,
+    "total_ms": 9077
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1923,
+     "ttft_ms": null,
+     "input_tokens": 902,
+     "output_tokens": 85,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0019905,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2465,
+     "ttft_ms": null,
+     "input_tokens": 5933,
+     "output_tokens": 31,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009132,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4240,
+     "ttft_ms": 1175,
+     "input_tokens": 3584,
+     "output_tokens": 428,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008586,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.019709,
+   "n_citations": 3,
+   "n_tokens": 18,
+   "errors": [],
+   "raw": "s19.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2505.15872v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::A1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::S3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::S1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::A1.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {
+    "2505.15872v2::S3::000": 7
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C6",
+    "C7",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s19",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does the InfoDeepSeek agentic RAG framework carry out the retrieval stage?",
+   "started_utc": "2026-10-28T07:01:43+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.997,
+   "total_s": 8.911,
+   "server_timings": {
+    "retrieval_ms": 271,
+    "llm_ms_sum": 8609,
+    "ttft_ms": 6995,
+    "total_ms": 8909
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2493,
+     "ttft_ms": null,
+     "input_tokens": 907,
+     "output_tokens": 87,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002013,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2131,
+     "ttft_ms": null,
+     "input_tokens": 4111,
+     "output_tokens": 76,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0067365,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3985,
+     "ttft_ms": 2074,
+     "input_tokens": 5384,
+     "output_tokens": 265,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0100635,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.018814,
+   "n_citations": 3,
+   "n_tokens": 11,
+   "errors": [],
+   "raw": "s20.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2309.07864v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S3.SS1.SSS5::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2309.07864v3::S3.SS3.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2309.07864v3::S3.SS3.SSS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2309.07864v3::S6.SS2::003": 5
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C4",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s20",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does the Rise and Potential of LLM-based Agents survey suggest evaluating agents' ability to keep learning?",
+   "started_utc": "2026-10-28T07:01:52+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 34.122,
+   "total_s": 38.401,
+   "server_timings": {
+    "retrieval_ms": 1392,
+    "llm_ms_sum": 36907,
+    "ttft_ms": 34120,
+    "total_ms": 38399
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": null,
+     "status": "error",
+     "error_kind": "timeout",
+     "attempt": 1,
+     "latency_ms": 20003,
+     "ttft_ms": null,
+     "input_tokens": 0,
+     "output_tokens": 0,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": null,
+     "cost_source": null
+    },
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 2,
+     "latency_ms": 2415,
+     "ttft_ms": null,
+     "input_tokens": 904,
+     "output_tokens": 86,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002001,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 8260,
+     "ttft_ms": null,
+     "input_tokens": 5633,
+     "output_tokens": 50,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0088245,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6229,
+     "ttft_ms": 1954,
+     "input_tokens": 8273,
+     "output_tokens": 514,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0162645,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.027091,
+   "n_citations": 13,
+   "n_tokens": 21,
+   "errors": [],
+   "raw": "c01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2606.24535v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::A1.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S2.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S6.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 19,
+   "reference_ranks": {
+    "2310.08560v2::S1::001": null,
+    "2310.08560v2::S2.SS1::000": 8,
+    "2502.12110v11::S3.SS1::000": 15,
+    "2502.12110v11::S3.SS3::000": null
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C12",
+    "C19",
+    "C7",
+    "C8",
+    "C11",
+    "C4",
+    "C13",
+    "C2",
+    "C15",
+    "C18",
+    "C14",
+    "C5",
+    "C16"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c01",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do MemGPT and A-MEM differ in how they organize an agent's memory?",
+   "started_utc": "2026-10-28T07:02:01+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.986,
+   "total_s": 11.873,
+   "server_timings": {
+    "retrieval_ms": 1176,
+    "llm_ms_sum": 11196,
+    "ttft_ms": 6983,
+    "total_ms": 11870
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2301,
+     "ttft_ms": null,
+     "input_tokens": 904,
+     "output_tokens": 81,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0019635,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2216,
+     "ttft_ms": null,
+     "input_tokens": 5833,
+     "output_tokens": 61,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009207,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6679,
+     "ttft_ms": 1796,
+     "input_tokens": 9289,
+     "output_tokens": 564,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0181635,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.029333,
+   "n_citations": 12,
+   "n_tokens": 24,
+   "errors": [],
+   "raw": "c02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2402.05120v2::S2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S4::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::A1.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.06322v1::S4.SS4.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2308.10848v3::S3.SS1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S3.SS3::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::A4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::A1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 22,
+   "reference_ranks": {
+    "2305.14325v1::S2.SS2::000": 11,
+    "2406.04692v1::S2.SS1::000": 4,
+    "2406.04692v1::S2.SS2::000": 14
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C20",
+    "C22",
+    "C7",
+    "C11",
+    "C5",
+    "C6",
+    "C14",
+    "C4",
+    "C16",
+    "C17",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c02",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "Compare how multiagent debate and Mixture-of-Agents combine the outputs of several LLMs.",
+   "started_utc": "2026-10-28T07:02:39+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.005,
+   "ttft_s": 6.18,
+   "total_s": 10.398,
+   "server_timings": {
+    "retrieval_ms": 1038,
+    "llm_ms_sum": 9764,
+    "ttft_ms": 6177,
+    "total_ms": 10395
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1953,
+     "ttft_ms": null,
+     "input_tokens": 899,
+     "output_tokens": 78,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0019335,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1878,
+     "ttft_ms": null,
+     "input_tokens": 6096,
+     "output_tokens": 27,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0093465,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5933,
+     "ttft_ms": 1719,
+     "input_tokens": 6202,
+     "output_tokens": 522,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013218,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.024499,
+   "n_citations": 9,
+   "n_tokens": 21,
+   "errors": [],
+   "raw": "c03.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2404.16130v2::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2404.16130v2::S1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2404.16130v2::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2404.16130v2::S7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2401.18059v1::S6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2404.16130v2::S5.SS1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2404.16130v2::S3.SS1.SSS5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2404.16130v2::S6.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2401.18059v1::S2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2401.18059v1::S3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2401.18059v1::A2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2401.18059v1::A2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2401.18059v1::A2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2401.18059v1::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 14,
+   "reference_ranks": {
+    "2404.16130v2::S3.SS1.SSS6::000": null,
+    "2404.16130v2::S4.SS1.SSS3::000": null,
+    "2401.18059v1::S3::002": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C1",
+    "C3",
+    "C7",
+    "C14",
+    "C9",
+    "C10",
+    "C5",
+    "C12"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c03",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do GraphRAG and RAPTOR each build summaries for retrieval?",
+   "started_utc": "2026-10-28T07:02:51+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 7.148,
+   "total_s": 10.89,
+   "server_timings": {
+    "retrieval_ms": 1229,
+    "llm_ms_sum": 9913,
+    "ttft_ms": 7145,
+    "total_ms": 10888
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2149,
+     "ttft_ms": null,
+     "input_tokens": 902,
+     "output_tokens": 89,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0020205,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2250,
+     "ttft_ms": null,
+     "input_tokens": 6972,
+     "output_tokens": 56,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010878,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5514,
+     "ttft_ms": 1774,
+     "input_tokens": 10374,
+     "output_tokens": 479,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0191535,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.032052,
+   "n_citations": 12,
+   "n_tokens": 19,
+   "errors": [],
+   "raw": "c04.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2311.09476v2::S1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S5.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.15217v2::S6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.15217v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2312.10997v5::S6.SS3.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2410.05779v3::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2410.05779v3::S4.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2312.10997v5::S6.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.15217v2::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.15217v2::S5::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.15217v2::S4::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.15217v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::A1.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2311.09476v2::S6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 21,
+   "reference_ranks": {
+    "2309.15217v2::S3::000": 13,
+    "2309.15217v2::S3::001": null,
+    "2311.09476v2::S3.SS3::000": 5,
+    "2311.09476v2::S3.SS3::001": null
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C7",
+    "C12",
+    "C4",
+    "C6",
+    "C13",
+    "C17",
+    "C19",
+    "C20",
+    "C3",
+    "C5",
+    "C8"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c04",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do RAGAS and ARES differ in how they evaluate RAG systems?",
+   "started_utc": "2026-10-28T07:03:02+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 5.65,
+   "total_s": 10.954,
+   "server_timings": {
+    "retrieval_ms": 58,
+    "llm_ms_sum": 10871,
+    "ttft_ms": 5648,
+    "total_ms": 10952
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2057,
+     "ttft_ms": null,
+     "input_tokens": 898,
+     "output_tokens": 76,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001917,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2135,
+     "ttft_ms": null,
+     "input_tokens": 3238,
+     "output_tokens": 108,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005667,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6679,
+     "ttft_ms": 1380,
+     "input_tokens": 4150,
+     "output_tokens": 646,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01107,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.018654,
+   "n_citations": 8,
+   "n_tokens": 27,
+   "errors": [],
+   "raw": "c05.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2305.15334v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2302.04761v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2302.04761v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2305.15334v1::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2305.15334v1::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2302.04761v1::S2::002": 5,
+    "2305.15334v1::S3.SS2::000": null,
+    "2305.15334v1::S1::001": null
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C1",
+    "C7",
+    "C8"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c05",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do Toolformer and Gorilla teach language models to use APIs?",
+   "started_utc": "2026-10-28T07:03:12+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 10.218,
+   "total_s": 16.018,
+   "server_timings": {
+    "retrieval_ms": 704,
+    "llm_ms_sum": 12205,
+    "ttft_ms": 10215,
+    "total_ms": 16016
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2517,
+     "ttft_ms": null,
+     "input_tokens": 905,
+     "output_tokens": 94,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0020625,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2116,
+     "ttft_ms": null,
+     "input_tokens": 5767,
+     "output_tokens": 51,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009033,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 7572,
+     "ttft_ms": 1775,
+     "input_tokens": 7258,
+     "output_tokens": 666,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.015882,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.026978,
+   "n_citations": 9,
+   "n_tokens": 27,
+   "errors": [],
+   "raw": "c06.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2501.05366v1::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.05366v1::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.05366v1::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.05366v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.05366v1::S3.SS5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.05366v1::S2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.05366v1::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.05366v1::S3.SS5::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S4.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::A9::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::A3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 14,
+   "reference_ranks": {
+    "2501.05366v1::S3.SS4::000": null,
+    "2501.05366v1::S3.SS4::002": null,
+    "2503.09516v5::S3.SS1::000": null,
+    "2503.09516v5::S3.SS1::002": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C4",
+    "C5",
+    "C10",
+    "C13",
+    "C12",
+    "C9",
+    "W1",
+    "W2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "tavily_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c06",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do Search-o1 and Search-R1 integrate search into a model's reasoning?",
+   "started_utc": "2026-10-28T07:03:23+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 10.66,
+   "total_s": 12.362,
+   "server_timings": {
+    "retrieval_ms": 492,
+    "llm_ms_sum": 12141,
+    "ttft_ms": 10657,
+    "total_ms": 12359
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2658,
+     "ttft_ms": null,
+     "input_tokens": 907,
+     "output_tokens": 103,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002133,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3039,
+     "ttft_ms": null,
+     "input_tokens": 6464,
+     "output_tokens": 1,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0097035,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6444,
+     "ttft_ms": 4744,
+     "input_tokens": 5816,
+     "output_tokens": 189,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0101415,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.021977,
+   "n_citations": 3,
+   "n_tokens": 9,
+   "errors": [],
+   "raw": "p01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS3.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::A1.SS3.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::A7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 11,
+   "reference_ranks": {
+    "2501.15228v2::S3.SS3.SSS3::000": 6
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C4",
+    "C6",
+    "C1"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "p01",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "How can a multi-agent RAG system trained with reinforcement learning stop its generator from writing overly long answers?",
+   "started_utc": "2026-10-28T07:03:39+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 10.217,
+   "total_s": 16.445,
+   "server_timings": {
+    "retrieval_ms": 909,
+    "llm_ms_sum": 13600,
+    "ttft_ms": 10214,
+    "total_ms": 16442
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3227,
+     "ttft_ms": null,
+     "input_tokens": 912,
+     "output_tokens": 101,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0021255,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2579,
+     "ttft_ms": null,
+     "input_tokens": 7106,
+     "output_tokens": 70,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011184,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 7794,
+     "ttft_ms": 1572,
+     "input_tokens": 9126,
+     "output_tokens": 697,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0189165,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.032225,
+   "n_citations": 8,
+   "n_tokens": 28,
+   "errors": [],
+   "raw": "p02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2308.03688v3::A4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2507.05257v4::A12.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2308.03688v3::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2308.03688v3::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::A4.SS6::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2606.06036v1::A3.SS5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S3.SS2.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S6.SS1.SSS6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2410.05779v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2410.05779v3::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2606.06036v1::A1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 14,
+   "reference_ranks": {
+    "2307.03172v3::S3.SS2::000": 9
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C6",
+    "C7",
+    "C9",
+    "C10",
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "tavily_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "p02",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "Do LLMs reliably find an exact key in a long list of key-value pairs, and does the key's position matter?",
+   "started_utc": "2026-10-28T07:03:52+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.005,
+   "ttft_s": 7.092,
+   "total_s": 10.831,
+   "server_timings": {
+    "retrieval_ms": 756,
+    "llm_ms_sum": 10300,
+    "ttft_ms": 7088,
+    "total_ms": 10827
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2603,
+     "ttft_ms": null,
+     "input_tokens": 922,
+     "output_tokens": 93,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0020805,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2104,
+     "ttft_ms": null,
+     "input_tokens": 6142,
+     "output_tokens": 32,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009453,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5593,
+     "ttft_ms": 1856,
+     "input_tokens": 6821,
+     "output_tokens": 487,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013884,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.025417,
+   "n_citations": 3,
+   "n_tokens": 20,
+   "errors": [],
+   "raw": "p03.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2310.06770v3::S2.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS5::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS5::005",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::Ax1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::S2.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 14,
+   "reference_ranks": {
+    "2310.06770v3::S4.SS1::000": 4
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C4",
+    "C8",
+    "C14"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "p03",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "When a code repository is too big for the context window, how do the GitHub-issue benchmark baselines choose files, and how often do they get the files the real fix touched?",
+   "started_utc": "2026-10-28T07:04:08+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 37.653,
+   "total_s": 40.673,
+   "server_timings": {
+    "retrieval_ms": 30951,
+    "llm_ms_sum": 10062,
+    "ttft_ms": 37651,
+    "total_ms": 40670
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3394,
+     "ttft_ms": null,
+     "input_tokens": 903,
+     "output_tokens": 87,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002007,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1918,
+     "ttft_ms": null,
+     "input_tokens": 5787,
+     "output_tokens": 1,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008688,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4750,
+     "ttft_ms": 1735,
+     "input_tokens": 4101,
+     "output_tokens": 355,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008814,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.019509,
+   "n_citations": 4,
+   "n_tokens": 15,
+   "errors": [],
+   "raw": "p04.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2303.17651v2::A7::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::A7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S4::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S5::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::A5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 9,
+   "reference_ranks": {
+    "2303.17651v2::S4::003": 3
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C1",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "p04",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "Can a small conversational model like Vicuna improve its own outputs through iterative self-feedback?",
+   "started_utc": "2026-10-28T07:04:19+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 11.521,
+   "total_s": 14.004,
+   "server_timings": {
+    "retrieval_ms": 1319,
+    "llm_ms_sum": 13180,
+    "ttft_ms": 11519,
+    "total_ms": 14002
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2581,
+     "ttft_ms": null,
+     "input_tokens": 904,
+     "output_tokens": 96,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002076,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6579,
+     "ttft_ms": null,
+     "input_tokens": 5558,
+     "output_tokens": 90,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009012,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4020,
+     "ttft_ms": 1540,
+     "input_tokens": 6640,
+     "output_tokens": 296,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01218,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.023268,
+   "n_citations": 7,
+   "n_tokens": 13,
+   "errors": [],
+   "raw": "h01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2503.09516v5::S4.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::A3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::A9::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S4.SS3::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S3.SS1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::A6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S5.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.09516v5::S5.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 13,
+   "reference_ranks": {
+    "2511.05385v2::S5.SS1.SSS2::001": null,
+    "2503.09516v5::S3.SS1::000": 10
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C5",
+    "C10",
+    "C11",
+    "C13",
+    "C9",
+    "C8"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "h01",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "How do Search-R1 and R1-Searcher differ in how they are trained?",
+   "started_utc": "2026-10-28T07:05:00+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 7.631,
+   "total_s": 10.842,
+   "server_timings": {
+    "retrieval_ms": 1290,
+    "llm_ms_sum": 10087,
+    "ttft_ms": 7628,
+    "total_ms": 10840
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "gemini-openrouter"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3427,
+     "ttft_ms": null,
+     "input_tokens": 897,
+     "output_tokens": 120,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0022455,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1647,
+     "ttft_ms": null,
+     "input_tokens": 7552,
+     "output_tokens": 64,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011808,
+     "cost_source": "reported"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "model_id": "google/gemini-3.8-flash",
+     "model_returned": "google/gemini-3.8-flash",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5013,
+     "ttft_ms": 1804,
+     "input_tokens": 9614,
+     "output_tokens": 379,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0172635,
+     "cost_source": "reported"
+    }
+   ],
+   "cost_usd": 0.031317,
+   "n_citations": 9,
+   "n_tokens": 16,
+   "errors": [],
+   "raw": "h02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2503.13657v3::A2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A7.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.07924v5::S4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A1.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A12.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A6::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A1.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A10::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::A1.SS1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::A1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 20,
+   "reference_ranks": {
+    "2402.05120v2::S5.SS2::000": null,
+    "2307.07924v5::S6::000": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C4",
+    "C7",
+    "C8",
+    "C18",
+    "C3",
+    "C9",
+    "C14",
+    "C10"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "gemini-openrouter",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=gemini-openrouter (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "h02",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "Do multi-agent methods always beat single-agent approaches?",
+   "started_utc": "2026-10-28T07:05:14+00:00"
+  }
+ ]
+}

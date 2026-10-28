@@ -1,0 +1,10 @@
+2026-10-28T07:09:28.204875Z	31.089447232s	https://paper-analyst-g7b7dxmyuq-uw.a.run.app/api/chat	
+2026-10-28T07:09:28.225540Z			Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU utilization, request throughput, etc.) or no existing capacity for current traffic.
+2026-10-28T07:09:42.499976Z			INFO:     Started server process [1]
+2026-10-28T07:09:42.500067Z			INFO:     Waiting for application startup.
+2026-10-28T07:09:48.318292Z			INFO:     paper_analyst: fault injection: per-request enabled for requests with the token
+2026-10-28T07:09:48.318358Z			INFO:     paper_analyst: index ready: 4521 chunks, 1536-d, live search enabled, startup 5.82s
+2026-10-28T07:09:48.318550Z			INFO:     Application startup complete.
+2026-10-28T07:09:48.321501Z			INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+2026-10-28T07:09:48.322208Z			Default STARTUP TCP probe succeeded after 1 attempt for container "paper-analyst-1" on port 8080.
+2026-10-28T07:09:48.462268Z			INFO:     2603:8000:b9f0:550:29ee:59c9:546:5788:0 - "POST /api/chat HTTP/1.1" 200 OK

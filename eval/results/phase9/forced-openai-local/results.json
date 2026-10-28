@@ -1,0 +1,6673 @@
+{
+ "url": "http://localhost:8765",
+ "label": "forced openai, local, code 85e6649",
+ "testset_sha256": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382",
+ "results": [
+  {
+   "http_status": 200,
+   "first_byte_s": 0.007,
+   "ttft_s": 6.962,
+   "total_s": 8.906,
+   "server_timings": {
+    "retrieval_ms": 43,
+    "llm_ms_sum": 8825,
+    "ttft_ms": 6957,
+    "total_ms": 8901
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2891,
+     "ttft_ms": null,
+     "input_tokens": 864,
+     "output_tokens": 82,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002548,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2251,
+     "ttft_ms": null,
+     "input_tokens": 2574,
+     "output_tokens": 110,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006248,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3683,
+     "ttft_ms": 1741,
+     "input_tokens": 4284,
+     "output_tokens": 173,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010298,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.019094,
+   "n_citations": 2,
+   "n_tokens": 170,
+   "errors": [],
+   "raw": "s01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2501.15228v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2501.15228v2::S3.SS3.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::A4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::A4.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2501.15228v2::S3.SS3.SSS3::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s01",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "In MMOA-RAG, how is the Generator agent rewarded?",
+   "started_utc": "2026-10-28T06:51:41+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.416,
+   "total_s": 7.46,
+   "server_timings": {
+    "retrieval_ms": 17,
+    "llm_ms_sum": 7411,
+    "ttft_ms": 6413,
+    "total_ms": 7457
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3099,
+     "ttft_ms": null,
+     "input_tokens": 874,
+     "output_tokens": 88,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002628,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1616,
+     "ttft_ms": null,
+     "input_tokens": 2933,
+     "output_tokens": 82,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006686,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2696,
+     "ttft_ms": 1654,
+     "input_tokens": 6066,
+     "output_tokens": 92,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013052,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.022366,
+   "n_citations": 2,
+   "n_tokens": 89,
+   "errors": [],
+   "raw": "s02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2511.05385v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::004",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::005",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2511.05385v2::S5.SS1.SSS3::006",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 10,
+   "reference_ranks": {
+    "2511.05385v2::S5.SS1.SSS2::001": 3
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s02",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Which iterative RAG baselines does TeaRAG compare against, and what retriever do the baselines use?",
+   "started_utc": "2026-10-28T06:51:50+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.007,
+   "ttft_s": 6.253,
+   "total_s": 11.099,
+   "server_timings": {
+    "retrieval_ms": 62,
+    "llm_ms_sum": 11006,
+    "ttft_ms": 6248,
+    "total_ms": 11094
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3309,
+     "ttft_ms": null,
+     "input_tokens": 869,
+     "output_tokens": 84,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002578,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1783,
+     "ttft_ms": null,
+     "input_tokens": 2237,
+     "output_tokens": 104,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005514,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5914,
+     "ttft_ms": 1071,
+     "input_tokens": 2047,
+     "output_tokens": 418,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008274,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.016366,
+   "n_citations": 3,
+   "n_tokens": 415,
+   "errors": [],
+   "raw": "s03.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2307.03172v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2307.03172v3::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.03172v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.03172v3::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2307.03172v3::S3.SS2::000": 3
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C3",
+    "C2",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s03",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How do language models perform on the synthetic key-value retrieval task in Lost in the Middle?",
+   "started_utc": "2026-10-28T06:51:58+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.005,
+   "ttft_s": 5.686,
+   "total_s": 9.651,
+   "server_timings": {
+    "retrieval_ms": 19,
+    "llm_ms_sum": 9601,
+    "ttft_ms": 5682,
+    "total_ms": 9647
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2959,
+     "ttft_ms": null,
+     "input_tokens": 867,
+     "output_tokens": 90,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002634,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1576,
+     "ttft_ms": null,
+     "input_tokens": 2618,
+     "output_tokens": 107,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006306,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5066,
+     "ttft_ms": 1102,
+     "input_tokens": 2317,
+     "output_tokens": 278,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.007414,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.016354,
+   "n_citations": 2,
+   "n_tokens": 275,
+   "errors": [],
+   "raw": "s04.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2404.16130v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2404.16130v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2404.16130v2::S3.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2404.16130v2::S4.SS1.SSS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2404.16130v2::S6.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 5,
+   "reference_ranks": {
+    "2404.16130v2::S3.SS2::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s04",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does GraphRAG generate the global sensemaking questions it uses for evaluation?",
+   "started_utc": "2026-10-28T06:52:09+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.002,
+   "ttft_s": 6.009,
+   "total_s": 9.069,
+   "server_timings": {
+    "retrieval_ms": 631,
+    "llm_ms_sum": 8826,
+    "ttft_ms": 6007,
+    "total_ms": 9067
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2890,
+     "ttft_ms": null,
+     "input_tokens": 867,
+     "output_tokens": 86,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002594,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1584,
+     "ttft_ms": null,
+     "input_tokens": 5580,
+     "output_tokens": 26,
+     "reasoning_tokens": 19,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01142,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4352,
+     "ttft_ms": 1295,
+     "input_tokens": 5347,
+     "output_tokens": 253,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013224,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.027238,
+   "n_citations": 2,
+   "n_tokens": 250,
+   "errors": [],
+   "raw": "s05.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2305.14325v1::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::A1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.12338v1::S2.SSx2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.12338v1::S6::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S6::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2308.10848v3::A1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2603.15798v1::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 12,
+   "reference_ranks": {
+    "2305.14325v1::S3.SS1::000": 1
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "s05",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "On which reasoning tasks is multiagent debate evaluated, and against which baselines?",
+   "started_utc": "2026-10-28T06:52:19+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.005,
+   "ttft_s": 5.478,
+   "total_s": 9.532,
+   "server_timings": {
+    "retrieval_ms": 48,
+    "llm_ms_sum": 9451,
+    "ttft_ms": 5475,
+    "total_ms": 9529
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2054,
+     "ttft_ms": null,
+     "input_tokens": 860,
+     "output_tokens": 75,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00247,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2322,
+     "ttft_ms": null,
+     "input_tokens": 1760,
+     "output_tokens": 98,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0045,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5075,
+     "ttft_ms": 1025,
+     "input_tokens": 3409,
+     "output_tokens": 233,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009148,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.016118,
+   "n_citations": 2,
+   "n_tokens": 230,
+   "errors": [],
+   "raw": "s06.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2307.07924v5::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2307.07924v5::S6::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.07924v5::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.07924v5::S4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.07924v5::S4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.07924v5::S4::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2307.07924v5::S4::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {
+    "2307.07924v5::S6::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s06",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "What limitations do the ChatDev authors acknowledge?",
+   "started_utc": "2026-10-28T06:52:28+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 7.407,
+   "total_s": 11.749,
+   "server_timings": {
+    "retrieval_ms": 1110,
+    "llm_ms_sum": 11553,
+    "ttft_ms": 7403,
+    "total_ms": 11746
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4256,
+     "ttft_ms": null,
+     "input_tokens": 870,
+     "output_tokens": 176,
+     "reasoning_tokens": 83,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0035,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1511,
+     "ttft_ms": null,
+     "input_tokens": 5579,
+     "output_tokens": 21,
+     "reasoning_tokens": 14,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011368,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5786,
+     "ttft_ms": 1446,
+     "input_tokens": 3937,
+     "output_tokens": 257,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010444,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.025312,
+   "n_citations": 5,
+   "n_tokens": 254,
+   "errors": [],
+   "raw": "s07.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2406.04692v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S3.SS3::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2406.04692v1::S2.SS2::000": 1
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C6",
+    "C8",
+    "C2",
+    "C3"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "s07",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How is a Mixture-of-Agents layer structured, and how are the layer outputs combined?",
+   "started_utc": "2026-10-28T06:52:37+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.245,
+   "total_s": 11.531,
+   "server_timings": {
+    "retrieval_ms": 228,
+    "llm_ms_sum": 11271,
+    "ttft_ms": 6242,
+    "total_ms": 11529
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2429,
+     "ttft_ms": null,
+     "input_tokens": 871,
+     "output_tokens": 88,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002622,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2505,
+     "ttft_ms": null,
+     "input_tokens": 1956,
+     "output_tokens": 119,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005102,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6337,
+     "ttft_ms": 1054,
+     "input_tokens": 3316,
+     "output_tokens": 341,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010042,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.017766,
+   "n_citations": 6,
+   "n_tokens": 338,
+   "errors": [],
+   "raw": "s08.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2402.05120v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2402.05120v2::S5.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2402.05120v2::S7::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2402.05120v2::S4::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2402.05120v2::S5.SS5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2402.05120v2::S4::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2402.05120v2::A2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2402.05120v2::S4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2402.05120v2::S5.SS2::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C4",
+    "C8",
+    "C5",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s08",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Does the sampling-and-voting method from More Agents Is All You Need combine well with other methods?",
+   "started_utc": "2026-10-28T06:52:49+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 6.234,
+   "total_s": 17.101,
+   "server_timings": {
+    "retrieval_ms": 305,
+    "llm_ms_sum": 16766,
+    "ttft_ms": 6231,
+    "total_ms": 17098
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2422,
+     "ttft_ms": null,
+     "input_tokens": 863,
+     "output_tokens": 87,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002596,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2317,
+     "ttft_ms": null,
+     "input_tokens": 2449,
+     "output_tokens": 129,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006188,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 12027,
+     "ttft_ms": 1164,
+     "input_tokens": 7599,
+     "output_tokens": 601,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.021208,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.029992,
+   "n_citations": 8,
+   "n_tokens": 598,
+   "errors": [],
+   "raw": "s09.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2405.15793v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2405.15793v3::S5.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::S5.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::S5.SS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::A2.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::A2.SS4::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A4.SSx4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A4.SSx2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A4.SSx2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A4.SSx3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS3::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2405.15793v3::A2.SS3.SSS3::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 15,
+   "reference_ranks": {
+    "2405.15793v3::S5.SS2::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C15",
+    "C11",
+    "C14",
+    "C12",
+    "C3",
+    "C4",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s09",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "What problem-solving patterns does SWE-agent show when fixing issues?",
+   "started_utc": "2026-10-28T06:53:00+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 5.982,
+   "total_s": 10.576,
+   "server_timings": {
+    "retrieval_ms": 55,
+    "llm_ms_sum": 10490,
+    "ttft_ms": 5980,
+    "total_ms": 10574
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2744,
+     "ttft_ms": null,
+     "input_tokens": 866,
+     "output_tokens": 79,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002522,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2094,
+     "ttft_ms": null,
+     "input_tokens": 2501,
+     "output_tokens": 104,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006042,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5652,
+     "ttft_ms": 1061,
+     "input_tokens": 1803,
+     "output_tokens": 256,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006166,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.01473,
+   "n_citations": 3,
+   "n_tokens": 253,
+   "errors": [],
+   "raw": "s10.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2310.06770v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2310.06770v3::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2310.06770v3::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2310.06770v3::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2310.06770v3::S4.SS1::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s10",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does SWE-bench choose which files to give the model as context?",
+   "started_utc": "2026-10-28T06:53:18+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.457,
+   "total_s": 12.523,
+   "server_timings": {
+    "retrieval_ms": 450,
+    "llm_ms_sum": 12041,
+    "ttft_ms": 6454,
+    "total_ms": 12520
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2235,
+     "ttft_ms": null,
+     "input_tokens": 872,
+     "output_tokens": 101,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002754,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2558,
+     "ttft_ms": null,
+     "input_tokens": 2216,
+     "output_tokens": 125,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005682,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 7248,
+     "ttft_ms": 1185,
+     "input_tokens": 5824,
+     "output_tokens": 593,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.017578,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.026014,
+   "n_citations": 4,
+   "n_tokens": 590,
+   "errors": [],
+   "raw": "s11.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2306.06070v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2306.06070v3::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2306.06070v3::S4.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2306.06070v3::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2306.06070v3::S4.SS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2306.06070v3::A3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2306.06070v3::A4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2306.06070v3::A4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2306.06070v3::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2306.06070v3::A2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2306.06070v3::S1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 11,
+   "reference_ranks": {
+    "2306.06070v3::S4.SS3::001": 5
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C3",
+    "C5",
+    "C2",
+    "C7"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s11",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How do GPT-3.5 and GPT-4 perform on Mind2Web with in-context learning?",
+   "started_utc": "2026-10-28T06:53:28+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 7.876,
+   "total_s": 13.467,
+   "server_timings": {
+    "retrieval_ms": 491,
+    "llm_ms_sum": 13291,
+    "ttft_ms": 7873,
+    "total_ms": 13464
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2650,
+     "ttft_ms": null,
+     "input_tokens": 871,
+     "output_tokens": 92,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002662,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3919,
+     "ttft_ms": null,
+     "input_tokens": 7715,
+     "output_tokens": 23,
+     "reasoning_tokens": 16,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01566,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6722,
+     "ttft_ms": 1134,
+     "input_tokens": 5137,
+     "output_tokens": 341,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013684,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.032006,
+   "n_citations": 4,
+   "n_tokens": 338,
+   "errors": [],
+   "raw": "s12.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2607.26637v1::S4.SS4::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS4::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS2::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S3::004",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS4::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::A4.SS7::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::A2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2607.26637v1::S4.SS4::002": 6
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C6",
+    "C5",
+    "C2",
+    "C1"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "s12",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "In the filesystem-based memory study, how do curated stores and the episode log differ as memory grows?",
+   "started_utc": "2026-10-28T06:53:41+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 5.519,
+   "total_s": 8.609,
+   "server_timings": {
+    "retrieval_ms": 61,
+    "llm_ms_sum": 8515,
+    "ttft_ms": 5516,
+    "total_ms": 8606
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2241,
+     "ttft_ms": null,
+     "input_tokens": 864,
+     "output_tokens": 87,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002598,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 1771,
+     "ttft_ms": null,
+     "input_tokens": 2145,
+     "output_tokens": 104,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00533,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4503,
+     "ttft_ms": 1416,
+     "input_tokens": 2356,
+     "output_tokens": 253,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.007242,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.01517,
+   "n_citations": 3,
+   "n_tokens": 250,
+   "errors": [],
+   "raw": "s13.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2502.12110v11::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2502.12110v11::S3.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2502.12110v11::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2502.12110v11::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 4,
+   "reference_ranks": {
+    "2502.12110v11::S3.SS4::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C4"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s13",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does A-MEM retrieve relevant memories for a new interaction?",
+   "started_utc": "2026-10-28T06:53:54+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.59,
+   "total_s": 11.914,
+   "server_timings": {
+    "retrieval_ms": 48,
+    "llm_ms_sum": 11835,
+    "ttft_ms": 6587,
+    "total_ms": 11911
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3498,
+     "ttft_ms": null,
+     "input_tokens": 862,
+     "output_tokens": 85,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002574,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2021,
+     "ttft_ms": null,
+     "input_tokens": 2587,
+     "output_tokens": 104,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006214,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6316,
+     "ttft_ms": 995,
+     "input_tokens": 2674,
+     "output_tokens": 533,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010678,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.019466,
+   "n_citations": 4,
+   "n_tokens": 530,
+   "errors": [],
+   "raw": "s14.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2403.16971v5::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2403.16971v5::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2403.16971v5::S4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2403.16971v5::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2403.16971v5::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 5,
+   "reference_ranks": {
+    "2403.16971v5::S4.SS2::000": 4
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C4",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s14",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Does running agents on AIOS change their benchmark performance?",
+   "started_utc": "2026-10-28T06:54:03+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 5.5,
+   "total_s": 10.465,
+   "server_timings": {
+    "retrieval_ms": 44,
+    "llm_ms_sum": 10390,
+    "ttft_ms": 5496,
+    "total_ms": 10462
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2290,
+     "ttft_ms": null,
+     "input_tokens": 868,
+     "output_tokens": 95,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002686,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2205,
+     "ttft_ms": null,
+     "input_tokens": 2240,
+     "output_tokens": 98,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00546,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5895,
+     "ttft_ms": 930,
+     "input_tokens": 3267,
+     "output_tokens": 289,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009424,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.01757,
+   "n_citations": 3,
+   "n_tokens": 286,
+   "errors": [],
+   "raw": "s15.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2303.17651v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2303.17651v2::A7::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2303.17651v2::A7::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2303.17651v2::A7::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2303.17651v2::S6::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2303.17651v2::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2303.17651v2::S3.SS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {
+    "2303.17651v2::S4::003": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C4",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s15",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "Does Self-Refine work with weaker models such as Vicuna-13B?",
+   "started_utc": "2026-10-28T06:54:15+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.002,
+   "ttft_s": 8.673,
+   "total_s": 16.729,
+   "server_timings": {
+    "retrieval_ms": 1337,
+    "llm_ms_sum": 15363,
+    "ttft_ms": 8671,
+    "total_ms": 16726
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2916,
+     "ttft_ms": null,
+     "input_tokens": 866,
+     "output_tokens": 89,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002622,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3170,
+     "ttft_ms": null,
+     "input_tokens": 2241,
+     "output_tokens": 129,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005772,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 9277,
+     "ttft_ms": 1225,
+     "input_tokens": 4587,
+     "output_tokens": 471,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013884,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.022278,
+   "n_citations": 5,
+   "n_tokens": 468,
+   "errors": [],
+   "raw": "s16.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2305.18323v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2305.18323v1::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2305.18323v1::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2305.18323v1::A2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2305.18323v1::S3.SS1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2305.18323v1::S4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2305.18323v1::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2305.18323v1::S3.SS2.SSS1::004",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2305.18323v1::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 9,
+   "reference_ranks": {
+    "2305.18323v1::S2.SS3::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C7",
+    "C4",
+    "C3",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s16",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does ReWOO use specialization to make a small model plan well?",
+   "started_utc": "2026-10-28T06:54:25+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 10.357,
+   "total_s": 23.232,
+   "server_timings": {
+    "retrieval_ms": 599,
+    "llm_ms_sum": 22602,
+    "ttft_ms": 10354,
+    "total_ms": 23229
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2452,
+     "ttft_ms": null,
+     "input_tokens": 862,
+     "output_tokens": 83,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002554,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3624,
+     "ttft_ms": null,
+     "input_tokens": 2139,
+     "output_tokens": 150,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005778,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 16526,
+     "ttft_ms": 3655,
+     "input_tokens": 8698,
+     "output_tokens": 995,
+     "reasoning_tokens": 78,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.027346,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.035678,
+   "n_citations": 10,
+   "n_tokens": 908,
+   "errors": [],
+   "raw": "s17.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2302.04761v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2302.04761v1::S4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS5::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2.SSS4::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::A3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::A1.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 19,
+   "reference_ranks": {
+    "2302.04761v1::S4.SS2::000": 5
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C5",
+    "C3",
+    "C4",
+    "C7",
+    "C8",
+    "C10",
+    "C6",
+    "C14",
+    "C15",
+    "C12"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s17",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How is Toolformer decoded and evaluated on downstream tasks?",
+   "started_utc": "2026-10-28T06:54:42+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 6.198,
+   "total_s": 10.598,
+   "server_timings": {
+    "retrieval_ms": 36,
+    "llm_ms_sum": 10534,
+    "ttft_ms": 6196,
+    "total_ms": 10596
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2466,
+     "ttft_ms": null,
+     "input_tokens": 865,
+     "output_tokens": 83,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00256,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2221,
+     "ttft_ms": null,
+     "input_tokens": 2694,
+     "output_tokens": 101,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006398,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5847,
+     "ttft_ms": 1448,
+     "input_tokens": 3289,
+     "output_tokens": 250,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.009078,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.018036,
+   "n_citations": 2,
+   "n_tokens": 247,
+   "errors": [],
+   "raw": "s18.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2607.04686v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2607.04686v1::S5.SS5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2607.04686v1::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2607.04686v1::S5::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2607.04686v1::S5::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2607.04686v1::S3.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 6,
+   "reference_ranks": {
+    "2607.04686v1::S5.SS5::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s18",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does tool-result faithfulness vary by domain in ToolFailBench?",
+   "started_utc": "2026-10-28T06:55:05+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.002,
+   "ttft_s": 6.091,
+   "total_s": 12.827,
+   "server_timings": {
+    "retrieval_ms": 51,
+    "llm_ms_sum": 12737,
+    "ttft_ms": 6089,
+    "total_ms": 12825
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2718,
+     "ttft_ms": null,
+     "input_tokens": 868,
+     "output_tokens": 83,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002566,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2155,
+     "ttft_ms": null,
+     "input_tokens": 2523,
+     "output_tokens": 101,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006056,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 7864,
+     "ttft_ms": 1132,
+     "input_tokens": 3315,
+     "output_tokens": 415,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01078,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.019402,
+   "n_citations": 4,
+   "n_tokens": 412,
+   "errors": [],
+   "raw": "s19.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2505.15872v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2505.15872v2::A1.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2505.15872v2::A1.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2505.15872v2::A1.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2505.15872v2::S3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2505.15872v2::S3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 6,
+   "reference_ranks": {
+    "2505.15872v2::S3::000": 5
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C3",
+    "C4",
+    "C2",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s19",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does the InfoDeepSeek agentic RAG framework carry out the retrieval stage?",
+   "started_utc": "2026-10-28T06:55:16+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 5.998,
+   "total_s": 9.402,
+   "server_timings": {
+    "retrieval_ms": 29,
+    "llm_ms_sum": 9344,
+    "ttft_ms": 5995,
+    "total_ms": 9399
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2643,
+     "ttft_ms": null,
+     "input_tokens": 872,
+     "output_tokens": 88,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002624,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2047,
+     "ttft_ms": null,
+     "input_tokens": 3827,
+     "output_tokens": 107,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008724,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 4654,
+     "ttft_ms": 1251,
+     "input_tokens": 5729,
+     "output_tokens": 241,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013868,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.025216,
+   "n_citations": 2,
+   "n_tokens": 238,
+   "errors": [],
+   "raw": "s20.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2309.07864v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS2::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S4.SS1.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS5::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS5::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.07864v3::S6.SS5::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 10,
+   "reference_ranks": {
+    "2309.07864v3::S6.SS2::003": 5
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C4",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s20",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "How does the Rise and Potential of LLM-based Agents survey suggest evaluating agents' ability to keep learning?",
+   "started_utc": "2026-10-28T06:55:29+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.001,
+   "ttft_s": 7.731,
+   "total_s": 15.158,
+   "server_timings": {
+    "retrieval_ms": 614,
+    "llm_ms_sum": 14523,
+    "ttft_ms": 7728,
+    "total_ms": 15156
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2848,
+     "ttft_ms": null,
+     "input_tokens": 869,
+     "output_tokens": 91,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002648,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3104,
+     "ttft_ms": null,
+     "input_tokens": 3303,
+     "output_tokens": 124,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.007846,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 8571,
+     "ttft_ms": 1147,
+     "input_tokens": 8165,
+     "output_tokens": 357,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.0199,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.030394,
+   "n_citations": 7,
+   "n_tokens": 354,
+   "errors": [],
+   "raw": "c01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2310.08560v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2502.12110v11::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2310.08560v2::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S2.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2310.08560v2::S2.SS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S3.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S4.SS7::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2502.12110v11::S4.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 19,
+   "reference_ranks": {
+    "2310.08560v2::S1::001": 6,
+    "2310.08560v2::S2.SS1::000": 4,
+    "2502.12110v11::S3.SS1::000": 13,
+    "2502.12110v11::S3.SS3::000": 15
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C8",
+    "C13",
+    "C15",
+    "C4",
+    "C3",
+    "C5",
+    "C12"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c01",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do MemGPT and A-MEM differ in how they organize an agent's memory?",
+   "started_utc": "2026-10-28T06:55:38+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.005,
+   "ttft_s": 7.772,
+   "total_s": 14.762,
+   "server_timings": {
+    "retrieval_ms": 1283,
+    "llm_ms_sum": 14240,
+    "ttft_ms": 7769,
+    "total_ms": 14759
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3774,
+     "ttft_ms": null,
+     "input_tokens": 871,
+     "output_tokens": 108,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002822,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2431,
+     "ttft_ms": null,
+     "input_tokens": 4785,
+     "output_tokens": 49,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01006,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 8035,
+     "ttft_ms": 1049,
+     "input_tokens": 5696,
+     "output_tokens": 426,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.015652,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.028534,
+   "n_citations": 8,
+   "n_tokens": 423,
+   "errors": [],
+   "raw": "c02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2402.05120v2::S2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S4::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::A1.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S2.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2305.14325v1::S3.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S3.SS3::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2406.04692v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 15,
+   "reference_ranks": {
+    "2305.14325v1::S2.SS2::000": 7,
+    "2406.04692v1::S2.SS1::000": 4,
+    "2406.04692v1::S2.SS2::000": 15
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C10",
+    "C15",
+    "C4",
+    "C7",
+    "C13",
+    "C11",
+    "C8",
+    "C6"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c02",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "Compare how multiagent debate and Mixture-of-Agents combine the outputs of several LLMs.",
+   "started_utc": "2026-10-28T06:55:53+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 6.004,
+   "total_s": 15.054,
+   "server_timings": {
+    "retrieval_ms": 359,
+    "llm_ms_sum": 14670,
+    "ttft_ms": 6002,
+    "total_ms": 15051
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2142,
+     "ttft_ms": null,
+     "input_tokens": 865,
+     "output_tokens": 93,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00266,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2272,
+     "ttft_ms": null,
+     "input_tokens": 3497,
+     "output_tokens": 132,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.008314,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 10256,
+     "ttft_ms": 1208,
+     "input_tokens": 6525,
+     "output_tokens": 436,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01741,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.028384,
+   "n_citations": 9,
+   "n_tokens": 433,
+   "errors": [],
+   "raw": "c03.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2401.18059v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2404.16130v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2404.16130v2::A2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2404.16130v2::S3.SS1.SSS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2404.16130v2::S3.SS1.SSS5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2404.16130v2::S4.SS1.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2404.16130v2::S4.SS1.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2404.16130v2::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2401.18059v1::S3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2401.18059v1::S3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2401.18059v1::S3::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2401.18059v1::S3::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2401.18059v1::S3::004",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2401.18059v1::S3::005",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 14,
+   "reference_ranks": {
+    "2404.16130v2::S3.SS1.SSS6::000": null,
+    "2404.16130v2::S4.SS1.SSS3::000": 6,
+    "2401.18059v1::S3::002": 11
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C9",
+    "C8",
+    "C4",
+    "C5",
+    "C10",
+    "C11",
+    "C12",
+    "C13"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c03",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do GraphRAG and RAPTOR each build summaries for retrieval?",
+   "started_utc": "2026-10-28T06:56:08+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 10.111,
+   "total_s": 19.047,
+   "server_timings": {
+    "retrieval_ms": 36,
+    "llm_ms_sum": 18987,
+    "ttft_ms": 10108,
+    "total_ms": 19044
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2649,
+     "ttft_ms": null,
+     "input_tokens": 868,
+     "output_tokens": 97,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002706,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2631,
+     "ttft_ms": null,
+     "input_tokens": 2565,
+     "output_tokens": 129,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00642,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 13707,
+     "ttft_ms": 4775,
+     "input_tokens": 3303,
+     "output_tokens": 656,
+     "reasoning_tokens": 102,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013166,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.022292,
+   "n_citations": 7,
+   "n_tokens": 545,
+   "errors": [],
+   "raw": "c04.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2309.15217v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2311.09476v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2309.15217v2::S3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.15217v2::S3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.15217v2::S3::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.15217v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2309.15217v2::S5::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 7,
+   "reference_ranks": {
+    "2309.15217v2::S3::000": 3,
+    "2309.15217v2::S3::001": 4,
+    "2311.09476v2::S3.SS3::000": null,
+    "2311.09476v2::S3.SS3::001": null
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c04",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do RAGAS and ARES differ in how they evaluate RAG systems?",
+   "started_utc": "2026-10-28T06:56:23+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 9.182,
+   "total_s": 17.879,
+   "server_timings": {
+    "retrieval_ms": 318,
+    "llm_ms_sum": 17539,
+    "ttft_ms": 9179,
+    "total_ms": 17877
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2231,
+     "ttft_ms": null,
+     "input_tokens": 864,
+     "output_tokens": 89,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002618,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3057,
+     "ttft_ms": null,
+     "input_tokens": 2992,
+     "output_tokens": 126,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.007244,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 12251,
+     "ttft_ms": 3556,
+     "input_tokens": 4393,
+     "output_tokens": 606,
+     "reasoning_tokens": 49,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.014846,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.024708,
+   "n_citations": 7,
+   "n_tokens": 548,
+   "errors": [],
+   "raw": "c05.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2305.15334v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2302.04761v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2302.04761v1::S2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S2::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2302.04761v1::S7::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2302.04761v1::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 9,
+   "reference_ranks": {
+    "2302.04761v1::S2::002": 5,
+    "2305.15334v1::S3.SS2::000": null,
+    "2305.15334v1::S1::001": null
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C3",
+    "C1",
+    "C5",
+    "C4",
+    "C6",
+    "C7"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c05",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do Toolformer and Gorilla teach language models to use APIs?",
+   "started_utc": "2026-10-28T06:56:42+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 8.764,
+   "total_s": 15.695,
+   "server_timings": {
+    "retrieval_ms": 370,
+    "llm_ms_sum": 15304,
+    "ttft_ms": 8761,
+    "total_ms": 15693
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2615,
+     "ttft_ms": null,
+     "input_tokens": 868,
+     "output_tokens": 95,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002686,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2682,
+     "ttft_ms": null,
+     "input_tokens": 3105,
+     "output_tokens": 123,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.00744,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 10007,
+     "ttft_ms": 3079,
+     "input_tokens": 5894,
+     "output_tokens": 511,
+     "reasoning_tokens": 67,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.016898,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.027024,
+   "n_citations": 7,
+   "n_tokens": 435,
+   "errors": [],
+   "raw": "c06.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2501.05366v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2503.09516v5::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2501.05366v1::S3.SS4::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2501.05366v1::S3.SS4::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2501.05366v1::S3.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2501.05366v1::S3.SS3::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2501.05366v1::S3.SS4::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2501.05366v1::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2503.09516v5::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2503.09516v5::S3.SS1::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 11,
+   "reference_ranks": {
+    "2501.05366v1::S3.SS4::000": 5,
+    "2501.05366v1::S3.SS4::002": 4,
+    "2503.09516v5::S3.SS1::000": 9,
+    "2503.09516v5::S3.SS1::002": 11
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C8",
+    "C5",
+    "C9",
+    "C7",
+    "C4",
+    "C2",
+    "C10"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c06",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do Search-o1 and Search-R1 integrate search into a model's reasoning?",
+   "started_utc": "2026-10-28T06:57:00+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.003,
+   "ttft_s": 7.946,
+   "total_s": 12.013,
+   "server_timings": {
+    "retrieval_ms": 970,
+    "llm_ms_sum": 11330,
+    "ttft_ms": 7944,
+    "total_ms": 12010
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3245,
+     "ttft_ms": null,
+     "input_tokens": 872,
+     "output_tokens": 108,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002824,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2911,
+     "ttft_ms": null,
+     "input_tokens": 5939,
+     "output_tokens": 68,
+     "reasoning_tokens": 18,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.012558,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5174,
+     "ttft_ms": 1111,
+     "input_tokens": 5682,
+     "output_tokens": 320,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.014564,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.029946,
+   "n_citations": 4,
+   "n_tokens": 317,
+   "errors": [],
+   "raw": "p01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS3.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S4.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S4.SS4::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2501.15228v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 13,
+   "reference_ranks": {
+    "2501.15228v2::S3.SS3.SSS3::000": 6
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C6",
+    "C1",
+    "C4",
+    "C10"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "p01",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "How can a multi-agent RAG system trained with reinforcement learning stop its generator from writing overly long answers?",
+   "started_utc": "2026-10-28T06:57:16+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.005,
+   "ttft_s": 6.959,
+   "total_s": 15.157,
+   "server_timings": {
+    "retrieval_ms": 633,
+    "llm_ms_sum": 14891,
+    "ttft_ms": 6956,
+    "total_ms": 15153
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2961,
+     "ttft_ms": null,
+     "input_tokens": 877,
+     "output_tokens": 94,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002694,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2436,
+     "ttft_ms": null,
+     "input_tokens": 6001,
+     "output_tokens": 24,
+     "reasoning_tokens": 17,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.012242,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 9494,
+     "ttft_ms": 1300,
+     "input_tokens": 5325,
+     "output_tokens": 411,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01476,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.029696,
+   "n_citations": 4,
+   "n_tokens": 408,
+   "errors": [],
+   "raw": "p02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2308.03688v3::A4.SS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2507.05257v4::A12.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2308.03688v3::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2308.03688v3::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2505.15872v2::A4.SS6::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2307.03172v3::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 11,
+   "reference_ranks": {
+    "2307.03172v3::S3.SS2::000": 8
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C8",
+    "C6",
+    "C7",
+    "C9"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "p02",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "Do LLMs reliably find an exact key in a long list of key-value pairs, and does the key's position matter?",
+   "started_utc": "2026-10-28T06:57:28+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 8.203,
+   "total_s": 12.944,
+   "server_timings": {
+    "retrieval_ms": 1135,
+    "llm_ms_sum": 12147,
+    "ttft_ms": 8200,
+    "total_ms": 12941
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3062,
+     "ttft_ms": null,
+     "input_tokens": 889,
+     "output_tokens": 114,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002918,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3109,
+     "ttft_ms": null,
+     "input_tokens": 6620,
+     "output_tokens": 78,
+     "reasoning_tokens": 28,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01402,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5976,
+     "ttft_ms": 1239,
+     "input_tokens": 5789,
+     "output_tokens": 301,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.014588,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.031526,
+   "n_citations": 3,
+   "n_tokens": 298,
+   "errors": [],
+   "raw": "p03.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2310.06770v3::S2.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::S4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS5::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A4.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A1.SS5::005",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.06770v3::A3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.26637v1::S4.SS5::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 11,
+   "reference_ranks": {
+    "2310.06770v3::S4.SS1::000": 4
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C4",
+    "C8"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "p03",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "When a code repository is too big for the context window, how do the GitHub-issue benchmark baselines choose files, and how often do they get the files the real fix touched?",
+   "started_utc": "2026-10-28T06:57:43+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 7.259,
+   "total_s": 12.355,
+   "server_timings": {
+    "retrieval_ms": 570,
+    "llm_ms_sum": 12082,
+    "ttft_ms": 7256,
+    "total_ms": 12353
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3796,
+     "ttft_ms": null,
+     "input_tokens": 868,
+     "output_tokens": 102,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002756,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2078,
+     "ttft_ms": null,
+     "input_tokens": 5881,
+     "output_tokens": 18,
+     "reasoning_tokens": 11,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.011942,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 6208,
+     "ttft_ms": 1115,
+     "input_tokens": 4891,
+     "output_tokens": 347,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.013252,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.02795,
+   "n_citations": 7,
+   "n_tokens": 344,
+   "errors": [],
+   "raw": "p04.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2303.17651v2::A7::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::A7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S4::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S6::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S2::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::S2::003",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2303.17651v2::A8.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 10,
+   "reference_ranks": {
+    "2303.17651v2::S4::003": 3
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C3",
+    "C6",
+    "C5",
+    "C7",
+    "C9",
+    "C1",
+    "C2"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    }
+   ],
+   "forced": true,
+   "id": "p04",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "Can a small conversational model like Vicuna improve its own outputs through iterative self-feedback?",
+   "started_utc": "2026-10-28T06:57:56+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 7.234,
+   "total_s": 11.691,
+   "server_timings": {
+    "retrieval_ms": 277,
+    "llm_ms_sum": 11371,
+    "ttft_ms": 7231,
+    "total_ms": 11688
+   },
+   "status": "partial",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2872,
+     "ttft_ms": null,
+     "input_tokens": 868,
+     "output_tokens": 98,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002716,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2753,
+     "ttft_ms": null,
+     "input_tokens": 2279,
+     "output_tokens": 137,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.005928,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 5746,
+     "ttft_ms": 1293,
+     "input_tokens": 5903,
+     "output_tokens": 254,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.014346,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.02299,
+   "n_citations": 4,
+   "n_tokens": 252,
+   "errors": [],
+   "raw": "h01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2503.09516v5::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2503.09516v5::A6::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::A2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::S5.SS4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::S5.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::A2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::S5.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::S5.SS1::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::S3.SS1::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::A4::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    },
+    {
+     "key": "2503.09516v5::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "search_within_paper"
+    }
+   ],
+   "n_retrieved_chunks": 11,
+   "reference_ranks": {
+    "2511.05385v2::S5.SS1.SSS2::001": null,
+    "2503.09516v5::S3.SS1::000": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": true,
+   "cited": [
+    "C1",
+    "C6",
+    "C9",
+    "C11"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "error",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "search_within_paper",
+     "status": "error",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "h01",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "How do Search-R1 and R1-Searcher differ in how they are trained?",
+   "started_utc": "2026-10-28T06:58:08+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.004,
+   "ttft_s": 11.423,
+   "total_s": 19.391,
+   "server_timings": {
+    "retrieval_ms": 1041,
+    "llm_ms_sum": 18593,
+    "ttft_ms": 11420,
+    "total_ms": 19389
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3310,
+     "ttft_ms": null,
+     "input_tokens": 861,
+     "output_tokens": 107,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002792,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3274,
+     "ttft_ms": null,
+     "input_tokens": 6718,
+     "output_tokens": 118,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.014616,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 12009,
+     "ttft_ms": 4044,
+     "input_tokens": 8937,
+     "output_tokens": 516,
+     "reasoning_tokens": 87,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.023034,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.040442,
+   "n_citations": 10,
+   "n_tokens": 420,
+   "errors": [],
+   "raw": "h02.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2503.13657v3::A2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS1::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2309.07864v3::S4.SS2.SSS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A7.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S6::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::A7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2407.01502v1::S2.SS2::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.12338v1::S2.SSx2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::A2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S5.SS5::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2607.12338v1::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2402.05120v2::S5.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2510.01279v1::S5.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A6::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::A10::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2503.13657v3::S5.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 21,
+   "reference_ranks": {
+    "2402.05120v2::S5.SS2::000": 16,
+    "2307.07924v5::S6::000": null
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C16",
+    "C14",
+    "C19",
+    "C5",
+    "C3",
+    "C6",
+    "C7",
+    "C9",
+    "C4",
+    "C8"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "h02",
+   "run": 1,
+   "category": "rag_hard",
+   "latency_category": "simple",
+   "query": "Do multi-agent methods always beat single-agent approaches?",
+   "started_utc": "2026-10-28T06:58:20+00:00"
+  }
+ ]
+}

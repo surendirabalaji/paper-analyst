@@ -439,3 +439,24 @@ Factual log of what happened during development. It is the source for `PROCESS_L
     - "Starting new instance" at 06:40:02.4; uvicorn process at 06:40:18.8; app startup 5.76 s (index open); ready at 06:40:24.6.
     - The question then ran warm: TTFT 6.3 s, total 9.1 s.
   - This is a valid **container cold-start** sample (21.8 s to first response) but **not** a cold TTFT for a question. Added `--no-health`; the rev 00018 cold run sends the question first.
+- Redeployed (student) as rev `paper-analyst-00018-gll` (image `…:20261028-064437-74965a1`, includes the abstract-lookup fix). Smoke test 06:48:30.
+- **Cold start 2 (rev 00018, `eval/results/phase9/cold-start-2/`):** question sent first, with no `/health`.
+  - Idle 20.9 min: last request 06:48:30; uvicorn shutdown logged 07:03:50; no requests in the window (watcher-checked).
+  - Instance start 07:09:28.2 → process start +14.3 s → app startup 5.8 s → ready at +20.1 s.
+  - Client: first SSE byte 20.4 s, **TTFT 28.7 s**, total 31.5 s. Server-side TTFT 8.3 s (plan: Summary, all Gemini).
+- Forced-provider runs (local, code 85e6649, `eval/results/phase9/forced-{openai,gemini}-local/`), 32 RAGAS items each:
+  - OpenAI: 31 done, h01 partial. Gemini: 32 done.
+  - Two Gemini outliers, both real tail events and kept:
+    - c01, TTFT 34 s: the planner hit its 20 s timeout and the retry succeeded;
+    - p04, TTFT 38 s: one OpenAI embedding call inside `corpus_search` took 30.6 s; the other retrievals were < 0.4 s.
+  - Judge cost for faithfulness + answer relevancy on the OpenAI run: $1.20 (higher than the $0.56 estimate).
+- Main run (deployed rev 00018, routed, warm, `eval/results/phase9/routed-deployed/`): all 44 items `done`.
+  - RAGAS (n = 32, 0 failed): faithfulness 0.981, answer relevance 0.828, context precision 0.714, context recall 0.914.
+  - Non-RAGAS deterministic checks: 12 / 12 pass.
+  - Multi repeats (`routed-deployed-multi/`): 6 more runs, all done, TTFT 24–37 s. The variance comes from planner reasoning (394 reasoning tokens in the slowest run) and extra Data SQL rounds.
+- Forced runs scored with faithfulness and answer relevance only (precision and recall measure retrieval; a retrieval-rank diagnostic covers the providers instead):
+  - OpenAI: 0.994 / 0.737.
+  - Gemini: 0.966 / 0.802.
+- `docs/evaluation.md` written from `summary.json` (`scripts/summarize_phase9.py`).
+  - Self-review corrections before commit: the paraphrase comparison (p01 is an exception), "routed between forced runs" was wrong for answer relevance, an unverified client-location detail removed, two unverified causal explanations removed, and the spend sum fixed to $2.89 system.
+- Spend: $8.36 of the student-raised $9 (system $2.89, judge $5.33, probe $0.15), plus 10 Tavily searches. About $0.6 left for the tester.
