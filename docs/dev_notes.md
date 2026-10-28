@@ -387,3 +387,8 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - New **P8-D3 (Minor):** the global `td { overflow-wrap: anywhere }` from the P8-D2 fix broke "Turn" and "#n" mid-word.
   - **Fix (local):** the Routing table uses `table-layout: fixed` with set column widths. Wrapping anywhere is limited to data cells and the turn row; the Turn column and its header stay whole.
   - Results: the tester's mock suite (now with M12b) passes 28/28 (`eval/results/testing/phase8-retest3-20261028T0227Z/mock/`); the full suite still passes.
+- **Deployed (student approved), 2026-10-28:** rev `paper-analyst-00014-2rj` (image `…-a02dd08`) with P8-D1, P8-D2 and N1, then rev `paper-analyst-00015-zhx` (image `…-16f02eb`, clean tree) with P8-D3. Smoke tests passed both times.
+- **Tester retest 2: PHASE PASS** (`docs/testing/phase-8-retest2-20261028T0245Z.md`) on rev 00015.
+  - Results: mock suite 28/28; no-spend live checks 10/10; one real query with both providers, rows matching their events and incremental streaming; the Routing table stays inside the panel with "Turn" and `#n` unbroken in light and dark at 1500 px and 1100 px.
+  - New non-blocking **P8-N6:** at a 1100 px window the Agent column shrinks to 73 px and "synthesizer" wraps mid-word.
+- **Phase 8 marked done.** Live spend about $0.61 of $0.75 (me about $0.26, tester about $0.19 + $0.15 + $0.03), plus about 12 Tavily credits.

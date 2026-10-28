@@ -1,0 +1,1074 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "started_utc": "2026-10-28T02:44:35Z",
+ "real": true,
+ "results": [
+  {
+   "id": "G1[light_1500] columns inside panel, no horizontal overflow",
+   "pass": true,
+   "detail": {
+    "panel_right": 1484,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 913,
+      "right": 961,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 961,
+      "right": 1064,
+      "width": 104
+     },
+     {
+      "t": "Provider · model",
+      "left": 1064,
+      "right": 1195,
+      "width": 131
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 1195,
+      "right": 1349,
+      "width": 154
+     },
+     {
+      "t": "Result",
+      "left": 1349,
+      "right": 1458,
+      "width": 109
+     }
+    ],
+    "scrollW": 565,
+    "clientW": 565,
+    "route_rows": 8
+   }
+  },
+  {
+   "id": "G2[light_1500] 'Turn' header and every '#n' cell on one line",
+   "pass": true,
+   "detail": {
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "G3[light_1500] no header / Agent / short Provider word broken mid-word",
+   "pass": true,
+   "detail": {
+    "header_broken": [],
+    "agent_broken": [],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 104,
+    "turn_head_lines": 35
+   }
+  },
+  {
+   "id": "G1[light_1100] columns inside panel, no horizontal overflow",
+   "pass": true,
+   "detail": {
+    "panel_right": 1084,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 673,
+      "right": 721,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 721,
+      "right": 794,
+      "width": 73
+     },
+     {
+      "t": "Provider · model",
+      "left": 794,
+      "right": 886,
+      "width": 92
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 886,
+      "right": 981,
+      "width": 95
+     },
+     {
+      "t": "Result",
+      "left": 981,
+      "right": 1058,
+      "width": 77
+     }
+    ],
+    "scrollW": 405,
+    "clientW": 405,
+    "route_rows": 8
+   }
+  },
+  {
+   "id": "G2[light_1100] 'Turn' header and every '#n' cell on one line",
+   "pass": true,
+   "detail": {
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "G3[light_1100] no header / Agent / short Provider word broken mid-word",
+   "pass": false,
+   "detail": {
+    "header_broken": [],
+    "agent_broken": [
+     "synthesizer"
+    ],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 73,
+    "turn_head_lines": 50
+   }
+  },
+  {
+   "id": "G1[dark_1500] columns inside panel, no horizontal overflow",
+   "pass": true,
+   "detail": {
+    "panel_right": 1484,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 913,
+      "right": 961,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 961,
+      "right": 1064,
+      "width": 104
+     },
+     {
+      "t": "Provider · model",
+      "left": 1064,
+      "right": 1195,
+      "width": 131
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 1195,
+      "right": 1349,
+      "width": 154
+     },
+     {
+      "t": "Result",
+      "left": 1349,
+      "right": 1458,
+      "width": 109
+     }
+    ],
+    "scrollW": 565,
+    "clientW": 565,
+    "route_rows": 8
+   }
+  },
+  {
+   "id": "G2[dark_1500] 'Turn' header and every '#n' cell on one line",
+   "pass": true,
+   "detail": {
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "G3[dark_1500] no header / Agent / short Provider word broken mid-word",
+   "pass": true,
+   "detail": {
+    "header_broken": [],
+    "agent_broken": [],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 104,
+    "turn_head_lines": 35
+   }
+  },
+  {
+   "id": "G1[dark_1100] columns inside panel, no horizontal overflow",
+   "pass": true,
+   "detail": {
+    "panel_right": 1084,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 673,
+      "right": 721,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 721,
+      "right": 794,
+      "width": 73
+     },
+     {
+      "t": "Provider · model",
+      "left": 794,
+      "right": 886,
+      "width": 92
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 886,
+      "right": 981,
+      "width": 95
+     },
+     {
+      "t": "Result",
+      "left": 981,
+      "right": 1058,
+      "width": 77
+     }
+    ],
+    "scrollW": 405,
+    "clientW": 405,
+    "route_rows": 8
+   }
+  },
+  {
+   "id": "G2[dark_1100] 'Turn' header and every '#n' cell on one line",
+   "pass": true,
+   "detail": {
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "G3[dark_1100] no header / Agent / short Provider word broken mid-word",
+   "pass": false,
+   "detail": {
+    "header_broken": [],
+    "agent_broken": [
+     "synthesizer"
+    ],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 73,
+    "turn_head_lines": 50
+   }
+  },
+  {
+   "id": "G4 routing rows match llm_route events; model_returned == model_id; turn done",
+   "pass": true,
+   "detail": {
+    "badge": "done",
+    "providers": [
+     "gemini-openrouter",
+     "openai"
+    ],
+    "n_routes": 8,
+    "pairs": [
+     {
+      "agent_call": "planner / planner",
+      "row_agent": "planner / planner",
+      "provider_label": "Google Gemini (served through OpenRouter)",
+      "model": "google/gemini-3.8-flash",
+      "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+      "dimension": "cost"
+     },
+     {
+      "agent_call": "data / worker_tool_loop",
+      "row_agent": "data / worker_tool_loop",
+      "provider_label": "Google Gemini (served through OpenRouter)",
+      "model": "google/gemini-3.8-flash",
+      "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "dimension": "cost"
+     },
+     {
+      "agent_call": "data / worker_tool_loop",
+      "row_agent": "data / worker_tool_loop",
+      "provider_label": "Google Gemini (served through OpenRouter)",
+      "model": "google/gemini-3.8-flash",
+      "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "dimension": "cost"
+     },
+     {
+      "agent_call": "data / worker_tool_loop",
+      "row_agent": "data / worker_tool_loop",
+      "provider_label": "Google Gemini (served through OpenRouter)",
+      "model": "google/gemini-3.8-flash",
+      "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "dimension": "cost"
+     },
+     {
+      "agent_call": "research / worker_tool_loop",
+      "row_agent": "research / worker_tool_loop",
+      "provider_label": "Google Gemini (served through OpenRouter)",
+      "model": "google/gemini-3.8-flash",
+      "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "dimension": "cost"
+     },
+     {
+      "agent_call": "research / worker_tool_loop",
+      "row_agent": "research / worker_tool_loop",
+      "provider_label": "Google Gemini (served through OpenRouter)",
+      "model": "google/gemini-3.8-flash",
+      "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "dimension": "cost"
+     },
+     {
+      "agent_call": "research / worker_tool_loop",
+      "row_agent": "research / worker_tool_loop",
+      "provider_label": "Google Gemini (served through OpenRouter)",
+      "model": "google/gemini-3.8-flash",
+      "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+      "model_returned": "google/gemini-3.8-flash",
+      "upstream": "Google AI Studio",
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+      "dimension": "cost"
+     },
+     {
+      "agent_call": "synthesizer / synthesize",
+      "row_agent": "synthesizer / synthesize",
+      "provider_label": "OpenAI (direct API)",
+      "model": "gpt-6.1-sol",
+      "row_provider": "OpenAI (direct API) · gpt-6.1-sol",
+      "model_returned": "gpt-6.1-sol",
+      "upstream": null,
+      "status": "ok",
+      "row_ok": true,
+      "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile.",
+      "dimension": "capability"
+     }
+    ]
+   }
+  },
+  {
+   "id": "G5 no uncaught exceptions",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "geometry": {
+  "light_1500": {
+   "geom": {
+    "panel_right": 1484,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 913,
+      "right": 961,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 961,
+      "right": 1064,
+      "width": 104
+     },
+     {
+      "t": "Provider · model",
+      "left": 1064,
+      "right": 1195,
+      "width": 131
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 1195,
+      "right": 1349,
+      "width": 154
+     },
+     {
+      "t": "Result",
+      "left": 1349,
+      "right": 1458,
+      "width": 109
+     }
+    ],
+    "scrollW": 565,
+    "clientW": 565,
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ],
+    "route_rows": 8,
+    "turn_heads": 2
+   },
+   "splits": {
+    "header_broken": [],
+    "agent_broken": [],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 104,
+    "turn_head_lines": 35
+   }
+  },
+  "light_1100": {
+   "geom": {
+    "panel_right": 1084,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 673,
+      "right": 721,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 721,
+      "right": 794,
+      "width": 73
+     },
+     {
+      "t": "Provider · model",
+      "left": 794,
+      "right": 886,
+      "width": 92
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 886,
+      "right": 981,
+      "width": 95
+     },
+     {
+      "t": "Result",
+      "left": 981,
+      "right": 1058,
+      "width": 77
+     }
+    ],
+    "scrollW": 405,
+    "clientW": 405,
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ],
+    "route_rows": 8,
+    "turn_heads": 2
+   },
+   "splits": {
+    "header_broken": [],
+    "agent_broken": [
+     "synthesizer"
+    ],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 73,
+    "turn_head_lines": 50
+   }
+  },
+  "dark_1500": {
+   "geom": {
+    "panel_right": 1484,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 913,
+      "right": 961,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 961,
+      "right": 1064,
+      "width": 104
+     },
+     {
+      "t": "Provider · model",
+      "left": 1064,
+      "right": 1195,
+      "width": 131
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 1195,
+      "right": 1349,
+      "width": 154
+     },
+     {
+      "t": "Result",
+      "left": 1349,
+      "right": 1458,
+      "width": 109
+     }
+    ],
+    "scrollW": 565,
+    "clientW": 565,
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ],
+    "route_rows": 8,
+    "turn_heads": 2
+   },
+   "splits": {
+    "header_broken": [],
+    "agent_broken": [],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 104,
+    "turn_head_lines": 35
+   }
+  },
+  "dark_1100": {
+   "geom": {
+    "panel_right": 1084,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 673,
+      "right": 721,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 721,
+      "right": 794,
+      "width": 73
+     },
+     {
+      "t": "Provider · model",
+      "left": 794,
+      "right": 886,
+      "width": 92
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 886,
+      "right": 981,
+      "width": 95
+     },
+     {
+      "t": "Result",
+      "left": 981,
+      "right": 1058,
+      "width": 77
+     }
+    ],
+    "scrollW": 405,
+    "clientW": 405,
+    "turn_header_lines": 1,
+    "first_col_cells": [
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     },
+     {
+      "t": "#2",
+      "lines": 1
+     }
+    ],
+    "route_rows": 8,
+    "turn_heads": 2
+   },
+   "splits": {
+    "header_broken": [],
+    "agent_broken": [
+     "synthesizer"
+    ],
+    "provider_broken_short": [],
+    "turn_broken": [],
+    "agent_col_px": 73,
+    "turn_head_lines": 50
+   }
+  }
+ },
+ "turn": {
+  "badge": "done",
+  "status": "done · TTFT 22.7 s · total 26.0 s · retrieval 1874 ms · Gemini 7 calls, 13650→644 tok; OpenAI 1 calls, 2749→230 tok · cost $0.0331 (1 call(s) estimated)",
+  "links": [
+   "D1",
+   "D2",
+   "D1",
+   "C2",
+   "C4",
+   "D2",
+   "C7",
+   "C8",
+   "C12"
+  ],
+  "stream": {
+   "n_events": 274,
+   "n_token_events": 227,
+   "network_chunks": 184,
+   "client_first_token_to_done_s": 3.3,
+   "server_first_token_to_done_s": 3.3,
+   "client_token_arrival_span_s": 3.26,
+   "server_token_t_ms_span_s": 3.27,
+   "dom_length_changes_before_done": 49,
+   "dom_changes_total": 49,
+   "dom_first_text_before_done_s": 3.3,
+   "server_ttft_ms": 22703,
+   "request_id": "57f55cde8c9f",
+   "request_ids": [
+    "57f55cde8c9f"
+   ]
+  },
+  "routing": {
+   "n_routes": 8,
+   "n_rows": 8,
+   "pairs": [
+    {
+     "agent_call": "planner / planner",
+     "row_agent": "planner / planner",
+     "provider_label": "Google Gemini (served through OpenRouter)",
+     "model": "google/gemini-3.8-flash",
+     "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+     "model_returned": "google/gemini-3.8-flash",
+     "upstream": "Google AI Studio",
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Short structured planning (JSON task list); the low-cost model is sufficient.",
+     "dimension": "cost"
+    },
+    {
+     "agent_call": "data / worker_tool_loop",
+     "row_agent": "data / worker_tool_loop",
+     "provider_label": "Google Gemini (served through OpenRouter)",
+     "model": "google/gemini-3.8-flash",
+     "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+     "model_returned": "google/gemini-3.8-flash",
+     "upstream": "Google AI Studio",
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+     "dimension": "cost"
+    },
+    {
+     "agent_call": "data / worker_tool_loop",
+     "row_agent": "data / worker_tool_loop",
+     "provider_label": "Google Gemini (served through OpenRouter)",
+     "model": "google/gemini-3.8-flash",
+     "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+     "model_returned": "google/gemini-3.8-flash",
+     "upstream": "Google AI Studio",
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+     "dimension": "cost"
+    },
+    {
+     "agent_call": "data / worker_tool_loop",
+     "row_agent": "data / worker_tool_loop",
+     "provider_label": "Google Gemini (served through OpenRouter)",
+     "model": "google/gemini-3.8-flash",
+     "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+     "model_returned": "google/gemini-3.8-flash",
+     "upstream": "Google AI Studio",
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+     "dimension": "cost"
+    },
+    {
+     "agent_call": "research / worker_tool_loop",
+     "row_agent": "research / worker_tool_loop",
+     "provider_label": "Google Gemini (served through OpenRouter)",
+     "model": "google/gemini-3.8-flash",
+     "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+     "model_returned": "google/gemini-3.8-flash",
+     "upstream": "Google AI Studio",
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+     "dimension": "cost"
+    },
+    {
+     "agent_call": "research / worker_tool_loop",
+     "row_agent": "research / worker_tool_loop",
+     "provider_label": "Google Gemini (served through OpenRouter)",
+     "model": "google/gemini-3.8-flash",
+     "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+     "model_returned": "google/gemini-3.8-flash",
+     "upstream": "Google AI Studio",
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+     "dimension": "cost"
+    },
+    {
+     "agent_call": "research / worker_tool_loop",
+     "row_agent": "research / worker_tool_loop",
+     "provider_label": "Google Gemini (served through OpenRouter)",
+     "model": "google/gemini-3.8-flash",
+     "row_provider": "Google Gemini (served through OpenRouter) · google/gemini-3.8-flashreasoning effort: low",
+     "model_returned": "google/gemini-3.8-flash",
+     "upstream": "Google AI Studio",
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Tool selection and search-query writing with short outputs; the low-cost, fast model is sufficient.",
+     "dimension": "cost"
+    },
+    {
+     "agent_call": "synthesizer / synthesize",
+     "row_agent": "synthesizer / synthesize",
+     "provider_label": "OpenAI (direct API)",
+     "model": "gpt-6.1-sol",
+     "row_provider": "OpenAI (direct API) · gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "upstream": null,
+     "status": "ok",
+     "row_ok": true,
+     "rationale": "Multi-source synthesis needs the stronger model: 2 worker results to reconcile.",
+     "dimension": "capability"
+    }
+   ],
+   "all_rows_match": true,
+   "chip_total": 8,
+   "chips_match": true,
+   "providers": [
+    "gemini-openrouter",
+    "openai"
+   ],
+   "turn_head": "Turn #2: Which papers in the corpus have 'debate' in the title, and what does each one argue in a sentence or two?",
+   "turn": null
+  }
+ },
+ "done_event": {
+  "request_id": "57f55cde8c9f",
+  "seq": 274,
+  "ts": "2026-10-28T02:45:07.685Z",
+  "t_ms": 26006,
+  "status": "done",
+  "plan_source": "llm",
+  "unresolved_citations": [],
+  "dropped_citations": [],
+  "excluded_evidence": [],
+  "tasks": [
+   {
+    "id": "t1",
+    "worker": "data",
+    "status": "done",
+    "attempts": 1,
+    "error_kind": null,
+    "reason": null,
+    "injected": false
+   },
+   {
+    "id": "t2",
+    "worker": "research",
+    "status": "done",
+    "attempts": 1,
+    "error_kind": null,
+    "reason": null,
+    "injected": false
+   }
+  ],
+  "gaps": [],
+  "faults_injected": [],
+  "over_budget_s": 0,
+  "timings": {
+   "retrieval_ms": 1874,
+   "llm_ms_sum": 24090,
+   "ttft_ms": 22703,
+   "total_ms": 26006
+  },
+  "tokens_by_provider": {
+   "gemini-openrouter": {
+    "input_tokens": 13650,
+    "output_tokens": 644,
+    "calls": 7,
+    "errors": 0,
+    "cost_usd": 0.025305
+   },
+   "openai": {
+    "input_tokens": 2749,
+    "output_tokens": 230,
+    "calls": 1,
+    "errors": 0,
+    "cost_usd": 0.007798
+   }
+  },
+  "providers_used": [
+   "gemini-openrouter",
+   "openai"
+  ],
+  "fallbacks": 0,
+  "cost_usd": 0.033103,
+  "cost_basis": {
+   "reported": 7,
+   "estimated": 1
+  }
+ },
+ "console": []
+}

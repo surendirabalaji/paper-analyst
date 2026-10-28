@@ -1,0 +1,440 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "started_utc": "2026-10-28T02:42:56Z",
+ "llm_spend": 0,
+ "results": [
+  {
+   "id": "H deployed static files byte-identical to HEAD",
+   "pass": true,
+   "detail": {
+    "index.html": {
+     "live": "756ecdf76f5fd1aa",
+     "head": "756ecdf76f5fd1aa"
+    },
+    "app.js": {
+     "live": "60464acb8be826d6",
+     "head": "60464acb8be826d6"
+    },
+    "md.js": {
+     "live": "318dbdeedaa2aaa6",
+     "head": "318dbdeedaa2aaa6"
+    },
+    "styles.css": {
+     "live": "b89f53697caf1141",
+     "head": "b89f53697caf1141"
+    }
+   }
+  },
+  {
+   "id": "H2 live app.js has the busy guard; live styles.css has the wrap rule and new --ok",
+   "pass": true,
+   "detail": {}
+  },
+  {
+   "id": "L7a live: one request after first Enter; Ask disabled while in flight",
+   "pass": true,
+   "detail": {
+    "after_first_enter": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_3_more_submit_attempts": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "retest second question while busy",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_fail": {
+     "turns": 1,
+     "send_disabled": false,
+     "q_value": "retest second question while busy",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "after_fresh_enter": {
+     "requests": 2,
+     "turns": 2,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "final": {
+     "turns": 2,
+     "send_disabled": false,
+     "q_value": "",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "server_contacted": false
+   }
+  },
+  {
+   "id": "L7b live: Enter x2 + click + requestSubmit while in flight start no 2nd request; typed text kept",
+   "pass": true,
+   "detail": {
+    "after_first_enter": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_3_more_submit_attempts": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "retest second question while busy",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_fail": {
+     "turns": 1,
+     "send_disabled": false,
+     "q_value": "retest second question while busy",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "after_fresh_enter": {
+     "requests": 2,
+     "turns": 2,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "final": {
+     "turns": 2,
+     "send_disabled": false,
+     "q_value": "",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "server_contacted": false
+   }
+  },
+  {
+   "id": "L7c live: after the held request fails the turn settles failed, Ask re-enabled",
+   "pass": true,
+   "detail": {
+    "after_first_enter": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_3_more_submit_attempts": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "retest second question while busy",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_fail": {
+     "turns": 1,
+     "send_disabled": false,
+     "q_value": "retest second question while busy",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "after_fresh_enter": {
+     "requests": 2,
+     "turns": 2,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "final": {
+     "turns": 2,
+     "send_disabled": false,
+     "q_value": "",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "server_contacted": false
+   }
+  },
+  {
+   "id": "L7d live: busy flag cleared — a fresh Enter afterwards starts exactly one new request",
+   "pass": true,
+   "detail": {
+    "after_first_enter": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_3_more_submit_attempts": {
+     "requests": 1,
+     "turns": 1,
+     "send_disabled": true,
+     "q_value": "retest second question while busy",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "after_fail": {
+     "turns": 1,
+     "send_disabled": false,
+     "q_value": "retest second question while busy",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "after_fresh_enter": {
+     "requests": 2,
+     "turns": 2,
+     "send_disabled": true,
+     "q_value": "",
+     "badge": "running",
+     "status": "Planning…",
+     "running": 1
+    },
+    "final": {
+     "turns": 2,
+     "send_disabled": false,
+     "q_value": "",
+     "badge": "failed",
+     "status": "Error: could not reach the server (Failed to fetch)",
+     "running": 0
+    },
+    "server_contacted": false
+   }
+  },
+  {
+   "id": "L12a live: 2,500-char turn returns visible HTTP 422 failure",
+   "pass": true,
+   "detail": {
+    "turns": 3,
+    "send_disabled": false,
+    "q_value": "",
+    "badge": "failed",
+    "status": "Error: the server refused the request (HTTP 422): String should have at most 2000 characters",
+    "running": 0
+   }
+  },
+  {
+   "id": "L12b live: Routing columns stay inside the panel, no horizontal overflow",
+   "pass": true,
+   "detail": {
+    "panel_right": 1484,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 913,
+      "right": 961,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 961,
+      "right": 1064,
+      "width": 104
+     },
+     {
+      "t": "Provider · model",
+      "left": 1064,
+      "right": 1195,
+      "width": 131
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 1195,
+      "right": 1349,
+      "width": 154
+     },
+     {
+      "t": "Result",
+      "left": 1349,
+      "right": 1458,
+      "width": 109
+     }
+    ],
+    "scrollW": 565,
+    "clientW": 565,
+    "turn_header_lines": 1,
+    "first_col_cells": [],
+    "route_rows": 0,
+    "turn_heads": 3
+   }
+  },
+  {
+   "id": "L12c live: 'Turn' header not broken across lines",
+   "pass": true,
+   "detail": {
+    "panel_right": 1484,
+    "cols": [
+     {
+      "t": "Turn",
+      "left": 913,
+      "right": 961,
+      "width": 48
+     },
+     {
+      "t": "Agent / call",
+      "left": 961,
+      "right": 1064,
+      "width": 104
+     },
+     {
+      "t": "Provider · model",
+      "left": 1064,
+      "right": 1195,
+      "width": 131
+     },
+     {
+      "t": "Why (dimension, rationale, inputs)",
+      "left": 1195,
+      "right": 1349,
+      "width": 154
+     },
+     {
+      "t": "Result",
+      "left": 1349,
+      "right": 1458,
+      "width": 109
+     }
+    ],
+    "scrollW": 565,
+    "clientW": 565,
+    "turn_header_lines": 1,
+    "first_col_cells": [],
+    "route_rows": 0,
+    "turn_heads": 3
+   }
+  },
+  {
+   "id": "L11 live: no uncaught exceptions / console errors other than the expected network failures",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "head": "16f02ebea6ef717f013191d7d09192d1d7b34f69",
+ "double_submit_live": {
+  "after_first_enter": {
+   "requests": 1,
+   "turns": 1,
+   "send_disabled": true,
+   "q_value": "",
+   "badge": "running",
+   "status": "Planning…",
+   "running": 1
+  },
+  "after_3_more_submit_attempts": {
+   "requests": 1,
+   "turns": 1,
+   "send_disabled": true,
+   "q_value": "retest second question while busy",
+   "badge": "running",
+   "status": "Planning…",
+   "running": 1
+  },
+  "after_fail": {
+   "turns": 1,
+   "send_disabled": false,
+   "q_value": "retest second question while busy",
+   "badge": "failed",
+   "status": "Error: could not reach the server (Failed to fetch)",
+   "running": 0
+  },
+  "after_fresh_enter": {
+   "requests": 2,
+   "turns": 2,
+   "send_disabled": true,
+   "q_value": "",
+   "badge": "running",
+   "status": "Planning…",
+   "running": 1
+  },
+  "final": {
+   "turns": 2,
+   "send_disabled": false,
+   "q_value": "",
+   "badge": "failed",
+   "status": "Error: could not reach the server (Failed to fetch)",
+   "running": 0
+  },
+  "server_contacted": false
+ },
+ "long_token_live": {
+  "state": {
+   "turns": 3,
+   "send_disabled": false,
+   "q_value": "",
+   "badge": "failed",
+   "status": "Error: the server refused the request (HTTP 422): String should have at most 2000 characters",
+   "running": 0
+  },
+  "geometry": {
+   "panel_right": 1484,
+   "cols": [
+    {
+     "t": "Turn",
+     "left": 913,
+     "right": 961,
+     "width": 48
+    },
+    {
+     "t": "Agent / call",
+     "left": 961,
+     "right": 1064,
+     "width": 104
+    },
+    {
+     "t": "Provider · model",
+     "left": 1064,
+     "right": 1195,
+     "width": 131
+    },
+    {
+     "t": "Why (dimension, rationale, inputs)",
+     "left": 1195,
+     "right": 1349,
+     "width": 154
+    },
+    {
+     "t": "Result",
+     "left": 1349,
+     "right": 1458,
+     "width": 109
+    }
+   ],
+   "scrollW": 565,
+   "clientW": 565,
+   "turn_header_lines": 1,
+   "first_col_cells": [],
+   "route_rows": 0,
+   "turn_heads": 3
+  }
+ },
+ "console": []
+}
