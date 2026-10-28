@@ -1,0 +1,431 @@
+{
+ "url": "http://localhost:8765",
+ "label": "pilot-forced-openai-local",
+ "testset_sha256": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382",
+ "results": [
+  {
+   "http_status": 200,
+   "first_byte_s": 0.011,
+   "ttft_s": 9.4,
+   "total_s": 9.784,
+   "server_timings": {
+    "retrieval_ms": 0,
+    "llm_ms_sum": 9752,
+    "ttft_ms": 9396,
+    "total_ms": 9780
+   },
+   "status": "partial",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2636,
+     "ttft_ms": null,
+     "input_tokens": 864,
+     "output_tokens": 81,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002538,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2526,
+     "ttft_ms": null,
+     "input_tokens": 1062,
+     "output_tokens": 23,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002354,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2362,
+     "ttft_ms": null,
+     "input_tokens": 1125,
+     "output_tokens": 38,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 1059,
+     "cost_usd": 0.000618,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2228,
+     "ttft_ms": 1846,
+     "input_tokens": 601,
+     "output_tokens": 30,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.001502,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.007012,
+   "n_citations": 0,
+   "n_tokens": 28,
+   "errors": [],
+   "raw": "s01.run1.events.jsonl",
+   "retrieved": [],
+   "n_retrieved_chunks": 0,
+   "reference_ranks": {
+    "2501.15228v2::S3.SS3.SSS3::000": null
+   },
+   "reference_chunk_hit": false,
+   "reference_doc_hit": false,
+   "cited": [],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "error",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s01",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "In MMOA-RAG, how is the Generator agent rewarded?",
+   "started_utc": "2026-10-28T06:22:29+00:00"
+  },
+  {
+   "http_status": 200,
+   "first_byte_s": 0.007,
+   "ttft_s": 9.289,
+   "total_s": 16.278,
+   "server_timings": {
+    "retrieval_ms": 1468,
+    "llm_ms_sum": 15104,
+    "ttft_ms": 9286,
+    "total_ms": 16275
+   },
+   "status": "done",
+   "workers": [
+    "research"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 3718,
+     "ttft_ms": null,
+     "input_tokens": 869,
+     "output_tokens": 111,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002848,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2973,
+     "ttft_ms": null,
+     "input_tokens": 5640,
+     "output_tokens": 91,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.01219,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 8413,
+     "ttft_ms": 1429,
+     "input_tokens": 8148,
+     "output_tokens": 363,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.019926,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.034964,
+   "n_citations": 10,
+   "n_tokens": 360,
+   "errors": [],
+   "raw": "c01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2606.24535v1::S2.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::A1.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S4.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S2.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S1::002",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S2.SS3::001",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S2.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3.SS4::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3.SS3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S3.SS1::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2502.12110v11::S4.SS7::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    },
+    {
+     "key": "2310.08560v2::S3.SS2::000",
+     "type": "paper_chunk",
+     "agent": "research",
+     "tool": "corpus_search"
+    }
+   ],
+   "n_retrieved_chunks": 19,
+   "reference_ranks": {
+    "2310.08560v2::S1::001": null,
+    "2310.08560v2::S2.SS1::000": 8,
+    "2502.12110v11::S3.SS1::000": 17,
+    "2502.12110v11::S3.SS3::000": 15
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C7",
+    "C12",
+    "C16",
+    "C8",
+    "C9",
+    "C11",
+    "C17",
+    "C14",
+    "C15",
+    "C13"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "research",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "speculative"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "research",
+     "tool": "corpus_search",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "c01",
+   "run": 1,
+   "category": "rag_compare",
+   "latency_category": "simple",
+   "query": "How do MemGPT and A-MEM differ in how they organize an agent's memory?",
+   "started_utc": "2026-10-28T06:22:39+00:00"
+  }
+ ]
+}

@@ -421,3 +421,14 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - No measurable gain from `minimal`; decision left to the student. Cost about $0.15.
 - Student decisions (2026-10-27): planner Gemini effort stays `low`; option 8 (parallel dispatch) not added, so multi-agent questions are reported as they are, with option 8 noted as future work. Redeploy started by the student.
 - Test set v1 frozen 2026-10-28 after review round 1 (44 items, 32 RAGAS), sha256 50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382.
+- Pilot (local, forced OpenAI; `eval/results/phase9/pilot-forced-openai/`):
+  - c01 scored faithfulness 1.00, answer relevancy 0.91, context precision 0.82, context recall 1.00 (19 contexts).
+  - s01 failed with `partial`: Summary resolves papers by title only, and "MMOA-RAG" is not in its paper's title. Same family as tester note N3 (HyDE).
+  - Judge cost about $0.15 for one item with 19 contexts; context precision makes one call per context.
+  - The student raised the Phase 9 budget to about $9 (option A: full plan) and chose to fix the lookup before scoring.
+- Fix (`app/agents/summary.py` `resolve_paper`): when no title matches, the paper whose *abstract* names the method as a whole word is used.
+  - Only abstracts count, because body text also names baselines (R1-Searcher appears only as a TeaRAG baseline).
+  - Several matching abstracts give an ambiguous error with candidates; names of 4 characters or fewer must match case exactly.
+  - Covers the planner seeds too, so N3 (HyDE) is fixed as well. The outline says when a paper was resolved this way.
+  - 10 new unit tests; full suite 529 passed, 36 skipped, 1 xfailed.
+  - Local rerun of s01 (`pilot-forced-openai-fix/`): done, reference chunk at rank 2, correct cited answer. Needs a redeploy (rev 00018).

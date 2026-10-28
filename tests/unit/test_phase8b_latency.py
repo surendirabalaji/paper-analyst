@@ -302,3 +302,14 @@ async def test_injected_fault_alone_is_still_labelled_injected():
     wr = [d for e, d in events if e == "worker_result"][-1]
     assert wr["injected"] is True and "real_errors" not in wr
     assert "do not indicate a real outage" in answer_text(events)
+
+
+@needs_data
+async def test_plan_seeds_resolve_a_method_name_through_the_abstract():
+    # Phase 9: "MMOA-RAG" is not in its paper's title; the seed must still reach the paper, without a note.
+    ctx = make_ctx("q", Script(), sqlite_path=DB, **ON)
+    tasks = [{"id": "t1", "worker": "summary", "papers": ["MMOA-RAG"]}]
+    notes: list[str] = []
+    await plan_seeds(ctx, tasks, notes)
+    assert tasks[0]["seeds"] == [{"name": "get_paper_outline", "args": {"paper": "2501.15228"}, "by": "planner"}]
+    assert notes == []
