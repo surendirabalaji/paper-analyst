@@ -196,7 +196,7 @@ async def planner(state: AnalystState, config) -> dict:
         summary = "Planner unavailable; falling back to a single Research task."
         msg = safe_error(e)
         errors.append({"scope": "planner", "error_kind": "planner_error", "message": msg, "ts": utc_now()})
-        ctx.emitter.emit("error", scope="planner", message_safe=msg, recoverable=True,
+        ctx.emitter.emit("error", scope="planner", error_kind="planner_error", message_safe=msg, recoverable=True,
                          **({"injected": True} if is_injected(e) else {}))
     finally:
         ctx.stage_deadline = None
@@ -573,6 +573,8 @@ async def synthesize(state: AnalystState, config) -> dict:
         ref = ctx.registry.get(c)
         if ref and c not in dropped:
             ctx.emitter.emit("citation", cite_id=c, type=ref.type, label=f"{ref.title} — {ref.section}",
+                             title=ref.title, section=ref.section,
+                             **({"snippet": ref.text} if ref.type == "web" else {}),
                              doc_id=ref.doc_id, chunk_id=ref.chunk_id, href=ref.href, source_url=ref.source_url,
                              retrieved_at=ref.retrieved_at or None, found_by=ref.agent or None,
                              **({"sql": ref.sql, "columns": ref.columns, "rows": ref.rows}

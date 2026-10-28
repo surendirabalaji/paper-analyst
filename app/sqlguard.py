@@ -283,8 +283,7 @@ def _execute(db_path: Path, executed: str, max_rows: int, max_ops: int, max_seco
         con.execute("SELECT 1 FROM sqlite_master LIMIT 1").fetchall()  # fails here if the file is not a database
     except sqlite3.DatabaseError as e:
         msg = str(e)
-        if "not a database" in msg:  # a corrupt or wrong file: reported as before
-            raise SqlError("sql_error", msg) from None
+        # A corrupt or wrong file is a service-side asset problem too, never the model's query (tester P7-D1).
         raise SqlError("sql_unavailable", f"the corpus database cannot be opened ({msg}); this is a service "
                                           "problem, not a problem with the query") from None
     rows, used = [], 0

@@ -316,7 +316,6 @@ def test_T7_S1_ordinary_queries_still_accepted_under_heap_cap(sql):
     assert res.rows
 
 
-@pytest.mark.xfail(strict=True, reason="P7-D1: a corrupt papers.db is reported as sql_error (invalid SQL)")
 def test_T7_S2_corrupt_db_is_not_blamed_on_the_query(tmp_path):
     bad = tmp_path / "papers.db"
     bad.write_bytes(b"this is not a sqlite file" * 100)
@@ -327,7 +326,6 @@ def test_T7_S2_corrupt_db_is_not_blamed_on_the_query(tmp_path):
     assert ei.value.kind in ("sql_unavailable", "sql_internal"), (ei.value.kind, str(ei.value)[:120])
 
 
-@pytest.mark.xfail(strict=True, reason="P7-D1: corrupt DB uses the repair round and the answer blames the query")
 async def test_T7_S3_corrupt_db_through_the_graph_is_service_side(tmp_path):
     bad = tmp_path / "papers.db"
     bad.write_bytes(b"this is not a sqlite file" * 100)
