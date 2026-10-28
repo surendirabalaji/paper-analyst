@@ -432,3 +432,10 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - Covers the planner seeds too, so N3 (HyDE) is fixed as well. The outline says when a paper was resolved this way.
   - 10 new unit tests; full suite 529 passed, 36 skipped, 1 xfailed.
   - Local rerun of s01 (`pilot-forced-openai-fix/`): done, reference chunk at rank 2, correct cited answer. Needs a redeploy (rev 00018).
+- Cold start, attempt 1 (rev 00017, `eval/results/phase9/cold-start-1/`):
+  - Scale-to-zero confirmed in the logs: the last request was the deploy smoke test at 06:15:02; uvicorn shut down at 06:30:15; no requests in between.
+  - The gate in my wait script wrongly counted the smoke-test request itself (timestamp-filter bug), so I re-checked the logs and sent the request by hand at 06:40.
+  - `measure_latency.py` sends `/health` before the question, so `/health` took the cold start: 21.8 s.
+    - "Starting new instance" at 06:40:02.4; uvicorn process at 06:40:18.8; app startup 5.76 s (index open); ready at 06:40:24.6.
+    - The question then ran warm: TTFT 6.3 s, total 9.1 s.
+  - This is a valid **container cold-start** sample (21.8 s to first response) but **not** a cold TTFT for a question. Added `--no-health`; the rev 00018 cold run sends the question first.
