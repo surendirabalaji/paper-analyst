@@ -1,0 +1,793 @@
+{
+  "runs": [
+    {
+      "key": "agent_memory",
+      "category": null,
+      "query": null,
+      "raw": "agent_memory.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 6.111,
+      "total_s": 15.058,
+      "server_timings": {
+        "retrieval_ms": 1447,
+        "llm_ms_sum": 13758,
+        "ttft_ms": 6009,
+        "total_ms": 15005
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "openai",
+          "capability",
+          null
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ],
+        [
+          "gpt-6.1-sol",
+          "gpt-6.1-sol"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "synth_provider": [
+        "openai"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 453,
+      "token_spread_s": 8.929,
+      "tokens_before_done": true,
+      "answer_chars": 2283,
+      "marked": [
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C12",
+        "C13",
+        "C15"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 7,
+      "cost_usd": 0.02918,
+      "errors": [],
+      "answer_head": "LLM agents handle long conversations by **keeping recent context available while storing older information in a separate memory system**, then bringing back the parts relevant to the current question. MemGPT, for example, separates a limited \u201cmain context\u201d used during inference from an external store that holds information beyond that context window. [C3]\n\nA typical memory workflow is:\n\n1. **Recor",
+      "case": {},
+      "answer": "LLM agents handle long conversations by **keeping recent context available while storing older information in a separate memory system**, then bringing back the parts relevant to the current question. MemGPT, for example, separates a limited \u201cmain context\u201d used during inference from an external store that holds information beyond that context window. [C3]\n\nA typical memory workflow is:\n\n1. **Record useful information.** Agents save dialogue history, important events, user facts, and preferences or conversational style. Memory can be raw text, summaries, or structured records such as database entries. [C2][C5]\n2. **Compress and organize it.** Instead of repeatedly including the entire transcript, agents can summarize conversations, merge redundant entries, and generate higher-level observations\u2014for example, a summary of daily events or recurring user preferences. [C2][C4]\n3. **Retrieve what matters now.** When a new message arrives, the agent searches for memories relevant to the question and current context, then uses them to produce a more consistent, personalized response. Some systems use embeddings\u2014numerical representations of text\u2014to find semantically related memories. [C2][C15]\n4. **Update memory over time.** MemoryBank adjusts memory strength according to time and significance; A-MEM can revise existing memories\u2019 context, keywords, and tags when new information arrives. [C3][C12]\n\n**More agentic approaches also connect memories rather than treating them as isolated snippets.** A-MEM first retrieves similar notes, then asks an LLM which should be linked; at retrieval time, linked memories can also be accessed. This provides a mechanism for bringing together related information scattered across a long conversation. [C13][C15]\n\nThe main trade-off is **completeness versus efficiency**: putting the full conversation into every prompt preserves more information but increases computation and latency, whereas summarization and selective retrieval reduce what must be included. Effective recall therefore depends on selecting memories relevant to the current question. [C5][C2]\n\nIn short, the practical pattern is **store \u2192 summarize/organize \u2192 retrieve \u2192 update**, rather than simply keeping every past message in the active prompt. [C2][C3][C4][C12]"
+    },
+    {
+      "key": "agentbench_envs",
+      "category": null,
+      "query": null,
+      "raw": "agentbench_envs.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 6.597,
+      "total_s": 8.655,
+      "server_timings": {
+        "retrieval_ms": 47,
+        "llm_ms_sum": 8350,
+        "ttft_ms": 6325,
+        "total_ms": 8433
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 15,
+      "token_spread_s": 1.985,
+      "tokens_before_done": true,
+      "answer_chars": 1532,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 6,
+      "cost_usd": 0.014974,
+      "errors": [],
+      "answer_head": "AgentBench evaluates LLM agents across 8 distinct environments, grouped into three categories [C1]:\n\n* **Code-grounded Environments:**\n  * **Operating System (OS):** An interactive Ubuntu Docker bash environment where agents execute shell commands to answer human questions or achieve practical goals [C2].\n  * **Database (DB):** Authentic SQL interfaces and databases where agents operate using SQL ",
+      "case": {},
+      "answer": "AgentBench evaluates LLM agents across 8 distinct environments, grouped into three categories [C1]:\n\n* **Code-grounded Environments:**\n  * **Operating System (OS):** An interactive Ubuntu Docker bash environment where agents execute shell commands to answer human questions or achieve practical goals [C2].\n  * **Database (DB):** Authentic SQL interfaces and databases where agents operate using SQL queries [C2].\n  * **Knowledge Graph (KG):** An environment requiring agents to interact with large knowledge graph interfaces (such as Freebase) for question answering under partial observability [C2, C3].\n\n* **Game-grounded Environments:**\n  * **Digital Card Game (DCG):** *Aquawar*, a simplified turn-based card game system where the agent controls a team of fishes to battle an algorithm-based opponent [C4].\n  * **Lateral Thinking Puzzles (LTP):** Also known as situation puzzles or \u6d77\u9f9f\u6c64, where an agent asks strategic questions with limited responses (\"yes\", \"no\", \"irrelevant\") to solve mysteries [C4].\n  * **House Holding (HH):** The embodied text-game environment *ALFWorld*, where agents complete physical household tasks (e.g., placing items) [C4, C5].\n\n* **Web-grounded Environments:**\n  * **Web Shopping (WS):** *WebShop*, a simulated e-commerce environment where agents search, view, and select items via prompting [C6].\n  * **Web Browsing (WB):** *Mind2Web*, a general web sandbox adapted for prompted LLMs to perform website actions such as clicking, selecting, and typing to fulfill high-level user instructions [C6]."
+    },
+    {
+      "key": "cs_ma_2025",
+      "category": null,
+      "query": null,
+      "raw": "cs_ma_2025.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "data",
+        "summary"
+      ],
+      "ttft_s": 18.155,
+      "total_s": 23.481,
+      "server_timings": {
+        "retrieval_ms": 692,
+        "llm_ms_sum": 22674,
+        "ttft_ms": 18085,
+        "total_ms": 23413
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [],
+      "seeded_calls": [],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        false,
+        false
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "data",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "data",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "data",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "openai",
+          "capability",
+          null
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ],
+        [
+          "gpt-6.1-sol",
+          "gpt-6.1-sol"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "synth_provider": [
+        "openai"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 315,
+      "token_spread_s": 5.269,
+      "tokens_before_done": true,
+      "answer_chars": 1347,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C5",
+        "C7",
+        "D1"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 6,
+      "cost_usd": 0.041664,
+      "errors": [],
+      "answer_head": "The corpus contains **only one 2025 paper tagged `cs.MA`**, so there is no second paper to summarize: **MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems** \u2014 arXiv:2503.03686, published **March 5, 2025**; `cs.MA` is a secondary category. [D1]\n\n### MAS-GPT \u2014 summary\n- **Contribution:** Treats multi-agent-system construction as a language-generation task: given a user query, MAS-GPT gene",
+      "case": {},
+      "answer": "The corpus contains **only one 2025 paper tagged `cs.MA`**, so there is no second paper to summarize: **MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems** \u2014 arXiv:2503.03686, published **March 5, 2025**; `cs.MA` is a secondary category. [D1]\n\n### MAS-GPT \u2014 summary\n- **Contribution:** Treats multi-agent-system construction as a language-generation task: given a user query, MAS-GPT generates a tailored, executable multi-agent system in a single model inference. [C1, C2]\n- **Method:** Represents multi-agent systems as executable code and builds coherent query\u2013system training pairs through a consistency-oriented data pipeline, then trains a 32B-parameter model to generate query-specific architectures. [C1, C5]\n- **Results:** The paper reports evaluation across nine benchmarks and five agent-driving LLMs against more than ten baseline methods. In its main eight-benchmark comparison using Llama-3-70B-Instruct, it reports a **3.89% improvement over the second-best method** on average. [C1, C3]\n- **Efficiency and caveat:** The single inference constructs the system; executing its agents still requires additional calls. The reported cost comparison measures inference-call counts, weighting a MAS-GPT call as half a 70B-model call, rather than reporting direct monetary cost or wall-clock latency in that comparison. [C2, C7]"
+    },
+    {
+      "key": "noisy_passages",
+      "category": null,
+      "query": null,
+      "raw": "noisy_passages.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 6.678,
+      "total_s": 14.029,
+      "server_timings": {
+        "retrieval_ms": 1088,
+        "llm_ms_sum": 13045,
+        "ttft_ms": 6626,
+        "total_ms": 13965
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "openai",
+          "capability",
+          null
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ],
+        [
+          "gpt-6.1-sol",
+          "gpt-6.1-sol"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "synth_provider": [
+        "openai"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 373,
+      "token_spread_s": 7.321,
+      "tokens_before_done": true,
+      "answer_chars": 1950,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C5",
+        "C11",
+        "C12",
+        "C17"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 7,
+      "cost_usd": 0.031799,
+      "errors": [],
+      "answer_head": "RAG systems do **not automatically ignore irrelevant passages**: noisy or contradictory retrieved information can degrade answer quality, and simply using the highest-ranked passage can hurt performance. More robust systems handle this at several stages. [C1][C3]\n\n- **Improve retrieval before generation.** Query rewriting, query expansion, better chunking, metadata, and hybrid retrieval aim to mak",
+      "case": {},
+      "answer": "RAG systems do **not automatically ignore irrelevant passages**: noisy or contradictory retrieved information can degrade answer quality, and simply using the highest-ranked passage can hurt performance. More robust systems handle this at several stages. [C1][C3]\n\n- **Improve retrieval before generation.** Query rewriting, query expansion, better chunking, metadata, and hybrid retrieval aim to make the retrieved set more relevant in the first place. [C12][C11]\n- **Rerank and compress the results.** After retrieval, systems can prioritize the most relevant passages, select essential sections, and shorten the context rather than send every retrieved document to the model. This reduces information overload and dilution by irrelevant content. [C12]\n- **Judge relevance and evidence support during generation.** For example, **Self-RAG** evaluates passage relevance, whether a proposed answer is supported, and answer usefulness; it uses those judgments to select among candidate continuations rather than trusting retrieval rank alone. It can also explicitly label a passage as irrelevant. [C5][C2]\n- **Make retrieval adaptive.** Instead of always retrieving a fixed set, systems such as Self-RAG decide when retrieval is needed; other modular pipelines support iterative retrieval and query refinement. [C5][C11]\n- **Evaluate retrieval and answers separately.** Frameworks such as Ragas assess context relevance, answer relevance, and faithfulness to the retrieved evidence, helping distinguish noisy retrieval from poor use of otherwise useful evidence. [C17]\n\n**The important caveat:** \u201cremove everything irrelevant\u201d is not a universal rule. The survey reports experiments in which adding irrelevant documents unexpectedly improved accuracy; document type, position, and quantity can all matter. Noise-handling strategies therefore need testing on the actual task rather than assuming that more context\u2014or less context\u2014is always better. [C1]"
+    },
+    {
+      "key": "react_summary",
+      "category": null,
+      "query": null,
+      "raw": "react_summary.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 6.745,
+      "total_s": 13.944,
+      "server_timings": {
+        "retrieval_ms": 24,
+        "llm_ms_sum": 13834,
+        "ttft_ms": 6630,
+        "total_ms": 13892
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 41,
+      "token_spread_s": 7.167,
+      "tokens_before_done": true,
+      "answer_chars": 3909,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C9",
+        "C10"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 8,
+      "cost_usd": 0.024158,
+      "errors": [],
+      "answer_head": "### Contribution\nThe ReAct paper explores combining reasoning and acting in large language models (LLMs) in an interleaved manner [C1]. While prior work studied reasoning (e.g., chain-of-thought prompting) and acting (e.g., action plan generation) separately, ReAct enables reasoning traces to guide, track, and update action plans, while allowing domain-specific actions to interface with external e",
+      "case": {},
+      "answer": "### Contribution\nThe ReAct paper explores combining reasoning and acting in large language models (LLMs) in an interleaved manner [C1]. While prior work studied reasoning (e.g., chain-of-thought prompting) and acting (e.g., action plan generation) separately, ReAct enables reasoning traces to guide, track, and update action plans, while allowing domain-specific actions to interface with external environments or knowledge sources [C1]. This synergy improves task success, grounds trajectories in factual information, and enhances human interpretability and controllability [C1, C3].\n\n### Method\n* **Augmented Action Space:** ReAct expands an agent's action space to include a free-form language space ($\\mathcal{\\hat{A}} = \\mathcal{A} \\cup \\mathcal{L}$) [C2]. Actions in $\\mathcal{L}$ represent internal reasoning traces or \"thoughts\" that do not affect the external environment or yield observation feedback, but update the internal context to assist future reasoning and planning [C2].\n* **Execution Format:** For reasoning-heavy tasks, thoughts and actions alternate strictly into thought-action-observation cycles [C3]. For decision-making tasks over long horizons, thoughts appear sparsely and asynchronously whenever needed (e.g., decomposing goals or tracking progress) [C2, C3].\n* **Implementation:** The authors primarily evaluate frozen PaLM-540B prompted with 1\u20136 few-shot in-context trajectories containing human-written thoughts, actions, and observations [C1, C3]. They also evaluate fine-tuning PaLM-8B and PaLM-62B models using ReAct trajectories [C6].\n\n### Results\n* **Knowledge-Intensive Tasks (HotpotQA & Fever):** PaLM-540B prompted with ReAct outperforms an action-only baseline (Act) on both HotpotQA (27.4 vs. 25.7 EM) and Fever (60.9 vs. 58.9 accuracy) by interacting with an external Wikipedia API [C1, C4]. While ReAct slightly lags behind Chain-of-Thought (CoT) on HotpotQA (27.4 vs. 29.4), combining both methods (ReAct $\\to$ CoT-SC or CoT-SC $\\to$ ReAct) achieves the highest scores (35.1 and 64.6, respectively) [C4, C6].\n* **Fine-Tuning Scaling:** When fine-tuned on 3,000 examples on HotpotQA, ReAct becomes the best-performing method; fine-tuned PaLM-8B ReAct outperforms all PaLM-62B prompting methods, and fine-tuned PaLM-62B ReAct outperforms all PaLM-540B prompting methods [C6].\n* **Interactive Decision Making (ALFWorld & WebShop):** On ALFWorld, ReAct achieves a best success rate of 71%, outperforming Act (45%) and the imitation learning baseline BUTLER (37%) [C9]. On WebShop, ReAct achieves an average score of 66.6 and a 40.0% success rate, improving over Act (30.1%) as well as imitation and reinforcement learning baselines (IL at 29.1% and IL+RL at 28.7%) [C1, C9].\n\n### Limitations\n* **Structural Reasoning Constraints & Loops:** Interleaving actions and reasoning constrains how the model formulates thoughts, causing a higher reasoning error rate than pure CoT on HotpotQA (47% vs. 16%) [C4, C5]. A frequent error mode is getting stuck repetitively generating previous thoughts and actions without recovering [C4, C5].\n* **Search and Information Bottlenecks:** ReAct is heavily reliant on external feedback; non-informative or empty search results account for 23% of ReAct errors on HotpotQA and derail the model's reasoning process [C4, C5].\n* **Prompting Sample Efficiency on Smaller Models:** Prompting ReAct on smaller models (PaLM-8B and PaLM-62B) without fine-tuning performs worse than Standard, CoT, and Act baselines due to the difficulty of learning both reasoning and acting from few in-context examples [C6].\n* **Gap to Humans and Supervised SoTA:** Across all tasks, prompting ReAct remains significantly below domain-specific supervised state-of-the-art models (e.g., 67.5 EM on HotpotQA) and expert human performance (e.g., 59.6% success on WebShop), struggling with complex query reformulations and extensive exploration [C4, C6, C9, C10]."
+    },
+    {
+      "key": "self_rag_retrieve",
+      "category": null,
+      "query": null,
+      "raw": "self_rag_retrieve.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 7.586,
+      "total_s": 9.451,
+      "server_timings": {
+        "retrieval_ms": 20,
+        "llm_ms_sum": 9315,
+        "ttft_ms": 7476,
+        "total_ms": 9373
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 11,
+      "token_spread_s": 1.802,
+      "tokens_before_done": true,
+      "answer_chars": 1220,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C5",
+        "C7"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 5,
+      "cost_usd": 0.01694,
+      "errors": [],
+      "answer_head": "Self-RAG decides when to retrieve dynamically at test time by having the language model evaluate the need for external evidence through special tokens [C1, C2, C5]:\n\n* **Prediction of Retrieval Tokens:** Given the input prompt $x$ and the preceding generated text $y_{<t}$, the generator model predicts a special `Retrieve` reflection token for each segment [C2, C3]. The possible token values are `{",
+      "case": {},
+      "answer": "Self-RAG decides when to retrieve dynamically at test time by having the language model evaluate the need for external evidence through special tokens [C1, C2, C5]:\n\n* **Prediction of Retrieval Tokens:** Given the input prompt $x$ and the preceding generated text $y_{<t}$, the generator model predicts a special `Retrieve` reflection token for each segment [C2, C3]. The possible token values are `{yes, no, continue}` [C2]:\n  * `yes` indicates that retrieval is necessary and the continuation requires factual grounding [C2, C7].\n  * `no` indicates that retrieval is unnecessary because the sequence does not require factual grounding or would not benefit from retrieval [C7].\n  * `continue` indicates that the model can continue using previously retrieved evidence rather than issuing a new query [C7].\n\n* **Execution Condition:** \n  * In standard greedy or hard-control inference, retrieval is triggered whenever the model predicts `Retrieve == Yes` [C2, C5]. \n  * Alternatively, Self-RAG supports an adaptive threshold mechanism: retrieval is triggered if the normalized generation probability of `Retrieve = Yes` (calculated over all candidate tokens in the `Retrieve` category) exceeds a specified threshold [C5]."
+    },
+    {
+      "key": "selfrag_vs_crag",
+      "category": null,
+      "query": null,
+      "raw": "selfrag_vs_crag.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 4.907,
+      "total_s": 12.035,
+      "server_timings": {
+        "retrieval_ms": 743,
+        "llm_ms_sum": 11512,
+        "ttft_ms": 4858,
+        "total_ms": 11981
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "openai",
+          "capability",
+          null
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ],
+        [
+          "gpt-6.1-sol",
+          "gpt-6.1-sol"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "synth_provider": [
+        "openai"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 415,
+      "token_spread_s": 7.054,
+      "tokens_before_done": true,
+      "answer_chars": 1897,
+      "marked": [
+        "C1",
+        "C6",
+        "C7",
+        "C8",
+        "C11",
+        "C13",
+        "C14",
+        "C15",
+        "C16"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 9,
+      "cost_usd": 0.030516,
+      "errors": [],
+      "answer_head": "**Self-RAG handles bad retrievals through self-critique and answer selection; CRAG explicitly repairs or replaces the retrieved evidence.** [C8][C14]\n\n| Aspect | Self-RAG | Corrective RAG (CRAG) |\n|---|---|---|\n| **Detecting bad retrievals** | The generator produces reflection tokens assessing passage **relevance**, whether its answer is **supported** by the passage, and answer **usefulness**. [C7",
+      "case": {},
+      "answer": "**Self-RAG handles bad retrievals through self-critique and answer selection; CRAG explicitly repairs or replaces the retrieved evidence.** [C8][C14]\n\n| Aspect | Self-RAG | Corrective RAG (CRAG) |\n|---|---|---|\n| **Detecting bad retrievals** | The generator produces reflection tokens assessing passage **relevance**, whether its answer is **supported** by the passage, and answer **usefulness**. [C7][C11] | A separate, lightweight retrieval evaluator scores query\u2013document relevance and assigns an overall **Correct, Incorrect, or Ambiguous** judgment. [C13] |\n| **Responding to bad retrievals** | It generates candidate continuations from multiple passages, then uses critique-guided, segment-level beam search to favor relevant evidence and supported answers rather than blindly using the top retrieved passage. [C8][C6] | **Correct:** refine the retrieved documents. **Incorrect:** discard them and use web search. **Ambiguous:** combine refined retrieved evidence with web-search evidence. [C13][C14] |\n| **Filtering irrelevant content** | Relevance and support assessments influence which generated continuation is selected. [C8] | Documents are split into small \u201cknowledge strips\u201d; irrelevant strips are filtered out, and relevant ones are recombined. Web results undergo the same refinement. [C15][C16] |\n| **Controlling retrieval** | The model decides whether retrieval is needed at each generation step, with an adjustable retrieval threshold. [C7][C8] | The evaluator\u2019s judgment determines whether to retain, supplement, or replace the initial retrieval results. [C13] |\n\n**Practical distinction:** Self-RAG asks, \u201cWhich evidence-backed continuation should I trust?\u201d CRAG additionally asks, \u201cIs this evidence set good enough\u2014or should I obtain different evidence?\u201d The approaches are complementary: CRAG is plug-and-play and was also evaluated as an addition to Self-RAG. [C8][C13][C1]"
+    }
+  ],
+  "results": [
+    {
+      "raw": "agent_memory.run1.events.jsonl",
+      "query": null
+    },
+    {
+      "raw": "agentbench_envs.run1.events.jsonl",
+      "query": null
+    },
+    {
+      "raw": "cs_ma_2025.run1.events.jsonl",
+      "query": null
+    },
+    {
+      "raw": "noisy_passages.run1.events.jsonl",
+      "query": null
+    },
+    {
+      "raw": "react_summary.run1.events.jsonl",
+      "query": null
+    },
+    {
+      "raw": "self_rag_retrieve.run1.events.jsonl",
+      "query": null
+    },
+    {
+      "raw": "selfrag_vs_crag.run1.events.jsonl",
+      "query": null
+    }
+  ]
+}

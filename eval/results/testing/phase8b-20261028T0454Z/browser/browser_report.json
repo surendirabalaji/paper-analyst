@@ -1,0 +1,87 @@
+{
+  "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+  "started_utc": "2026-10-28T05:09:22Z",
+  "turns": [
+    {
+      "question": "What problem does the HyDE paper's hypothetical document trick solve?",
+      "rows_sample": [
+        "+2.4 sspeculative corpus search of the question during planning discarded: plan is not a single Research task",
+        "+2.4 snote t1: planner-named paper not seeded (no indexed paper title contains 'HyDE'; it is not in the corpus)",
+        "+8.3 sdone t1 done, evidence only (the synthesizer writes from it): C1 C2 C3 C4 C5 C6 C7 C8"
+      ],
+      "plan_first_calls_row": true,
+      "seeded_rows": true,
+      "speculative_row": true,
+      "evidence_only_row": true,
+      "incremental": {
+        "n_events": 52,
+        "n_token_events": 16,
+        "network_chunks": 35,
+        "client_first_token_to_done_s": 2.92,
+        "server_first_token_to_done_s": 2.92,
+        "client_token_arrival_span_s": 2.89,
+        "server_token_t_ms_span_s": 2.89,
+        "dom_length_changes_before_done": 16,
+        "dom_changes_total": 16,
+        "dom_first_text_before_done_s": 2.92,
+        "server_ttft_ms": 9948,
+        "request_id": "220ec4041693",
+        "request_ids": [
+          "220ec4041693"
+        ]
+      },
+      "n_links": 20,
+      "chips": [
+        "planner \u2192 Gemini (cost)",
+        "summary \u2192 Gemini \u00d72 (cost)",
+        "synthesizer \u2192 Gemini (cost)"
+      ],
+      "status": "done \u00b7 TTFT 9.9 s \u00b7 total 12.9 s \u00b7 retrieval 15 ms \u00b7 Gemini 4 calls, 8486\u2192570 tok \u00b7 cost $0.0170",
+      "badge": "done",
+      "viewer": {
+        "kind": "paper",
+        "title_ok": true,
+        "text_len": 1350
+      },
+      "console_errors": []
+    },
+    {
+      "question": "Why do LLM agents fail at long-horizon web tasks?",
+      "rows_sample": [
+        "+2.1 sspeculative corpus search of the question during planning kept: plan is a single Research task: kept as its first corpus search",
+        "+2.1 stask t1 research: Analyze why LLM agents fail on long-horizon web navigation and interaction tasks based on corpus papers. \u00b7 first calls: corpus_search(\"Why do LLM agents fail at long-horizon web tasks?\", speculative), corpus_search(\"LLM agent long horizon web task failure challenges\", planner)",
+        "+2.1 stool calls corpus_search({\"query\":\"Why do LLM agents fail at long-horizon web tasks?\"}) \u00b7 seeded by the speculative search, no LLM round",
+        "+2.1 stool calls corpus_search({\"query\":\"LLM agent long horizon web task failure challenges\"}) \u00b7 seeded by the planner, no LLM round"
+      ],
+      "plan_first_calls_row": true,
+      "seeded_rows": true,
+      "speculative_row": true,
+      "evidence_only_row": false,
+      "incremental": {
+        "n_events": 19,
+        "n_token_events": 1,
+        "network_chunks": 7,
+        "client_first_token_to_done_s": 0.0,
+        "server_first_token_to_done_s": 0.0,
+        "client_token_arrival_span_s": 0.0,
+        "server_token_t_ms_span_s": 0.0,
+        "dom_length_changes_before_done": 0,
+        "dom_changes_total": 1,
+        "dom_first_text_before_done_s": null,
+        "server_ttft_ms": 5687,
+        "request_id": "3ba764cc3982",
+        "request_ids": [
+          "3ba764cc3982"
+        ]
+      },
+      "n_links": 0,
+      "chips": [
+        "planner \u2192 Gemini (cost)",
+        "research \u2192 Gemini (cost)"
+      ],
+      "status": "failed \u00b7 TTFT 5.7 s \u00b7 total 5.7 s \u00b7 retrieval 0 ms \u00b7 Gemini 2 calls, 1855\u2192161 tok \u00b7 cost $0.0040",
+      "badge": "failed",
+      "console_errors": []
+    }
+  ]
+}

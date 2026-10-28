@@ -424,7 +424,9 @@ async function ask(query) {
       T.add("orchestration", "plan", `${d.plan_summary} (${d.source === "fallback" ? "fallback plan" : "planner"})`,
         d.source === "fallback" ? "warn" : "", d.t_ms);
       d.tasks.forEach((t) => T.add("orchestration", `task ${t.id}`, `${t.worker}${t.needs_live ? " [needs live web]" : ""}: ` +
-        `${t.instruction}` + (t.depends_on.length ? ` (after ${t.depends_on.join(", ")})` : ""), "", d.t_ms));
+        `${t.instruction}` + (t.depends_on.length ? ` (after ${t.depends_on.join(", ")})` : "") +
+        ((t.seeds || []).length ? ` · first calls: ${t.seeds.map((x) => `${x.tool}(${JSON.stringify(x.paper || x.query)}, ` +
+          `${x.by})`).join(", ")}` : ""), "", d.t_ms));
       d.notes.forEach((n) => T.add("orchestration", "note", n, "warn", d.t_ms));
       status.textContent = d.tasks.length ? `Plan: ${d.tasks.map((t) => `${t.id} ${t.worker}`).join(" → ")}` : "No research needed";
       T.status("orchestration", d.source === "fallback" ? "partial" : "done");
@@ -466,7 +468,11 @@ async function ask(query) {
       if (cell.textContent === "…") cell.replaceChildren();
       cell.append(line);
     },
-    tool_call: (d) => T.add(groupOf(d.agent), "tool", `calls ${d.tool}(${JSON.stringify(d.args_safe)})`, "", d.t_ms),
+    tool_call: (d) => T.add(groupOf(d.agent), "tool", `calls ${d.tool}(${JSON.stringify(d.args_safe)})` +
+      (d.seeded_by ? ` · seeded by the ${d.seeded_by === "planner" ? "planner" : "speculative search"}, no LLM round` : ""),
+      "", d.t_ms),
+    speculative_retrieval: (d) => T.add("orchestration", "speculative", `corpus search of the question during ` +
+      `planning ${d.status}: ${d.reason}`, d.status === "kept" ? "ok" : "", d.t_ms),
     tool_result: (d) => T.add(groupOf(d.agent), d.status === "ok" ? "result" : d.status, `${d.tool} → ${d.status}` +
       (d.error_kind ? ` (${d.error_kind}, recoverable)` : "") + INJ(d) +
       (d.n_results != null ? `, ${d.n_results} results` : "") + `, ${d.latency_ms} ms`, d.injected ? "inj" : statusKind(d.status), d.t_ms),
@@ -486,7 +492,8 @@ async function ask(query) {
     retrieval: (d) => {
       d.chunks.forEach((c) => registry.set(c.cite_id, { ...c, label: `${c.title} — ${c.section}` }));
       T.add(groupOf(d.agent), "retrieval", `${d.tool ? `${d.tool} ` : ""}"${d.query}" → ` +
-        `${d.chunks.map((c) => `${c.cite_id} ${c.doc_id} (${c.score.toFixed(2)})`).join(", ") || "no chunks"} in ${d.retrieval_ms} ms`,
+        `${d.chunks.map((c) => `${c.cite_id} ${c.doc_id} (${c.score.toFixed(2)})`).join(", ") || "no chunks"} in ${d.retrieval_ms} ms` +
+        (d.speculative ? " (ran during planning)" : ""),
         "", d.t_ms);
     },
     sql_result: (d) => {
@@ -508,7 +515,9 @@ async function ask(query) {
       const why = d.reason ? `: ${d.reason}` : "";
       T.add(groupOf(d.agent), d.status, `${d.task_id} ${d.status}` + (d.attempt > 1 ? ` (attempt ${d.attempt})` : "") +
         (d.error_kind ? ` (${d.error_kind})` : "") + why + INJ(d, why) +
-        (d.evidence_ids && d.evidence_ids.length ? `, cites ${d.evidence_ids.join(" ")}` : ""),
+        (d.evidence_ids && d.evidence_ids.length
+          ? (d.evidence_only ? `, evidence only (the synthesizer writes from it): ${d.evidence_ids.join(" ")}`
+            : `, cites ${d.evidence_ids.join(" ")}`) : ""),
         d.injected ? "inj" : statusKind(d.status), d.t_ms);
       T.status(groupOf(d.agent), d.status, d.injected);
     },

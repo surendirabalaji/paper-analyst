@@ -24,6 +24,15 @@ Failure handling (Phase 7):
   answer). If every task failed, a templated answer says what was tried and whether retrying can help (N9).
   If the synthesis call itself fails before streaming, the workers' cited findings are returned as-is.
 - Fault injection (app/faults.py, `worker:<name>:<mode>`) is applied here; injected failures are labelled.
+
+Latency (Phase 8b, package B; each part can be switched off in config):
+- The planner also names Summary's papers and Research's search queries. They are checked (papers must
+  resolve in papers.db) and become the task's `seeds`: tool calls the worker runs before its first LLM round.
+- While the planner plans, a corpus search of the question runs speculatively. It is kept as a Research seed
+  only when the plan is a single Research task, and discarded otherwise; both are traced.
+- One-task plans run the Research or Summary worker in evidence-only mode (no written findings); the
+  synthesizer answers from the evidence it gathered. Plans with two or more tasks keep worker findings,
+  because the synthesizer must reconcile them.
 """
 
 from __future__ import annotations
@@ -41,7 +50,7 @@ from pydantic import BaseModel, Field
 from app.agents.data import run_data
 from app.agents.prompts import PLANNER_SYSTEM, SYNTH_NO_TASK_ROLE, SYNTH_ROLE
 from app.agents.research import run_research
-from app.agents.summary import run_summary
+from app.agents.summary import PaperNotFound, resolve_paper, run_summary
 from app.context import RequestContext, ctx_of
 from app.events import safe_error, utc_now
 from app.faults import is_injected, maybe_fail
@@ -80,6 +89,8 @@ RETRYABLE = TRANSIENT | {"budget_exhausted", BUDGET_SKIPPED, "live_search_unavai
 SERVICE_SIDE = {"data_unavailable", "worker_error", "tool_error"}  # neither retrying nor rephrasing helps
 
 WorkerFn = Callable[[RequestContext, dict, str], Awaitable[dict]]
+SPEC_MIN_CHARS, SPEC_MAX_CHARS = 2, 300  # corpus_search's query limits: only a valid query is searched speculatively
+EVIDENCE_ONLY_WORKERS = ("research", "summary")  # Data keeps its findings: its SQL result needs explaining
 WORKERS: dict[str, tuple[WorkerFn, str]] = {
     "research": (
         run_research,
@@ -130,6 +141,9 @@ class PlannedTask(BaseModel):
     instruction: str = Field(..., description="What this worker should find or produce")
     depends_on: list[int] = Field(default_factory=list, description="0-based indices of earlier tasks it needs")
     needs_live: bool = Field(False, description="True if the task needs current information from the live web")
+    papers: list[str] = Field(default_factory=list, description="summary only: arXiv ids or short titles of the "
+                              "named papers (at most 2)")
+    queries: list[str] = Field(default_factory=list, description="research only: 1-2 short corpus search queries")
 
 
 class Plan(BaseModel):
@@ -160,9 +174,54 @@ def validate_plan(plan: Plan, query: str) -> tuple[list[dict], list[str]]:
                 "status": "pending",
                 "attempts": 0,
                 "error_kind": None,
+                # Seed hints (Phase 8b): only for the worker that can use them, trimmed and capped.
+                "papers": _hints(t.papers, 2, 200) if t.worker == "summary" else [],
+                "queries": _hints(t.queries, 2, 300) if t.worker == "research" else [],
             }
         )
     return tasks, notes
+
+
+def _hints(values: list[str], cap: int, max_chars: int) -> list[str]:
+    out: list[str] = []
+    for v in values or []:
+        v = (v or "").strip()[:max_chars]
+        if len(v) >= 3 and v not in out:
+            out.append(v)
+    return out[:cap]
+
+
+async def plan_seeds(ctx: RequestContext, tasks: list[dict], notes: list[str]) -> None:
+    """Turn the planner's hints into each task's `seeds` (tool calls run before the worker's first LLM
+    round), and keep or discard the speculative search of the question. Unknown papers are dropped with
+    a note; the worker then finds the paper itself and reports it if it is not in the corpus."""
+    single_research = len(tasks) == 1 and tasks[0]["worker"] == "research"
+    use_spec = bool(ctx.speculative) and single_research
+    for t in tasks:
+        seeds: list[dict] = []
+        if t["worker"] == "research":
+            if use_spec:
+                seeds.append({"name": "corpus_search", "args": {"query": ctx.query}, "by": "speculative"})
+            if ctx.settings.planner_seeds:
+                for q in t.get("queries", [])[: 1 if seeds else 2]:
+                    if q != ctx.query or not seeds:
+                        seeds.append({"name": "corpus_search", "args": {"query": q}, "by": "planner"})
+        elif t["worker"] == "summary" and ctx.settings.planner_seeds:
+            for ref in t.get("papers", []):
+                try:
+                    row = await asyncio.to_thread(resolve_paper, ctx.settings.sqlite_path, ref)
+                except PaperNotFound as e:
+                    notes.append(f"{t['id']}: planner-named paper not seeded ({str(e)[:120]})")
+                    continue
+                except Exception as e:  # the database is the Data/Summary tools' problem to report, not ours
+                    notes.append(f"{t['id']}: paper seed skipped ({safe_error(e)[:120]})")
+                    continue
+                if all(s["args"]["paper"] != row["arxiv_id"] for s in seeds):
+                    seeds.append({"name": "get_paper_outline", "args": {"paper": row["arxiv_id"]}, "by": "planner"})
+        t["seeds"] = seeds
+    if ctx.speculative:
+        await ctx.end_speculative(use_spec, "plan is a single Research task: kept as its first corpus search" if use_spec
+                            else "plan is not a single Research task")
 
 
 def fallback_tasks(query: str) -> list[dict]:
@@ -179,6 +238,8 @@ async def planner(state: AnalystState, config) -> dict:
                                                 "comparison": comparison_cue(state["query"])})
     system = PLANNER_SYSTEM.format(max_tasks=MAX_TASKS, workers="\n".join(f"- {d}" for _, d in WORKERS.values()))
     errors, source = [], "llm"
+    if ctx.settings.speculative_retrieval and SPEC_MIN_CHARS <= len(state["query"].strip()) <= SPEC_MAX_CHARS:
+        ctx.start_speculative(state["query"], ctx.k)
     ctx.stage_deadline = time.perf_counter() + max(0.0, ctx.worker_window_s())  # keep the synthesis reserve
     try:
         out = await call_llm(
@@ -200,12 +261,15 @@ async def planner(state: AnalystState, config) -> dict:
                          **({"injected": True} if is_injected(e) else {}))
     finally:
         ctx.stage_deadline = None
+    await plan_seeds(ctx, tasks, notes)
     ctx.emitter.emit(
         "plan",
         plan_summary=summary,
         source=source,
         notes=notes,
-        tasks=[{k: t[k] for k in ("id", "worker", "instruction", "needs_live", "depends_on")} for t in tasks],
+        tasks=[{**{k: t[k] for k in ("id", "worker", "instruction", "needs_live", "depends_on")},
+                "seeds": [{"tool": x["name"], **x["args"], "by": x["by"]} for x in t.get("seeds", [])]}
+               for t in tasks],
     )
     return {"tasks": tasks, "plan_summary": summary, "plan_source": source, "worker_results": {},
             "step_count": 0, "errors": errors}
@@ -338,6 +402,9 @@ def make_worker_node(name: str, fn: WorkerFn):
         task = next(t for t in tasks if t["id"] == state["active_task"])
         task["attempts"] += 1
         task["status"] = "running"
+        # One-task plans: the worker gathers evidence and the synthesizer writes from it (Phase 8b).
+        task["evidence_only"] = (ctx.settings.evidence_only_single_task and len(tasks) == 1
+                                 and name in EVIDENCE_ONLY_WORKERS)
         errors = []
         if task["depends_on"]:
             papers = upstream_papers(state, task)
@@ -350,6 +417,7 @@ def make_worker_node(name: str, fn: WorkerFn):
         # caps each LLM attempt by ctx.time_left(), so the stage deadline is enforced inside the worker too.
         timeout = max(1.0, min(ctx.settings.worker_timeout_s, ctx.worker_window_s()))
         hits0 = len(ctx.faults.hits)
+        real0 = len(ctx.real_provider_errors)
 
         async def run() -> dict:
             if await maybe_fail(ctx, "worker", name, task_id=task["id"], attempt=task["attempts"]) == "empty":
@@ -372,14 +440,20 @@ def make_worker_node(name: str, fn: WorkerFn):
         finally:
             ctx.stage_deadline = None
         faults = [h["target"] for h in ctx.faults.hits[hits0:]]
+        real = ctx.real_provider_errors[real0:]
         if faults:
             res["faults"] = faults
-            res["injected"] = res["status"] != "done"  # this outcome was caused (or shaped) by injected faults
+            # Caused (or shaped) by injected faults only if no real provider error happened in this worker too
+            # (P8b-D2): a real outage during a fault test is reported as real, with the fault noted.
+            res["injected"] = res["status"] != "done" and not real
+            if res["status"] != "done" and real:
+                res["real_errors"] = real
         res["agent"] = name
         res["task_id"] = task["id"]
         task["status"] = res["status"]
         task["error_kind"] = res.get("error_kind")
         task["injected"] = bool(res.get("injected"))
+        task["fault_also"] = bool(res.get("real_errors"))  # real failure while a test fault was also active
         task.pop("retry_note", None)
         ctx.emitter.emit(
             "worker_result",
@@ -391,7 +465,9 @@ def make_worker_node(name: str, fn: WorkerFn):
             evidence_ids=res.get("evidence_ids", []),
             rounds=res.get("rounds"),
             tool_calls=res.get("tool_calls"),
+            **({"evidence_only": True} if task["evidence_only"] else {}),
             **({"injected": True, "faults": faults} if res.get("injected") else {}),
+            **({"real_errors": res["real_errors"], "faults": faults} if res.get("real_errors") else {}),
         )
         ctx.emitter.emit("transition", **{"from": name, "to": "supervisor", "task_id": task["id"],
                                           "reason": f"{task['id']} {res['status']}", "step": state.get("step_count", 0)})
@@ -406,6 +482,8 @@ def make_worker_node(name: str, fn: WorkerFn):
 
 
 LABELS = {"research": "Research", "summary": "Summary", "data": "Data"}
+EVIDENCE_ONLY_NOTE = ("(evidence-only task: the worker gathered the <evidence> items below and wrote no findings; "
+                      "answer this task directly from them)")
 
 
 def describe(task: dict) -> str:
@@ -421,7 +499,11 @@ def describe(task: dict) -> str:
         line = f"{who} {why or 'failed'}"
     else:
         line = f"{who} {status}"
-    return line + (" [injected test fault, not a real outage]" if task.get("injected") else "")
+    if task.get("injected"):
+        return line + " [injected test fault, not a real outage]"
+    if task.get("fault_also"):
+        return line + " [a real provider error, not caused by the injected test fault that was also active]"
+    return line
 
 
 def evidence_gaps(tasks: list[dict]) -> list[dict]:
@@ -448,10 +530,12 @@ def failure_answer(state: AnalystState) -> str:
              "grounded to report. What was tried:"]
     lines += [f"- {describe(t)}" for t in tasks]
     root = [t for t in tasks if t["status"] == "failed"] or tasks  # skipped tasks follow from these
+    real = [t for t in root if not t.get("injected")]
     if any(t.get("injected") for t in root):
         lines.append("These failures were injected on purpose to test failure handling (fault injection); "
-                     "they do not indicate a real outage.")
-    real = [t for t in root if not t.get("injected")]
+                     "they do not indicate a real outage." if not real else
+                     "The failures marked as injected test faults were caused on purpose (fault injection); "
+                     "the others are real and are described below.")
     if real and all(t.get("error_kind") in RETRYABLE for t in real):
         lines.append("This looks temporary (a provider, network or time-limit problem). Please try again in a moment.")
     elif real:
@@ -510,6 +594,7 @@ async def synthesize(state: AnalystState, config) -> dict:
             f"[{t['id']} {t['worker']} ({t['status']})]\n" + (
                 "(not run: the database lookup found no matching papers, so there was nothing to summarise)"
                 if t.get("error_kind") == NO_UPSTREAM_PAPERS
+                else EVIDENCE_ONLY_NOTE if results.get(t["id"], {}).get("evidence_only")
                 else results.get(t["id"], {}).get("findings_md") or "(no findings)")
             for t in tasks
         )
@@ -537,6 +622,8 @@ async def synthesize(state: AnalystState, config) -> dict:
         "comparison": comparison_cue(state["query"]),
         "statuses": statuses,
     }
+    if any(results.get(t["id"], {}).get("evidence_only") for t in tasks):
+        features["evidence_only"] = True  # answers from gathered evidence, not worker findings (Phase 8b)
     decision = ctx.route("synthesize" if tasks else "synthesize_no_task", "synthesizer", features)
 
     streamed = {"n": 0}
@@ -669,6 +756,8 @@ async def run_request(ctx: RequestContext) -> dict[str, Any]:
         )
         status = final.get("status", "failed")
     except asyncio.CancelledError:
+        if ctx.speculative:
+            ctx.speculative["task"].cancel()
         em.close()
         raise
     except Exception as e:

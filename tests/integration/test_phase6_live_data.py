@@ -19,7 +19,7 @@ import pytest
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from phase2_fakes import drain  # noqa: E402
 
-pytestmark = [pytest.mark.live, pytest.mark.anyio]
+pytestmark = [pytest.mark.live, pytest.mark.anyio, pytest.mark.usefixtures("close_openai_clients")]  # P8b-D1
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 OUT = ROOT / "eval" / "results" / "phase6"
 

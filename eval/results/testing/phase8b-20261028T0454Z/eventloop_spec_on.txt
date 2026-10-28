@@ -1,0 +1,6 @@
+[32m[32m[1m4 passed[0m, [33m2 deselected[0m[32m in 10.01s[0m[0m
+--run 1
+[32m[32m[1m4 passed[0m, [33m2 deselected[0m[32m in 10.22s[0m[0m
+--run 2
+[32m[32m[1m4 passed[0m, [33m2 deselected[0m[32m in 12.26s[0m[0m
+--run 3

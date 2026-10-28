@@ -11,7 +11,7 @@ import pathlib
 
 import pytest
 
-pytestmark = [pytest.mark.live, pytest.mark.anyio]
+pytestmark = [pytest.mark.live, pytest.mark.anyio, pytest.mark.usefixtures("close_openai_clients")]  # P8b-D1
 OUT = pathlib.Path(__file__).resolve().parents[2] / "eval/results/testing" / os.environ.get("TESTER_RUN", "phase6-local")
 
 CASES = [
