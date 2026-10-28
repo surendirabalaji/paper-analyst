@@ -419,3 +419,4 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - Both 38/38 correct plans; worker plans identical on all 38 pairs.
   - Planner latency median 2.54 s (low) vs 2.51 s (minimal); p90 3.27 vs 3.34 s; max 4.4 vs 6.7 s; one reasoning call each.
   - No measurable gain from `minimal`; decision left to the student. Cost about $0.15.
+- Student decisions (2026-10-27): planner Gemini effort stays `low`; option 8 (parallel dispatch) not added, so multi-agent questions are reported as they are, with option 8 noted as future work. Redeploy started by the student.
