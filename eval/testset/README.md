@@ -1,6 +1,6 @@
 # Phase 9 fixed test set (`testset_v1.jsonl`)
 
-**Status: DRAFT, awaiting student review. Not frozen; no scoring has been run on it.**
+**Status: FROZEN 2026-10-28 (student approved after review round 1). SHA-256 `50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382`. Do not edit; changes go to `testset_v2`.**
 
 ## Composition (44 items)
 
@@ -44,7 +44,7 @@ RAGAS set: **32 items** (20 single + 6 comparison + 6 hard). Data, multi and sys
    - The suggested "Search-R1 vs R1-Searcher" is kept (h01), but as a similar-name test: R1-Searcher has no paper of its own in the corpus and appears only as a TeaRAG baseline.
    - Expansion to ~60 items: about 3 configurations × 32 RAGAS runs already uses most of the $5 budget.
    - A separate oracle-context mode: the four required metrics are run end to end only (below).
-6. **Student review (pending):** edit, drop or replace items, then freeze.
+6. **Student review:** approved without further changes (2026-10-28).
 7. **Freeze:** after review, the file's SHA-256 is recorded here and in `docs/evaluation.md`, and the file is committed. It is not edited after scoring starts; any later change becomes `testset_v2` with its own results.
 
 ## How the set is used (no single aggregate score)

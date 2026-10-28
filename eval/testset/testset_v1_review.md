@@ -1,4 +1,4 @@
-# Test set v1 (DRAFT, for review)
+# Test set v1 (FROZEN 2026-10-28, sha256 50e9c0f3e629e9bc…)
 
 Readable view of `testset_v1.jsonl` (44 items, 32 RAGAS), generated from it. Edit items via Claude / `draft_v1.py`, not here.
 

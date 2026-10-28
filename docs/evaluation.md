@@ -4,7 +4,7 @@
 
 ## 1. Fixed test set
 
-- **File:** `eval/testset_v1.jsonl` *(to be created and frozen before the final run)*
+- **File:** `eval/testset/testset_v1.jsonl`, frozen 2026-10-28 before any scoring, SHA-256 `50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382`. Construction method and composition: `eval/testset/README.md`.
 - **Planned composition:** about 30 questions.
   - 20 single-paper factual questions, stratified across papers and section types (method, results, limitations).
   - 6 cross-paper comparison questions.
