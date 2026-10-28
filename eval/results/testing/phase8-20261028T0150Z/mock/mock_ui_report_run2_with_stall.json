@@ -1,0 +1,1544 @@
+{
+ "started_utc": "2026-10-28T01:56:38Z",
+ "mocked": "SSE backend mocked; real static UI and real Chrome",
+ "results": [
+  {
+   "id": "M1a no script execution (window.__xss==0)",
+   "pass": true,
+   "detail": 0
+  },
+  {
+   "id": "M1b no on* attributes / img / svg / iframe / inline script in DOM",
+   "pass": true,
+   "detail": {
+    "xss": 0,
+    "on_attrs": [],
+    "bad_nodes": [],
+    "non_http_hrefs": [],
+    "inline_scripts": 0,
+    "ext_links": [
+     {
+      "h": "https://ok.example/\"onmouseover=\"window.__xss=6",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     },
+     {
+      "h": "https://arxiv.org/abs/2210.03629",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     },
+     {
+      "h": "https://evil.example/x.png",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     }
+    ],
+    "literal_evil_in_answer": true,
+    "literal_evil_in_trace": true,
+    "literal_evil_in_routing": true
+   }
+  },
+  {
+   "id": "M1c every <a href> is '#' or http(s)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "M1d hostile text shown literally in answer, trace, routing",
+   "pass": true,
+   "detail": {
+    "xss": 0,
+    "on_attrs": [],
+    "bad_nodes": [],
+    "non_http_hrefs": [],
+    "inline_scripts": 0,
+    "ext_links": [
+     {
+      "h": "https://ok.example/\"onmouseover=\"window.__xss=6",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     },
+     {
+      "h": "https://arxiv.org/abs/2210.03629",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     },
+     {
+      "h": "https://evil.example/x.png",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     }
+    ],
+    "literal_evil_in_answer": true,
+    "literal_evil_in_trace": true,
+    "literal_evil_in_routing": true
+   }
+  },
+  {
+   "id": "M1e external links have rel=noopener noreferrer target=_blank",
+   "pass": true,
+   "detail": [
+    {
+     "h": "https://ok.example/\"onmouseover=\"window.__xss=6",
+     "rel": "noopener noreferrer",
+     "target": "_blank"
+    },
+    {
+     "h": "https://arxiv.org/abs/2210.03629",
+     "rel": "noopener noreferrer",
+     "target": "_blank"
+    },
+    {
+     "h": "https://evil.example/x.png",
+     "rel": "noopener noreferrer",
+     "target": "_blank"
+    }
+   ]
+  },
+  {
+   "id": "M1f unknown markers [C9]/[Z1] are plain text; C1/W1/D1 are links",
+   "pass": true,
+   "detail": [
+    "C1",
+    "C1",
+    "W1",
+    "D1",
+    "D1",
+    "W1"
+   ]
+  },
+  {
+   "id": "M1g C# viewer: hostile title/text literal, javascript: anchor hidden",
+   "pass": true,
+   "detail": {
+    "kind": "paper",
+    "title": "C1 · T-2210.03629v3::s3::001 <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "sub": "Sec <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "meta": "arXiv:2210.03629v3 · published 2022-10-06 · chunk 2210.03629v3::s3::001 · 191 characters",
+    "text": "TEXT-OF[2210.03629v3::s3::001] <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם",
+    "link": "#",
+    "link_hidden": true,
+    "link2": "https://arxiv.org/abs/2210.03629",
+    "link2_hidden": false
+   }
+  },
+  {
+   "id": "M1h W# viewer: javascript: URL not linked, snippet literal",
+   "pass": true,
+   "detail": {
+    "kind": "web",
+    "title": "W1 · Web <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "sub": "evil<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> · retrieved 2026-10-28T00:00Z<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "meta": "found by research via tavily_search (Tavily remote MCP) · snippet as given to the model, 165 characters",
+    "text": "SNIP <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם",
+    "link": "#",
+    "link_hidden": true,
+    "link2": "#",
+    "link2_hidden": true
+   }
+  },
+  {
+   "id": "M1i D# viewer: javascript: href not linked, SQL/rows literal",
+   "pass": true,
+   "detail": {
+    "kind": "database",
+    "title": "D1 · Row <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "sub": "one paper's row in the corpus metadata DB",
+    "meta": "papers.db (read-only) · found by data via run_sql",
+    "text": "SQL:\nSELECT '<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">'\n\nResult:\nc<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> | n\n<b><img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"></b> | 3",
+    "link": "#",
+    "link_hidden": true,
+    "link2": "#",
+    "link2_hidden": true
+   }
+  },
+  {
+   "id": "M1j still no execution after viewer clicks",
+   "pass": true,
+   "detail": {
+    "xss": 0,
+    "on_attrs": [],
+    "bad_nodes": [],
+    "non_http_hrefs": [],
+    "inline_scripts": 0,
+    "ext_links": [
+     {
+      "h": "https://ok.example/\"onmouseover=\"window.__xss=6",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     },
+     {
+      "h": "https://arxiv.org/abs/2210.03629",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     },
+     {
+      "h": "https://evil.example/x.png",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+     }
+    ],
+    "literal_evil_in_answer": true,
+    "literal_evil_in_trace": true,
+    "literal_evil_in_routing": true
+   }
+  },
+  {
+   "id": "M2a Unicode across arbitrary byte splits + CRLF + pings reassembled exactly",
+   "pass": true,
+   "detail": "Unicode: Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם — end."
+  },
+  {
+   "id": "M2b dir=auto on question and answer",
+   "pass": true,
+   "detail": {
+    "qdir": "auto",
+    "adir": "auto"
+   }
+  },
+  {
+   "id": "M3 same id C1 in two turns opens each turn's own source",
+   "pass": true,
+   "detail": {
+    "A": "arXiv:2210.03629v3 · published 2022-10-06 · chunk isoA::sec::000 · 184 characters",
+    "B": "arXiv:2210.03629v3 · published 2022-10-06 · chunk isoB::sec::000 · 184 characters"
+   }
+  },
+  {
+   "id": "M4a chunk id with space / # ? & % round-trips through the viewer",
+   "pass": true,
+   "detail": "TEXT-OF[2305.10601v2::4 Experiments Game of 24 #1 ?a=b&c%::003] <img src=x onerror=\"window.__xss=1\"><script>window.__xss"
+  },
+  {
+   "id": "M4b missing chunk -> visible 'Could not load source: HTTP 404'",
+   "pass": true,
+   "detail": {
+    "kind": "paper",
+    "title": "C2 · Gone",
+    "sub": "Gone",
+    "meta": "chunk missing::x::000",
+    "text": "Could not load source: HTTP 404",
+    "link": "https://arxiv.org/html/2210.03629v3#S3",
+    "link_hidden": false,
+    "link2": "#",
+    "link2_hidden": true
+   }
+  },
+  {
+   "id": "M5 partial turn: badge partial, warn status, dropped C2 not linked, injected badges shown",
+   "pass": true,
+   "detail": {
+    "turn": {
+     "q": "S:partial",
+     "answer": "Reflexion reflects [C1]. The count is unknown [C2].Note: Data failed.",
+     "hidden": false,
+     "streaming": false,
+     "status": "partial · TTFT 1.2 s · total 3.0 s · retrieval 9 ms · OpenAI 1 calls, 100→50 tok · cost $0.0010 · not linked (missing-evidence statements): C2",
+     "status_cls": "status warn",
+     "badge": "partial",
+     "links": [
+      "C1"
+     ],
+     "dropped": [
+      "C2"
+     ],
+     "send_disabled": false,
+     "trace_badge": "partial",
+     "wait_s": 0.31
+    },
+    "trace": {
+     "sum": "partialTurn #6: S:partialinjected",
+     "agents": [
+      "Orchestration (planner + supervisor)done8 events",
+      "Research agentdone2 events",
+      "Data agentfailedinjected2 events",
+      "Synthesispartial2 events"
+     ]
+    }
+   }
+  },
+  {
+   "id": "M6a non-recoverable error event -> failed badge and error status",
+   "pass": true,
+   "detail": {
+    "q": "S:errev",
+    "answer": "",
+    "hidden": true,
+    "streaming": false,
+    "status": "Error: all providers failed",
+    "status_cls": "status error",
+    "badge": "failed",
+    "links": [],
+    "dropped": [],
+    "send_disabled": false,
+    "trace_badge": "failed",
+    "wait_s": 0.15
+   }
+  },
+  {
+   "id": "M6b mid-stream close without done -> failed, partial text kept, message says so",
+   "pass": true,
+   "detail": {
+    "q": "S:cut",
+    "answer": "This partial answer stops here",
+    "hidden": false,
+    "streaming": false,
+    "status": "Error: the connection closed before the answer finished; the partial answer is shown above",
+    "status_cls": "status error",
+    "badge": "failed",
+    "links": [],
+    "dropped": [],
+    "send_disabled": false,
+    "trace_badge": "failed",
+    "wait_s": 0.46
+   }
+  },
+  {
+   "id": "M6c HTTP 500 (HTML body) -> failed with HTTP 500, no markup executed",
+   "pass": true,
+   "detail": {
+    "q": "S:http500",
+    "answer": "",
+    "hidden": true,
+    "streaming": false,
+    "status": "Error: the server refused the request (HTTP 500): <html><body>Internal <b>Server</b> Error<script>window.__xss=20</script></body></html>",
+    "status_cls": "status error",
+    "badge": "failed",
+    "links": [],
+    "dropped": [],
+    "send_disabled": false,
+    "trace_badge": "failed",
+    "wait_s": 0.15
+   }
+  },
+  {
+   "id": "M6d HTTP 422 detail list joined and shown as text",
+   "pass": true,
+   "detail": {
+    "q": "S:http422",
+    "answer": "",
+    "hidden": true,
+    "streaming": false,
+    "status": "Error: the server refused the request (HTTP 422): query too long <script>window.__xss=21</script>; second",
+    "status_cls": "status error",
+    "badge": "failed",
+    "links": [],
+    "dropped": [],
+    "send_disabled": false,
+    "trace_badge": "failed",
+    "wait_s": 0.15
+   }
+  },
+  {
+   "id": "M7a Ask button disabled while a turn runs (click does nothing)",
+   "pass": true,
+   "detail": {
+    "send_disabled": true,
+    "calls_after_disabled_click": 1,
+    "calls_after_enter": 2,
+    "turns_running_concurrently": 2,
+    "after_settle": {
+     "disabled": false,
+     "running": 0
+    }
+   }
+  },
+  {
+   "id": "M7b Enter key while a turn runs does not start a second concurrent request",
+   "pass": false,
+   "detail": {
+    "send_disabled": true,
+    "calls_after_disabled_click": 1,
+    "calls_after_enter": 2,
+    "turns_running_concurrently": 2,
+    "after_settle": {
+     "disabled": false,
+     "running": 0
+    }
+   }
+  },
+  {
+   "id": "M7c after both settle: no turn left 'running', button enabled",
+   "pass": true,
+   "detail": {
+    "disabled": false,
+    "running": 0
+   }
+  },
+  {
+   "id": "M8 long answer (400 list items, ~25k chars) renders completely",
+   "pass": true,
+   "detail": {
+    "wait_s": 12.99,
+    "li": 400,
+    "longtasks": {
+     "n": 0,
+     "max": 0,
+     "sum": 0
+    },
+    "len": 20294,
+    "links": 400
+   }
+  },
+  {
+   "id": "M9 text contrast >= 4.5:1 (WCAG AA) for all measured UI text, light and dark",
+   "pass": true,
+   "detail": {
+    "light": {},
+    "dark": {}
+   }
+  },
+  {
+   "id": "M10 silent stream -> watchdog error at ~60 s, turn failed, button re-enabled",
+   "pass": true,
+   "detail": {
+    "q": "S:stall",
+    "answer": "",
+    "hidden": true,
+    "streaming": false,
+    "status": "Error: the stream stalled (no data for 60 s) and was stopped",
+    "status_cls": "status error",
+    "badge": "failed",
+    "links": [],
+    "dropped": [],
+    "send_disabled": false,
+    "trace_badge": "failed",
+    "wait_s": 60.03
+   }
+  },
+  {
+   "id": "M11 no uncaught exceptions / 'bad SSE payload' warnings",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "passed": 26,
+ "failed": 1,
+ "evidence": {
+  "xss_turn": {
+   "q": "S:xss <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "answer": "Heading <img src=x onerror=\"window.xss=1\"><script>window.xss=2</script><svg onload=\"window.__xss=3\">Para <img src=x onerror=\"window.xss=1\"><script>window.xss=2</script><svg onload=\"window.__xss=3\"> with [C1] and [C9] and [Z1] and [C1, W1, D1].[js link](javascript:window.xss=4) [data](data:text/html,<script>window.xss=5</script>)[vb](vbscript:msgbox) quote-break ok!image &lt;script&gt;window.xss=7&lt;/script&gt; <a href=\"javascript:window.xss=8\">a</a>col <img src=x onerror=\"window.xss=1\"><script>window.xss=2</script><svg onload=\"window.__xss=3\">b<iframe src=javascript:window.__xss=10></iframe>[D1]</pre><script>window.__xss=11</script><img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">quote <img src=x onerror=\"window.xss=1\"><script>window.xss=2</script><svg onload=\"window.__xss=3\"> [W1]bold <img src=x onerror=\"window.xss=1\"><script>window.xss=2</script><svg onload=\"window.__xss=3\"> em code <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "hidden": false,
+   "streaming": false,
+   "status": "done · TTFT 1.2 s · total 3.0 s · retrieval 9 ms · OpenAI 1 calls, 100→50 tok · cost $0.0010",
+   "status_cls": "status",
+   "badge": "done",
+   "links": [
+    "C1",
+    "C1",
+    "W1",
+    "D1",
+    "D1",
+    "W1"
+   ],
+   "dropped": [],
+   "send_disabled": false,
+   "trace_badge": "done",
+   "wait_s": 3.37
+  },
+  "xss_safety": {
+   "xss": 0,
+   "on_attrs": [],
+   "bad_nodes": [],
+   "non_http_hrefs": [],
+   "inline_scripts": 0,
+   "ext_links": [
+    {
+     "h": "https://ok.example/\"onmouseover=\"window.__xss=6",
+     "rel": "noopener noreferrer",
+     "target": "_blank"
+    },
+    {
+     "h": "https://arxiv.org/abs/2210.03629",
+     "rel": "noopener noreferrer",
+     "target": "_blank"
+    },
+    {
+     "h": "https://evil.example/x.png",
+     "rel": "noopener noreferrer",
+     "target": "_blank"
+    }
+   ],
+   "literal_evil_in_answer": true,
+   "literal_evil_in_trace": true,
+   "literal_evil_in_routing": true
+  },
+  "xss_viewer_C1": {
+   "kind": "paper",
+   "title": "C1 · T-2210.03629v3::s3::001 <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "sub": "Sec <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "meta": "arXiv:2210.03629v3 · published 2022-10-06 · chunk 2210.03629v3::s3::001 · 191 characters",
+   "text": "TEXT-OF[2210.03629v3::s3::001] <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם",
+   "link": "#",
+   "link_hidden": true,
+   "link2": "https://arxiv.org/abs/2210.03629",
+   "link2_hidden": false
+  },
+  "xss_viewer_W1": {
+   "kind": "web",
+   "title": "W1 · Web <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "sub": "evil<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> · retrieved 2026-10-28T00:00Z<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "meta": "found by research via tavily_search (Tavily remote MCP) · snippet as given to the model, 165 characters",
+   "text": "SNIP <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם",
+   "link": "#",
+   "link_hidden": true,
+   "link2": "#",
+   "link2_hidden": true
+  },
+  "xss_viewer_D1": {
+   "kind": "database",
+   "title": "D1 · Row <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "sub": "one paper's row in the corpus metadata DB",
+   "meta": "papers.db (read-only) · found by data via run_sql",
+   "text": "SQL:\nSELECT '<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">'\n\nResult:\nc<img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> | n\n<b><img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"></b> | 3",
+   "link": "#",
+   "link_hidden": true,
+   "link2": "#",
+   "link2_hidden": true
+  },
+  "split": {
+   "q": "S:split",
+   "answer": "Unicode: Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם — end.",
+   "hidden": false,
+   "streaming": false,
+   "status": "done · TTFT 1.2 s · total 3.0 s · retrieval 9 ms · OpenAI 1 calls, 100→50 tok · cost $0.0010",
+   "status_cls": "status",
+   "badge": "done",
+   "links": [],
+   "dropped": [],
+   "send_disabled": false,
+   "trace_badge": "done",
+   "wait_s": 1.23
+  },
+  "iso": {
+   "A": {
+    "kind": "paper",
+    "title": "C1 · T-isoA::sec::000 <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "sub": "Sec <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "meta": "arXiv:2210.03629v3 · published 2022-10-06 · chunk isoA::sec::000 · 184 characters",
+    "text": "TEXT-OF[isoA::sec::000] <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם",
+    "link": "#",
+    "link_hidden": true,
+    "link2": "https://arxiv.org/abs/2210.03629",
+    "link2_hidden": false
+   },
+   "B": {
+    "kind": "paper",
+    "title": "C1 · T-isoB::sec::000 <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "sub": "Sec <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+    "meta": "arXiv:2210.03629v3 · published 2022-10-06 · chunk isoB::sec::000 · 184 characters",
+    "text": "TEXT-OF[isoB::sec::000] <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם",
+    "link": "#",
+    "link_hidden": true,
+    "link2": "https://arxiv.org/abs/2210.03629",
+    "link2_hidden": false
+   }
+  },
+  "enc": {
+   "kind": "paper",
+   "title": "C1 · T-2305.10601v2::4 Experiments Game of 24 #1 ?a=b&c%::003 <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "sub": "Sec <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\">",
+   "meta": "arXiv:2210.03629v3 · published 2022-10-06 · chunk 2305.10601v2::4 Experiments Game of 24 #1 ?a=b&c%::003 · 224 characters",
+   "text": "TEXT-OF[2305.10601v2::4 Experiments Game of 24 #1 ?a=b&c%::003] <img src=x onerror=\"window.__xss=1\"><script>window.__xss=2</script><svg onload=\"window.__xss=3\"> Résumé naïve — 检索增强生成 日本語 😀 👩‍🔬 🇫🇷 مرحبا بالعالم שלום עולם",
+   "link": "#",
+   "link_hidden": true,
+   "link2": "https://arxiv.org/abs/2210.03629",
+   "link2_hidden": false
+  },
+  "partial": {
+   "turn": {
+    "q": "S:partial",
+    "answer": "Reflexion reflects [C1]. The count is unknown [C2].Note: Data failed.",
+    "hidden": false,
+    "streaming": false,
+    "status": "partial · TTFT 1.2 s · total 3.0 s · retrieval 9 ms · OpenAI 1 calls, 100→50 tok · cost $0.0010 · not linked (missing-evidence statements): C2",
+    "status_cls": "status warn",
+    "badge": "partial",
+    "links": [
+     "C1"
+    ],
+    "dropped": [
+     "C2"
+    ],
+    "send_disabled": false,
+    "trace_badge": "partial",
+    "wait_s": 0.31
+   },
+   "trace": {
+    "sum": "partialTurn #6: S:partialinjected",
+    "agents": [
+     "Orchestration (planner + supervisor)done8 events",
+     "Research agentdone2 events",
+     "Data agentfailedinjected2 events",
+     "Synthesispartial2 events"
+    ]
+   }
+  },
+  "errev": {
+   "q": "S:errev",
+   "answer": "",
+   "hidden": true,
+   "streaming": false,
+   "status": "Error: all providers failed",
+   "status_cls": "status error",
+   "badge": "failed",
+   "links": [],
+   "dropped": [],
+   "send_disabled": false,
+   "trace_badge": "failed",
+   "wait_s": 0.15
+  },
+  "cut": {
+   "q": "S:cut",
+   "answer": "This partial answer stops here",
+   "hidden": false,
+   "streaming": false,
+   "status": "Error: the connection closed before the answer finished; the partial answer is shown above",
+   "status_cls": "status error",
+   "badge": "failed",
+   "links": [],
+   "dropped": [],
+   "send_disabled": false,
+   "trace_badge": "failed",
+   "wait_s": 0.46
+  },
+  "http500": {
+   "q": "S:http500",
+   "answer": "",
+   "hidden": true,
+   "streaming": false,
+   "status": "Error: the server refused the request (HTTP 500): <html><body>Internal <b>Server</b> Error<script>window.__xss=20</script></body></html>",
+   "status_cls": "status error",
+   "badge": "failed",
+   "links": [],
+   "dropped": [],
+   "send_disabled": false,
+   "trace_badge": "failed",
+   "wait_s": 0.15
+  },
+  "http422": {
+   "q": "S:http422",
+   "answer": "",
+   "hidden": true,
+   "streaming": false,
+   "status": "Error: the server refused the request (HTTP 422): query too long <script>window.__xss=21</script>; second",
+   "status_cls": "status error",
+   "badge": "failed",
+   "links": [],
+   "dropped": [],
+   "send_disabled": false,
+   "trace_badge": "failed",
+   "wait_s": 0.15
+  },
+  "double_submit": {
+   "send_disabled": true,
+   "calls_after_disabled_click": 1,
+   "calls_after_enter": 2,
+   "turns_running_concurrently": 2,
+   "after_settle": {
+    "disabled": false,
+    "running": 0
+   }
+  },
+  "long": {
+   "wait_s": 12.99,
+   "li": 400,
+   "longtasks": {
+    "n": 0,
+    "max": 0,
+    "sum": 0
+   },
+   "len": 20294,
+   "links": 400
+  },
+  "contrast": {
+   "light": {
+    "h1": {
+     "min": 15.17,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(22,22,21)",
+      "size": "18px"
+     }
+    },
+    ".banner": {
+     "min": 7.5,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(22,22,21)",
+      "size": "13px"
+     }
+    },
+    ".question": {
+     "min": 13.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer p": {
+     "min": 6.83,
+     "n": 12,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer li": {
+     "min": 13.83,
+     "n": 403,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer a.cite": {
+     "min": 9.75,
+     "n": 411,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "13.5px"
+     }
+    },
+    ".answer a.ext": {
+     "min": 9.75,
+     "n": 3,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer code": {
+     "min": 12.06,
+     "n": 401,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,42,39)",
+      "size": "13.5px"
+     }
+    },
+    ".answer pre.code": {
+     "min": 12.06,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,42,39)",
+      "size": "13px"
+     }
+    },
+    ".answer blockquote": {
+     "min": 6.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer th": {
+     "min": 13.83,
+     "n": 2,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".answer td": {
+     "min": 13.83,
+     "n": 2,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".status": {
+     "min": 6.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".status.warn": {
+     "min": 9,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(242, 180, 90)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".status.error": {
+     "min": 6.91,
+     "n": 4,
+     "worst": {
+      "fg": "rgb(242, 139, 130)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".cite-dropped": {
+     "min": 5.81,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".chip.prov-openai": {
+     "min": 7.21,
+     "n": 11,
+     "worst": {
+      "fg": "rgb(95, 209, 176)",
+      "bg": "rgb(42,47,54)",
+      "size": "12px"
+     }
+    },
+    ".chip.prov-gemini-openrouter": {
+     "min": 6.81,
+     "n": 11,
+     "worst": {
+      "fg": "rgb(159, 182, 255)",
+      "bg": "rgb(42,47,54)",
+      "size": "12px"
+     }
+    },
+    ".routing-line .label": {
+     "min": 6.83,
+     "n": 11,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".turn-no": {
+     "min": 6.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".clock": {
+     "min": 6.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".badge.ok": {
+     "min": 7.09,
+     "n": 8,
+     "worst": {
+      "fg": "rgb(111, 207, 151)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.warn": {
+     "min": 7.35,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(242, 180, 90)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.bad": {
+     "min": 5.64,
+     "n": 4,
+     "worst": {
+      "fg": "rgb(242, 139, 130)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.src-paper": {
+     "min": 7.09,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(111, 207, 151)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.src-db": {
+     "min": 7.35,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(242, 180, 90)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.src-web": {
+     "min": 6.81,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(159, 182, 255)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    "#trace li": {
+     "min": 13.83,
+     "n": 143,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#trace .t": {
+     "min": 6.83,
+     "n": 143,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "11px"
+     }
+    },
+    "#trace .agent-name": {
+     "min": 13.83,
+     "n": 39,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#trace .muted": {
+     "min": 6.83,
+     "n": 39,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "11px"
+     }
+    },
+    "#routing-rows td": {
+     "min": 11.29,
+     "n": 128,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,47,54)",
+      "size": "13px"
+     }
+    },
+    "#routing-rows .muted": {
+     "min": 6.83,
+     "n": 35,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "11px"
+     }
+    },
+    "#routing-rows .prov": {
+     "min": 8.34,
+     "n": 23,
+     "worst": {
+      "fg": "rgb(159, 182, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#sources li": {
+     "min": 13.83,
+     "n": 10,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#sources a.cite": {
+     "min": 9.75,
+     "n": 10,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "11.7px"
+     }
+    },
+    "#viewer-title": {
+     "min": 13.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "14px"
+     }
+    },
+    "#viewer-sub": {
+     "min": 13.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#viewer-meta": {
+     "min": 6.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#viewer-text": {
+     "min": 15.17,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(22,22,21)",
+      "size": "13px"
+     }
+    },
+    "#viewer-link": {
+     "min": 9.75,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "nav button": {
+     "min": 7.94,
+     "n": 3,
+     "worst": {
+      "fg": "rgb(31, 31, 29)",
+      "bg": "rgb(141,184,227)",
+      "size": "15px"
+     }
+    },
+    "textarea": {
+     "min": 15.17,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(22,22,21)",
+      "size": "15px"
+     }
+    },
+    "#send": {
+     "min": 7.94,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(31, 31, 29)",
+      "bg": "rgb(141,184,227)",
+      "size": "15px"
+     }
+    },
+    ".muted": {
+     "min": 6.83,
+     "n": 49,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#routing-rows tr.turn-head td": {
+     "min": 11.29,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,47,54)",
+      "size": "13px"
+     }
+    }
+   },
+   "dark": {
+    "h1": {
+     "min": 15.17,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(22,22,21)",
+      "size": "18px"
+     }
+    },
+    ".banner": {
+     "min": 7.5,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(22,22,21)",
+      "size": "13px"
+     }
+    },
+    ".question": {
+     "min": 13.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer p": {
+     "min": 6.83,
+     "n": 12,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer li": {
+     "min": 13.83,
+     "n": 403,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer a.cite": {
+     "min": 9.75,
+     "n": 411,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "13.5px"
+     }
+    },
+    ".answer a.ext": {
+     "min": 9.75,
+     "n": 3,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer code": {
+     "min": 12.06,
+     "n": 401,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,42,39)",
+      "size": "13.5px"
+     }
+    },
+    ".answer pre.code": {
+     "min": 12.06,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,42,39)",
+      "size": "13px"
+     }
+    },
+    ".answer blockquote": {
+     "min": 6.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".answer th": {
+     "min": 13.83,
+     "n": 2,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".answer td": {
+     "min": 13.83,
+     "n": 2,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".status": {
+     "min": 6.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".status.warn": {
+     "min": 9,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(242, 180, 90)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".status.error": {
+     "min": 6.91,
+     "n": 4,
+     "worst": {
+      "fg": "rgb(242, 139, 130)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".cite-dropped": {
+     "min": 5.81,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "15px"
+     }
+    },
+    ".chip.prov-openai": {
+     "min": 7.21,
+     "n": 11,
+     "worst": {
+      "fg": "rgb(95, 209, 176)",
+      "bg": "rgb(42,47,54)",
+      "size": "12px"
+     }
+    },
+    ".chip.prov-gemini-openrouter": {
+     "min": 6.81,
+     "n": 11,
+     "worst": {
+      "fg": "rgb(159, 182, 255)",
+      "bg": "rgb(42,47,54)",
+      "size": "12px"
+     }
+    },
+    ".routing-line .label": {
+     "min": 6.83,
+     "n": 11,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".turn-no": {
+     "min": 6.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    ".clock": {
+     "min": 6.83,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".badge.ok": {
+     "min": 7.09,
+     "n": 77,
+     "worst": {
+      "fg": "rgb(111, 207, 151)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.warn": {
+     "min": 7.35,
+     "n": 6,
+     "worst": {
+      "fg": "rgb(242, 180, 90)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.bad": {
+     "min": 5.64,
+     "n": 16,
+     "worst": {
+      "fg": "rgb(242, 139, 130)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.skip": {
+     "min": 5.58,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.inj": {
+     "min": 6.71,
+     "n": 5,
+     "worst": {
+      "fg": "rgb(208, 166, 245)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.src-paper": {
+     "min": 7.09,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(111, 207, 151)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.src-db": {
+     "min": 7.35,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(242, 180, 90)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    ".badge.src-web": {
+     "min": 6.81,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(159, 182, 255)",
+      "bg": "rgb(42,47,54)",
+      "size": "11px"
+     }
+    },
+    "#trace li": {
+     "min": 13.83,
+     "n": 143,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#trace .t": {
+     "min": 6.83,
+     "n": 143,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "11px"
+     }
+    },
+    "#trace .agent-name": {
+     "min": 13.83,
+     "n": 39,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#trace .muted": {
+     "min": 6.83,
+     "n": 39,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "11px"
+     }
+    },
+    "#routing-rows td": {
+     "min": 11.29,
+     "n": 128,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,47,54)",
+      "size": "13px"
+     }
+    },
+    "#routing-rows .muted": {
+     "min": 6.83,
+     "n": 35,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "11px"
+     }
+    },
+    "#routing-rows .prov": {
+     "min": 8.34,
+     "n": 23,
+     "worst": {
+      "fg": "rgb(159, 182, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#sources li": {
+     "min": 13.83,
+     "n": 10,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#sources a.cite": {
+     "min": 9.75,
+     "n": 10,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "11.7px"
+     }
+    },
+    "#viewer-title": {
+     "min": 13.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "14px"
+     }
+    },
+    "#viewer-sub": {
+     "min": 13.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#viewer-meta": {
+     "min": 6.83,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "#viewer-text": {
+     "min": 15.17,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(22,22,21)",
+      "size": "13px"
+     }
+    },
+    "#viewer-link": {
+     "min": 9.75,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(156, 203, 255)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    "nav button": {
+     "min": 7.94,
+     "n": 3,
+     "worst": {
+      "fg": "rgb(31, 31, 29)",
+      "bg": "rgb(141,184,227)",
+      "size": "15px"
+     }
+    },
+    "textarea": {
+     "min": 15.17,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(22,22,21)",
+      "size": "15px"
+     }
+    },
+    "#send": {
+     "min": 7.94,
+     "n": 1,
+     "worst": {
+      "fg": "rgb(31, 31, 29)",
+      "bg": "rgb(141,184,227)",
+      "size": "15px"
+     }
+    },
+    ".muted": {
+     "min": 6.83,
+     "n": 53,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "13px"
+     }
+    },
+    ".flow .node": {
+     "min": 7.09,
+     "n": 56,
+     "worst": {
+      "fg": "rgb(111, 207, 151)",
+      "bg": "rgb(42,47,54)",
+      "size": "12px"
+     }
+    },
+    ".flow .arrow": {
+     "min": 6.83,
+     "n": 43,
+     "worst": {
+      "fg": "rgb(168, 167, 159)",
+      "bg": "rgb(31,31,29)",
+      "size": "12px"
+     }
+    },
+    "#routing-rows tr.turn-head td": {
+     "min": 11.29,
+     "n": 13,
+     "worst": {
+      "fg": "rgb(236, 235, 230)",
+      "bg": "rgb(42,47,54)",
+      "size": "13px"
+     }
+    }
+   }
+  },
+  "contrast_below_4_5": {
+   "light": {},
+   "dark": {}
+  },
+  "stall": {
+   "q": "S:stall",
+   "answer": "",
+   "hidden": true,
+   "streaming": false,
+   "status": "Error: the stream stalled (no data for 60 s) and was stopped",
+   "status_cls": "status error",
+   "badge": "failed",
+   "links": [],
+   "dropped": [],
+   "send_disabled": false,
+   "trace_badge": "failed",
+   "wait_s": 60.03
+  },
+  "console": []
+ }
+}

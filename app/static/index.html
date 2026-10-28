@@ -9,13 +9,13 @@
 <body>
   <header>
     <h1>Agentic AI Paper Analyst</h1>
-    <p class="banner">Single-turn: each question is answered independently. Answers cite indexed arXiv passages [C#], exact records from the corpus database [D#] and, for current information, live web results [W#] with their retrieval time.</p>
+    <p class="banner single-turn" id="single-turn"><span class="badge">single-turn</span> Each question is answered on its own: there is no conversation memory, and earlier turns stay on this page only. Answers cite indexed arXiv passages <span class="badge src-paper">C#</span>, exact records from the corpus database <span class="badge src-db">D#</span> and, for current information, live web results <span class="badge src-web">W#</span> with their retrieval time. Click a citation to see its source.</p>
   </header>
   <main>
     <section id="chat" aria-label="Chat">
       <div id="turns" aria-live="polite"></div>
       <form id="ask">
-        <textarea id="q" rows="2" maxlength="2000" placeholder="Ask about LLM agents, tool use, multi-agent systems or RAG papers…" required></textarea>
+        <textarea id="q" rows="2" maxlength="2000" dir="auto" placeholder="Ask about LLM agents, tool use, multi-agent systems or RAG papers…" required></textarea>
         <button id="send" type="submit">Ask</button>
       </form>
     </section>
@@ -26,23 +26,30 @@
         <button role="tab" data-tab="sources" aria-selected="false">Sources</button>
       </nav>
       <div id="tab-routing" class="tab">
+        <p class="muted">Every generation call per turn: which agent asked, the provider and exact model chosen, the routing dimension (cost or capability), the decision inputs, and the result. Fallbacks appear as separate ↪ rows.</p>
         <table>
           <thead><tr><th>Turn</th><th>Agent / call</th><th>Provider · model</th><th>Why (dimension, rationale, inputs)</th><th>Result</th></tr></thead>
           <tbody id="routing-rows"></tbody>
         </table>
       </div>
-      <div id="tab-trace" class="tab" hidden><ol id="trace"></ol></div>
+      <div id="tab-trace" class="tab" hidden>
+        <p class="muted">One group per turn, then per agent. Times are since the request started. Badges: <span class="badge ok">done</span> <span class="badge warn">partial</span> <span class="badge bad">failed</span> <span class="badge skip">skipped</span> <span class="badge inj">injected</span> (a deliberate test fault).</p>
+        <div id="trace"></div>
+      </div>
       <div id="tab-sources" class="tab" hidden>
         <ul id="sources"></ul>
         <article id="viewer" hidden>
+          <p class="viewer-head"><span id="viewer-kind" class="badge"></span></p>
           <h3 id="viewer-title"></h3>
+          <p class="viewer-sub" id="viewer-sub"></p>
           <p class="muted" id="viewer-meta"></p>
-          <pre id="viewer-text"></pre>
-          <a id="viewer-link" target="_blank" rel="noopener noreferrer">Open on arXiv</a>
+          <pre id="viewer-text" tabindex="0"></pre>
+          <p class="viewer-links"><a id="viewer-link" target="_blank" rel="noopener noreferrer">Open on arXiv</a> <a id="viewer-link2" target="_blank" rel="noopener noreferrer" hidden></a></p>
         </article>
       </div>
     </aside>
   </main>
+  <script src="/static/md.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

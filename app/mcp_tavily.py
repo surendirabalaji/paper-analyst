@@ -31,7 +31,6 @@ SERVER = "tavily-remote-mcp"
 TOOL = "tavily_search"
 MAX_CALLS_PER_TASK = 2
 SNIPPET_CHARS = 1200  # per result, kept in the evidence registry and the prompt
-TRACE_SNIPPET_CHARS = 280
 
 
 class TavilyUnavailable(Exception):
@@ -229,7 +228,7 @@ def shared_search_tool(ctx, agent: str, purpose: str) -> StructuredTool:
         ctx.emitter.emit(
             "web_search", **base, status="ok", latency_ms=int((time.perf_counter() - t0) * 1000),
             results=[{"cite_id": r.cite_id, "url": r.source_url, "title": r.title, "domain": r.doc_id,
-                      "score": r.score, "retrieved_at": r.retrieved_at, "snippet": r.text[:TRACE_SNIPPET_CHARS]}
+                      "score": r.score, "retrieved_at": r.retrieved_at, "snippet": r.text}
                      for r in refs],
         )
         from app.rag import format_evidence  # local import: rag imports nothing from here

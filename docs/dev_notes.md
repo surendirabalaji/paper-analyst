@@ -329,3 +329,66 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - P7-N1 hang-mode faults lose the injected label after the real timeout fires; P7-N2 "Planning…" stays after a 403 (Phase 8); P7-N3 token stays in `location.hash`/history (`history.replaceState`); P7-N4 422 echoes the whole spec; P7-N5 `deploy.sh` grep misses `FAULT_INJECT = x` (allowlist still blocks); P7-N6 planner error event lacks `error_kind`; P7-N7 cryptic startup error when the Chroma dir is missing.
 - **Phase 7 marked done.** Live spend about $0.48 of $1.00.
 
+
+## Phase 8: UI polish (branch `phase-8-ui`, from `origin/main` at 7b532d4, 2026-10-28)
+
+- **Scope:** trace badges, source viewer, error states, Unicode, single-turn banner; redeploy. Open notes handled: P2-N3, P2-N5, P5-N4, P7-N2, P7-N3, the duplicated injected label. Optional notes done because they were cheap: P7-D1 and P7-N6. No latency work (Phase 8b).
+- **Frontend (architecture §10):**
+  - **`md.js` (new):** Markdown → a plain data tree, then DOM via `createElement`/`textContent`. It handles headings, lists, `---`, quotes, fences, tables, bold, italic, code, and links for http(s) only. HTML in model output stays literal text. LaTeX still renders raw (out of scope).
+  - **Trace:** grouped per turn and per agent with `<details>`. Status badges are done, partial, failed, skipped and injected. Each turn has a flow strip, every row has a `+t` time, and transitions are written as sentences. The injected label appears once per row.
+  - **Viewer:** title from the paper title and section (P2-N3); the full web snippet in a scrolling panel (P5-N4); an abstract link. Dark-mode link colour `--link` gives 9.75:1 contrast.
+  - **Errors (P7-N2):** HTTP errors, closed-before-done streams and a 60 s no-byte watchdog (`AbortController`) all settle the turn on a visible error. The fault token is cleared with `history.replaceState` (P7-N3).
+  - **Per turn:** a status badge, a clock and routing chips; the status line says "Streaming answer… (first token after X s)". The single-turn banner now says "no conversation memory". `dir="auto"` and an IME-safe Enter for CJK input.
+  - **Bug found on the deployment and fixed:** the new chat header class `.turn-head` clashed with the Routing tab's `tr.turn-head`, which squeezed the turn row into one column. Renamed to `.turn-bar`. The browser test now checks that the row spans the table.
+- **Server (small):**
+  - `citation` events carry `title`, `section`, and the full `snippet` for web results. `web_search` sends the full snippet (`TRACE_SNIPPET_CHARS` 280 removed).
+  - The planner `error` has `error_kind="planner_error"` (P7-N6).
+  - A corrupt `papers.db` ("not a database") is `sql_unavailable`, not `sql_error` (P7-D1). The tester's strict xfails T7-S2 and T7-S3 now pass, so their markers were removed as the tester instructed.
+- **Not done (optional):** P7-N1 (hang faults lose the injected label after the real timeout). The `TimeoutError` comes from `wait_for` outside the fault, so the label would need changes across the router, planner, worker and synthesis paths. P7-N4 and P7-N5 not done either.
+- **Tests:**
+  - `tests/unit/test_phase8_ui.py` (8): md.js under Node via `tests/unit/js/md_check.mjs`, static safety, fault-token clearing, the HTTP-error path, citation title/section, and the full web snippet.
+  - Full suite: 492 passed, 36 skipped, 1 xfailed (before: 482/36/3).
+- **Browser:** `tests/e2e/phase8_browser_ui.py` (real headless Chrome, CDP). Local run 19/19. Deployed run on rev 00013: **20/20** (`eval/results/phase8/browser_report.json`, 11 screenshots), covering:
+  - 403 error state, token cleared, banner;
+  - 69 answer-length changes before `done`;
+  - routing chips and Routing tab with both providers;
+  - grouped trace with badges;
+  - C1, D1 and W1 viewers;
+  - a French/Chinese/emoji question and answer intact;
+  - dark-mode contrast, no console errors.
+- **Deployed (student approved), 2026-10-28:** rev `paper-analyst-00012-452` (image `…:20261028-013101-29c6c50`), then the CSS fix as rev `paper-analyst-00013-v4k` (image `…:20261028-013849-c25d730-dirty`; "dirty" only because `eval/results/phase8/` was untracked). Smoke tests passed both times. The second smoke test saw a Gemini `empty_response` that was retried and then succeeded (P5-N1 behaviour, handled).
+- **Spend so far:** about $0.23 of the $0.75 phase budget (local browser run $0.07, two smoke tests about $0.02, two deployed browser runs about $0.14), plus about 8 Tavily credits.
+- **Tester Phase 8 gate: PHASE PASS** (`docs/testing/phase-8-20261028T0150Z.md`), on rev 00013. Tester spend about $0.19 plus 2 Tavily searches, so the phase total is about $0.42 of $0.75. What it checked:
+  - streaming in the browser (client and server token timings match);
+  - routing rows and chips against the routing events;
+  - all 16 citation links opening the right viewer;
+  - two tabs at once kept separate;
+  - a real mid-stream disconnect through a proxy;
+  - a local injected Data fault;
+  - a mock-backend suite of hostile Markdown/HTML, which executed nothing.
+  - **P8-D1 (Minor):** pressing Enter during a running turn starts a second paid request (`requestSubmit` bypasses the disabled button).
+  - **P8-D2 (Minor):** a long unbroken token in a question pushes the Routing-tab columns past the panel edge (`tr.turn-head td` has no `overflow-wrap`).
+  - Notes:
+    - N1: light-mode contrast is 4.49:1 on the 11 px green badges.
+    - N2: LaTeX shows raw.
+    - N3: the model the API returned is not shown.
+    - N4: in a hidden tab, `requestAnimationFrame` pauses painting.
+    - N5: a chunk id containing `/` would 404; no current id has one.
+  - Retest without spend: `tests/e2e/phase8_tester_mock_ui.py`.
+- **Fixes after the Phase 8 gate (local, 2026-10-28, no LLM spend):**
+  - **P8-D1:** a `busy` flag makes the submit handler return while a turn is running.
+  - **P8-D2:** table cells get `overflow-wrap: anywhere`.
+  - **N1:** light `--ok` is now #236a40, and `.cite-dropped` uses a solid muted colour instead of opacity.
+  - Result: the tester's `phase8_tester_mock_ui.py` passes 27/27, including M7b, M12 and M9. Full suite: 492 passed, 36 skipped, 1 xfailed.
+  - Not yet redeployed (needs approval).
+- **Tester retest: PHASE PASS** (`docs/testing/phase-8-retest-20261028T0216Z.md`) on rev 00014 (image `…-a02dd08`).
+  - P8-D1, P8-D2 and N1 were confirmed fixed, including on the live page with real Enter key events and no LLM spend.
+  - The deployed smoke run passed, with both providers used. Tester spend about $0.15.
+  - New **P8-D3 (Minor):** the global `td { overflow-wrap: anywhere }` from the P8-D2 fix broke "Turn" and "#n" mid-word.
+  - **Fix (local):** the Routing table uses `table-layout: fixed` with set column widths. Wrapping anywhere is limited to data cells and the turn row; the Turn column and its header stay whole.
+  - Results: the tester's mock suite (now with M12b) passes 28/28 (`eval/results/testing/phase8-retest3-20261028T0227Z/mock/`); the full suite still passes.
+- **Deployed (student approved), 2026-10-28:** rev `paper-analyst-00014-2rj` (image `…-a02dd08`) with P8-D1, P8-D2 and N1, then rev `paper-analyst-00015-zhx` (image `…-16f02eb`, clean tree) with P8-D3. Smoke tests passed both times.
+- **Tester retest 2: PHASE PASS** (`docs/testing/phase-8-retest2-20261028T0245Z.md`) on rev 00015.
+  - Results: mock suite 28/28; no-spend live checks 10/10; one real query with both providers, rows matching their events and incremental streaming; the Routing table stays inside the panel with "Turn" and `#n` unbroken in light and dark at 1500 px and 1100 px.
+  - New non-blocking **P8-N6:** at a 1100 px window the Agent column shrinks to 73 px and "synthesizer" wraps mid-word.
+- **Phase 8 marked done.** Live spend about $0.61 of $0.75 (me about $0.26, tester about $0.19 + $0.15 + $0.03), plus about 12 Tavily credits.
