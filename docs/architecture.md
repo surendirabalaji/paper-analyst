@@ -1,6 +1,6 @@
 # Architecture: Agentic AI Paper Analyst
 
-> **Status: updated 2026-10-27 for Phase 6 (Data agent, hand-offs, D# citations).** Phase 2 built the first end-to-end slice: planner → supervisor → Research → synthesize, SSE streaming, `C#` citations and the chat page. This describes the planned system. Sections are updated to match the actual code as each phase is built. Anything marked *(planned)* is not implemented yet. Full design rationale: [`design_proposal.md`](design_proposal.md).
+> **Status: updated 2026-10-28 for Phase 8 (UI polish, §10); Phase 6 added the Data agent, hand-offs and D# citations.** Phase 2 built the first end-to-end slice: planner → supervisor → Research → synthesize, SSE streaming, `C#` citations and the chat page. This describes the planned system. Sections are updated to match the actual code as each phase is built. Anything marked *(planned)* is not implemented yet. Full design rationale: [`design_proposal.md`](design_proposal.md).
 
 ## 1. What the system does
 
@@ -288,3 +288,32 @@ Markers that are not in the registry are reported as `unresolved_citations` and 
 - **Chroma as non-root:** `chromadb.PersistentClient` opens `chroma.sqlite3` read-write even for queries. Opened as a uid that does not own the file it fails with `attempt to write a readonly database` (reproduced in the container as uid 10002). The index directory is therefore `COPY --chown=10001:10001`; code stays root-owned. Copying the index to `/tmp` at startup was rejected because Cloud Run's `/tmp` is in memory and the copy would cost about 105 MB of RAM and time on every cold start. Any writes go to the instance's ephemeral layer and are never shared or persisted.
 - **Secrets:** never in the image or the repo. `.dockerignore` and `.gcloudignore` are allowlists. `scripts/deploy.sh` turns an allowlist of `.env` keys into a temporary `--env-vars-file` outside the repo and deletes it afterwards.
 - **Cloud Run:** starting at 2 GiB / 1 CPU, concurrency 10, timeout 300 s, min 0, max 3 instances. To be tuned from measured memory and cold starts.
+
+## 10. Frontend *(polished in Phase 8)*
+
+One vanilla page, `app/static/index.html` + `app.js` + `md.js` + `styles.css`, served by FastAPI at `/` and `/static/`. There is no framework, build step or `node_modules`. The browser sends `POST /api/chat` and reads the body with `fetch()`. A `TextDecoder` in stream mode plus `makeParser()` handle SSE frames split across arbitrary network chunks.
+
+- **Safety:** every server string reaches the DOM through `textContent` or `createElement`. Model Markdown is parsed by `md.js` into a plain data tree with a fixed set of node types (headings, paragraphs, lists, `---`, quotes, fenced code, tables, bold, italic, inline code, and links for http(s) only). `app.js` then builds elements from that tree. Neither file contains `innerHTML`, `insertAdjacentHTML`, `eval` or `new Function` (a unit test checks this). A `[C#]`/`[D#]`/`[W#]` marker becomes a link only when its id is in the turn's registry.
+- **Per turn (chat):**
+  - a status badge and a running clock;
+  - routing chips, one per agent/provider/dimension group, e.g. "data → Gemini ×3 (cost) · synthesizer → OpenAI (capability)";
+  - the answer, streamed with a cursor;
+  - a status line that moves through planning, then the agent working on `tN`, then streaming (first token after X s), then a summary (TTFT, total, retrieval, tokens and cost per provider, unresolved or unlinked citations).
+- **Routing tab:** one row per generation call, showing agent / call site, provider and exact model, dimension, rationale, decision inputs, then tokens, latency and cost. Fallbacks get separate ↪ rows.
+- **Trace tab:**
+  - One collapsible group per turn, with a flow strip (Request → Planner → Data t1 → Summary t2 → Synthesis → Done). Older turns fold when a new one starts.
+  - Inside each turn, one collapsible group per agent: Orchestration (planner + supervisor), Research, Summary, Data and Synthesis. Each group has a status badge: done, partial, failed or skipped, plus "injected" when a test fault caused the outcome.
+  - Every row has a `+t` time since the request started.
+  - Supervisor transitions are written as sentences, e.g. "Supervisor hands task t2 to Summary (task t2 ready (after t1))".
+- **Sources tab and viewer:**
+  - `C#`: the paper title and section path, the arXiv id, the publication date, the chunk id and the full chunk text from `/api/source/chunk/{id}`, with links to the arXiv section and the abstract page.
+  - `D#`: the SQL and its rows.
+  - `W#`: the full snippet given to the model (up to 1,200 characters), the retrieval time and the page link.
+  - The text panel scrolls.
+- **Errors:**
+  - A non-OK HTTP response (e.g. 403/422) replaces "Planning…" with a red error line that carries the server's `detail`. The turn badge reads "failed".
+  - A stream that closes before `done`, or sends no byte for 60 s, is aborted (`AbortController`) and reported, and any partial answer is kept.
+  - The Ask button is always re-enabled.
+- **Fault-injection links:** `#fault=…&fault_token=…` is read once and then removed from the address bar and history with `history.replaceState`. A red banner says fault injection is on until reload.
+- **Unicode:** UTF-8 end to end (`ensure_ascii=False` frames, a streaming decoder, `dir="auto"` on the question and answer, IME-safe Enter). Verified with French, Chinese and emoji on the deployment (`eval/results/phase8/`).
+- **Scope banner:** "single-turn: … no conversation memory".

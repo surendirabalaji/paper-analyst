@@ -329,3 +329,32 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - P7-N1 hang-mode faults lose the injected label after the real timeout fires; P7-N2 "Planning…" stays after a 403 (Phase 8); P7-N3 token stays in `location.hash`/history (`history.replaceState`); P7-N4 422 echoes the whole spec; P7-N5 `deploy.sh` grep misses `FAULT_INJECT = x` (allowlist still blocks); P7-N6 planner error event lacks `error_kind`; P7-N7 cryptic startup error when the Chroma dir is missing.
 - **Phase 7 marked done.** Live spend about $0.48 of $1.00.
 
+
+## Phase 8: UI polish (branch `phase-8-ui`, from `origin/main` at 7b532d4, 2026-10-28)
+
+- **Scope:** trace badges, source viewer, error states, Unicode, single-turn banner; redeploy. Open notes handled: P2-N3, P2-N5, P5-N4, P7-N2, P7-N3, the duplicated injected label. Optional notes done because they were cheap: P7-D1 and P7-N6. No latency work (Phase 8b).
+- **Frontend (architecture §10):**
+  - **`md.js` (new):** Markdown → a plain data tree, then DOM via `createElement`/`textContent`. It handles headings, lists, `---`, quotes, fences, tables, bold, italic, code, and links for http(s) only. HTML in model output stays literal text. LaTeX still renders raw (out of scope).
+  - **Trace:** grouped per turn and per agent with `<details>`. Status badges are done, partial, failed, skipped and injected. Each turn has a flow strip, every row has a `+t` time, and transitions are written as sentences. The injected label appears once per row.
+  - **Viewer:** title from the paper title and section (P2-N3); the full web snippet in a scrolling panel (P5-N4); an abstract link. Dark-mode link colour `--link` gives 9.75:1 contrast.
+  - **Errors (P7-N2):** HTTP errors, closed-before-done streams and a 60 s no-byte watchdog (`AbortController`) all settle the turn on a visible error. The fault token is cleared with `history.replaceState` (P7-N3).
+  - **Per turn:** a status badge, a clock and routing chips; the status line says "Streaming answer… (first token after X s)". The single-turn banner now says "no conversation memory". `dir="auto"` and an IME-safe Enter for CJK input.
+  - **Bug found on the deployment and fixed:** the new chat header class `.turn-head` clashed with the Routing tab's `tr.turn-head`, which squeezed the turn row into one column. Renamed to `.turn-bar`. The browser test now checks that the row spans the table.
+- **Server (small):**
+  - `citation` events carry `title`, `section`, and the full `snippet` for web results. `web_search` sends the full snippet (`TRACE_SNIPPET_CHARS` 280 removed).
+  - The planner `error` has `error_kind="planner_error"` (P7-N6).
+  - A corrupt `papers.db` ("not a database") is `sql_unavailable`, not `sql_error` (P7-D1). The tester's strict xfails T7-S2 and T7-S3 now pass, so their markers were removed as the tester instructed.
+- **Not done (optional):** P7-N1 (hang faults lose the injected label after the real timeout). The `TimeoutError` comes from `wait_for` outside the fault, so the label would need changes across the router, planner, worker and synthesis paths. P7-N4 and P7-N5 not done either.
+- **Tests:**
+  - `tests/unit/test_phase8_ui.py` (8): md.js under Node via `tests/unit/js/md_check.mjs`, static safety, fault-token clearing, the HTTP-error path, citation title/section, and the full web snippet.
+  - Full suite: 492 passed, 36 skipped, 1 xfailed (before: 482/36/3).
+- **Browser:** `tests/e2e/phase8_browser_ui.py` (real headless Chrome, CDP). Local run 19/19. Deployed run on rev 00013: **20/20** (`eval/results/phase8/browser_report.json`, 11 screenshots), covering:
+  - 403 error state, token cleared, banner;
+  - 69 answer-length changes before `done`;
+  - routing chips and Routing tab with both providers;
+  - grouped trace with badges;
+  - C1, D1 and W1 viewers;
+  - a French/Chinese/emoji question and answer intact;
+  - dark-mode contrast, no console errors.
+- **Deployed (student approved), 2026-10-28:** rev `paper-analyst-00012-452` (image `…:20261028-013101-29c6c50`), then the CSS fix as rev `paper-analyst-00013-v4k` (image `…:20261028-013849-c25d730-dirty`; "dirty" only because `eval/results/phase8/` was untracked). Smoke tests passed both times. The second smoke test saw a Gemini `empty_response` that was retried and then succeeded (P5-N1 behaviour, handled).
+- **Spend so far:** about $0.23 of the $0.75 phase budget (local browser run $0.07, two smoke tests about $0.02, two deployed browser runs about $0.14), plus about 8 Tavily credits.
