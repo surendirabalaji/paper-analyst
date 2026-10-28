@@ -1,0 +1,136 @@
+[
+  {
+    "insertId": "6ae19677000bb4a0b446c453",
+    "labels": {
+      "instanceId": "0010dd860727da87eef5d86a4dc0b6c8a815ec79242caa4b4c88cbf5036187fd13566cd439ed930bebd2af724fdc0428eb9a6bf9c48b81f85543858eae5895d01db50b26ca9f20ac66a3a47870bcbfb194761b6cfa0fffa3"
+    },
+    "logName": "projects/changelens-510807/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-10-28T06:30:16.003952655Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "paper-analyst",
+        "location": "us-west1",
+        "project_id": "changelens-510807",
+        "revision_name": "paper-analyst-00017-mbk",
+        "service_name": "paper-analyst"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Finished server process [1]",
+    "timestamp": "2026-10-28T06:30:15.767136Z"
+  },
+  {
+    "insertId": "6ae19677000bb34eb65bbc33",
+    "labels": {
+      "instanceId": "0010dd860727da87eef5d86a4dc0b6c8a815ec79242caa4b4c88cbf5036187fd13566cd439ed930bebd2af724fdc0428eb9a6bf9c48b81f85543858eae5895d01db50b26ca9f20ac66a3a47870bcbfb194761b6cfa0fffa3"
+    },
+    "logName": "projects/changelens-510807/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-10-28T06:30:16.003952655Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "paper-analyst",
+        "location": "us-west1",
+        "project_id": "changelens-510807",
+        "revision_name": "paper-analyst-00017-mbk",
+        "service_name": "paper-analyst"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Application shutdown complete.",
+    "timestamp": "2026-10-28T06:30:15.766798Z"
+  },
+  {
+    "insertId": "6ae19677000bb1a32e38fb27",
+    "labels": {
+      "instanceId": "0010dd860727da87eef5d86a4dc0b6c8a815ec79242caa4b4c88cbf5036187fd13566cd439ed930bebd2af724fdc0428eb9a6bf9c48b81f85543858eae5895d01db50b26ca9f20ac66a3a47870bcbfb194761b6cfa0fffa3"
+    },
+    "logName": "projects/changelens-510807/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-10-28T06:30:16.003952655Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "paper-analyst",
+        "location": "us-west1",
+        "project_id": "changelens-510807",
+        "revision_name": "paper-analyst-00017-mbk",
+        "service_name": "paper-analyst"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Waiting for application shutdown.",
+    "timestamp": "2026-10-28T06:30:15.766371Z"
+  },
+  {
+    "insertId": "6ae19677000a269dc718a2c5",
+    "labels": {
+      "instanceId": "0010dd860727da87eef5d86a4dc0b6c8a815ec79242caa4b4c88cbf5036187fd13566cd439ed930bebd2af724fdc0428eb9a6bf9c48b81f85543858eae5895d01db50b26ca9f20ac66a3a47870bcbfb194761b6cfa0fffa3"
+    },
+    "logName": "projects/changelens-510807/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-10-28T06:30:15.675292521Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "paper-analyst",
+        "location": "us-west1",
+        "project_id": "changelens-510807",
+        "revision_name": "paper-analyst-00017-mbk",
+        "service_name": "paper-analyst"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Shutting down",
+    "timestamp": "2026-10-28T06:30:15.665245Z"
+  },
+  {
+    "insertId": "6ae192e60002e3bbddf8b0f7",
+    "labels": {
+      "instanceId": "0010dd860727da87eef5d86a4dc0b6c8a815ec79242caa4b4c88cbf5036187fd13566cd439ed930bebd2af724fdc0428eb9a6bf9c48b81f85543858eae5895d01db50b26ca9f20ac66a3a47870bcbfb194761b6cfa0fffa3"
+    },
+    "logName": "projects/changelens-510807/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-10-28T06:15:02.235138552Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "paper-analyst",
+        "location": "us-west1",
+        "project_id": "changelens-510807",
+        "revision_name": "paper-analyst-00017-mbk",
+        "service_name": "paper-analyst"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     2603:8000:b9f0:550:29ee:59c9:546:5788:0 - \"POST /api/chat HTTP/1.1\" 200 OK",
+    "timestamp": "2026-10-28T06:15:02.189371Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "10.936505034s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "2603:8000:b9f0:550:29ee:59c9:546:5788",
+      "requestMethod": "POST",
+      "requestSize": "383",
+      "requestUrl": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app/api/chat",
+      "responseSize": "20406",
+      "serverIp": "2600:1900:4243:200::",
+      "status": 200,
+      "userAgent": "curl/8.7.1"
+    },
+    "insertId": "6ae192f10000fcde3f0c9f4e",
+    "labels": {
+      "instanceId": "0010dd860727da87eef5d86a4dc0b6c8a815ec79242caa4b4c88cbf5036187fd13566cd439ed930bebd2af724fdc0428eb9a6bf9c48b81f85543858eae5895d01db50b26ca9f20ac66a3a47870bcbfb194761b6cfa0fffa3"
+    },
+    "logName": "projects/changelens-510807/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-10-28T06:15:13.071498648Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "paper-analyst",
+        "location": "us-west1",
+        "project_id": "changelens-510807",
+        "revision_name": "paper-analyst-00017-mbk",
+        "service_name": "paper-analyst"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "4364956b127db3a4",
+    "timestamp": "2026-10-28T06:15:02.118043Z",
+    "trace": "projects/changelens-510807/traces/e526e4cd890ed6d3d1c4d00c3c9d38ce"
+  }
+]
