@@ -1,0 +1,527 @@
+{
+  "summary": {
+    "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+    "health": {
+      "status": 200,
+      "latency_s": 0.109
+    },
+    "warmup": true,
+    "runs": 2,
+    "categories": {
+      "simple": {
+        "n": 10,
+        "ttft_median_s": 6.354,
+        "ttft_min_s": 4.562,
+        "ttft_max_s": 8.328,
+        "total_median_s": 12.326,
+        "cost_sum_usd": 0.2294
+      },
+      "multi": {
+        "n": 4,
+        "ttft_median_s": 11.973,
+        "ttft_min_s": 4.907,
+        "ttft_max_s": 19.15,
+        "total_median_s": 18.037,
+        "cost_sum_usd": 0.1473
+      }
+    }
+  },
+  "results": [
+    {
+      "http_status": 200,
+      "first_byte_s": 0.061,
+      "ttft_s": 7.586,
+      "total_s": 9.451,
+      "server_timings": {
+        "retrieval_ms": 20,
+        "llm_ms_sum": 9315,
+        "ttft_ms": 7476,
+        "total_ms": 9373
+      },
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:gemini-openrouter"
+      ],
+      "cost_usd": 0.01694,
+      "n_citations": 5,
+      "n_tokens": 11,
+      "errors": [],
+      "raw": "self_rag_retrieve.run1.events.jsonl",
+      "category": "simple",
+      "key": "self_rag_retrieve",
+      "query": "How does Self-RAG decide when to retrieve?",
+      "run": 1,
+      "started_utc": "2026-10-28T04:33:17+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.055,
+      "ttft_s": 6.745,
+      "total_s": 13.946,
+      "server_timings": {
+        "retrieval_ms": 24,
+        "llm_ms_sum": 13834,
+        "ttft_ms": 6630,
+        "total_ms": 13892
+      },
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:gemini-openrouter"
+      ],
+      "cost_usd": 0.024158,
+      "n_citations": 8,
+      "n_tokens": 41,
+      "errors": [],
+      "raw": "react_summary.run1.events.jsonl",
+      "category": "simple",
+      "key": "react_summary",
+      "query": "Summarize the ReAct paper.",
+      "run": 1,
+      "started_utc": "2026-10-28T04:33:31+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.053,
+      "ttft_s": 6.678,
+      "total_s": 14.03,
+      "server_timings": {
+        "retrieval_ms": 1088,
+        "llm_ms_sum": 13045,
+        "ttft_ms": 6626,
+        "total_ms": 13965
+      },
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "research:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.031799,
+      "n_citations": 7,
+      "n_tokens": 373,
+      "errors": [],
+      "raw": "noisy_passages.run1.events.jsonl",
+      "category": "simple",
+      "key": "noisy_passages",
+      "query": "How do RAG systems handle noisy or irrelevant retrieved passages?",
+      "run": 1,
+      "started_utc": "2026-10-28T04:33:45+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.056,
+      "ttft_s": 6.111,
+      "total_s": 15.059,
+      "server_timings": {
+        "retrieval_ms": 1447,
+        "llm_ms_sum": 13758,
+        "ttft_ms": 6009,
+        "total_ms": 15005
+      },
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "research:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.02918,
+      "n_citations": 7,
+      "n_tokens": 453,
+      "errors": [],
+      "raw": "agent_memory.run1.events.jsonl",
+      "category": "simple",
+      "key": "agent_memory",
+      "query": "How do LLM agents use memory to handle long conversations?",
+      "run": 1,
+      "started_utc": "2026-10-28T04:34:00+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.22,
+      "ttft_s": 6.597,
+      "total_s": 8.656,
+      "server_timings": {
+        "retrieval_ms": 47,
+        "llm_ms_sum": 8350,
+        "ttft_ms": 6325,
+        "total_ms": 8433
+      },
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:gemini-openrouter"
+      ],
+      "cost_usd": 0.014974,
+      "n_citations": 6,
+      "n_tokens": 15,
+      "errors": [],
+      "raw": "agentbench_envs.run1.events.jsonl",
+      "category": "simple",
+      "key": "agentbench_envs",
+      "query": "What environments does AgentBench use to evaluate LLM agents?",
+      "run": 1,
+      "started_utc": "2026-10-28T04:34:09+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.072,
+      "ttft_s": 18.155,
+      "total_s": 23.482,
+      "server_timings": {
+        "retrieval_ms": 692,
+        "llm_ms_sum": 22674,
+        "ttft_ms": 18085,
+        "total_ms": 23413
+      },
+      "status": "done",
+      "workers": [
+        "data",
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "data:worker_tool_loop:gemini-openrouter",
+        "data:worker_tool_loop:gemini-openrouter",
+        "data:worker_tool_loop:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.041664,
+      "n_citations": 6,
+      "n_tokens": 315,
+      "errors": [],
+      "raw": "cs_ma_2025.run1.events.jsonl",
+      "category": "multi",
+      "key": "cs_ma_2025",
+      "query": "Which 2025 cs.MA papers are in the corpus? Summarize the two most recent.",
+      "run": 1,
+      "started_utc": "2026-10-28T04:34:33+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.059,
+      "ttft_s": 4.907,
+      "total_s": 12.036,
+      "server_timings": {
+        "retrieval_ms": 743,
+        "llm_ms_sum": 11512,
+        "ttft_ms": 4858,
+        "total_ms": 11981
+      },
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "research:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.030516,
+      "n_citations": 9,
+      "n_tokens": 415,
+      "errors": [],
+      "raw": "selfrag_vs_crag.run1.events.jsonl",
+      "category": "multi",
+      "key": "selfrag_vs_crag",
+      "query": "Compare Self-RAG and Corrective RAG (CRAG): how does each handle bad retrievals?",
+      "run": 1,
+      "started_utc": "2026-10-28T04:34:45+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.053,
+      "ttft_s": 5.524,
+      "total_s": 7.699,
+      "server_timings": {
+        "retrieval_ms": 29,
+        "llm_ms_sum": 7584,
+        "ttft_ms": 5403,
+        "total_ms": 7647
+      },
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:gemini-openrouter"
+      ],
+      "cost_usd": 0.015307,
+      "n_citations": 5,
+      "n_tokens": 12,
+      "errors": [],
+      "raw": "self_rag_retrieve.run2.events.jsonl",
+      "category": "simple",
+      "key": "self_rag_retrieve",
+      "query": "How does Self-RAG decide when to retrieve?",
+      "run": 2,
+      "started_utc": "2026-10-28T04:34:52+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.057,
+      "ttft_s": 5.712,
+      "total_s": 10.707,
+      "server_timings": {
+        "retrieval_ms": 24,
+        "llm_ms_sum": 10591,
+        "ttft_ms": 5641,
+        "total_ms": 10648
+      },
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:gemini-openrouter"
+      ],
+      "cost_usd": 0.022488,
+      "n_citations": 10,
+      "n_tokens": 32,
+      "errors": [],
+      "raw": "react_summary.run2.events.jsonl",
+      "category": "simple",
+      "key": "react_summary",
+      "query": "Summarize the ReAct paper.",
+      "run": 2,
+      "started_utc": "2026-10-28T04:35:03+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.071,
+      "ttft_s": 8.328,
+      "total_s": 17.003,
+      "server_timings": {
+        "retrieval_ms": 840,
+        "llm_ms_sum": 16346,
+        "ttft_ms": 8269,
+        "total_ms": 16949
+      },
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "research:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.031833,
+      "n_citations": 10,
+      "n_tokens": 463,
+      "errors": [],
+      "raw": "noisy_passages.run2.events.jsonl",
+      "category": "simple",
+      "key": "noisy_passages",
+      "query": "How do RAG systems handle noisy or irrelevant retrieved passages?",
+      "run": 2,
+      "started_utc": "2026-10-28T04:35:20+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.064,
+      "ttft_s": 5.135,
+      "total_s": 16.499,
+      "server_timings": {
+        "retrieval_ms": 695,
+        "llm_ms_sum": 15902,
+        "ttft_ms": 5071,
+        "total_ms": 16398
+      },
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "research:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.028573,
+      "n_citations": 9,
+      "n_tokens": 529,
+      "errors": [],
+      "raw": "agent_memory.run2.events.jsonl",
+      "category": "simple",
+      "key": "agent_memory",
+      "query": "How do LLM agents use memory to handle long conversations?",
+      "run": 2,
+      "started_utc": "2026-10-28T04:35:37+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.064,
+      "ttft_s": 4.562,
+      "total_s": 6.197,
+      "server_timings": {
+        "retrieval_ms": 29,
+        "llm_ms_sum": 6071,
+        "ttft_ms": 4501,
+        "total_ms": 6135
+      },
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:gemini-openrouter"
+      ],
+      "cost_usd": 0.014188,
+      "n_citations": 6,
+      "n_tokens": 13,
+      "errors": [],
+      "raw": "agentbench_envs.run2.events.jsonl",
+      "category": "simple",
+      "key": "agentbench_envs",
+      "query": "What environments does AgentBench use to evaluate LLM agents?",
+      "run": 2,
+      "started_utc": "2026-10-28T04:35:43+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.057,
+      "ttft_s": 19.15,
+      "total_s": 24.548,
+      "server_timings": {
+        "retrieval_ms": 630,
+        "llm_ms_sum": 23789,
+        "ttft_ms": 19095,
+        "total_ms": 24472
+      },
+      "status": "done",
+      "workers": [
+        "data",
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "data:worker_tool_loop:gemini-openrouter",
+        "data:worker_tool_loop:gemini-openrouter",
+        "data:worker_tool_loop:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.041831,
+      "n_citations": 8,
+      "n_tokens": 370,
+      "errors": [],
+      "raw": "cs_ma_2025.run2.events.jsonl",
+      "category": "multi",
+      "key": "cs_ma_2025",
+      "query": "Which 2025 cs.MA papers are in the corpus? Summarize the two most recent.",
+      "run": 2,
+      "started_utc": "2026-10-28T04:36:07+00:00"
+    },
+    {
+      "http_status": 200,
+      "first_byte_s": 0.076,
+      "ttft_s": 5.79,
+      "total_s": 12.591,
+      "server_timings": {
+        "retrieval_ms": 1413,
+        "llm_ms_sum": 11723,
+        "ttft_ms": 5680,
+        "total_ms": 12535
+      },
+      "status": "done",
+      "workers": [
+        "research"
+      ],
+      "providers_used": [
+        "gemini-openrouter",
+        "openai"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "research:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:openai"
+      ],
+      "cost_usd": 0.033334,
+      "n_citations": 8,
+      "n_tokens": 449,
+      "errors": [],
+      "raw": "selfrag_vs_crag.run2.events.jsonl",
+      "category": "multi",
+      "key": "selfrag_vs_crag",
+      "query": "Compare Self-RAG and Corrective RAG (CRAG): how does each handle bad retrievals?",
+      "run": 2,
+      "started_utc": "2026-10-28T04:36:20+00:00"
+    }
+  ]
+}

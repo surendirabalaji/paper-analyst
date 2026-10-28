@@ -76,7 +76,7 @@ Multi-agent questions (e.g. Data → Summary) use options 1, 2, 3, 7 and 8: abou
 
 **Recommendation recorded:** build package C; add D only if measurements show C missing the target. Report simple and multi-agent questions as separate latency categories, and explain the planner + synthesis limit.
 
-**Student decision still open:** which package (A–D).
+**Student decision (2026-10-28):** package B (options 1, 2, 3, 4, 6, 7, 10). Option 8 is held back until the student approves it.
 
 ## Proposed exit check for Phase 8b
 
@@ -91,3 +91,23 @@ Multi-agent questions (e.g. Data → Summary) use options 1, 2, 3, 7 and 8: abou
 - RAGAS faithfulness may drop if fewer sections are read or the worker's self-check is removed. Measure before and after on the same questions.
 - Fewer LLM calls means fewer routing decisions. Confirm that both providers still appear under ordinary use (rubric 15%).
 - Orchestration evidence (rubric 25%): the planner, supervisor transitions, hand-offs and agent identities must stay visible in the trace.
+
+## Results (package B, measured 2026-10-28)
+
+Method: `scripts/measure_latency.py` (client-side wall clock; TTFT = first `token` SSE event), fixed question set (5 simple, 2 "multi"), warm runs after one unrecorded warm-up request. Faithfulness: `scripts/faithfulness_check.py` (RAGAS 0.4.3 `Faithfulness`, evaluator `gpt-6.1-sol`, contexts = the sources each answer cites). Raw events and summaries are in `eval/results/phase8b/`.
+
+| | Before (rev 00015, warm) | After (rev 00016, warm) |
+|---|---|---|
+| Simple questions, TTFT median | 18.1 s (n = 5, 15.9–23.3 s) | **6.35 s** (n = 10, 4.6–8.3 s) |
+| Simple questions, total median | 23.5 s | 12.3 s |
+| Data → Summary ("2025 cs.MA … two most recent"), TTFT | 35.3 s (n = 1) | 18.2 / 19.2 s (n = 2) |
+| Self-RAG vs CRAG comparison, TTFT | 20.9 s (n = 1) | 4.9 / 5.8 s (n = 2; planned as one Research task) |
+| Cost per simple question | $0.039–0.050 | $0.014–0.032 |
+| RAGAS faithfulness, mean | 0.959 (n = 7) | 0.985 (n = 14) |
+
+- The warm target for package B (~4–6 s) is met at the median for single-paper Summary questions (4.6–7.6 s) and close for Research questions (5.1–8.3 s).
+- Where the time goes now (simple question): planner ~2–3 s, one worker round ~2.5–4.5 s, first synthesis token ~1–3 s. The planner at `low` effort occasionally reasons (200–240 reasoning tokens, 10–12 s; seen locally in 3 of 21 calls, not in the deployed runs).
+- Multi-agent plans keep worker findings and sequential dispatch, so they remain ~18–19 s; option 8 (parallel dispatch) is what would reduce them.
+- Both providers still appear under ordinary use: Research questions and multi-task plans synthesize on OpenAI (≥ 3 papers or 2 worker results); short single-paper Summary questions stay on Gemini.
+- Cold start: deferred to the next phase by the student (2026-10-28); not measured on rev 00016.
+- Limits: one region, small samples (n = 10 simple), a single client location; faithfulness uses one evaluator model and cited sources only, so it says nothing about recall.

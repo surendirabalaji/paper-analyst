@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "dir": "eval/results/phase8b/deployed-rev00016-warm",
+    "evaluator": "gpt-6.1-sol",
+    "metric": "ragas.metrics.collections.Faithfulness (0.4.3)",
+    "n": 14,
+    "n_failed": 0,
+    "mean": 0.9848,
+    "median": 1.0
+  },
+  "rows": [
+    {
+      "file": "agent_memory.run1.events.jsonl",
+      "n_contexts": 7,
+      "faithfulness": 0.9411764705882353,
+      "error": null
+    },
+    {
+      "file": "agent_memory.run2.events.jsonl",
+      "n_contexts": 9,
+      "faithfulness": 0.9714285714285714,
+      "error": null
+    },
+    {
+      "file": "agentbench_envs.run1.events.jsonl",
+      "n_contexts": 6,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "agentbench_envs.run2.events.jsonl",
+      "n_contexts": 6,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "cs_ma_2025.run1.events.jsonl",
+      "n_contexts": 6,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "cs_ma_2025.run2.events.jsonl",
+      "n_contexts": 8,
+      "faithfulness": 0.9583333333333334,
+      "error": null
+    },
+    {
+      "file": "noisy_passages.run1.events.jsonl",
+      "n_contexts": 7,
+      "faithfulness": 0.9736842105263158,
+      "error": null
+    },
+    {
+      "file": "noisy_passages.run2.events.jsonl",
+      "n_contexts": 10,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "react_summary.run1.events.jsonl",
+      "n_contexts": 8,
+      "faithfulness": 0.9642857142857143,
+      "error": null
+    },
+    {
+      "file": "react_summary.run2.events.jsonl",
+      "n_contexts": 10,
+      "faithfulness": 0.9782608695652174,
+      "error": null
+    },
+    {
+      "file": "self_rag_retrieve.run1.events.jsonl",
+      "n_contexts": 5,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "self_rag_retrieve.run2.events.jsonl",
+      "n_contexts": 5,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "selfrag_vs_crag.run1.events.jsonl",
+      "n_contexts": 9,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "selfrag_vs_crag.run2.events.jsonl",
+      "n_contexts": 8,
+      "faithfulness": 1.0,
+      "error": null
+    }
+  ]
+}
