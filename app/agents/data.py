@@ -10,7 +10,10 @@ and gets its own D#. Each D# keeps its SQL, which the trace and the D# viewer sh
 
 Invalid SQL (unknown column, syntax) or a refused statement gets one repair round: the model sees the
 error and may send one corrected query. If that also fails, run_sql is closed for the task and the task
-ends `failed` (error_kind invalid_sql). The repair call is routed by the `repair_round` feature (policy.py).
+ends `failed` with the kind of the last failure (invalid_sql, sql_rejected or sql_timeout). The repair call
+is routed by the `repair_round` feature (policy.py). A service problem (the database cannot be opened, or
+the query process crashed: sqlguard.INFRA_KINDS) is not the model's fault: it does not use the repair
+round, closes run_sql at once, and ends the task `failed` with error_kind data_unavailable (P6-D3).
 
 Hand-off: the result lists the paper ids it found (`paper_ids`, cited rows first), which the supervisor
 passes to dependent tasks (for example Summary) as `upstream_papers`.
@@ -28,11 +31,13 @@ from app.agents.prompts import DATA_ROLE
 from app.agents.worker import run_tool_loop
 from app.context import RequestContext
 from app.rag import AUGMENT_SYSTEM, cited_ids, format_evidence
-from app.sqlguard import MAX_ROWS, MAX_SQL_CHARS, SqlError, run_readonly, schema_text
+from app.sqlguard import INFRA_KINDS, MAX_ROWS, MAX_SQL_CHARS, SqlError, run_readonly, schema_text
 
 AGENT = "data"
 MAX_SQL_FAILURES = 2  # the first failure gets one repair round; the second ends the task
 MAX_HANDOFF_PAPERS = 10
+# Task error kind for the last query failure (N9: a refused query is not reported as "invalid").
+FAILURE_KINDS = {"sql_error": "invalid_sql", "sql_rejected": "sql_rejected", "sql_timeout": "sql_timeout"}
 
 
 class SqlUnavailable(Exception):
@@ -56,12 +61,21 @@ def data_tools(ctx: RequestContext, state: dict) -> list[StructuredTool]:
         return await asyncio.to_thread(schema_text, db)
 
     async def run_sql(query: str):
+        if state["unavailable"]:
+            raise SqlError("sql_unavailable", "the corpus database is unavailable for this request; report that "
+                                              "the data could not be looked up. Do not guess the answer.")
         if state["failures"] >= MAX_SQL_FAILURES:
             raise SqlUnavailable("run_sql is closed for this task: the query failed and the one repair round "
                                  "was used. Report the failure; do not guess the answer.")
         try:
             res = await asyncio.to_thread(run_readonly, db, query)
         except SqlError as e:
+            if e.kind in INFRA_KINDS:
+                state["unavailable"] = e.kind
+                ctx.emitter.emit("sql_result", agent=AGENT, status="error", error_kind=e.kind,
+                                 sql=query[:MAX_SQL_CHARS], message_safe=str(e)[:300], repair_rounds_left=0)
+                raise SqlError(e.kind, f"{e}. The query was not at fault; do not rewrite it. Report that the "
+                                       "data could not be looked up.") from None
             state["failures"] += 1
             state["last_error"] = e.kind
             left = MAX_SQL_FAILURES - state["failures"]
@@ -118,7 +132,7 @@ def handoff_papers(refs: list, cited: list[str]) -> list[dict]:
 
 
 async def run_data(ctx: RequestContext, task: dict, upstream: str) -> dict:
-    state = {"refs": [], "ok": 0, "rows": 0, "failures": 0, "last_error": None}
+    state = {"refs": [], "ok": 0, "rows": 0, "failures": 0, "last_error": None, "unavailable": None}
     system = AUGMENT_SYSTEM.format(
         worker_name="Data Agent",
         role_paragraph=DATA_ROLE,
@@ -133,7 +147,9 @@ async def run_data(ctx: RequestContext, task: dict, upstream: str) -> dict:
     unknown = [c for c in cited if not ctx.registry.get(c)]
     if not state["ok"]:
         status = "failed"
-        error_kind = "invalid_sql" if state["failures"] else "tool_error" if loop.tool_errors else "no_query"
+        error_kind = ("data_unavailable" if state["unavailable"]
+                      else FAILURE_KINDS.get(state["last_error"], "invalid_sql") if state["failures"]
+                      else "tool_error" if loop.tool_errors else "no_query")
     elif not used or unknown or not loop.text.strip():
         # The query ran, so its rows are real evidence even if the write-up did not cite them.
         status, error_kind = "partial", "citation_or_empty"

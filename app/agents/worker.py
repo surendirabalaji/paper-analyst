@@ -11,6 +11,10 @@ web-search tool only when the planner asked for live information or corpus suppo
 decision is traced as a `tool_gate` event. Tools tagged `metadata={"reads_full_text": True}` (full
 paper sections) feed the `long_source_tokens_est` routing feature, and a tool error caused by the model's
 own input (invalid SQL) sets the `repair_round` feature for the calls that follow.
+
+Fault injection (`tool:<name>:<mode>`, app/faults.py) runs before the real tool: `error` / `timeout` become
+an ordinary tool error the model sees, `empty` returns an empty result; both are marked `injected` in the
+trace.
 """
 
 from __future__ import annotations
@@ -24,6 +28,7 @@ from langchain_core.tools import BaseTool
 
 from app.context import RequestContext
 from app.events import safe_error
+from app.faults import is_injected, maybe_fail
 from app.llm.policy import REPAIRABLE_TOOL_ERRORS, approx_tokens, comparison_cue
 from app.llm.router import call_llm, text_of
 
@@ -123,6 +128,10 @@ async def _run_tool(ctx: RequestContext, agent: str, by_name: dict, call: dict, 
     try:
         if tool is None:
             raise ValueError(f"tool {name!r} is not available to {agent} in this round")
+        if await maybe_fail(ctx, "tool", name, agent=agent) == "empty":
+            ctx.emitter.emit("tool_result", agent=agent, tool=name, status="ok", latency_ms=0, n_results=0,
+                             injected=True)
+            return ToolMessage("[injected test fault] the tool returned no results.", tool_call_id=call["id"])
         # Invoking with the full tool call returns a ToolMessage; content_and_artifact tools put the
         # cited ids in .artifact, which gives the result count for the trace.
         msg = await tool.ainvoke({**call, "type": "tool_call"})
@@ -137,6 +146,8 @@ async def _run_tool(ctx: RequestContext, agent: str, by_name: dict, call: dict, 
         content, n, status = f"ERROR ({kind}): {msg_safe}"[:500], 0, "error"
         out.tool_errors.append(f"{name}: {kind}")
         err = {"error_kind": kind, "message_safe": msg_safe, "recoverable": True}
+        if is_injected(e):
+            err["injected"] = True
     ctx.emitter.emit(
         "tool_result",
         agent=agent,

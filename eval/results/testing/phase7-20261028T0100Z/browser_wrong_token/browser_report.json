@@ -1,0 +1,28 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "fault": "provider:*:down",
+ "query": "How many papers are in the corpus?",
+ "started_utc": "2026-10-28T01:11:28Z",
+ "banner": "Fault injection is on for your requests: provider:*:down. Failures it causes are test faults, not real outages.",
+ "final": {
+  "turns": 1,
+  "len": 0,
+  "streaming": false,
+  "cites": 0,
+  "status": "Planning\u2026 | Error: HTTP 403: {\"detail\":\"fault injection is not enabled for this request\"}",
+  "trace": 0,
+  "routes": 1,
+  "sources": 0,
+  "sendDisabled": false,
+  "t": 0.21
+ },
+ "streamed_lengths": 0,
+ "answer_tail": "",
+ "status_line": [
+  "Planning\u2026",
+  "Error: HTTP 403: {\"detail\":\"fault injection is not enabled for this request\"}"
+ ],
+ "answer_links": [],
+ "fault_trace_rows": [],
+ "console_errors": []
+}

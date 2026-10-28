@@ -49,3 +49,4 @@ tr.fallback td:first-child::before { content: "↪ "; color: var(--warn); }
 td .muted { font-size: 11px; margin: 0; }
 .badge.mcp { color: var(--accent); font-weight: 600; }
 .cite-dropped { opacity: 0.6; text-decoration: line-through dotted; cursor: help; }
+.banner.fault { background: #fde8e8; color: #8a1c1c; border-left: 4px solid #c0392b; padding: .3rem .6rem; }

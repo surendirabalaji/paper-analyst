@@ -18,14 +18,21 @@ Layers, each enough on its own to stop a write; together they also bound cost an
      (in-memory on Cloud Run) and the process's memory are bounded by the OS, and the parent kills it after
      CHILD_WALL_S. Only check_sql runs in the app process.
 
-Every failure raises SqlError with a `kind` (`sql_rejected` for policy refusals, `sql_error` for invalid
-SQL such as an unknown column, `sql_timeout` for the op/time cap); the Data agent gives the model one
-repair round.
+  6. In the child only, `PRAGMA temp_store=MEMORY` plus `PRAGMA hard_heap_limit` (CHILD_HEAP_BYTES): sort and
+     materialisation temp tables live in SQLite's heap, so their total per query is capped, not just each
+     file (tester P6-D1c).
+
+Every failure raises SqlError with a `kind`. Problems with the query: `sql_rejected` (policy refusals and
+resource limits), `sql_error` (invalid SQL such as an unknown column), `sql_timeout` (the op/time cap); the
+Data agent gives the model one repair round for these. Problems with the service, not the query (P6-D3):
+`sql_unavailable` (the database cannot be opened) and `sql_internal` (the child process crashed; its exit
+code and stderr tail are logged); these are not repairable and do not use the repair round.
 """
 
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import resource
@@ -52,6 +59,10 @@ CHILD_MEM_BYTES = 512 * 1024 * 1024  # RLIMIT_AS (address space; Linux enforces 
 CHILD_FILE_BYTES = 16 * 1024 * 1024  # RLIMIT_FSIZE: largest file it may write (SQLite temp files)
 CHILD_CPU_S = 5  # RLIMIT_CPU
 CHILD_WALL_S = 8.0  # the parent kills it after this
+CHILD_HEAP_BYTES = 32 * 1024 * 1024  # PRAGMA hard_heap_limit: all SQLite memory, incl. in-memory temp tables
+INFRA_KINDS = frozenset({"sql_unavailable", "sql_internal"})  # service problems, not the model's query
+
+log = logging.getLogger("paper_analyst.sqlguard")
 
 ALLOWED_TABLES = frozenset({"papers", "authors", "paper_authors", "paper_categories", "repos"})
 # printf/format are left out: one call can pad a value to any width (tester P6-D1), and over the length
@@ -191,9 +202,17 @@ def run_readonly(db_path: Path, sql: str, *, max_rows: int = MAX_ROWS, max_ops: 
             raise SqlError("sql_timeout", f"query stopped after {CHILD_WALL_S:g} s; simplify it") from None
     try:
         out = json.loads(p.stdout.strip().splitlines()[-1])
-    except (ValueError, IndexError):  # killed by a limit (CPU, memory) before it could report
-        raise SqlError("sql_rejected", "query exceeded the resource limits (memory, CPU or temporary storage); "
-                                       "simplify it") from None
+    except (ValueError, IndexError):
+        if p.returncode < 0 or "MemoryError" in (p.stderr or ""):  # killed by a limit (CPU, memory) or OOM
+            raise SqlError("sql_rejected", "query exceeded the resource limits (memory, CPU or temporary "
+                                           "storage); simplify it") from None
+        # Anything else is a crash of the query process itself (P6-D3): log it, and do not blame the query.
+        from app.events import redact
+
+        tail = redact((p.stderr or "").strip()[-600:])
+        log.warning("sql child process failed: returncode=%s stderr_tail=%r", p.returncode, tail)
+        raise SqlError("sql_internal", f"the query process failed unexpectedly (exit code {p.returncode}); "
+                                       "this is a service problem, not a problem with the query") from None
     if "error" in out:
         raise SqlError(out["error"]["kind"], out["error"]["message"])
     return SqlResult(sql=q, executed_sql=executed, columns=out["columns"], rows=out["rows"],
@@ -256,7 +275,18 @@ def _execute(db_path: Path, executed: str, max_rows: int, max_ops: int, max_seco
         ops["n"] += PROGRESS_EVERY
         return 1 if ops["n"] > max_ops or time.perf_counter() > deadline else 0
 
-    con = connect_ro(db_path)
+    try:
+        con = connect_ro(db_path)
+        # Child-only, process-wide: temp tables in memory, and all SQLite memory capped (P6-D1c).
+        con.execute("PRAGMA temp_store = MEMORY")
+        con.execute(f"PRAGMA hard_heap_limit = {int(CHILD_HEAP_BYTES)}")
+        con.execute("SELECT 1 FROM sqlite_master LIMIT 1").fetchall()  # fails here if the file is not a database
+    except sqlite3.DatabaseError as e:
+        msg = str(e)
+        if "not a database" in msg:  # a corrupt or wrong file: reported as before
+            raise SqlError("sql_error", msg) from None
+        raise SqlError("sql_unavailable", f"the corpus database cannot be opened ({msg}); this is a service "
+                                          "problem, not a problem with the query") from None
     rows, used = [], 0
     try:
         con.set_authorizer(authorizer)

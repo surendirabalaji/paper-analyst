@@ -103,7 +103,6 @@ def test_T6_CHILD_WALL_KILL_cleans_up(monkeypatch, tmp_path):
     assert not _live_children()
 
 
-@pytest.mark.xfail(strict=True, reason="P6-D3: an unusable DB is reported as a resource-limit refusal")
 def test_T6_CHILD_MISSING_DB_is_not_a_resource_refusal(tmp_path):
     """A missing metadata DB is an infrastructure failure, not 'simplify your query'."""
     with pytest.raises(SqlError) as ei:

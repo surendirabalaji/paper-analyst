@@ -173,9 +173,9 @@ async def test_tc_p4_10_max_attempts_per_call_is_four(monkeypatch):
     assert len(ev(events, "llm_result")) == 4 and len(ev(events, "fallback")) == 1
 
 
-async def test_tc_p4_11_synthesis_retry_can_overrun_request_budget(monkeypatch):
-    """Documents P4-N1 (non-blocking, Phase 7 scope): per-attempt timeouts are not clamped to the
-    remaining request budget, so a slow synthesis plus its retry can outlive REQUEST_BUDGET_S.
+async def test_tc_p4_11_synthesis_retry_respects_request_budget(monkeypatch):
+    """P4-N1 regression (was: documents the overrun; fixed in Phase 7). Per-attempt timeouts are now capped
+    by the time left in the request budget, so a slow synthesis plus its retry cannot outlive REQUEST_BUDGET_S.
     Scaled down: budget 12.5 s, synthesis attempt timeout 7 s (> the 5 s retry guard), provider never answers."""
     g = Scripted(behaviours=[30.0, 30.0], stream_parts=[])
     o = Scripted(behaviours=[30.0], stream_parts=[])
@@ -185,9 +185,8 @@ async def test_tc_p4_11_synthesis_retry_can_overrun_request_budget(monkeypatch):
         await stream_llm(ctx, ctx.route("synthesize", "synthesizer", {"n_papers": 1}), lambda c: c, "hi",
                          lambda d: None)
     wall = time.perf_counter() - t0
-    # bounded (no runaway), but it overruns the 12.5 s request budget (attempt 2 starts with 5.5 s left)
-    assert wall < 2 * 7.0 + 1
-    assert wall > ctx.settings.request_budget_s
+    # Before Phase 7 this ran to ~14 s (attempt 2 got its full 7 s with 5.5 s left); now it stops at the budget.
+    assert wall <= ctx.settings.request_budget_s + 0.5, wall
     assert not every_decision_has_result(drain(ctx))
 
 

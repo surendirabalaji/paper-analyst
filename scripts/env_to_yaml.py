@@ -17,14 +17,16 @@ from pathlib import Path
 REQUIRED = {"OPENAI_API_KEY"}
 # Warned about here, not required, so the converter stays usable on its own. scripts/deploy.sh separately
 # requires OPENROUTER_API_KEY, because the Phase 4 router needs both providers.
-OPTIONAL_SECRETS = {"OPENROUTER_API_KEY", "TAVILY_API_KEY"}
+# FAULT_INJECT_TOKEN enables per-request fault injection only for requests that present it (X-Fault-Token).
+OPTIONAL_SECRETS = {"OPENROUTER_API_KEY", "TAVILY_API_KEY", "FAULT_INJECT_TOKEN"}
 # ROUTER_FORCE_PROVIDER is deliberately absent: it is an evaluation-only override, so the deployed
-# service always routes by policy.
+# service always routes by policy. FAULT_INJECT (process-wide faults for every request) is absent for the
+# same reason: the deployed service never injects faults into ordinary requests.
 SETTINGS = {
     "OPENAI_MODEL", "OPENROUTER_BASE_URL", "GEMINI_MODEL", "OPENAI_EMBEDDING_MODEL",
     "CHROMA_COLLECTION", "RAG_TOP_K", "MAX_SUPERVISOR_STEPS", "MAX_TOOL_ROUNDS", "WORKER_TIMEOUT_S",
     "REQUEST_BUDGET_S", "LLM_TIMEOUT_S", "GEMINI_REASONING_EFFORT", "OPENAI_REASONING_EFFORT", "LLM_FALLBACK",
-    "TAVILY_TIMEOUT_S", "TAVILY_MAX_RESULTS", "RAG_MIN_SCORE",
+    "TAVILY_TIMEOUT_S", "TAVILY_MAX_RESULTS", "RAG_MIN_SCORE", "SYNTH_RESERVE_S",
 }
 # TAVILY_MCP_BASE_URL is also absent: the deployed service always talks to the hosted Tavily endpoint.
 ALLOWED = REQUIRED | OPTIONAL_SECRETS | SETTINGS

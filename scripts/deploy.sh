@@ -72,6 +72,10 @@ grep -Eq '^[[:space:]]*(export[[:space:]]+)?OPENROUTER_API_KEY=.+' "$ENV_FILE" &
 # Live retrieval and the shared MCP tool (Phase 5) need the Tavily key.
 grep -Eq '^[[:space:]]*(export[[:space:]]+)?TAVILY_API_KEY=.+' "$ENV_FILE" && ! grep -Eq '^[[:space:]]*(export[[:space:]]+)?TAVILY_API_KEY=.*REPLACE_ME' "$ENV_FILE" \
   || die "TAVILY_API_KEY missing or placeholder in $ENV_FILE (needed for Tavily Remote MCP)"
+# Process-wide fault injection would break every ordinary request; it is for local runs only (Phase 7).
+# (env_to_yaml.py never copies it either; this makes the refusal explicit.)
+! grep -Eq '^[[:space:]]*(export[[:space:]]+)?FAULT_INJECT=[[:space:]]*[^[:space:]#]' "$ENV_FILE" \
+  || die "FAULT_INJECT is set in $ENV_FILE; it applies faults to every request and is never deployed (clear it)"
 for n in "$CONCURRENCY" "$TIMEOUT" "$MIN_INSTANCES" "$MAX_INSTANCES"; do
   case "$n" in ''|*[!0-9]*) die "CONCURRENCY, TIMEOUT, MIN_INSTANCES and MAX_INSTANCES must be integers" ;; esac
 done

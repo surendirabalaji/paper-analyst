@@ -3,12 +3,17 @@
 Every LLM call goes through `Router.decide()` (the hybrid policy in policy.py) and then through
 `call_llm()` or `stream_llm()`, which add:
 
-- a per-attempt timeout (policy.TIMEOUTS, else LLM_TIMEOUT_S); SDK retries are off so retries are ours;
+- a per-attempt timeout (policy.TIMEOUTS, else LLM_TIMEOUT_S), capped by the time left in the request
+  budget or the running worker's deadline (`ctx.time_left()`, P4-N1); SDK retries are off so retries are ours;
 - one retry with jittered backoff on transient errors (timeout, 429, 5xx, connection);
 - then a fallback to the other provider (directly for 401/403/404/400), emitted as a separate
   `fallback` event that names the original decision; a stream falls back only before its first token;
 - an `llm_result` event for every attempt, with status ok / error / cancelled, so a failed or
-  cancelled call never leaves its route without a result.
+  cancelled call never leaves its route without a result;
+- an empty completion (no text, no tool calls, no output tokens; streamed or not) is `empty_response`,
+  which is retried and then falls back like any transient error (P5-N1);
+- fault injection hooks (app/faults.py, `provider:<name>:<mode>`) before each attempt; injected failures
+  are marked `injected: true` in llm_result.
 
 Trace events: `llm_route` (decision: agent, call site, provider, exact model id, decision inputs,
 dimension, rationale), `llm_retry`, `fallback`, `llm_result` (tokens, reasoning tokens, latency, TTFT,
@@ -30,6 +35,7 @@ from langchain_openai import ChatOpenAI
 
 from app.config import Settings
 from app.events import safe_error
+from app.faults import InjectedFault, is_injected, maybe_fail
 from app.llm import policy
 from app.llm.policy import GEMINI, OPENAI
 
@@ -39,6 +45,8 @@ PROVIDER_LABELS = {
 }
 TRANSIENT = {"timeout", "rate_limit", "provider_unavailable", "empty_response"}
 MAX_TRIES_PER_PROVIDER = 2
+MIN_ATTEMPT_S = 0.25  # below this much time left, an attempt is not started (budget_exhausted)
+MIN_RETRY_S = 5.0  # a retry or fallback needs at least this much time left
 
 
 class OpenRouterChat(ChatOpenAI):
@@ -135,8 +143,14 @@ def _model_returned(meta: dict) -> str | None:
     return name
 
 
+class BudgetExhausted(Exception):
+    """No time left in the request budget (or the worker's deadline) to start another LLM attempt."""
+
+    kind = "budget_exhausted"
+
+
 def classify_error(e: BaseException) -> str:
-    if isinstance(e, ProviderCallError):
+    if isinstance(e, (ProviderCallError, InjectedFault, BudgetExhausted)):
         return e.kind
     if isinstance(e, (asyncio.TimeoutError, TimeoutError, openai.APITimeoutError)):
         return "timeout"
@@ -166,7 +180,15 @@ def is_empty_completion(msg: Any) -> bool:
 
 
 def is_provider_error(e: BaseException) -> bool:
-    return isinstance(e, (asyncio.TimeoutError, TimeoutError, openai.APIError))
+    return isinstance(e, (asyncio.TimeoutError, TimeoutError, openai.APIError, InjectedFault, BudgetExhausted))
+
+
+def attempt_timeout(ctx, dec: RouteDecision) -> float:
+    """The call site's timeout, capped by the time left in this request/stage (P2-N7, P4-N1)."""
+    left = ctx.time_left()
+    if left < MIN_ATTEMPT_S:
+        raise BudgetExhausted(f"{left:.1f} s left in the request budget; not starting another LLM attempt")
+    return min(dec.timeout_s, left)
 
 
 class Router:
@@ -234,7 +256,7 @@ class Router:
 
 def record_llm_result(ctx, decision: RouteDecision, msg: BaseMessage | None, t0: float, *, status: str = "ok",
                       attempt: int = 1, ttft_ms: int | None = None, error_kind: str | None = None,
-                      error: str | None = None, stream_stats: dict | None = None) -> None:
+                      error: str | None = None, stream_stats: dict | None = None, injected: bool = False) -> None:
     latency_ms = int((time.perf_counter() - t0) * 1000)
     usage = usage_of(msg)
     meta = (getattr(msg, "response_metadata", None) or {}) if msg is not None else {}
@@ -275,6 +297,7 @@ def record_llm_result(ctx, decision: RouteDecision, msg: BaseMessage | None, t0:
         reported_cost_usd=reported,
         **usage,
         **(stream_stats or {}),
+        **({"injected": True} if injected else {}),
     )
 
 
@@ -289,20 +312,26 @@ async def _resilient(ctx, decision: RouteDecision, attempt_fn: Callable[[RouteDe
         try:
             return await attempt_fn(current, n)
         except ProviderCallError as pe:
-            if pe.kind in TRANSIENT and tries < MAX_TRIES_PER_PROVIDER and ctx.remaining_s() > 5:
+            if pe.kind in TRANSIENT and tries < MAX_TRIES_PER_PROVIDER and ctx.time_left() > MIN_RETRY_S:
                 delay = round(min(4.0, 0.5 * 2 ** (tries - 1)) * random.uniform(0.7, 1.3), 2)
                 ctx.emitter.emit("llm_retry", decision_id=current.decision_id, agent=current.agent,
                                  call_site=current.call_site, provider=current.provider, error_kind=pe.kind,
-                                 next_attempt=n + 1, backoff_s=delay)
+                                 next_attempt=n + 1, backoff_s=delay,
+                                 **({"injected": True} if is_injected(pe) else {}))
                 await asyncio.sleep(delay)
                 continue
+            if pe.kind == "budget_exhausted" or (pe.kind == "timeout" and ctx.time_left() < MIN_ATTEMPT_S):
+                # The provider is not at fault: the request (or worker) deadline cut the attempt short, so it
+                # is not marked failed for the rest of the request and there is no time to fall back.
+                raise pe.original
             ctx.failed_providers[current.provider] = pe.kind
-            if current is decision and ctx.settings.fallback_enabled and ctx.remaining_s() > 5:
+            if current is decision and ctx.settings.fallback_enabled and ctx.time_left() > MIN_RETRY_S:
                 fb = ctx.router.fallback_decision(decision, pe.kind)
                 ctx.fallbacks += 1
                 ctx.emitter.emit("fallback", original_decision_id=decision.decision_id,
                                  from_provider=decision.provider, to_provider=fb.provider, error_kind=pe.kind,
-                                 attempts_on_original=tries, **fb.public())
+                                 attempts_on_original=tries, **fb.public(),
+                                 **({"injected": True} if is_injected(pe) else {}))
                 current, tries = fb, 0
                 continue
             raise pe.original
@@ -314,23 +343,36 @@ async def call_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], in
 
     async def attempt(dec: RouteDecision, n: int) -> Any:
         t0 = time.perf_counter()
+        injected_empty = False
+
+        async def run() -> Any:
+            nonlocal injected_empty
+            if await maybe_fail(ctx, "provider", dec.provider, agent=dec.agent, call_site=dec.call_site) == "empty":
+                injected_empty = True
+                return AIMessage(content="", response_metadata={"finish_reason": "stop"})
+            return await build(ctx.router.client(dec.provider)).ainvoke(inputs)
+
         try:
-            out = await asyncio.wait_for(build(ctx.router.client(dec.provider)).ainvoke(inputs), dec.timeout_s)
+            limit = attempt_timeout(ctx, dec)
+            out = await asyncio.wait_for(run(), limit)
         except asyncio.CancelledError:
             record_llm_result(ctx, dec, None, t0, status="cancelled", attempt=n)
             raise
         except Exception as e:
             kind = classify_error(e)
-            record_llm_result(ctx, dec, None, t0, status="error", attempt=n, error_kind=kind, error=safe_error(e))
+            record_llm_result(ctx, dec, None, t0, status="error", attempt=n, error_kind=kind, error=safe_error(e),
+                              injected=is_injected(e))
             if is_provider_error(e):
                 raise ProviderCallError(kind, e) from e
             raise
         raw = out.get("raw") if isinstance(out, dict) else out
         if is_empty_completion(raw):
             finish = (raw.response_metadata or {}).get("finish_reason")
-            e = EmptyResponse(f"empty completion from {dec.provider} (finish_reason={finish})")
+            e = EmptyResponse(f"{'[injected test fault] ' if injected_empty else ''}empty completion from "
+                              f"{dec.provider} (finish_reason={finish})")
+            e.injected = injected_empty
             record_llm_result(ctx, dec, raw, t0, status="error", attempt=n, error_kind="empty_response",
-                              error=safe_error(e))
+                              error=safe_error(e), injected=injected_empty)
             raise ProviderCallError("empty_response", e)
         record_llm_result(ctx, dec, raw if isinstance(raw, AIMessage) else None, t0, attempt=n)
         return out
@@ -346,8 +388,12 @@ async def stream_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], 
     async def attempt(dec: RouteDecision, n: int) -> str:
         t0 = time.perf_counter()
         first_ms, gathered, parts, chunks, max_gap, last = None, None, [], 0, 0, None
+        injected_empty = False
         try:
-            async with asyncio.timeout(dec.timeout_s):
+            async with asyncio.timeout(attempt_timeout(ctx, dec)):
+                if await maybe_fail(ctx, "provider", dec.provider, agent=dec.agent, call_site=dec.call_site) == "empty":
+                    injected_empty = True
+                    raise EmptyResponse(f"[injected test fault] empty stream from {dec.provider}")
                 async for chunk in build(ctx.router.client(dec.provider)).astream(inputs):
                     gathered = chunk if gathered is None else gathered + chunk
                     delta = text_of(chunk.content)
@@ -364,13 +410,26 @@ async def stream_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], 
         except asyncio.CancelledError:
             record_llm_result(ctx, dec, gathered, t0, status="cancelled", attempt=n, ttft_ms=first_ms)
             raise
+        except EmptyResponse as e:
+            e.injected = injected_empty
+            record_llm_result(ctx, dec, gathered, t0, status="error", attempt=n, error_kind="empty_response",
+                              error=safe_error(e), stream_stats={"stream_chunks": 0}, injected=injected_empty)
+            raise ProviderCallError("empty_response", e) from e
         except Exception as e:
             kind = classify_error(e)
             record_llm_result(ctx, dec, gathered, t0, status="error", attempt=n, ttft_ms=first_ms,
-                              error_kind=kind, error=safe_error(e), stream_stats={"stream_chunks": chunks})
+                              error_kind=kind, error=safe_error(e), stream_stats={"stream_chunks": chunks},
+                              injected=is_injected(e))
             if is_provider_error(e) and not parts:
                 raise ProviderCallError(kind, e) from e
             raise
+        if not parts and not usage_of(gathered)["output_tokens"]:
+            # A stream that ends with no text is the streamed form of the empty completion (P5-N1); nothing
+            # was forwarded yet, so retry/fallback are still safe.
+            e = EmptyResponse(f"empty stream from {dec.provider}")
+            record_llm_result(ctx, dec, gathered, t0, status="error", attempt=n, error_kind="empty_response",
+                              error=safe_error(e), stream_stats={"stream_chunks": chunks})
+            raise ProviderCallError("empty_response", e)
         record_llm_result(ctx, dec, gathered, t0, attempt=n, ttft_ms=first_ms,
                           stream_stats={"stream_chunks": chunks, "max_chunk_gap_ms": max_gap})
         return "".join(parts)

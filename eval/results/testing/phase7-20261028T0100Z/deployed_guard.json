@@ -1,0 +1,47 @@
+{
+ "spec_no_token": {
+  "http": 403,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ "spec_wrong_token": {
+  "http": 403,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ "spec_empty_token": {
+  "http": 403,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ "spec_token_prefix": {
+  "http": 403,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ "spec_token_plus": {
+  "http": 403,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ "lowercase_hdr_no_token": {
+  "http": 403,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ "empty_spec_no_token": {
+  "http": 403,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ "bad_spec_good_token": {
+  "http": 422,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"bad x-fault-inject header: unknown worker fault mode 'explode' (use empty, exception, hang, timeout)\"}"
+ },
+ "oversized_spec_good_token": {
+  "http": 422,
+  "ctype": "application/json",
+  "body": "{\"detail\":\"bad x-fault-inject header: fault rule 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ }
+}
