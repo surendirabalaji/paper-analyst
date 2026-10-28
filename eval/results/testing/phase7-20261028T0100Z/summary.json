@@ -1,0 +1,20 @@
+{
+  "run_id": "phase7-20261028T0100Z",
+  "utc": "2026-10-28T01:00Z-01:25Z",
+  "source": {"head": "7afb300", "dirty_diff_sha256_prefix": "382c71800aabec89", "note": "uncommitted phase-7-failures working tree; app/ mtimes all before the 00:44 UTC image build"},
+  "deployed": {"url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app", "revision": "paper-analyst-00011-c4t", "image": "paper-analyst:20261028-004430-7afb300-dirty", "traffic": 100,
+               "env_names_checked": "FAULT_INJECT absent; FAULT_INJECT_TOKEN present (43 chars, matches .env); REQUEST_BUDGET_S=120, WORKER_TIMEOUT_S=45, SYNTH_RESERVE_S default 30"},
+  "suite": {"before": "466 passed, 36 skipped, 1 xfailed", "after_tester_tests": "482 passed, 36 skipped, 3 xfailed (2 new strict xfails = P7-D1)"},
+  "deployed_guard": "deployed_guard.json: 7 no/wrong/empty/prefix/suffix/short-token cases -> 403 JSON (no stream); bad and 6000-char specs with token -> 422",
+  "deployed_runs": {
+    "D1_all_providers_down": {"status": "failed", "wall_s": 2.1, "cost_usd": 0.0, "honest": "templated failure answer, injected label, no citations"},
+    "D2_data_timeout_partial": {"status": "partial", "wall_s": 19.2, "cost_usd": 0.029, "retry": "t1 retried once (attempt 2 of 2) then not retried", "answer": "says count not answered; MetaGPT SOP part cited C1-C4; Incomplete-evidence note"},
+    "D3_tavily_error": {"status": "partial", "wall_s": 15.0, "cost_usd": 0.017, "answer": "says live search failed and recent developments missing; corpus background cited"},
+    "D4_summary_hang_once_real_timeout": {"status": "done", "wall_s": 66.1, "cost_usd": 0.033, "trace": "45 s real worker timeout, retry attempt 2 done"},
+    "D5_ordinary_no_header": {"status": "done", "wall_s": 28.4, "ttft_s": 26.0, "cost_usd": 0.050, "facts": "cs.MA count 5 [D1] matches independent SQL"},
+    "browser_partial": {"status": "partial", "ttft_ms": 15696, "links": ["C2", "C4"], "fault_trace_rows": 5, "console_errors": 0},
+    "browser_wrong_token": {"result": "visible 'Error: HTTP 403', no stream; stale 'Planning...' line remains (P7-N2)"}
+  },
+  "logs_rev_00011_since_01:00Z": {"entries": 62, "tracebacks": 0, "token_or_key_values": 0, "credential_shapes": 0},
+  "spend": {"local_usd": 0.166, "deployed_usd": 0.155, "aborted_curl_request_usd_est": 0.005, "total_usd_est": 0.33, "tavily_credits": 0}
+}

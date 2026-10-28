@@ -352,7 +352,9 @@ async def test_graph_multi_paper_question_synthesises_on_capability_side():
 
 
 async def test_graph_worker_timeout_leaves_no_route_without_result():
-    """P2-N4: the worker's in-flight LLM call is cancelled by the worker timeout; its route still gets a result."""
+    """P2-N4: the worker's in-flight LLM call is cut by the worker deadline; its route still gets a result.
+    Since Phase 7 the attempt timeout is capped by the worker's deadline, so the call ends as a recorded
+    `timeout` error rather than being cancelled from outside."""
     async def slow(messages, kw):
         await asyncio.sleep(5)
 
@@ -360,7 +362,9 @@ async def test_graph_worker_timeout_leaves_no_route_without_result():
     ctx = make_ctx("q", s, worker_timeout_s=0.2)
     events = await _run(ctx)
     assert_every_decision_has_a_result(events)
-    assert "cancelled" in [r["status"] for r in ev(events, "llm_result")]
+    cut = [r for r in ev(events, "llm_result") if r["agent"] == "research"]
+    assert cut and all(r["status"] in ("error", "cancelled") for r in cut)
+    assert "timeout" in [r["error_kind"] for r in cut]
     assert ev(events, "done")
 
 

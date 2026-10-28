@@ -1,0 +1,36 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "fault": "worker:data:exception",
+ "query": "Which 2023 papers in the collection are tagged cs.MA, and in a sentence, what is Generative Agents' memory stream?",
+ "started_utc": "2026-10-28T01:11:01Z",
+ "banner": "Fault injection is on for your requests: worker:data:exception. Failures it causes are test faults, not real outages.",
+ "final": {
+  "turns": 1,
+  "len": 579,
+  "streaming": false,
+  "cites": 2,
+  "status": "partial \u00b7 TTFT 15696 ms \u00b7 total 16196 ms \u00b7 retrieval 22 ms \u00b7 Gemini 6 calls, 16324\u2192634 tok \u00b7 cost $0.0264",
+  "trace": 26,
+  "routes": 7,
+  "sources": 2,
+  "sendDisabled": false,
+  "t": 16.43
+ },
+ "streamed_lengths": 3,
+ "answer_tail": "g a natural language description, a creation timestamp, and a most recent access timestamp\u2014that maintains a comprehensive record of an agent's direct experiences and observations [C2, C4].\n\n---\n**Incomplete evidence:** Data (t1) failed with an internal error [injected test fault, not a real outage].",
+ "status_line": [
+  "partial \u00b7 TTFT 15696 ms \u00b7 total 16196 ms \u00b7 retrieval 22 ms \u00b7 Gemini 6 calls, 16324\u2192634 tok \u00b7 cost $0.0264"
+ ],
+ "answer_links": [
+  "C2",
+  "C4"
+ ],
+ "fault_trace_rows": [
+  "#1 fault injection worker:data:exception (header): Test faults are injected in this request; failures they cause are labelled.",
+  "#1 FAULT injected worker:data:exception (t1) \u2014 Deliberate test fault (fault injection), not a real outage.",
+  "#1 error worker data: InjectedFault: [injected test fault] worker:data -> worker_error [injected test fault]",
+  "#1 data t1 failed (worker_error) [injected test fault]",
+  "#1 done partial in 16196 ms \u00b7 t1 data failed, t2 summary done \u00b7 1 injected fault(s)"
+ ],
+ "console_errors": []
+}

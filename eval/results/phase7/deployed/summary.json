@@ -1,0 +1,149 @@
+[
+ {
+  "case": "guard",
+  "http": 403,
+  "body": "{\"detail\":\"fault injection is not enabled for this request\"}"
+ },
+ {
+  "case": "partial",
+  "http": 200,
+  "wall_s": 17.2,
+  "request_id": "dcc56255524b",
+  "status": "partial",
+  "last_event": "done",
+  "plan": [
+   "data",
+   "summary"
+  ],
+  "tasks": [
+   {
+    "id": "t1",
+    "worker": "data",
+    "status": "done",
+    "attempts": 1,
+    "error_kind": null,
+    "reason": null,
+    "injected": false
+   },
+   {
+    "id": "t2",
+    "worker": "summary",
+    "status": "failed",
+    "attempts": 1,
+    "error_kind": "worker_error",
+    "reason": null,
+    "injected": true
+   }
+  ],
+  "faults": [
+   "worker:summary:exception"
+  ],
+  "retries": [],
+  "llm_retry": 0,
+  "fallbacks": [],
+  "citations": [
+   "D1",
+   "D2",
+   "D3",
+   "D4",
+   "D5",
+   "D6"
+  ],
+  "nonrecoverable_errors": [],
+  "over_budget_s": 0.0,
+  "cost_usd": 0.021732,
+  "ttft_ms": 15486,
+  "total_ms": 17069,
+  "answer": "There are 5 papers in the corpus that have cs.MA as a category [D1]:\n\n- *CAMEL: Communicative Agents for \"Mind\" Exploration of Large Language Model Society* (arXiv:2303.17760, published 2023-03-31) [D2]\n- *ChatDev: Communicative Agents for Software Development* (arXiv:2307.07924, published 2023-07-16) [D3]\n- *MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework* (arXiv:2308.00352, published 2023-08-01) [D4]\n- *Large Language Model based Multi-Agents: A Survey of Progress and Challenges* (arXiv:2402.01680, published 2024-01-21) [D5]\n- *MAS-GPT: Training LLMs to Build LLM-based Multi-Agent Systems* (arXiv:2503.03686, published 2025-03-05) [D6]\n\nRegarding how Self-RAG decides when to retrieve, the available evidence does not answer this because the corresponding summary task failed and no text or documentation for Self-RAG is present in the evidence.\n\n---\n**Incomplete evidence:** Summary (t2) failed with an internal error [injected test fault, not a real outage]."
+ },
+ {
+  "case": "retry",
+  "http": 200,
+  "wall_s": 20.1,
+  "request_id": "7f53b6c9196b",
+  "status": "done",
+  "last_event": "done",
+  "plan": [
+   "data"
+  ],
+  "tasks": [
+   {
+    "id": "t1",
+    "worker": "data",
+    "status": "done",
+    "attempts": 2,
+    "error_kind": null,
+    "reason": null,
+    "injected": false
+   }
+  ],
+  "faults": [
+   "worker:data:timeout"
+  ],
+  "retries": [
+   "retry t1: transient timeout (attempt 2 of 2)"
+  ],
+  "llm_retry": 0,
+  "fallbacks": [],
+  "citations": [
+   "D2",
+   "D1",
+   "D3"
+  ],
+  "nonrecoverable_errors": [],
+  "over_budget_s": 0.0,
+  "cost_usd": 0.027735,
+  "ttft_ms": 17851,
+  "total_ms": 19951,
+  "answer": "A total of 74 authors appear on more than one paper in the corpus [D2]. \n\nThe authors and their paper counts are:\n\n* **8 papers:** Karthik Narasimhan, Shunyu Yao [D1]\n* **5 papers:** Zhiyuan Liu [D1]\n* **4 papers:** Maosong Sun, Weize Chen, Xin Cong, Yusheng Su [D1]\n* **3 papers:** Cheng Yang, Dahai Li, Graham Neubig, Heng Ji, Joseph E. Gonzalez, Luyu Gao, Matei Zaharia, Yankai Lin, Yaxi Lu, Yiming Yang, Yu Su, Yujia Qin [D1]\n* **2 papers (55 authors):** Akari Asai, Alexander Wettig, Aohan Zeng, Carlos E. Jimenez, Chen Ma, Chen Qian, Chi Wang, Chi-Min Chan, Christopher Potts, Dian Yu, Frank F. Xu, Huan Sun, Ion Stoica, Izhak Shafran, Jamie Callan, Jane Dwivedi-Yu, Jeffrey Zhao, Ji-Rong Wen, Jiaqi Liu, Jiawei Han, Jie Tang, Jie Zhou, Jimmy Lin, Jinsung Yoon, John Yang, Julian McAuley, Kai Mei, Kevin Lin, Kunlun Zhu, Lan Yan, Lei Wang [D1], Noah Shinn, Ofir Press, Omar Khattab, Percy Liang, Runchu Tian, Ruobing Xie, Shihao Liang, Shishir G. Patil, Thomas L. Griffiths, Thomas Scialom, Tianjun Zhang, Uri Alon, Wujiang Xu, Xiang Deng, Xiangyu Zhao, Xiao Liu, Xu Chen, Xueguang Ma, Yining Ye, Yongfeng Zhang, Yu Gu, Yuan Cao, Yuxiao Dong, and Zeyu Zhang [D3]."
+ },
+ {
+  "case": "empty",
+  "http": 200,
+  "wall_s": 24.5,
+  "request_id": "6607173909e3",
+  "status": "done",
+  "last_event": "done",
+  "plan": [
+   "summary"
+  ],
+  "tasks": [
+   {
+    "id": "t1",
+    "worker": "summary",
+    "status": "done",
+    "attempts": 1,
+    "error_kind": null,
+    "reason": null,
+    "injected": false
+   }
+  ],
+  "faults": [
+   "provider:gemini-openrouter:empty",
+   "provider:gemini-openrouter:empty"
+  ],
+  "retries": [],
+  "llm_retry": 1,
+  "fallbacks": [
+   [
+    "planner",
+    "gemini-openrouter",
+    "openai",
+    true
+   ]
+  ],
+  "citations": [
+   "C2",
+   "C3",
+   "C5",
+   "C7",
+   "C4"
+  ],
+  "nonrecoverable_errors": [],
+  "over_budget_s": 0.0,
+  "cost_usd": 0.03272,
+  "ttft_ms": 21594,
+  "total_ms": 24374,
+  "answer": "Self-RAG uses a **learned retrieval decision**, rather than retrieving automatically for every question. Before generating each output segment, it predicts a special **`Retrieve` reflection token** based on the prompt and what it has generated so far. [C2][C3]\n\n- **`yes`** \u2192 call the retriever, then generate using retrieved passages. [C2]\n- **`no`** \u2192 generate the next segment without retrieval, like a standard language model. [C3]\n- **`continue`** is also a possible token value, but the available excerpt does not explain its precise behavior. [C2]\n\nThe decision is trained to answer: **\u201cWould finding external documents help produce a better response?\u201d** The authors first obtain such judgments from GPT-4 and train a critic to predict them; that critic then annotates training outputs segment by segment. [C5][C7] The generator learns to predict these retrieval tokens alongside ordinary text through standard next-token training, so **no separate critic is needed at inference**. [C7][C4]\n\nAfter retrieval, separate reflection tokens assess passage relevance, whether the generated claims are supported, and response usefulness; those assessments help rank candidate output segments. [C2][C3]"
+ }
+]

@@ -47,6 +47,11 @@ class Settings:
     tavily_max_results: int = 4
     rag_min_score: float = 0.55  # best corpus similarity below this = low corpus support (calibrated 2026-10-27)
     sqlite_path: Path = ROOT / "data" / "papers.db"
+    # Failure handling (Phase 7). The synthesis reserve is request time kept back from workers so the
+    # final answer can still stream inside REQUEST_BUDGET_S.
+    synth_reserve_s: float = 30.0
+    fault_inject: str = ""  # process-wide fault spec, local runs only (app/faults.py)
+    fault_inject_token: str = ""  # enables the per-request X-Fault-Inject header when it matches X-Fault-Token
 
 
 def load_settings() -> Settings:
@@ -77,4 +82,7 @@ def load_settings() -> Settings:
         tavily_max_results=int(env("TAVILY_MAX_RESULTS", "4")),
         rag_min_score=float(env("RAG_MIN_SCORE", "0.55")),
         sqlite_path=_path(env("SQLITE_PATH", "./data/papers.db")),
+        synth_reserve_s=float(env("SYNTH_RESERVE_S", "30")),
+        fault_inject=env("FAULT_INJECT", ""),
+        fault_inject_token=env("FAULT_INJECT_TOKEN", ""),
     )

@@ -1,0 +1,40 @@
+{
+ "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+ "fault": "worker:research:exception,worker:summary:exception",
+ "query": "How many papers in the corpus have cs.MA as a category, and how does Self-RAG decide when to retrieve?",
+ "started_utc": "2026-10-28T00:53:39Z",
+ "banner": "Fault injection is on for your requests: worker:research:exception,worker:summary:exception. Failures it causes are test faults, not real outages.",
+ "final": {
+  "turns": 1,
+  "len": 954,
+  "streaming": false,
+  "cites": 6,
+  "status": "partial \u00b7 TTFT 13148 ms \u00b7 total 14757 ms \u00b7 retrieval 1245 ms \u00b7 Gemini 6 calls, 9568\u2192823 tok \u00b7 cost $0.0205",
+  "trace": 24,
+  "routes": 7,
+  "sources": 6,
+  "sendDisabled": false,
+  "t": 15.01
+ },
+ "streamed_lengths": 8,
+ "answer_tail": "86, published 2025-03-05) [D6]\n\nThe available evidence does not answer how Self-RAG decides when to retrieve, as the research investigation for that part failed to return any findings.\n\n---\n**Incomplete evidence:** Research (t2) failed with an internal error [injected test fault, not a real outage].",
+ "status_line": [
+  "partial \u00b7 TTFT 13148 ms \u00b7 total 14757 ms \u00b7 retrieval 1245 ms \u00b7 Gemini 6 calls, 9568\u2192823 tok \u00b7 cost $0.0205"
+ ],
+ "answer_links": [
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "D5",
+  "D6"
+ ],
+ "fault_trace_rows": [
+  "#1 fault injection worker:research:exception, worker:summary:exception (header): Test faults are injected in this request; failures they cause are labelled.",
+  "#1 FAULT injected worker:research:exception (t2) \u2014 Deliberate test fault (fault injection), not a real outage.",
+  "#1 error worker research: InjectedFault: [injected test fault] worker:research -> worker_error [injected test fault]",
+  "#1 research t2 failed (worker_error) [injected test fault]",
+  "#1 done partial in 14757 ms \u00b7 t1 data done, t2 research failed \u00b7 1 injected fault(s)"
+ ],
+ "console_errors": []
+}

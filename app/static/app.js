@@ -6,6 +6,20 @@ const $ = (id) => document.getElementById(id);
 const MARKERS = /\[([A-Z]\d+(?:\s*[,;]\s*[A-Z]\d+)*)\]/g;
 let turnNo = 0;
 
+// Fault injection for failure-handling demos (Phase 7): #fault=<spec>&fault_token=<token> in the URL. The
+// hash never reaches the server or its logs; the server refuses the header unless the token matches.
+const FAULT = (() => {
+  const h = new URLSearchParams(location.hash.slice(1));
+  return h.get("fault") && h.get("fault_token") ? { spec: h.get("fault"), token: h.get("fault_token") } : null;
+})();
+if (FAULT) {
+  const b = document.createElement("p");
+  b.className = "banner fault";
+  b.textContent = `Fault injection is on for your requests: ${FAULT.spec}. Failures it causes are test faults, not real outages.`;
+  document.querySelector("header").append(b);
+}
+const INJ = (d) => (d && d.injected ? " [injected test fault]" : "");
+
 // ---------------------------------------------------------------- tabs
 document.querySelectorAll("nav button").forEach((b) =>
   b.addEventListener("click", () => showTab(b.dataset.tab)));
@@ -199,7 +213,13 @@ async function ask(query) {
   };
 
   const handlers = {
-    meta: (d) => traceItem(turn, "start", ` request ${d.request_id}, k=${d.k}, workers: ${d.workers.join(", ")}`),
+    meta: (d) => {
+      traceItem(turn, "start", ` request ${d.request_id}, k=${d.k}, workers: ${d.workers.join(", ")}`);
+      if (d.fault_injection) traceItem(turn, "fault injection", ` ${d.fault_injection.rules.join(", ")} (${d.fault_injection.source}): ${d.fault_injection.note}`, "bad");
+    },
+    fault_injected: (d) => traceItem(turn, "FAULT", ` injected ${d.target}` +
+      (d.agent ? ` in ${d.agent}` : "") + (d.call_site ? ` / ${d.call_site}` : "") + (d.task_id ? ` (${d.task_id})` : "") +
+      ` — ${d.note}`, "bad"),
     plan: (d) => {
       traceItem(turn, "plan", ` ${d.plan_summary} (${d.source})`);
       d.tasks.forEach((t) => traceItem(turn, t.id, ` ${t.worker}${t.needs_live ? " [needs_live]" : ""}: ${t.instruction}` +
@@ -217,13 +237,13 @@ async function ask(query) {
       paintRouting();
     },
     llm_retry: (d) => {
-      traceItem(turn, "retry", ` ${d.agent} ${d.call_site} on ${d.provider}: ${d.error_kind}, retrying in ${d.backoff_s}s`, "warn");
+      traceItem(turn, "retry", ` ${d.agent} ${d.call_site} on ${d.provider}: ${d.error_kind}${INJ(d)}, retrying in ${d.backoff_s}s`, "warn");
     },
     fallback: (d) => {
       routes.set(d.decision_id, routeRow(turn, d, "fallback"));
       picks.push({ agent: d.agent, provider: d.provider, dimension: "fallback", fallback: true });
       paintRouting();
-      traceItem(turn, "fallback", ` ${d.agent} ${d.call_site}: ${d.from_provider} failed (${d.error_kind}) → ${d.to_provider}`, "warn");
+      traceItem(turn, "fallback", ` ${d.agent} ${d.call_site}: ${d.from_provider} failed (${d.error_kind})${INJ(d)} → ${d.to_provider}`, "warn");
     },
     llm_result: (d) => {
       const tr = routes.get(d.decision_id);
@@ -234,14 +254,14 @@ async function ask(query) {
         (d.status === "ok"
           ? `${d.input_tokens}→${d.output_tokens} tok` + (d.reasoning_tokens ? ` (${d.reasoning_tokens} reasoning)` : "") +
             ` · ${d.latency_ms} ms` + (d.ttft_ms != null ? ` · TTFT ${d.ttft_ms} ms` : "") + fmtCost(d.cost_usd, d.cost_source)
-          : `${d.status}${d.error_kind ? ` (${d.error_kind})` : ""} after ${d.latency_ms} ms`));
+          : `${d.status}${d.error_kind ? ` (${d.error_kind})` : ""}${INJ(d)} after ${d.latency_ms} ms`));
       if (d.upstream_provider) line.append(el("div", "muted", `served by ${d.upstream_provider}`));
       if (cell.textContent === "…") cell.replaceChildren();
       cell.append(line);
     },
     tool_call: (d) => traceItem(turn, d.agent, ` calls ${d.tool}(${JSON.stringify(d.args_safe)})`),
     tool_result: (d) => traceItem(turn, d.agent, ` ${d.tool} → ${d.status}` +
-      (d.error_kind ? ` (${d.error_kind}, recoverable)` : "") +
+      (d.error_kind ? ` (${d.error_kind}, recoverable)` : "") + INJ(d) +
       (d.n_results != null ? `, ${d.n_results} results` : "") + `, ${d.latency_ms} ms`, statusKind(d.status)),
     tool_gate: (d) => traceItem(turn, d.agent, ` ${d.tool} ${d.enabled ? "enabled" : "not enabled"}: ${d.reason}`,
       d.enabled ? "mcp" : ""),
@@ -276,7 +296,9 @@ async function ask(query) {
       (d.papers.length ? d.papers.map((p) => `arXiv:${p.arxiv_id}${p.cite_id ? ` [${p.cite_id}]` : ""}`).join(", ")
         : "no paper ids") + (d.evidence_ids.length ? ` · upstream evidence ${d.evidence_ids.join(" ")}` : "")),
     worker_result: (d) => traceItem(turn, d.agent, ` ${d.task_id} ${d.status}` +
-      (d.error_kind ? ` (${d.error_kind})` : "") + (d.evidence_ids && d.evidence_ids.length ? `, cites ${d.evidence_ids.join(" ")}` : ""),
+      (d.attempt > 1 ? ` (attempt ${d.attempt})` : "") +
+      (d.error_kind ? ` (${d.error_kind})` : "") + (d.reason ? `: ${d.reason}` : "") + INJ(d) +
+      (d.evidence_ids && d.evidence_ids.length ? `, cites ${d.evidence_ids.join(" ")}` : ""),
       statusKind(d.status)),
     token: (d) => { text += d.delta; repaint(); },
     citation: (d) => {
@@ -292,7 +314,7 @@ async function ask(query) {
       repaint();
     },
     error: (d) => {
-      traceItem(turn, "error", ` ${d.scope}${d.agent ? " " + d.agent : ""}: ${d.message_safe}`, d.recoverable ? "warn" : "bad");
+      traceItem(turn, "error", ` ${d.scope}${d.agent ? " " + d.agent : ""}: ${d.message_safe}${INJ(d)}`, d.recoverable ? "warn" : "bad");
       if (!d.recoverable) box.append(el("div", "status error", `Error: ${d.message_safe}`));
     },
     done: (d) => {
@@ -307,7 +329,9 @@ async function ask(query) {
       d.dropped_citations && d.dropped_citations.forEach((c) => dropped.add(c));
       repaint();
       if (d.status !== "done") status.classList.add("error");
-      traceItem(turn, "done", ` ${d.status} in ${t.total_ms} ms`, statusKind(d.status));
+      traceItem(turn, "done", ` ${d.status} in ${t.total_ms} ms` +
+        (d.tasks && d.tasks.length ? " · " + d.tasks.map((x) => `${x.id} ${x.worker} ${x.status}`).join(", ") : "") +
+        (d.faults_injected && d.faults_injected.length ? ` · ${d.faults_injected.length} injected fault(s)` : ""), statusKind(d.status));
     },
   };
 
@@ -315,7 +339,8 @@ async function ask(query) {
   try {
     const r = await fetch("/api/chat", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
+      headers: { "Content-Type": "application/json", Accept: "text/event-stream",
+        ...(FAULT ? { "X-Fault-Inject": FAULT.spec, "X-Fault-Token": FAULT.token } : {}) },
       body: JSON.stringify({ query }),
     });
     if (!r.ok) throw new Error(`HTTP ${r.status}: ${(await r.text()).slice(0, 200)}`);
