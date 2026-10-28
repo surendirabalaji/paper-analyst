@@ -199,29 +199,45 @@ class Router:
     def model_id(self, provider: str) -> str:
         return self.settings.openai_model if provider == OPENAI else self.settings.gemini_model
 
-    def reasoning_effort(self, provider: str) -> str | None:
+    def reasoning_effort(self, provider: str, call_site: str = "") -> str | None:
+        """Gemini runs at `minimal` effort except the planner, which keeps `low` (plan quality, Phase 8b)."""
         s = self.settings
-        return (s.openai_reasoning_effort if provider == OPENAI else s.gemini_reasoning_effort) or None
+        if provider == OPENAI:
+            return s.openai_reasoning_effort or None
+        if call_site == "planner" and s.gemini_planner_reasoning_effort:
+            return s.gemini_planner_reasoning_effort
+        return s.gemini_reasoning_effort or None
+
+    def client_for(self, dec: "RouteDecision") -> ChatOpenAI:
+        """The client for one routed call: the provider's default client, or one with the call site's own
+        reasoning effort (the planner's, Phase 8b)."""
+        if dec.reasoning_effort == self.reasoning_effort(dec.provider):
+            return self.client(dec.provider)
+        return self._build(dec.provider, dec.reasoning_effort)
 
     def client(self, provider: str) -> ChatOpenAI:
-        if provider not in self._clients:
+        return self._build(provider, self.reasoning_effort(provider))
+
+    def _build(self, provider: str, effort: str | None) -> ChatOpenAI:
+        """One cached client per (provider, reasoning effort)."""
+        key = f"{provider}:{effort or ''}"
+        if key not in self._clients:
             s = self.settings
-            effort = self.reasoning_effort(provider)
             common = dict(stream_usage=True, timeout=s.llm_timeout_s, max_retries=0)  # retries are ours
             if provider == OPENAI:
                 kw = {"reasoning_effort": effort} if effort else {}
-                self._clients[provider] = ChatOpenAI(model=s.openai_model, api_key=s.openai_api_key, **common, **kw)
+                self._clients[key] = ChatOpenAI(model=s.openai_model, api_key=s.openai_api_key, **common, **kw)
             elif provider == GEMINI:
                 body: dict[str, Any] = {"usage": {"include": True}}
                 if effort:  # Gemini 3.8 cannot disable reasoning; low/minimal effort keeps it near zero
                     body["reasoning"] = {"effort": effort}
-                self._clients[provider] = OpenRouterChat(
+                self._clients[key] = OpenRouterChat(
                     model=s.gemini_model, base_url=s.openrouter_base_url, api_key=s.openrouter_api_key,
                     extra_body=body, **common,
                 )
             else:
                 raise ValueError(f"unknown provider {provider!r}")
-        return self._clients[provider]
+        return self._clients[key]
 
     def _decision(self, call_site: str, agent: str, choice: policy.Choice, features: dict) -> RouteDecision:
         model = self.model_id(choice.provider)
@@ -233,7 +249,7 @@ class Router:
             dimension=choice.dimension,
             rationale=choice.rationale,
             features=features,
-            reasoning_effort=self.reasoning_effort(choice.provider),
+            reasoning_effort=self.reasoning_effort(choice.provider, call_site),
             timeout_s=policy.TIMEOUTS.get(call_site, self.settings.llm_timeout_s),
             price_checked=(policy.PRICES.get(model) or {}).get("checked"),
         )
@@ -350,7 +366,7 @@ async def call_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], in
             if await maybe_fail(ctx, "provider", dec.provider, agent=dec.agent, call_site=dec.call_site) == "empty":
                 injected_empty = True
                 return AIMessage(content="", response_metadata={"finish_reason": "stop"})
-            return await build(ctx.router.client(dec.provider)).ainvoke(inputs)
+            return await build(ctx.router.client_for(dec)).ainvoke(inputs)
 
         try:
             limit = attempt_timeout(ctx, dec)
@@ -394,7 +410,7 @@ async def stream_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], 
                 if await maybe_fail(ctx, "provider", dec.provider, agent=dec.agent, call_site=dec.call_site) == "empty":
                     injected_empty = True
                     raise EmptyResponse(f"[injected test fault] empty stream from {dec.provider}")
-                async for chunk in build(ctx.router.client(dec.provider)).astream(inputs):
+                async for chunk in build(ctx.router.client_for(dec)).astream(inputs):
                     gathered = chunk if gathered is None else gathered + chunk
                     delta = text_of(chunk.content)
                     if delta:

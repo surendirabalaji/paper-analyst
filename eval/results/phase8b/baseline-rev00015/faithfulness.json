@@ -1,0 +1,55 @@
+{
+  "summary": {
+    "dir": "eval/results/phase8b/baseline-rev00015",
+    "evaluator": "gpt-6.1-sol",
+    "metric": "ragas.metrics.collections.Faithfulness (0.4.3)",
+    "n": 7,
+    "n_failed": 0,
+    "mean": 0.9588,
+    "median": 0.9677
+  },
+  "rows": [
+    {
+      "file": "agent_memory.run1.events.jsonl",
+      "n_contexts": 8,
+      "faithfulness": 0.967741935483871,
+      "error": null
+    },
+    {
+      "file": "agentbench_envs.run1.events.jsonl",
+      "n_contexts": 6,
+      "faithfulness": 0.896551724137931,
+      "error": null
+    },
+    {
+      "file": "cs_ma_2025.run1.events.jsonl",
+      "n_contexts": 7,
+      "faithfulness": 0.9473684210526315,
+      "error": null
+    },
+    {
+      "file": "noisy_passages.run1.events.jsonl",
+      "n_contexts": 9,
+      "faithfulness": 0.9,
+      "error": null
+    },
+    {
+      "file": "react_summary.run1.events.jsonl",
+      "n_contexts": 7,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "self_rag_retrieve.run1.events.jsonl",
+      "n_contexts": 5,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "selfrag_vs_crag.run1.events.jsonl",
+      "n_contexts": 8,
+      "faithfulness": 1.0,
+      "error": null
+    }
+  ]
+}

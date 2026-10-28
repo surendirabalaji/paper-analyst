@@ -230,15 +230,18 @@ async def run_summary(ctx: RequestContext, task: dict, upstream: str) -> dict:
     user = (f"Question: {ctx.query}\nSupervisor task: {task['instruction']}\n"
             f"Web status check available: {'yes' if live else 'no'}\n"
             f"Papers handed off: {handoff_line(task.get('upstream_papers'))}\nUpstream results: {upstream or 'none'}")
+    evidence_only = bool(task.get("evidence_only"))
     loop = await run_tool_loop(ctx, agent=AGENT, system=system, user=user, tools=tools,
-                               max_rounds=ctx.settings.max_tool_rounds)
-    used = [c for c in cited_ids(loop.text) if ctx.registry.get(c)]
-    unknown = [c for c in cited_ids(loop.text) if not ctx.registry.get(c)]
+                               max_rounds=ctx.settings.max_tool_rounds, seeds=task.get("seeds"),
+                               evidence_only=evidence_only)
+    # Evidence-only (one-task plans): the sections and abstracts it read go to synthesis as they are.
+    used = [c for c in (loop.evidence_ids if evidence_only else cited_ids(loop.text)) if ctx.registry.get(c)]
+    unknown = [] if evidence_only else [c for c in cited_ids(loop.text) if not ctx.registry.get(c)]
     paper_errors = [e for e in loop.tool_errors if e.endswith("paper_not_found")]
     if not used and loop.tool_errors:
         status, error_kind = ("partial" if paper_errors else "failed"), (
             "paper_not_found" if paper_errors else "tool_error")
-    elif loop.tool_errors or unknown or not loop.text.strip():
+    elif loop.tool_errors or unknown or (not used if evidence_only else not loop.text.strip()):
         web_only = loop.tool_errors and all(e.startswith("tavily_search") for e in loop.tool_errors)
         status = "partial"
         error_kind = ("live_search_unavailable" if web_only else "paper_not_found" if paper_errors
@@ -254,4 +257,7 @@ async def run_summary(ctx: RequestContext, task: dict, upstream: str) -> dict:
         "rounds": loop.rounds,
         "tool_calls": loop.tool_calls,
         "tool_errors": loop.tool_errors,
+        "evidence_only": evidence_only,
+        "seeded_calls": loop.seeded_calls,
+        "long_source_tokens": loop.long_source_tokens,
     }

@@ -1,0 +1,55 @@
+{
+  "summary": {
+    "dir": "eval/results/phase8b/local-pkgB-1",
+    "evaluator": "gpt-6.1-sol",
+    "metric": "ragas.metrics.collections.Faithfulness (0.4.3)",
+    "n": 7,
+    "n_failed": 0,
+    "mean": 0.989,
+    "median": 1.0
+  },
+  "rows": [
+    {
+      "file": "agent_memory.run1.events.jsonl",
+      "n_contexts": 7,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "agentbench_envs.run1.events.jsonl",
+      "n_contexts": 6,
+      "faithfulness": 0.9615384615384616,
+      "error": null
+    },
+    {
+      "file": "cs_ma_2025.run1.events.jsonl",
+      "n_contexts": 10,
+      "faithfulness": 0.9615384615384616,
+      "error": null
+    },
+    {
+      "file": "noisy_passages.run1.events.jsonl",
+      "n_contexts": 6,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "react_summary.run1.events.jsonl",
+      "n_contexts": 10,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "self_rag_retrieve.run1.events.jsonl",
+      "n_contexts": 5,
+      "faithfulness": 1.0,
+      "error": null
+    },
+    {
+      "file": "selfrag_vs_crag.run1.events.jsonl",
+      "n_contexts": 8,
+      "faithfulness": 1.0,
+      "error": null
+    }
+  ]
+}

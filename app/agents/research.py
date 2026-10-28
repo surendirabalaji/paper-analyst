@@ -73,16 +73,20 @@ async def run_research(ctx: RequestContext, task: dict, upstream: str) -> dict:
         tools=[corpus, web],
         max_rounds=ctx.settings.max_tool_rounds,
         gate=gate,
+        seeds=task.get("seeds"),
+        evidence_only=bool(task.get("evidence_only")),
     )
-    used = [c for c in cited_ids(loop.text) if ctx.registry.get(c)]
-    unknown = [c for c in cited_ids(loop.text) if not ctx.registry.get(c)]
+    evidence_only = bool(task.get("evidence_only"))
+    # Evidence-only (one-task plans): everything gathered goes to synthesis, which applies the off-topic filter.
+    used = [c for c in (loop.evidence_ids if evidence_only else cited_ids(loop.text)) if ctx.registry.get(c)]
+    unknown = [] if evidence_only else [c for c in cited_ids(loop.text) if not ctx.registry.get(c)]
     corpus_errors = [e for e in loop.tool_errors if not e.startswith("tavily_search")]
     web_errors = [e for e in loop.tool_errors if e.startswith("tavily_search")]
     if not used and corpus_errors:
         status, error_kind = "failed", "tool_error"
     elif not used and web_errors and best["score"] is None:
         status, error_kind = "failed", "live_search_unavailable"
-    elif loop.tool_errors or unknown or not loop.text.strip():
+    elif loop.tool_errors or unknown or (not used if evidence_only else not loop.text.strip()):
         status = "partial"
         error_kind = ("tool_error" if corpus_errors else "live_search_unavailable" if web_errors
                       else "citation_or_empty")
@@ -99,6 +103,8 @@ async def run_research(ctx: RequestContext, task: dict, upstream: str) -> dict:
         "tool_errors": loop.tool_errors,
         "best_corpus_score": best["score"],
         "web_enabled": gate.enabled,
+        "evidence_only": evidence_only,
+        "seeded_calls": loop.seeded_calls,
     }
 
 

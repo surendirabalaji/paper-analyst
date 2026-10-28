@@ -392,3 +392,11 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - Results: mock suite 28/28; no-spend live checks 10/10; one real query with both providers, rows matching their events and incremental streaming; the Routing table stays inside the panel with "Turn" and `#n` unbroken in light and dark at 1500 px and 1100 px.
   - New non-blocking **P8-N6:** at a 1100 px window the Agent column shrinks to 73 px and "synthesizer" wraps mid-word.
 - **Phase 8 marked done.** Live spend about $0.61 of $0.75 (me about $0.26, tester about $0.19 + $0.15 + $0.03), plus about 12 Tavily credits.
+
+## Phase 8b (latency, package B) — in progress, 2026-10-28
+- Student chose package B (options 1, 2, 3, 4, 6, 7, 10); option 8 (parallel dispatch) held back pending approval.
+- Baseline rev 00015 (warm, 1 run each, `eval/results/phase8b/baseline-rev00015/`): simple TTFT median 18.1 s, multi 28.1 s.
+- Built (branch `phase-8b-latency`, uncommitted): planner `papers`/`queries` hints → seeded first tool calls; speculative corpus search during planning (kept only for a single Research task); evidence-only single-task plans (no worker write-up; synthesis answers from gathered evidence, off-topic filter kept); synthesis capability rule for ≥3k tokens of raw sections; Gemini `minimal` effort except planner (`low`); trace UI rows for seeds/speculation/evidence-only. Switches: PLANNER_SEEDS, EVIDENCE_ONLY_SINGLE_TASK, SPECULATIVE_RETRIEVAL, GEMINI_PLANNER_REASONING_EFFORT. Tool-call bounds unchanged (3/round, 4/task).
+- Tests: 435 unit passed (13 new in `tests/unit/test_phase8b_latency.py`). Bug found and fixed: questions > 300 chars are not searched speculatively.
+- Local measurement (15 simple runs, `eval/results/phase8b/local-pkgB-{1,2}/`): simple TTFT median 7.6 s (4.8–16.4 s); outliers are the planner reasoning at `low` (10–12 s, 3/21 calls). Multi (Data → Summary) still 22–32 s. Both providers used in ordinary queries; cost per simple query ~$0.015–0.034 (was ~$0.04–0.05).
+- Not done yet: option 10 (runtime-only requirements / cold start), README/.env.example/architecture updates, planner-probe + RAGAS faithfulness before/after, deploy, cold-start measurement, tester phase run.

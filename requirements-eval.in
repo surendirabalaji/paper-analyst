@@ -1,0 +1,11 @@
+# Evaluation-only dependencies (RAGAS, Phase 9). Not installed in the Cloud Run image.
+# requirements-eval.txt pins EVERY package with == and is resolved against the runtime lockfile, so the
+# two install together without changing any runtime version. Regenerate with:
+#   uv pip compile requirements-eval.in -c requirements.txt --python-version 3.13 \
+#     --python-platform x86_64-unknown-linux-gnu -o requirements-eval.txt
+# Install both for evaluation: uv pip install -r requirements.txt -r requirements-eval.txt
+-r requirements.in
+ragas==0.4.3
+# ragas 0.4.3 imports langchain_community.chat_models.vertexai, which was removed in
+# langchain-community 0.4.2. Hold at 0.4.1 (verified 2026-10-26).
+langchain-community==0.4.1

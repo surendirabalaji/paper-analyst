@@ -37,6 +37,7 @@ class Settings:
     llm_timeout_s: float
     # Routing (Phase 4). Defaults keep the dataclass constructible in tests.
     gemini_reasoning_effort: str = "low"  # OpenRouter reasoning effort; Gemini 3.8 cannot disable reasoning
+    gemini_planner_reasoning_effort: str = ""  # planner only; empty = same as gemini_reasoning_effort
     openai_reasoning_effort: str = ""  # empty = model default (the capability side keeps its reasoning)
     router_force_provider: str = ""  # evaluation-only override: "openai" or "gemini-openrouter"
     fallback_enabled: bool = True
@@ -52,6 +53,10 @@ class Settings:
     synth_reserve_s: float = 30.0
     fault_inject: str = ""  # process-wide fault spec, local runs only (app/faults.py)
     fault_inject_token: str = ""  # enables the per-request X-Fault-Inject header when it matches X-Fault-Token
+    # Latency (Phase 8b, package B). Off in the dataclass so tests opt in; on by default in load_settings.
+    planner_seeds: bool = False  # run the planner-named papers / queries as the worker's first tool calls
+    evidence_only_single_task: bool = False  # one-task plans: the worker gathers evidence, synthesis writes
+    speculative_retrieval: bool = False  # corpus search of the question runs while the planner plans
 
 
 def load_settings() -> Settings:
@@ -72,7 +77,8 @@ def load_settings() -> Settings:
         worker_timeout_s=float(env("WORKER_TIMEOUT_S", "45")),
         request_budget_s=float(env("REQUEST_BUDGET_S", "120")),
         llm_timeout_s=float(env("LLM_TIMEOUT_S", "60")),
-        gemini_reasoning_effort=env("GEMINI_REASONING_EFFORT", "low"),
+        gemini_reasoning_effort=env("GEMINI_REASONING_EFFORT", "minimal"),
+        gemini_planner_reasoning_effort=env("GEMINI_PLANNER_REASONING_EFFORT", "low"),
         openai_reasoning_effort=env("OPENAI_REASONING_EFFORT", ""),
         router_force_provider=env("ROUTER_FORCE_PROVIDER", ""),
         fallback_enabled=env("LLM_FALLBACK", "1") != "0",
@@ -85,4 +91,7 @@ def load_settings() -> Settings:
         synth_reserve_s=float(env("SYNTH_RESERVE_S", "30")),
         fault_inject=env("FAULT_INJECT", ""),
         fault_inject_token=env("FAULT_INJECT_TOKEN", ""),
+        planner_seeds=env("PLANNER_SEEDS", "1") != "0",
+        evidence_only_single_task=env("EVIDENCE_ONLY_SINGLE_TASK", "1") != "0",
+        speculative_retrieval=env("SPECULATIVE_RETRIEVAL", "1") != "0",
     )

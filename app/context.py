@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import asyncio
 import time
 from dataclasses import dataclass, field
+from typing import Any
 
 from app.config import Settings
 from app.events import Emitter
@@ -11,6 +13,9 @@ from app.faults import Faults
 from app.llm.router import RouteDecision, Router
 from app.mcp_tavily import TavilyMCP
 from app.rag import EvidenceRegistry, Retriever
+
+
+SPEC_DISCARD_WAIT_S = 1.0
 
 
 @dataclass
@@ -34,6 +39,49 @@ class RequestContext:
     cost_basis: dict = field(default_factory=dict)  # "reported" / "estimated" -> number of priced calls
     faults: Faults = field(default_factory=Faults)  # fault injection rules for this request (normally none)
     stage_deadline: float | None = None  # perf_counter deadline of the running worker, if any
+    # Speculative retrieval (Phase 8b): {"query", "k", "task", "status"}; the task returns (chunks, ms).
+    speculative: dict[str, Any] | None = None
+
+    def start_speculative(self, query: str, k: int) -> None:
+        """Start the corpus search of the question while the planner plans (no citation ids yet)."""
+
+        async def run():
+            t0 = time.perf_counter()
+            chunks = await self.retriever.search(query, k)
+            return chunks, int((time.perf_counter() - t0) * 1000)
+
+        task = asyncio.create_task(run())
+        task.add_done_callback(lambda t: t.cancelled() or t.exception())  # never an unretrieved exception
+        self.speculative = {"query": query, "k": k, "task": task, "status": "running"}
+
+    async def end_speculative(self, used: bool, reason: str) -> None:
+        """Keep the speculative result for a corpus_search seed, or discard it; traced either way. A discarded
+        search is not cancelled mid-request (that would break its pooled HTTP connection): it started with the
+        planner, so it has normally finished already; it is cancelled only if it is still running after 1 s."""
+        spec = self.speculative
+        if not spec or spec["status"] != "running":
+            return
+        spec["status"] = "kept" if used else "discarded"
+        if not used:
+            try:
+                await asyncio.wait_for(asyncio.shield(spec["task"]), SPEC_DISCARD_WAIT_S)
+            except asyncio.TimeoutError:
+                spec["task"].cancel()
+            except Exception:  # a failed discarded search does not matter
+                pass
+        self.emitter.emit("speculative_retrieval", status=spec["status"], query=spec["query"], k=spec["k"],
+                          reason=reason)
+
+    async def take_speculative(self, query: str, k: int):
+        """(chunks, ms) if a kept speculative search matches this corpus_search call, else None (used once)."""
+        spec = self.speculative
+        if not spec or spec["status"] != "kept" or spec["query"] != query or spec["k"] != k:
+            return None
+        spec["status"] = "used"
+        try:
+            return await spec["task"]
+        except Exception:  # the search failed: the caller searches normally and reports any error itself
+            return None
 
     def route(self, call_site: str, agent: str, features: dict | None = None) -> RouteDecision:
         """Routing decision for one LLM call; providers that already failed in this request are avoided."""

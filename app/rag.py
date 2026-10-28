@@ -333,11 +333,16 @@ def make_corpus_search_chain(retriever: Retriever, ctx, agent: str):
     evidence -> formatted <evidence> block. Emits a `retrieval` trace event."""
 
     async def retrieve(inp: dict) -> dict:
-        t0 = time.perf_counter()
-        chunks = await retriever.search(inp["query"], inp.get("k") or ctx.k)
-        ms = int((time.perf_counter() - t0) * 1000)
+        k = inp.get("k") or ctx.k
+        spec = await ctx.take_speculative(inp["query"], k) if hasattr(ctx, "take_speculative") else None
+        if spec is not None:  # this search already ran while the planner planned (Phase 8b)
+            chunks, ms = spec
+        else:
+            t0 = time.perf_counter()
+            chunks = await retriever.search(inp["query"], k)
+            ms = int((time.perf_counter() - t0) * 1000)
         ctx.retrieval_ms_sum += ms
-        return {**inp, "chunks": chunks, "retrieval_ms": ms}
+        return {**inp, "chunks": chunks, "retrieval_ms": ms, "speculative": spec is not None}
 
     def register(inp: dict) -> dict:
         refs = [ctx.registry.register_chunk(c) for c in inp["chunks"]]
@@ -348,6 +353,7 @@ def make_corpus_search_chain(retriever: Retriever, ctx, agent: str):
             k=len(inp["chunks"]),
             retrieval_ms=inp["retrieval_ms"],
             chunks=[r.public() for r in refs],
+            **({"speculative": True} if inp.get("speculative") else {}),
         )
         return {"refs": refs, "evidence": format_evidence(refs)}
 

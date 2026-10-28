@@ -35,11 +35,19 @@ uv pip install -r requirements.txt
 cp .env.example .env   # then fill in the keys
 ```
 
-Dependencies: `requirements.in` lists the top-level packages; `requirements.txt` pins every package with `==` and is generated with:
+Dependencies: `requirements.in` lists the top-level runtime packages; `requirements.txt` pins every package with `==` and is what the Cloud Run image installs. Evaluation-only packages (RAGAS and its dependencies) are in `requirements-eval.in` / `requirements-eval.txt`, also pinned with `==` and resolved against the runtime lockfile, so the image stays smaller (Phase 8b). Install both to run tests or the evaluation:
+
+```bash
+uv pip install -r requirements.txt -r requirements-eval.txt
+```
+
+Regenerate the lockfiles with:
 
 ```bash
 uv pip compile requirements.in --python-version 3.13 \
   --python-platform x86_64-unknown-linux-gnu -o requirements.txt
+uv pip compile requirements-eval.in -c requirements.txt --python-version 3.13 \
+  --python-platform x86_64-unknown-linux-gnu -o requirements-eval.txt
 ```
 
 ## Corpus ingestion
