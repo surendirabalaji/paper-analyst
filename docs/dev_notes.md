@@ -358,3 +358,20 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - dark-mode contrast, no console errors.
 - **Deployed (student approved), 2026-10-28:** rev `paper-analyst-00012-452` (image `…:20261028-013101-29c6c50`), then the CSS fix as rev `paper-analyst-00013-v4k` (image `…:20261028-013849-c25d730-dirty`; "dirty" only because `eval/results/phase8/` was untracked). Smoke tests passed both times. The second smoke test saw a Gemini `empty_response` that was retried and then succeeded (P5-N1 behaviour, handled).
 - **Spend so far:** about $0.23 of the $0.75 phase budget (local browser run $0.07, two smoke tests about $0.02, two deployed browser runs about $0.14), plus about 8 Tavily credits.
+- **Tester Phase 8 gate: PHASE PASS** (`docs/testing/phase-8-20261028T0150Z.md`), on rev 00013. Tester spend about $0.19 plus 2 Tavily searches, so the phase total is about $0.42 of $0.75. What it checked:
+  - streaming in the browser (client and server token timings match);
+  - routing rows and chips against the routing events;
+  - all 16 citation links opening the right viewer;
+  - two tabs at once kept separate;
+  - a real mid-stream disconnect through a proxy;
+  - a local injected Data fault;
+  - a mock-backend suite of hostile Markdown/HTML, which executed nothing.
+  - **P8-D1 (Minor):** pressing Enter during a running turn starts a second paid request (`requestSubmit` bypasses the disabled button).
+  - **P8-D2 (Minor):** a long unbroken token in a question pushes the Routing-tab columns past the panel edge (`tr.turn-head td` has no `overflow-wrap`).
+  - Notes:
+    - N1: light-mode contrast is 4.49:1 on the 11 px green badges.
+    - N2: LaTeX shows raw.
+    - N3: the model the API returned is not shown.
+    - N4: in a hidden tab, `requestAnimationFrame` pauses painting.
+    - N5: a chunk id containing `/` would 404; no current id has one.
+  - Retest without spend: `tests/e2e/phase8_tester_mock_ui.py`.

@@ -1,0 +1,18 @@
+INFO:     Started server process [77500]
+INFO:     Waiting for application startup.
+WARNING:     paper_analyst: FAULT_INJECT is set: every request gets injected test faults (worker:data:exception)
+INFO:     paper_analyst: fault injection: per-request enabled for requests with the token
+INFO:     paper_analyst: index ready: 4521 chunks, 1536-d, live search enabled, startup 0.60s
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8796 (Press CTRL+C to quit)
+INFO:     127.0.0.1:62177 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62202 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62202 - "GET /static/styles.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62204 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62203 - "GET /static/md.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62203 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62203 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [77500]
