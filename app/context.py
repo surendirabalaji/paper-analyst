@@ -39,6 +39,9 @@ class RequestContext:
     cost_basis: dict = field(default_factory=dict)  # "reported" / "estimated" -> number of priced calls
     faults: Faults = field(default_factory=Faults)  # fault injection rules for this request (normally none)
     stage_deadline: float | None = None  # perf_counter deadline of the running worker, if any
+    # Provider errors no injected fault caused (P8b-D2): "provider: kind". A task that failed while a fault
+    # was injected is labelled injected only if none of these happened during it.
+    real_provider_errors: list[str] = field(default_factory=list)
     # Speculative retrieval (Phase 8b): {"query", "k", "task", "status"}; the task returns (chunks, ms).
     speculative: dict[str, Any] | None = None
 

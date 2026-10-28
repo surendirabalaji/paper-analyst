@@ -417,6 +417,7 @@ def make_worker_node(name: str, fn: WorkerFn):
         # caps each LLM attempt by ctx.time_left(), so the stage deadline is enforced inside the worker too.
         timeout = max(1.0, min(ctx.settings.worker_timeout_s, ctx.worker_window_s()))
         hits0 = len(ctx.faults.hits)
+        real0 = len(ctx.real_provider_errors)
 
         async def run() -> dict:
             if await maybe_fail(ctx, "worker", name, task_id=task["id"], attempt=task["attempts"]) == "empty":
@@ -439,14 +440,20 @@ def make_worker_node(name: str, fn: WorkerFn):
         finally:
             ctx.stage_deadline = None
         faults = [h["target"] for h in ctx.faults.hits[hits0:]]
+        real = ctx.real_provider_errors[real0:]
         if faults:
             res["faults"] = faults
-            res["injected"] = res["status"] != "done"  # this outcome was caused (or shaped) by injected faults
+            # Caused (or shaped) by injected faults only if no real provider error happened in this worker too
+            # (P8b-D2): a real outage during a fault test is reported as real, with the fault noted.
+            res["injected"] = res["status"] != "done" and not real
+            if res["status"] != "done" and real:
+                res["real_errors"] = real
         res["agent"] = name
         res["task_id"] = task["id"]
         task["status"] = res["status"]
         task["error_kind"] = res.get("error_kind")
         task["injected"] = bool(res.get("injected"))
+        task["fault_also"] = bool(res.get("real_errors"))  # real failure while a test fault was also active
         task.pop("retry_note", None)
         ctx.emitter.emit(
             "worker_result",
@@ -460,6 +467,7 @@ def make_worker_node(name: str, fn: WorkerFn):
             tool_calls=res.get("tool_calls"),
             **({"evidence_only": True} if task["evidence_only"] else {}),
             **({"injected": True, "faults": faults} if res.get("injected") else {}),
+            **({"real_errors": res["real_errors"], "faults": faults} if res.get("real_errors") else {}),
         )
         ctx.emitter.emit("transition", **{"from": name, "to": "supervisor", "task_id": task["id"],
                                           "reason": f"{task['id']} {res['status']}", "step": state.get("step_count", 0)})
@@ -491,7 +499,11 @@ def describe(task: dict) -> str:
         line = f"{who} {why or 'failed'}"
     else:
         line = f"{who} {status}"
-    return line + (" [injected test fault, not a real outage]" if task.get("injected") else "")
+    if task.get("injected"):
+        return line + " [injected test fault, not a real outage]"
+    if task.get("fault_also"):
+        return line + " [a real provider error, not caused by the injected test fault that was also active]"
+    return line
 
 
 def evidence_gaps(tasks: list[dict]) -> list[dict]:
@@ -518,10 +530,12 @@ def failure_answer(state: AnalystState) -> str:
              "grounded to report. What was tried:"]
     lines += [f"- {describe(t)}" for t in tasks]
     root = [t for t in tasks if t["status"] == "failed"] or tasks  # skipped tasks follow from these
+    real = [t for t in root if not t.get("injected")]
     if any(t.get("injected") for t in root):
         lines.append("These failures were injected on purpose to test failure handling (fault injection); "
-                     "they do not indicate a real outage.")
-    real = [t for t in root if not t.get("injected")]
+                     "they do not indicate a real outage." if not real else
+                     "The failures marked as injected test faults were caused on purpose (fault injection); "
+                     "the others are real and are described below.")
     if real and all(t.get("error_kind") in RETRYABLE for t in real):
         lines.append("This looks temporary (a provider, network or time-limit problem). Please try again in a moment.")
     elif real:

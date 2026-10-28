@@ -183,6 +183,21 @@ def is_provider_error(e: BaseException) -> bool:
     return isinstance(e, (asyncio.TimeoutError, TimeoutError, openai.APIError, InjectedFault, BudgetExhausted))
 
 
+def _hits(ctx) -> int:
+    faults = getattr(ctx, "faults", None)
+    return len(faults.hits) if faults is not None else 0
+
+
+def note_real_error(ctx, dec: RouteDecision, kind: str, injected: bool, hits_before: int) -> None:
+    """Record a provider error that no injected fault caused (P8b-D2): not marked injected, no fault fired
+    during this attempt (a `hang` fault ends in a real timeout), and not the request deadline itself."""
+    if injected or kind == "budget_exhausted" or _hits(ctx) > hits_before:
+        return
+    errs = getattr(ctx, "real_provider_errors", None)
+    if errs is not None:
+        errs.append(f"{dec.provider}: {kind}")
+
+
 def attempt_timeout(ctx, dec: RouteDecision) -> float:
     """The call site's timeout, capped by the time left in this request/stage (P2-N7, P4-N1)."""
     left = ctx.time_left()
@@ -360,6 +375,7 @@ async def call_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], in
     async def attempt(dec: RouteDecision, n: int) -> Any:
         t0 = time.perf_counter()
         injected_empty = False
+        h0 = _hits(ctx)
 
         async def run() -> Any:
             nonlocal injected_empty
@@ -378,6 +394,7 @@ async def call_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], in
             kind = classify_error(e)
             record_llm_result(ctx, dec, None, t0, status="error", attempt=n, error_kind=kind, error=safe_error(e),
                               injected=is_injected(e))
+            note_real_error(ctx, dec, kind, is_injected(e), h0)
             if is_provider_error(e):
                 raise ProviderCallError(kind, e) from e
             raise
@@ -389,6 +406,7 @@ async def call_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], in
             e.injected = injected_empty
             record_llm_result(ctx, dec, raw, t0, status="error", attempt=n, error_kind="empty_response",
                               error=safe_error(e), injected=injected_empty)
+            note_real_error(ctx, dec, "empty_response", injected_empty, h0)
             raise ProviderCallError("empty_response", e)
         record_llm_result(ctx, dec, raw if isinstance(raw, AIMessage) else None, t0, attempt=n)
         return out
@@ -405,6 +423,7 @@ async def stream_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], 
         t0 = time.perf_counter()
         first_ms, gathered, parts, chunks, max_gap, last = None, None, [], 0, 0, None
         injected_empty = False
+        h0 = _hits(ctx)
         try:
             async with asyncio.timeout(attempt_timeout(ctx, dec)):
                 if await maybe_fail(ctx, "provider", dec.provider, agent=dec.agent, call_site=dec.call_site) == "empty":
@@ -430,12 +449,14 @@ async def stream_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], 
             e.injected = injected_empty
             record_llm_result(ctx, dec, gathered, t0, status="error", attempt=n, error_kind="empty_response",
                               error=safe_error(e), stream_stats={"stream_chunks": 0}, injected=injected_empty)
+            note_real_error(ctx, dec, "empty_response", injected_empty, h0)
             raise ProviderCallError("empty_response", e) from e
         except Exception as e:
             kind = classify_error(e)
             record_llm_result(ctx, dec, gathered, t0, status="error", attempt=n, ttft_ms=first_ms,
                               error_kind=kind, error=safe_error(e), stream_stats={"stream_chunks": chunks},
                               injected=is_injected(e))
+            note_real_error(ctx, dec, kind, is_injected(e), h0)
             if is_provider_error(e) and not parts:
                 raise ProviderCallError(kind, e) from e
             raise
@@ -445,6 +466,7 @@ async def stream_llm(ctx, decision: RouteDecision, build: Callable[[Any], Any], 
             e = EmptyResponse(f"empty stream from {dec.provider}")
             record_llm_result(ctx, dec, gathered, t0, status="error", attempt=n, error_kind="empty_response",
                               error=safe_error(e), stream_stats={"stream_chunks": chunks})
+            note_real_error(ctx, dec, "empty_response", False, h0)
             raise ProviderCallError("empty_response", e)
         record_llm_result(ctx, dec, gathered, t0, attempt=n, ttft_ms=first_ms,
                           stream_stats={"stream_chunks": chunks, "max_chunk_gap_ms": max_gap})

@@ -1,0 +1,802 @@
+{
+  "runs": [
+    {
+      "key": "h_code_actions",
+      "category": "simple",
+      "query": "Why would executable Python be a better action format than JSON tool calls for an agent?",
+      "raw": "h_code_actions.run1.events.jsonl",
+      "status": "failed",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 23.393,
+      "total_s": 23.394,
+      "server_timings": {
+        "retrieval_ms": 0,
+        "llm_ms_sum": 21718,
+        "ttft_ms": 23305,
+        "total_ms": 23306
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": false,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [],
+      "unmatched_routes": [],
+      "n_token_events": 1,
+      "token_spread_s": 0,
+      "tokens_before_done": true,
+      "answer_chars": 393,
+      "marked": [],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 0,
+      "cost_usd": 0.019952,
+      "errors": [],
+      "answer_head": "I could not answer this question: no planned step produced usable evidence, so there is nothing grounded to report. What was tried:\n- Research (t1) had a tool failure, so its results are incomplete\nThis is a problem on the service side (Research had a tool failure, so its results are incomplete), not with your question, so neither retrying nor rephrasing is likely to help until it is fixed.",
+      "case": {},
+      "answer": "I could not answer this question: no planned step produced usable evidence, so there is nothing grounded to report. What was tried:\n- Research (t1) had a tool failure, so its results are incomplete\nThis is a problem on the service side (Research had a tool failure, so its results are incomplete), not with your question, so neither retrying nor rephrasing is likely to help until it is fixed."
+    },
+    {
+      "key": "h_lost_middle",
+      "category": "simple",
+      "query": "Why does accuracy drop when the relevant passage sits in the middle of a long context?",
+      "raw": "h_lost_middle.run1.events.jsonl",
+      "status": "failed",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 11.263,
+      "total_s": 11.263,
+      "server_timings": {
+        "retrieval_ms": 0,
+        "llm_ms_sum": 7892,
+        "ttft_ms": 11183,
+        "total_ms": 11183
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": false,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [],
+      "unmatched_routes": [],
+      "n_token_events": 1,
+      "token_spread_s": 0,
+      "tokens_before_done": true,
+      "answer_chars": 393,
+      "marked": [],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 0,
+      "cost_usd": 0.006926,
+      "errors": [],
+      "answer_head": "I could not answer this question: no planned step produced usable evidence, so there is nothing grounded to report. What was tried:\n- Research (t1) had a tool failure, so its results are incomplete\nThis is a problem on the service side (Research had a tool failure, so its results are incomplete), not with your question, so neither retrying nor rephrasing is likely to help until it is fixed.",
+      "case": {},
+      "answer": "I could not answer this question: no planned step produced usable evidence, so there is nothing grounded to report. What was tried:\n- Research (t1) had a tool failure, so its results are incomplete\nThis is a problem on the service side (Research had a tool failure, so its results are incomplete), not with your question, so neither retrying nor rephrasing is likely to help until it is fixed."
+    },
+    {
+      "key": "h_memory_recall",
+      "category": "simple",
+      "query": "How do LLM agents decide which past experiences to recall once their memory gets large?",
+      "raw": "h_memory_recall.run1.events.jsonl",
+      "status": "failed",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 16.019,
+      "total_s": 16.019,
+      "server_timings": {
+        "retrieval_ms": 0,
+        "llm_ms_sum": 12308,
+        "ttft_ms": 15938,
+        "total_ms": 15938
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": false,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [],
+      "unmatched_routes": [],
+      "n_token_events": 1,
+      "token_spread_s": 0,
+      "tokens_before_done": true,
+      "answer_chars": 393,
+      "marked": [],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 0,
+      "cost_usd": 0.010313,
+      "errors": [],
+      "answer_head": "I could not answer this question: no planned step produced usable evidence, so there is nothing grounded to report. What was tried:\n- Research (t1) had a tool failure, so its results are incomplete\nThis is a problem on the service side (Research had a tool failure, so its results are incomplete), not with your question, so neither retrying nor rephrasing is likely to help until it is fixed.",
+      "case": {},
+      "answer": "I could not answer this question: no planned step produced usable evidence, so there is nothing grounded to report. What was tried:\n- Research (t1) had a tool failure, so its results are incomplete\nThis is a problem on the service side (Research had a tool failure, so its results are incomplete), not with your question, so neither retrying nor rephrasing is likely to help until it is fixed."
+    },
+    {
+      "key": "h_reflexion_memory",
+      "category": "simple",
+      "query": "Where does a Reflexion agent keep its self-reflections between trials, and how are they used?",
+      "raw": "h_reflexion_memory.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 5.075,
+      "total_s": 7.068,
+      "server_timings": {
+        "retrieval_ms": 11,
+        "llm_ms_sum": 6975,
+        "ttft_ms": 4958,
+        "total_ms": 7012
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 10,
+      "token_spread_s": 1.936,
+      "tokens_before_done": true,
+      "answer_chars": 952,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 5,
+      "cost_usd": 0.012037,
+      "errors": [],
+      "answer_head": "A Reflexion agent stores and uses its self-reflections as follows:\n\n* **Where they are kept:** Self-reflections ($sr_t$) are stored in an episodic memory buffer ($mem$), which acts as the agent's long-term memory [C1, C4]. After each trial $t$, the newly generated self-reflection is appended to this memory [C2, C5]. To stay within large language model (LLM) context limits, this memory buffer is pr",
+      "case": {},
+      "answer": "A Reflexion agent stores and uses its self-reflections as follows:\n\n* **Where they are kept:** Self-reflections ($sr_t$) are stored in an episodic memory buffer ($mem$), which acts as the agent's long-term memory [C1, C4]. After each trial $t$, the newly generated self-reflection is appended to this memory [C2, C5]. To stay within large language model (LLM) context limits, this memory buffer is practically bounded by a maximum capacity ($\\Omega$), typically set to 1\u20133 stored experiences [C5].\n* **How they are used:** The Actor model treats the stored self-reflections as in-context memory, conditioning its future decisions on both short-term memory (the current trajectory history) and long-term memory (the past self-reflections) [C2, C3, C4]. This linguistic feedback allows the agent to learn from past errors and adapt its decision-making in subsequent trials\u2014such as choosing alternative actions\u2014without updating model weights [C1, C3, C4]."
+    },
+    {
+      "key": "h_toolformer_filter",
+      "category": "simple",
+      "query": "What criterion does Toolformer use to decide whether an inserted API call is worth keeping?",
+      "raw": "h_toolformer_filter.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 5.028,
+      "total_s": 7.021,
+      "server_timings": {
+        "retrieval_ms": 11,
+        "llm_ms_sum": 6927,
+        "ttft_ms": 4970,
+        "total_ms": 6963
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 15,
+      "token_spread_s": 1.952,
+      "tokens_before_done": true,
+      "answer_chars": 1209,
+      "marked": [
+        "C2",
+        "C4",
+        "C5"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 3,
+      "cost_usd": 0.01254,
+      "errors": [],
+      "answer_head": "Toolformer decides whether an inserted API call is worth keeping based on whether providing both the API call and its result reduces the model's loss when predicting future tokens [C2, C4].\n\nSpecifically, for a sequence of tokens $x_{1}, \\ldots, x_{n}$ and an API call $c_{i}$ inserted at position $i$ with response $r_{i}$, Toolformer evaluates the weighted cross-entropy loss over the subsequent to",
+      "case": {},
+      "answer": "Toolformer decides whether an inserted API call is worth keeping based on whether providing both the API call and its result reduces the model's loss when predicting future tokens [C2, C4].\n\nSpecifically, for a sequence of tokens $x_{1}, \\ldots, x_{n}$ and an API call $c_{i}$ inserted at position $i$ with response $r_{i}$, Toolformer evaluates the weighted cross-entropy loss over the subsequent tokens $x_{i}, \\ldots, x_{n}$ under different conditions [C4]:\n\n* $L_{i}^{+} = L_{i}(\\text{e}(c_{i}, r_{i}))$: The loss when prefixing the subsequent tokens with the API call and its result [C4].\n* $L_{i}^{-} = \\min\\left(L_{i}(\\varepsilon), L_{i}(\\text{e}(c_{i}, \\varepsilon))\\right)$: The baseline loss, defined as the minimum of the losses obtained from (1) doing no API call at all ($\\varepsilon$), and (2) making the API call but providing no response ($\\text{e}(c_{i}, \\varepsilon)$) [C4].\n\nGiven a filtering threshold $\\tau_{f}$, Toolformer keeps the API call if and only if:\n\n$$L_{i}^{-} - L_{i}^{+} \\geq \\tau_{f}$$\n\nThat is, the call is retained only if including the API call and its resulting response reduces the loss by at least $\\tau_{f}$ compared to having no call or receiving no result [C4, C5]."
+    },
+    {
+      "key": "h_voyager_skills",
+      "category": "simple",
+      "query": "Explain how Voyager's skill library grows over time.",
+      "raw": "h_voyager_skills.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 7.186,
+      "total_s": 10.501,
+      "server_timings": {
+        "retrieval_ms": 27,
+        "llm_ms_sum": 10384,
+        "ttft_ms": 7131,
+        "total_ms": 10445
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 18,
+      "token_spread_s": 3.287,
+      "tokens_before_done": true,
+      "answer_chars": 1894,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C5",
+        "C6",
+        "C7"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 6,
+      "cost_usd": 0.015875,
+      "errors": [],
+      "answer_head": "Voyager\u2019s skill library grows over time through an automated loop of program synthesis, iterative refinement, self-verification, and vector-based storage:\n\n* **Task-Driven Code Synthesis:** An automatic curriculum proposes increasingly complex tasks [C1, C2]. To solve a task, GPT-4 generates executable programs representing temporally extended, reusable skills [C1, C2]. The prompt provided to GPT-",
+      "case": {},
+      "answer": "Voyager\u2019s skill library grows over time through an automated loop of program synthesis, iterative refinement, self-verification, and vector-based storage:\n\n* **Task-Driven Code Synthesis:** An automatic curriculum proposes increasingly complex tasks [C1, C2]. To solve a task, GPT-4 generates executable programs representing temporally extended, reusable skills [C1, C2]. The prompt provided to GPT-4 includes code guidelines, primitive control APIs, the agent's current state, chain-of-thought reasoning steps, and relevant skills already retrieved from the library [C2, C5, C7].\n* **Iterative Refinement:** Programs undergo an iterative prompting mechanism that refines code using three types of feedback: environment feedback (such as chat logs showing missing materials or intermediate progress), code interpreter execution errors, and critiques from a separate GPT-4 self-verification agent [C2, C3, C6].\n* **Self-Verification and Addition:** The GPT-4 critic assesses Voyager\u2019s state against the task requirements to confirm success [C3]. Once self-verification validates completion, the program is added to the skill library [C2, C3]. (If an agent remains stuck after 4 attempts, the curriculum moves on to another task) [C3].\n* **Indexing in a Vector Database:** Each newly acquired skill is stored in a vector database [C2]. GPT-3.5 generates a text description of the program; the embedding vector of this description serves as the key, and the executable program itself serves as the value [C2].\n* **Compositional Growth:** When facing novel tasks, Voyager uses GPT-3.5 suggestions and environment context to retrieve the top-5 most relevant existing skills from the vector database [C2]. These retrieved skills are supplied in-context to GPT-4 to compose more complex, higher-level behaviors, compounding the agent's capabilities over time without catastrophic forgetting [C1, C2]."
+    },
+    {
+      "key": "m_mem2026_handoff",
+      "category": "multi",
+      "query": "Which corpus papers from 2026 have 'memory' in their title? Briefly summarize the newest one.",
+      "raw": "m_mem2026_handoff.run1.events.jsonl",
+      "status": "done",
+      "workers": [
+        "data",
+        "summary"
+      ],
+      "ttft_s": 21.601,
+      "total_s": 25.022,
+      "server_timings": {
+        "retrieval_ms": 554,
+        "llm_ms_sum": 23788,
+        "ttft_ms": 21507,
+        "total_ms": 24965
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [],
+      "seeded_calls": [],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        false,
+        false
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "data",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "data",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "data",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "openai",
+          "capability",
+          null
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "openai"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 21,
+      "token_spread_s": 3.359,
+      "tokens_before_done": true,
+      "answer_chars": 1951,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 7,
+      "cost_usd": 0.035931,
+      "errors": [],
+      "answer_head": "The corpus contains 4 papers published in 2026 with \"memory\" in their title, listed in descending order by publication date:\n\n- **arXiv:2607.26637**: *\"Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability\"* (published: 2026-07-29) [D1]\n- **arXiv:2606.24535**: *\"Governed Shared Memory for Multi-Agent LLM Systems\"* (published: 2026-06-23) [D2]\n- **arXiv:2606.06036**: *",
+      "case": {
+        "sql_truth": [
+          [
+            "2607.26637",
+            "Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability"
+          ],
+          [
+            "2606.24535",
+            "Governed Shared Memory for Multi-Agent LLM Systems"
+          ],
+          [
+            "2606.06036",
+            "Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents"
+          ],
+          [
+            "2601.02553",
+            "SimpleMem: Efficient Lifelong Memory for LLM Agents"
+          ]
+        ],
+        "handoff": [
+          {
+            "request_id": "d56e95a0644f",
+            "seq": 22,
+            "ts": "2026-10-28T05:05:44.790Z",
+            "t_ms": 10978,
+            "to_task": "t2",
+            "to_agent": "summary",
+            "from_tasks": [
+              "t1"
+            ],
+            "papers": [
+              {
+                "arxiv_id": "2607.26637",
+                "title": "Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability",
+                "cite_id": "D1",
+                "from_task": "t1"
+              },
+              {
+                "arxiv_id": "2606.24535",
+                "title": "Governed Shared Memory for Multi-Agent LLM Systems",
+                "cite_id": "D2",
+                "from_task": "t1"
+              },
+              {
+                "arxiv_id": "2606.06036",
+                "title": "Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents",
+                "cite_id": "D3",
+                "from_task": "t1"
+              },
+              {
+                "arxiv_id": "2601.02553",
+                "title": "SimpleMem: Efficient Lifelong Memory for LLM Agents",
+                "cite_id": "D4",
+                "from_task": "t1"
+              }
+            ],
+            "evidence_ids": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ]
+          }
+        ],
+        "handed_ids": [
+          "2601.02553",
+          "2606.06036",
+          "2606.24535",
+          "2607.26637"
+        ],
+        "summary_reads": [
+          {
+            "paper": "2607.26637"
+          },
+          {
+            "section": "S5",
+            "paper": "2607.26637"
+          },
+          {
+            "section": "S2",
+            "paper": "2607.26637"
+          }
+        ],
+        "summary_read_newest": true,
+        "answer_mentions_all_truth": true,
+        "has_D_and_C": true
+      },
+      "answer": "The corpus contains 4 papers published in 2026 with \"memory\" in their title, listed in descending order by publication date:\n\n- **arXiv:2607.26637**: *\"Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability\"* (published: 2026-07-29) [D1]\n- **arXiv:2606.24535**: *\"Governed Shared Memory for Multi-Agent LLM Systems\"* (published: 2026-06-23) [D2]\n- **arXiv:2606.06036**: *\"Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents\"* (published: 2026-06-04) [D3]\n- **arXiv:2601.02553**: *\"SimpleMem: Efficient Lifelong Memory for LLM Agents\"* (published: 2026-01-05) [D4]\n\n---\n\n### Summary of the Newest Paper: arXiv:2607.26637\n\n- **Contribution**: Provides the first systematic study of filesystem-based agent memory (a directory tree of markdown files manipulated via generic file tools), testing whether LLM agents can maintain organized memory over time and whether that organization pays off [D1, C1].\n- **Method & Framework**: The study unifies declarative memory and skills into a single filesystem store structured around three agent roles acting through an interchangeable tool harness: a *management agent* that organizes and integrates incoming content, a *search agent* that traverses the store to return attributed answers or skills, and an optional *execution agent* that executes tasks and supplies trajectories [C1, C3].\n- **Results**: Organizing memory reliably yields search economy by roughly halving retrieval costs when the material is large and keeping per-use costs steady, compared to verbatim episode logs where retrieval costs grow with accumulated history [C1, C2].\n- **Limitations**: No tested agent turned organization itself into higher answer quality [C1, C2]. Furthermore, taxonomy adherence and organization eroded over time for all but the strongest management agents, and swapping the tool harness reshaped the store just as significantly as changing the backbone model [C1, C2]."
+    }
+  ],
+  "results": [
+    {
+      "raw": "h_code_actions.run1.events.jsonl",
+      "query": "Why would executable Python be a better action format than JSON tool calls for an agent?"
+    },
+    {
+      "raw": "h_lost_middle.run1.events.jsonl",
+      "query": "Why does accuracy drop when the relevant passage sits in the middle of a long context?"
+    },
+    {
+      "raw": "h_memory_recall.run1.events.jsonl",
+      "query": "How do LLM agents decide which past experiences to recall once their memory gets large?"
+    },
+    {
+      "raw": "h_reflexion_memory.run1.events.jsonl",
+      "query": "Where does a Reflexion agent keep its self-reflections between trials, and how are they used?"
+    },
+    {
+      "raw": "h_toolformer_filter.run1.events.jsonl",
+      "query": "What criterion does Toolformer use to decide whether an inserted API call is worth keeping?"
+    },
+    {
+      "raw": "h_voyager_skills.run1.events.jsonl",
+      "query": "Explain how Voyager's skill library grows over time."
+    },
+    {
+      "raw": "m_mem2026_handoff.run1.events.jsonl",
+      "query": "Which corpus papers from 2026 have 'memory' in their title? Briefly summarize the newest one."
+    }
+  ]
+}

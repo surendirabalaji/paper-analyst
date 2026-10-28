@@ -1,0 +1,47 @@
+Task exception was never retrieved
+future: <Task finished name='Task-77' coro=<AsyncClient.aclose() done, defined at /Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpx2/_client.py:2197> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpx2/_client.py", line 2204, in aclose
+    await self._transport.aclose()
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpx2/_transports/default.py", line 400, in aclose
+    await self._pool.aclose()
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpcore2/_async/connection_pool.py", line 382, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpcore2/_async/connection_pool.py", line 374, in _close_connections
+    await connection.aclose()
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpcore2/_async/connection.py", line 157, in aclose
+    await self._connection.aclose()
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpcore2/_async/http11.py", line 236, in aclose
+    await self._network_stream.aclose()
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/httpcore2/_backends/anyio.py", line 56, in aclose
+    await self._stream.aclose()
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/surensfolder/Desktop/Agentic AI/assignment2/.venv/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 1467, in aclose
+    self._transport.close()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/surensfolder/.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/lib/python3.13/asyncio/selector_events.py", line 1218, in close
+    super().close()
+    ~~~~~~~~~~~~~^^
+  File "/Users/surensfolder/.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/lib/python3.13/asyncio/selector_events.py", line 871, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/surensfolder/.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/lib/python3.13/asyncio/base_events.py", line 834, in call_soon
+    self._check_closed()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/surensfolder/.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/lib/python3.13/asyncio/base_events.py", line 557, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+0 Who are the authors of the ReAct paper? (['data'], 'discarded')
+1 How many papers in the corpus have a lin (['data'], 'discarded')
+2 How does Self-RAG decide when to retriev (['summary'], 'discarded')
+3 Compare how Reflexion and Self-Refine us (['research'], 'kept')
+4 Who are the authors of the ReAct paper? (['data'], 'discarded')
+5 How many papers in the corpus have a lin (['data'], 'discarded')
+6 How does Self-RAG decide when to retriev (['summary'], 'discarded')
+7 Compare how Reflexion and Self-Refine us (['research'], 'kept')
+8 Who are the authors of the ReAct paper? (['data'], 'discarded')
+9 How many papers in the corpus have a lin (['data'], 'discarded')
+10 How does Self-RAG decide when to retriev (['summary'], 'discarded')
+11 Compare how Reflexion and Self-Refine us (['research'], 'kept')
+spec True fails 0 of 12

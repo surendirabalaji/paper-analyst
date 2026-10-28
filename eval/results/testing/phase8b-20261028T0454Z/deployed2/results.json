@@ -1,0 +1,806 @@
+{
+  "base": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+  "started_utc": "2026-10-28T05:06:58+00:00",
+  "runs": [
+    {
+      "key": "m_mcp_share",
+      "category": "multi",
+      "query": "What are the latest developments around the Model Context Protocol this year, and has the paper 'Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions' been published at a venue yet?",
+      "raw": "m_mcp_share.run1.events.jsonl",
+      "started_utc": "2026-10-28T05:07:08+00:00",
+      "http_status": 200,
+      "status": "partial",
+      "workers": [
+        "research",
+        "summary"
+      ],
+      "ttft_s": 38.67,
+      "total_s": 41.768,
+      "server_timings": {
+        "retrieval_ms": 14,
+        "llm_ms_sum": 25964,
+        "ttft_ms": 38597,
+        "total_ms": 41708
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "planner"
+        ],
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "planner"
+        ],
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        false,
+        false
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "openai",
+          "capability",
+          null
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "openai"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 19,
+      "token_spread_s": 3.086,
+      "tokens_before_done": true,
+      "answer_chars": 1819,
+      "marked": [
+        "C1",
+        "W1",
+        "W2",
+        "W3",
+        "W5",
+        "W6",
+        "W8",
+        "W9",
+        "W10"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 9,
+      "cost_usd": 0.051047,
+      "errors": [],
+      "answer_head": "Based on web records retrieved on October 28, 2026:\n\n### Developments Around the Model Context Protocol (MCP)\n* **Origins & Architecture**: Introduced by Anthropic in November 2024, MCP is an open-source standard designed to unify how large language models interact with external data sources, prompts, and tools using JSON-RPC 2.0 client-server messaging [W1, W3].\n* **Industry & Ecosystem Adoption*",
+      "case": {
+        "tavily_calls": [
+          [
+            "research",
+            {
+              "max_results": 5,
+              "query": "Model Context Protocol Anthropic developments ecosystem standardization 2024 2025"
+            }
+          ],
+          [
+            "research",
+            {
+              "max_results": 5,
+              "query": "Model Context Protocol MCP Landscape Security Threats Future Research Directions venue published"
+            }
+          ],
+          [
+            "research",
+            {
+              "query": "\"Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions\" \"accepted\" OR \"proceedings\" OR \"conference\" OR \"journal\"",
+              "max_results": 3
+            }
+          ],
+          [
+            "summary",
+            {
+              "query": "\"Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions\" venue publication"
+            }
+          ],
+          [
+            "summary",
+            {
+              "query": "\"Model Context Protocol (MCP): Landscape, Security Threats\" \"accepted to\" OR \"proceedings of\" OR \"conference\" OR \"journal\""
+            }
+          ]
+        ],
+        "agents_calling_tavily": [
+          "research",
+          "summary"
+        ],
+        "W_marked": [
+          "W1",
+          "W2",
+          "W3",
+          "W5",
+          "W6",
+          "W8",
+          "W9",
+          "W10"
+        ]
+      }
+    },
+    {
+      "key": "e_out_of_scope",
+      "category": "edge",
+      "query": "What is the recommended daily vitamin D intake for adults?",
+      "raw": "e_out_of_scope.run1.events.jsonl",
+      "started_utc": "2026-10-28T05:07:50+00:00",
+      "http_status": 200,
+      "status": "partial",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 10.557,
+      "total_s": 12.011,
+      "server_timings": {
+        "retrieval_ms": 0,
+        "llm_ms_sum": 8167,
+        "ttft_ms": 10484,
+        "total_ms": 11959
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ],
+        [
+          "corpus_search",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": false,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 13,
+      "token_spread_s": 1.449,
+      "tokens_before_done": true,
+      "answer_chars": 1002,
+      "marked": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 4,
+      "cost_usd": 0.009701,
+      "errors": [],
+      "answer_head": "Based on current web sources (retrieved October 28, 2026):\n\n* **Adults aged 19 to 70:** The Recommended Dietary Allowance (RDA) is 15 mcg (600 IU) per day [W1, W2, W4]. This recommendation also applies to pregnant and breastfeeding women [W4].\n* **Adults aged 71 and older:** The RDA increases to 20 mcg (800 IU) per day [W1, W2, W4].\n* **Tolerable Upper Intake Limit:** The upper limit for adults ag",
+      "case": {
+        "C_marked": [],
+        "W_marked": [
+          "W1",
+          "W2",
+          "W3",
+          "W4"
+        ]
+      }
+    },
+    {
+      "key": "e_missing_paper",
+      "category": "edge",
+      "query": "Summarize the corpus paper 'Quantum Swarm Agents for Protein Folding'.",
+      "raw": "e_missing_paper.run1.events.jsonl",
+      "started_utc": "2026-10-28T05:08:02+00:00",
+      "http_status": 200,
+      "status": "partial",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 8.548,
+      "total_s": 8.846,
+      "server_timings": {
+        "retrieval_ms": 0,
+        "llm_ms_sum": 8777,
+        "ttft_ms": 8499,
+        "total_ms": 8795
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [],
+      "seeded_calls": [],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 4,
+      "token_spread_s": 0.295,
+      "tokens_before_done": true,
+      "answer_chars": 359,
+      "marked": [],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 0,
+      "cost_usd": 0.007964,
+      "errors": [],
+      "answer_head": "The available evidence does not answer this. The paper \"Quantum Swarm Agents for Protein Folding\" could not be found in the indexed corpus, and no evidence or summary details (such as contribution, method, results, or limitations) were retrieved.\n\n---\n**Incomplete evidence:** Summary (t1) is incomplete: it could not find a named paper in the indexed corpus.",
+      "case": {
+        "C_marked": [],
+        "notes": [
+          "t1: planner-named paper not seeded (no indexed paper title contains 'Quantum Swarm Agents for Protein Folding'; it is not in the corpus)"
+        ],
+        "task_status": [
+          [
+            "t1",
+            "partial",
+            "paper_not_found"
+          ]
+        ]
+      }
+    },
+    {
+      "key": "f_gemini_down_summary",
+      "category": "fault",
+      "query": "What environments does the AgentBench paper use?",
+      "raw": "f_gemini_down_summary.run1.events.jsonl",
+      "started_utc": "2026-10-28T05:08:11+00:00",
+      "http_status": 200,
+      "status": "failed",
+      "workers": [
+        "research"
+      ],
+      "ttft_s": 7.062,
+      "total_s": 7.062,
+      "server_timings": {
+        "retrieval_ms": 0,
+        "llm_ms_sum": 3545,
+        "ttft_ms": 6992,
+        "total_ms": 6992
+      },
+      "spec": "kept",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "corpus_search",
+          "speculative"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "corpus_search",
+          "speculative"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "kept_spec_used": false,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "research",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [],
+      "providers_used": [],
+      "synth_provider": [],
+      "unmatched_routes": [],
+      "n_token_events": 1,
+      "token_spread_s": 0,
+      "tokens_before_done": true,
+      "answer_chars": 347,
+      "marked": [],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 0,
+      "cost_usd": 0.0,
+      "errors": [
+        [
+          "planner_error",
+          ""
+        ],
+        [
+          "rate_limit",
+          ""
+        ]
+      ],
+      "answer_head": "I could not answer this question: no planned step produced usable evidence, so there is nothing grounded to report. What was tried:\n- Research (t1) was rate-limited by the model provider [injected test fault, not a real outage]\nThese failures were injected on purpose to test failure handling (fault injection); they do not indicate a real outage.",
+      "case": {
+        "faults_injected": [
+          {
+            "target": "provider:gemini-openrouter:down",
+            "kind": "provider",
+            "name": "gemini-openrouter",
+            "mode": "down",
+            "hit": 1,
+            "source": "header",
+            "agent": "planner",
+            "call_site": "planner"
+          },
+          {
+            "target": "provider:gemini-openrouter:down",
+            "kind": "provider",
+            "name": "gemini-openrouter",
+            "mode": "down",
+            "hit": 2,
+            "source": "header",
+            "agent": "planner",
+            "call_site": "planner"
+          },
+          {
+            "target": "provider:gemini-openrouter:down",
+            "kind": "provider",
+            "name": "gemini-openrouter",
+            "mode": "down",
+            "hit": 3,
+            "source": "header",
+            "agent": "research",
+            "call_site": "worker_tool_loop"
+          },
+          {
+            "target": "provider:gemini-openrouter:down",
+            "kind": "provider",
+            "name": "gemini-openrouter",
+            "mode": "down",
+            "hit": 4,
+            "source": "header",
+            "agent": "research",
+            "call_site": "worker_tool_loop"
+          }
+        ],
+        "fallbacks": [
+          [
+            "gemini-openrouter",
+            "openai",
+            "provider_unavailable"
+          ],
+          [
+            "gemini-openrouter",
+            "openai",
+            "provider_unavailable"
+          ]
+        ],
+        "task_status": [
+          [
+            "t1",
+            "failed",
+            "rate_limit"
+          ]
+        ],
+        "answer_has_injected_label": true
+      }
+    },
+    {
+      "key": "c_a",
+      "category": "concurrent",
+      "query": "How does MetaGPT assign roles to its agents?",
+      "raw": "c_a.run1.events.jsonl",
+      "started_utc": "2026-10-28T05:08:18+00:00",
+      "http_status": 200,
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 6.596,
+      "total_s": 9.322,
+      "server_timings": {
+        "retrieval_ms": 19,
+        "llm_ms_sum": 9216,
+        "ttft_ms": 6542,
+        "total_ms": 9269
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 15,
+      "token_spread_s": 2.685,
+      "tokens_before_done": true,
+      "answer_chars": 1693,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 4,
+      "cost_usd": 0.012667,
+      "errors": [],
+      "answer_head": "MetaGPT assigns and manages roles for its agents through the following mechanisms:\n\n* **Assembly Line Paradigm and Human SOPs**: MetaGPT adopts an assembly line paradigm modeled after human software development Standardized Operating Procedures (SOPs) [C1, C2]. This decomposes complex software engineering tasks into a structured, sequential workflow carried out by specialized roles: Product Manage",
+      "case": {
+        "request_ids": [
+          "b1a06f32ca03"
+        ],
+        "cited_docs": [
+          "2308.00352v7"
+        ],
+        "spec_query_is_own": true,
+        "other_query_in_events": false
+      }
+    },
+    {
+      "key": "c_b",
+      "category": "concurrent",
+      "query": "What does the RAPTOR paper build its retrieval tree from?",
+      "raw": "c_b.run1.events.jsonl",
+      "started_utc": "2026-10-28T05:08:18+00:00",
+      "http_status": 200,
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "ttft_s": 6.685,
+      "total_s": 8.566,
+      "server_timings": {
+        "retrieval_ms": 17,
+        "llm_ms_sum": 8391,
+        "ttft_ms": 6558,
+        "total_ms": 8438
+      },
+      "spec": "discarded",
+      "spec_consistent": true,
+      "plan_seeds": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeded_calls": [
+        [
+          "get_paper_outline",
+          "planner"
+        ]
+      ],
+      "seeds_match_plan": true,
+      "evidence_only": [
+        true
+      ],
+      "evidence_only_consistent": true,
+      "routes": [
+        [
+          "planner",
+          "planner",
+          "gemini-openrouter",
+          "cost",
+          "low"
+        ],
+        [
+          "worker_tool_loop",
+          "summary",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ],
+        [
+          "synthesize",
+          "synthesizer",
+          "gemini-openrouter",
+          "cost",
+          "minimal"
+        ]
+      ],
+      "route_fields_ok": true,
+      "model_returned_matches": true,
+      "model_pairs": [
+        [
+          "google/gemini-3.8-flash",
+          "google/gemini-3.8-flash"
+        ]
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "synth_provider": [
+        "gemini-openrouter"
+      ],
+      "unmatched_routes": [],
+      "n_token_events": 11,
+      "token_spread_s": 1.844,
+      "tokens_before_done": true,
+      "answer_chars": 1114,
+      "marked": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "marked_without_citation_event": [],
+      "unresolved_citations": [],
+      "dropped_citations": [],
+      "citation_resolution_failures": [],
+      "n_citations": 4,
+      "cost_usd": 0.013472,
+      "errors": [],
+      "answer_head": "The RAPTOR paper builds its retrieval tree from the following components and bottom-up process:\n\n* **Leaf nodes from text chunks:** Tree construction begins by segmenting the retrieval corpus into short, contiguous text chunks of 100 tokens [C2]. If a sentence exceeds this limit, the whole sentence is shifted to the next chunk rather than split mid-sentence to preserve coherence [C2]. These chunks",
+      "case": {
+        "request_ids": [
+          "262f74570c99"
+        ],
+        "cited_docs": [
+          "2401.18059v1"
+        ],
+        "spec_query_is_own": true,
+        "other_query_in_events": false
+      }
+    }
+  ],
+  "health": {
+    "status": "ok",
+    "chunks": 4521,
+    "embedding_dims": 1536,
+    "live_search": "tavily-remote-mcp"
+  },
+  "concurrent_request_ids_disjoint": true,
+  "results": [
+    {
+      "raw": "m_mcp_share.run1.events.jsonl",
+      "query": "What are the latest developments around the Model Context Protocol this year, and has the paper 'Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions' been published at a venue yet?"
+    },
+    {
+      "raw": "e_out_of_scope.run1.events.jsonl",
+      "query": "What is the recommended daily vitamin D intake for adults?"
+    },
+    {
+      "raw": "e_missing_paper.run1.events.jsonl",
+      "query": "Summarize the corpus paper 'Quantum Swarm Agents for Protein Folding'."
+    },
+    {
+      "raw": "f_gemini_down_summary.run1.events.jsonl",
+      "query": "What environments does the AgentBench paper use?"
+    },
+    {
+      "raw": "c_a.run1.events.jsonl",
+      "query": "How does MetaGPT assign roles to its agents?"
+    },
+    {
+      "raw": "c_b.run1.events.jsonl",
+      "query": "What does the RAPTOR paper build its retrieval tree from?"
+    }
+  ]
+}

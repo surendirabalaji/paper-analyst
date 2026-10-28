@@ -176,7 +176,11 @@ async def test_single_summary_task_seeds_outline_reads_sections_in_one_round(rea
                                           tool_call("get_paper_section", {"paper": "2310.11511", "section": "S3"}, 2)]),
         AIMessage(content="must not be called"),
     ]}
-    ctx = ctx5("Summarize Self-RAG", s, real_retriever, FakeMCP(), sqlite_path=DB, **ON)
+    # Speculation off: with the real retriever it would make a real (paid) embedding call, which also left an
+    # OpenAI connection on this test's event loop and broke later tests (tester P8b-D1). A Summary plan
+    # discards the speculative search anyway; that path is covered by the fake-retriever tests above.
+    ctx = ctx5("Summarize Self-RAG", s, real_retriever, FakeMCP(), sqlite_path=DB,
+               **{**ON, "speculative_retrieval": False})
     await run_request(ctx)
     events = drain(ctx)
     calls = ev(events, "tool_call")
@@ -252,3 +256,49 @@ def test_eval_requirements_are_exact_pins_and_agree_with_the_runtime_lockfile(ro
     assert not {"ragas", "langchain-community", "datasets", "pandas", "scipy"} & set(runtime)  # not in the image
     assert {k: v for k, v in evals.items() if k in runtime} == runtime  # one environment, same versions
     assert _pins(root / "requirements-eval.in")["ragas"] == evals["ragas"]
+
+
+# ---------------------------------------------------------------- P8b-D2: real outage during a fault test
+
+
+async def test_real_provider_error_during_a_fault_test_is_not_labelled_injected():
+    """Gemini is down by injected fault; OpenAI fails for real (429). The real failure must stay real."""
+    import httpx
+    import openai
+
+    from tests.unit.test_phase7_failures import AgentChat, answer_text, ctx7, run
+
+    class Quota(AgentChat):
+        async def _agenerate(self, messages, stop=None, run_manager=None, **kw):
+            raise openai.RateLimitError(
+                "insufficient_quota", body=None,
+                response=httpx.Response(429, request=httpx.Request("POST", "https://api.openai.com/v1/x")))
+
+    ctx, s = ctx7("How does alpha work?", [("research", "find it", [])],
+                  faults="provider:gemini-openrouter:down")
+    base = type(ctx.router)
+
+    class R(base):
+        def client(self, provider):
+            return Quota(script=self.script) if provider == OPENAI else AgentChat(script=self.script)
+
+    ctx.router = R(ctx.settings, s)
+    final, events = await run(ctx)
+    assert final["status"] == "failed"
+    assert ctx.real_provider_errors and all(e.startswith("openai: ") for e in ctx.real_provider_errors)
+    wr = [d for e, d in events if e == "worker_result"][-1]
+    assert not wr.get("injected") and wr["real_errors"] and wr["faults"]
+    text = answer_text(events)
+    assert "do not indicate a real outage" not in text
+    assert "a real provider error, not caused by the injected test fault" in text
+
+
+async def test_injected_fault_alone_is_still_labelled_injected():
+    from tests.unit.test_phase7_failures import answer_text, ctx7, run
+
+    ctx, _ = ctx7("How does alpha work?", [("research", "find it", [])], faults="provider:*:down")
+    final, events = await run(ctx)
+    assert final["status"] == "failed" and ctx.real_provider_errors == []
+    wr = [d for e, d in events if e == "worker_result"][-1]
+    assert wr["injected"] is True and "real_errors" not in wr
+    assert "do not indicate a real outage" in answer_text(events)

@@ -1,0 +1,9 @@
+[32m[32m[1m6 passed[0m[32m in 48.85s[0m[0m
+--full run 1
+        [94mif[39;49;00m [96mself[39;49;00m._closed:[90m[39;49;00m
+>           [94mraise[39;49;00m [96mRuntimeError[39;49;00m([33m'[39;49;00m[33mEvent loop is closed[39;49;00m[33m'[39;49;00m)[90m[39;49;00m
+[1m[31mE           RuntimeError: Event loop is closed[0m
+[1m[31m../../../.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/lib/python3.13/asyncio/base_events.py[0m:557: RuntimeError
+[31mFAILED[0m tests/integration/test_phase6_live_data.py::[1mtest_planner_routes_metadata_to_data_live[Who are the authors of the ReAct paper?-data][0m - RuntimeError: Event loop is closed
+[31m[31m[1m1 failed[0m, [32m5 passed[0m[31m in 54.27s[0m[0m
+--full run 2
