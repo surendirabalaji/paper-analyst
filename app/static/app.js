@@ -351,7 +351,7 @@ async function ask(query) {
   const turn = ++turnNo;
   const t0 = performance.now();
   const box = el("div", "turn");
-  const head = el("div", "turn-head");
+  const head = el("div", "turn-bar");
   const tBadge = el("span", "badge run", "running");
   const clock = el("span", "muted clock", "0.0 s");
   head.append(el("span", "turn-no", `#${turn}`), tBadge, clock);

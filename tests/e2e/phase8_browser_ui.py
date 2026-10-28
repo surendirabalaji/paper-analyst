@@ -57,7 +57,7 @@ TURN = """(() => {
     answer_len: a.textContent.length,
     status: t.querySelector('.status').textContent,
     status_error: t.querySelector('.status').classList.contains('error'),
-    turn_badge: t.querySelector('.turn-head .badge').textContent,
+    turn_badge: t.querySelector('.turn-bar .badge').textContent,
     routing_line: t.querySelector('.routing-line').textContent,
     routing_chips: [...t.querySelectorAll('.routing-line .chip')].map(c => c.textContent),
     links, kinds: [...new Set(links.map(x => x[0]))],
@@ -205,7 +205,11 @@ async def main():
             rep["routing_tab"] = await cdp.js(
                 "[...document.querySelectorAll('#routing-rows tr')].map(r => r.textContent.slice(0, 240))")
             rep["routing_providers"] = await cdp.js("[...new Set([...document.querySelectorAll('#routing-rows .prov')].map(p => p.textContent))]")
+            rep["routing_turn_row_span"] = await cdp.js(
+                "(() => { const td = document.querySelector('#routing-rows tr.turn-head td');"
+                " return td ? +(td.offsetWidth / document.querySelector('#tab-routing table').offsetWidth).toFixed(2) : 0; })()")
             await shot(cdp, out / "03_routing_tab.png")
+            C["Routing tab turn row spans the table"] = rep["routing_turn_row_span"] > 0.95
             C["Routing tab rows with provider/model/rationale"] = len(rep["routing_tab"]) >= 3 and all(
                 "·" in r for r in rep["routing_tab"][1:])
 

@@ -23,7 +23,7 @@ main { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap:
 
 /* turns */
 .turn { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px dashed var(--line); }
-.turn-head { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+.turn-bar { display: flex; gap: 6px; align-items: center; font-size: 12px; }
 .turn-no { font-weight: 600; color: var(--muted); }
 .question { font-weight: 600; margin-top: 2px; overflow-wrap: anywhere; white-space: pre-wrap; }
 .answer { margin-top: 6px; overflow-wrap: anywhere; }
@@ -122,3 +122,4 @@ li.row-inj { background: color-mix(in srgb, var(--inj) 8%, transparent); }
 .viewer-links { display: flex; gap: 12px; }
 #viewer pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--bg); padding: 8px; border-radius: 6px; max-height: 45vh; overflow: auto; border: 1px solid var(--line); }
 .banner.fault { background: #fde8e8; color: #8a1c1c; border-left: 4px solid #c0392b; padding: .3rem .6rem; }
+#tab-routing td:nth-child(3) { min-width: 140px; }
