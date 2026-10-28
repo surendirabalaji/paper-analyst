@@ -526,6 +526,13 @@ async def run(out, profile, with_stall):
             ev["long_url_routing"] = ov
             check(R, "M12 pasted long URL in the question keeps all Routing columns inside the panel",
                   all(c["right"] <= ov["panel_right"] + 1 for c in ov["cols"]), ov)
+            # M12b (added in the P8-D2 retest): the wrap fix must not squeeze short words letter by letter
+            # ("Turn" header, "#n" turn cells), which happens when overflow-wrap:anywhere lowers every cell's min-content.
+            from phase8_tester_live_nospend import GEOM  # noqa: E402
+            g = await cdp.js(GEOM)
+            ev["long_url_routing_words"] = g
+            check(R, "M12b Routing 'Turn' header and '#n' cells are not broken mid-word",
+                  g["turn_header_lines"] == 1 and all(c["lines"] == 1 for c in g["first_col_cells"]), g)
 
             errs = [e for e in cdp.events if e.get("method") == "Runtime.exceptionThrown" or e["params"].get("type") in ("error", "warning")]
             ev["console"] = [json.dumps(e)[:300] for e in errs]

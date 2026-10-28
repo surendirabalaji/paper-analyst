@@ -381,3 +381,9 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - **N1:** light `--ok` is now #236a40, and `.cite-dropped` uses a solid muted colour instead of opacity.
   - Result: the tester's `phase8_tester_mock_ui.py` passes 27/27, including M7b, M12 and M9. Full suite: 492 passed, 36 skipped, 1 xfailed.
   - Not yet redeployed (needs approval).
+- **Tester retest: PHASE PASS** (`docs/testing/phase-8-retest-20261028T0216Z.md`) on rev 00014 (image `…-a02dd08`).
+  - P8-D1, P8-D2 and N1 were confirmed fixed, including on the live page with real Enter key events and no LLM spend.
+  - The deployed smoke run passed, with both providers used. Tester spend about $0.15.
+  - New **P8-D3 (Minor):** the global `td { overflow-wrap: anywhere }` from the P8-D2 fix broke "Turn" and "#n" mid-word.
+  - **Fix (local):** the Routing table uses `table-layout: fixed` with set column widths. Wrapping anywhere is limited to data cells and the turn row; the Turn column and its header stay whole.
+  - Results: the tester's mock suite (now with M12b) passes 28/28 (`eval/results/testing/phase8-retest3-20261028T0227Z/mock/`); the full suite still passes.

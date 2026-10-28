@@ -250,6 +250,10 @@ async def main():
         await shot(B, out / "d2_tab_b_trace.png")
         await A.js("document.querySelector('nav button[data-tab=routing]').click(); true")
         await shot(A, out / "d1_tab_a_routing.png")
+        # retest (P8-D2): Routing geometry with REAL route rows after the 2,500-char 422 turn head
+        from phase8_tester_live_nospend import GEOM  # noqa: E402
+        await asyncio.sleep(0.4)
+        rep["routing_geometry_A"] = await A.js(GEOM)
 
         # ---- 2. stateless follow-up in tab A
         await submit(A, Q_FOLLOW)

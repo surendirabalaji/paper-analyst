@@ -68,7 +68,15 @@ nav button[aria-selected=true] { background: var(--accent); color: var(--panel);
 .tab { overflow: auto; padding: 8px 10px; flex: 1; font-size: 13px; }
 .tab > p.muted:first-child { margin: 0 0 6px; }
 table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; vertical-align: top; padding: 4px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; } /* a pasted URL must not widen the table (P8-D2) */
+th, td { text-align: left; vertical-align: top; padding: 4px; border-bottom: 1px solid var(--line); }
+/* A pasted URL must not widen the table (P8-D2), but short columns must not shrink until words break (P8-D3):
+   wrap anywhere only in the turn row and the long-text columns; keep Turn / Agent cells whole. */
+#tab-routing table { table-layout: fixed; }
+#tab-routing th:nth-child(1) { width: 48px; } #tab-routing th:nth-child(2) { width: 19%; }
+#tab-routing th:nth-child(3) { width: 24%; } #tab-routing th:nth-child(5) { width: 20%; }
+#tab-routing td, .answer table.md td { overflow-wrap: anywhere; }
+#tab-routing th { overflow-wrap: normal; }
+#tab-routing th:first-child, #tab-routing tr:not(.turn-head) > td:first-child { white-space: nowrap; overflow-wrap: normal; }
 tr.turn-head td { background: var(--chip); font-weight: 600; }
 tr.fallback td { background: color-mix(in srgb, var(--warn) 12%, transparent); }
 tr.fallback td:first-child::before { content: "↪ "; color: var(--warn); }
@@ -122,4 +130,3 @@ li.row-inj { background: color-mix(in srgb, var(--inj) 8%, transparent); }
 .viewer-links { display: flex; gap: 12px; }
 #viewer pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--bg); padding: 8px; border-radius: 6px; max-height: 45vh; overflow: auto; border: 1px solid var(--line); }
 .banner.fault { background: #fde8e8; color: #8a1c1c; border-left: 4px solid #c0392b; padding: .3rem .6rem; }
-#tab-routing td:nth-child(3) { min-width: 140px; }
