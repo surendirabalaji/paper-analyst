@@ -375,3 +375,9 @@ Factual log of what happened during development. It is the source for `PROCESS_L
     - N4: in a hidden tab, `requestAnimationFrame` pauses painting.
     - N5: a chunk id containing `/` would 404; no current id has one.
   - Retest without spend: `tests/e2e/phase8_tester_mock_ui.py`.
+- **Fixes after the Phase 8 gate (local, 2026-10-28, no LLM spend):**
+  - **P8-D1:** a `busy` flag makes the submit handler return while a turn is running.
+  - **P8-D2:** table cells get `overflow-wrap: anywhere`.
+  - **N1:** light `--ok` is now #236a40, and `.cite-dropped` uses a solid muted colour instead of opacity.
+  - Result: the tester's `phase8_tester_mock_ui.py` passes 27/27, including M7b, M12 and M9. Full suite: 492 passed, 36 skipped, 1 xfailed.
+  - Not yet redeployed (needs approval).

@@ -625,13 +625,17 @@ async function ask(query) {
   }
 }
 
+// One turn at a time: Enter calls requestSubmit(), which fires even while the button is disabled (P8-D1).
+let busy = false;
 $("ask").addEventListener("submit", async (e) => {
   e.preventDefault();
+  if (busy) return;
   const q = $("q").value.trim();
   if (!q) return;
+  busy = true;
   $("send").disabled = true;
   $("q").value = "";
-  try { await ask(q); } finally { $("send").disabled = false; $("q").focus(); }
+  try { await ask(q); } finally { busy = false; $("send").disabled = false; $("q").focus(); }
 });
 $("q").addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); $("ask").requestSubmit(); }

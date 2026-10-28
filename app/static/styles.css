@@ -1,6 +1,6 @@
 :root {
   --bg: #f7f7f5; --panel: #ffffff; --text: #1d1d1b; --muted: #6b6b66; --line: #e2e1dc;
-  --accent: #2f5d8a; --link: #1f5fa3; --ok: #2e7d4f; --warn: #9a5b06; --bad: #b3261e; --chip: #eef2f7;
+  --accent: #2f5d8a; --link: #1f5fa3; --ok: #236a40; --warn: #9a5b06; --bad: #b3261e; --chip: #eef2f7;
   --inj: #7a3fb0; --code: #f0efea; --openai: #10715a; --gemini: #3d5fc4;
 }
 @media (prefers-color-scheme: dark) {
@@ -46,7 +46,7 @@ main { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap:
 .status.error, .error { color: var(--bad); }
 .status.error { background: color-mix(in srgb, var(--bad) 10%, transparent); border-left: 3px solid var(--bad); padding: 4px 8px; border-radius: 4px; font-size: 13px; }
 .cite { color: var(--link); cursor: pointer; text-decoration: underline; font-size: 0.9em; font-weight: 600; }
-.cite-dropped { opacity: 0.6; text-decoration: line-through dotted; cursor: help; }
+.cite-dropped { color: var(--muted); text-decoration: line-through dotted; cursor: help; } /* solid colour: opacity fell below 4.5:1 */
 .routing-line { font-size: 12px; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
 .routing-line .label { color: var(--muted); }
 .chip { display: inline-block; padding: 0 7px; border-radius: 10px; background: var(--chip); border: 1px solid var(--line); }
@@ -68,7 +68,7 @@ nav button[aria-selected=true] { background: var(--accent); color: var(--panel);
 .tab { overflow: auto; padding: 8px 10px; flex: 1; font-size: 13px; }
 .tab > p.muted:first-child { margin: 0 0 6px; }
 table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; vertical-align: top; padding: 4px; border-bottom: 1px solid var(--line); }
+th, td { text-align: left; vertical-align: top; padding: 4px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; } /* a pasted URL must not widen the table (P8-D2) */
 tr.turn-head td { background: var(--chip); font-weight: 600; }
 tr.fallback td { background: color-mix(in srgb, var(--warn) 12%, transparent); }
 tr.fallback td:first-child::before { content: "↪ "; color: var(--warn); }
