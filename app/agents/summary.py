@@ -8,8 +8,8 @@ Shared MCP tool: `tavily_search` (the same Tavily Remote MCP tool Research uses)
 paper's *current status*: venue or acceptance, newer versions, follow-up work. It is available when the
 planner marked the task `needs_live` or the question asks about status (see `status_cue`).
 
-`paper` accepts an arXiv id (with or without version) or a distinctive title fragment; papers outside the
-corpus resolve to a clear "not in corpus" result, and the task ends `partial`.
+`paper` accepts an arXiv id (with or without version), a distinctive title fragment, or a method name that
+exactly one paper's abstract uses ("MMOA-RAG", "HyDE"; Phase 9 fix); papers outside the corpus resolve to a clear "not in corpus" result, and the task ends `partial`.
 """
 
 from __future__ import annotations
@@ -73,7 +73,7 @@ def resolve_paper(db_path, paper: str) -> dict:
             "SELECT * FROM papers WHERE title LIKE ? ESCAPE '\\' ORDER BY length(title) LIMIT 6", (like,)
         ).fetchall()
     if not rows:
-        raise PaperNotFound(f"no indexed paper title contains {q!r}; it is not in the corpus")
+        return _resolve_by_abstract(db_path, q)
     # A fragment wins only if it is the whole title or the short name before the colon ("Self-RAG" in
     # "Self-RAG: Learning to ..."), so "Agent" does not silently pick "AgentBench: ...".
     ql = q.lower().rstrip(":").strip()
@@ -82,6 +82,23 @@ def resolve_paper(db_path, paper: str) -> dict:
         return dict((exact or rows)[0])
     names = "; ".join(f"{r['arxiv_id']} {r['title'][:70]}" for r in rows)
     raise PaperNotFound(f"{q!r} matches several papers, use an arXiv id: {names}")
+
+
+def _resolve_by_abstract(db_path, q: str) -> dict:
+    """Fallback for a method name that is not in any title ("MMOA-RAG", "HyDE"): the paper whose abstract
+    names it as a whole word. Only abstracts count, because a paper's abstract names its own method, while
+    body text also names baselines (TeaRAG's text mentions R1-Searcher, which has no paper in the corpus).
+    Short names (<= 4 chars) must match case exactly. Several matching abstracts -> ambiguous."""
+    flags = 0 if len(q) <= 4 else re.I
+    pat = re.compile(r"(?<![\w-])" + re.escape(q) + r"(?![\w-])", flags)
+    with _connect(db_path) as con:
+        rows = [dict(r) for r in con.execute("SELECT * FROM papers ORDER BY arxiv_id") if pat.search(r["abstract"])]
+    if len(rows) == 1:
+        return {**rows[0], "resolved_by": "abstract"}
+    if rows:
+        names = "; ".join(f"{r['arxiv_id']} {r['title'][:70]}" for r in rows[:6])
+        raise PaperNotFound(f"no indexed paper title contains {q!r}, and several abstracts name it, use an arXiv id: {names}")
+    raise PaperNotFound(f"no indexed paper title or abstract names {q!r}; it is not in the corpus")
 
 
 def _authors(db_path, arxiv_id: str) -> list[str]:
@@ -94,7 +111,7 @@ def _authors(db_path, arxiv_id: str) -> list[str]:
 
 
 class PaperArgs(BaseModel):
-    paper: str = Field(..., min_length=3, max_length=200, description="arXiv id (e.g. 2310.11511) or a distinctive title fragment")
+    paper: str = Field(..., min_length=3, max_length=200, description="arXiv id (e.g. 2310.11511), a distinctive title fragment, or the method name the paper introduces")
 
 
 class SectionArgs(PaperArgs):
@@ -135,6 +152,8 @@ def summary_tools(ctx: RequestContext) -> list[StructuredTool]:
         authors = await asyncio.to_thread(_authors, db, p["arxiv_id"])
         lines = [
             f"Paper arXiv:{p['doc_id']}: {p['title']}",
+            *([f"(Resolved {paper!r} through this paper's abstract, which names it; the title does not.)"]
+              if p.get("resolved_by") == "abstract" else []),
             f"Authors: {', '.join(authors[:8])}{' et al.' if len(authors) > 8 else ''}",
             f"Submitted {p['published']} (indexed version {p['updated']}); category {p['primary_category']}"
             + (f"; journal_ref: {p['journal_ref']}" if p.get("journal_ref") else "")

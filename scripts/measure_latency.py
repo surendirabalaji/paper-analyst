@@ -7,7 +7,7 @@ the raw SSE events as JSONL. A summary JSON (per-category medians) is written ne
 
 Usage:
   .venv/bin/python scripts/measure_latency.py URL OUT_DIR [--runs N] [--category simple|multi|all]
-                                              [--warmup] [--only "question substring"]
+                                              [--warmup] [--no-health] [--only "question substring"]
 
 Categories: `simple` = questions a single worker should answer; `multi` = questions whose plan is
 expected to use two or more workers. The category is fixed per question in QUESTIONS, not inferred from
@@ -88,6 +88,7 @@ def main() -> int:
     ap.add_argument("--runs", type=int, default=1)
     ap.add_argument("--category", default="all", choices=["simple", "multi", "all"])
     ap.add_argument("--warmup", action="store_true", help="hit /health and run one unrecorded question first")
+    ap.add_argument("--no-health", action="store_true", help="skip the /health request (cold-start runs)")
     ap.add_argument("--only", default="", help="run only questions whose text contains this substring")
     a = ap.parse_args()
     url = a.url.rstrip("/")
@@ -96,16 +97,18 @@ def main() -> int:
     qs = [q for q in QUESTIONS if (a.category == "all" or q[0] == a.category) and a.only.lower() in q[2].lower()]
     results = []
     with httpx.Client(timeout=httpx.Timeout(300.0, connect=60.0)) as client:
-        t0 = time.perf_counter()
-        h = client.get(f"{url}/health")
-        health = {"status": h.status_code, "latency_s": round(time.perf_counter() - t0, 3)}
+        health = None
+        if not a.no_health:  # a cold-start run must send the question first, or /health absorbs the cold start
+            t0 = time.perf_counter()
+            h = client.get(f"{url}/health")
+            health = {"status": h.status_code, "latency_s": round(time.perf_counter() - t0, 3)}
         if a.warmup:
             run_one(client, url, QUESTIONS[0][2], out / "warmup.events.jsonl")
         for i in range(a.runs):
             for cat, key, q in qs:
+                started = datetime.now(timezone.utc).isoformat(timespec="seconds")  # before the request (P9-N3)
                 r = run_one(client, url, q, out / f"{key}.run{i + 1}.events.jsonl")
-                r.update({"category": cat, "key": key, "query": q, "run": i + 1,
-                          "started_utc": datetime.now(timezone.utc).isoformat(timespec="seconds")})
+                r.update({"category": cat, "key": key, "query": q, "run": i + 1, "started_utc": started})
                 results.append(r)
                 print(json.dumps({k: r[k] for k in ("category", "key", "run", "ttft_s", "total_s", "status",
                                                     "workers", "providers_used", "cost_usd", "errors")}),

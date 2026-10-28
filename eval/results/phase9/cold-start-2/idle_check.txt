@@ -1,0 +1,4 @@
+2026-10-28T07:03:50.159847Z		INFO:     Shutting down
+2026-10-28T07:03:50.261187Z		INFO:     Waiting for application shutdown.
+2026-10-28T07:03:50.261527Z		INFO:     Application shutdown complete.
+2026-10-28T07:03:50.261657Z		INFO:     Finished server process [1]

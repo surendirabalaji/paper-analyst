@@ -1,0 +1,26 @@
+{
+  "low": {
+    "n": 38,
+    "correct": 38,
+    "fallback": 0,
+    "latency_ms_median": 2540.5,
+    "latency_ms_p90": 3270,
+    "latency_ms_max": 4423,
+    "reasoning_calls": 1,
+    "output_tokens_median": 77.0,
+    "summary_with_paper_seed": 8,
+    "cost_usd": 0.0746
+  },
+  "minimal": {
+    "n": 38,
+    "correct": 38,
+    "fallback": 0,
+    "latency_ms_median": 2506.5,
+    "latency_ms_p90": 3341,
+    "latency_ms_max": 6685,
+    "reasoning_calls": 1,
+    "output_tokens_median": 80.0,
+    "summary_with_paper_seed": 8,
+    "cost_usd": 0.0756
+  }
+}

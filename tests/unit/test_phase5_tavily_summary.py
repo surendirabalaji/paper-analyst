@@ -680,3 +680,46 @@ async def test_excluded_off_topic_evidence_is_reported_in_done():
     events = drain(ctx)
     assert ev(events, "done")[0]["excluded_evidence"] == ["C1"]
     assert "Table 9" not in s.synth_messages[-1].content
+
+
+# ---------------------------------------------------------------- Phase 9: method names outside titles
+
+
+@needs_data
+@pytest.mark.parametrize("ref,arxiv", [("MMOA-RAG", "2501.15228"), ("HyDE", "2212.10496"), ("IRCoT", "2212.10509"),
+                                       ("GraphRAG", "2404.16130"), ("CodeAct", "2402.01030"), ("mmoa-rag", "2501.15228")])
+def test_resolve_paper_by_method_name_in_abstract(ref, arxiv):
+    from app.agents.summary import resolve_paper
+
+    row = resolve_paper(DB, ref)
+    assert row["arxiv_id"] == arxiv and row["resolved_by"] == "abstract"
+
+
+@needs_data
+@pytest.mark.parametrize("ref,frag", [("R1-Searcher", "title or abstract names"),  # only a TeaRAG baseline
+                                      ("Voyager-2", "title or abstract names"),     # not Voyager
+                                      ("APIBench", "several abstracts name it"),    # Gorilla and ToolLLM
+                                      ("hyde", "title or abstract names")])         # short names match case
+def test_resolve_paper_abstract_fallback_refuses_unsafe_matches(ref, frag):
+    from app.agents.summary import PaperNotFound, resolve_paper
+
+    with pytest.raises(PaperNotFound, match=frag):
+        resolve_paper(DB, ref)
+
+
+@needs_data
+def test_title_match_still_wins_and_is_not_marked():
+    from app.agents.summary import resolve_paper
+
+    row = resolve_paper(DB, "Self-RAG")
+    assert row["arxiv_id"] == "2310.11511" and "resolved_by" not in row
+
+
+@needs_data
+async def test_outline_says_when_the_paper_was_resolved_by_its_abstract(real_retriever):
+    from app.agents.summary import summary_tools
+
+    ctx = make_ctx("q", Script(), real_retriever, sqlite_path=DB)
+    tools = {t.name: t for t in summary_tools(ctx)}
+    text, cites = await tools["get_paper_outline"].coroutine(paper="MMOA-RAG")
+    assert "arXiv:2501.15228" in text and "through this paper's abstract" in text and cites

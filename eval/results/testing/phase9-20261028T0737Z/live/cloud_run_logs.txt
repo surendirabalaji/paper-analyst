@@ -1,0 +1,3 @@
+2026-10-28T07:45:55.283170Z	paper-analyst-00018-gll	INFO:     paper_analyst: index ready: 4521 chunks, 1536-d, live search enabled, startup 6.73s
+2026-10-28T07:45:32.451702Z	paper-analyst-00018-gll	Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU ut
+2026-10-28T07:40:40.251405Z	paper-analyst-00018-gll	INFO:     Finished server process [1]

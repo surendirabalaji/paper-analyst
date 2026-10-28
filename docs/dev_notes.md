@@ -410,3 +410,73 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - P8b-D1 (test harness) fixed in tests only. My unit test no longer makes a real embedding call (speculation off where the real retriever is used). New tests/integration/conftest.py fixture `close_openai_clients` (used by the six live modules) drops langchain-openai's cached clients and collects them at the end of each test while its loop runs. A module-scoped anyio_backend was tried first and did not help (anyio still makes a loop per test). Unit suite 5/5 clean (446 passed); live Phase 6 module 4/4 clean (was about 1 in 3 failing); Phase 4 live routing passes.
   - P8b-D2 fixed in app code (router/context/graph): real provider errors (no fault fired in that attempt, not budget_exhausted) are recorded per request. A task is labelled injected only if no real error happened during it; otherwise its line says it was a real provider error with a test fault also active, and the advice covers the real cause. Two new unit tests. Not deployed yet (next redeploy).
   - The student chose not to run the retest and accepted the block (2026-10-28). Phase 8b marked done as an accepted block. Open notes from the tester: N1 (insufficient_quota retried as a rate limit), N2 (Research does not unlock web search when corpus_search errors), N3 (HyDE seed note wording), N5 (6.35 s just above 6 s), N6 (faithfulness check is a regression signal only).
+
+## Phase 9 (evaluation) — in progress, branch `phase-9-eval`, 2026-10-27
+- Start state: live service still on rev `paper-analyst-00016-dnl` (no P8b-D2 fix). Redeploy requested from the student (auto mode cannot run `scripts/deploy.sh`).
+- OpenAI credits checked with one embedding and one `gpt-6.1-sol` call: both succeeded.
+- Test set draft `eval/testset/testset_v1.jsonl` (36 items, 26 RAGAS); construction method in `eval/testset/README.md`. The first sampler run produced three table- or caption-only chunks, so a prose filter and an appendix filter were added before any question was written. All 40 reference chunk ids resolve. Waiting for student review, then freeze.
+- Planner effort probe (`scripts/planner_effort_probe.py`, `eval/results/phase9/planner-effort-probe/`): 19 questions × 2 runs × {low, minimal}.
+  - Both 38/38 correct plans; worker plans identical on all 38 pairs.
+  - Planner latency median 2.54 s (low) vs 2.51 s (minimal); p90 3.27 vs 3.34 s; max 4.4 vs 6.7 s; one reasoning call each.
+  - No measurable gain from `minimal`; decision left to the student. Cost about $0.15.
+- Student decisions (2026-10-27): planner Gemini effort stays `low`; option 8 (parallel dispatch) not added, so multi-agent questions are reported as they are, with option 8 noted as future work. Redeploy started by the student.
+- Test set v1 frozen 2026-10-28 after review round 1 (44 items, 32 RAGAS), sha256 50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382.
+- Pilot (local, forced OpenAI; `eval/results/phase9/pilot-forced-openai/`):
+  - c01 scored faithfulness 1.00, answer relevancy 0.91, context precision 0.82, context recall 1.00 (19 contexts).
+  - s01 failed with `partial`: Summary resolves papers by title only, and "MMOA-RAG" is not in its paper's title. Same family as tester note N3 (HyDE).
+  - Judge cost about $0.15 for one item with 19 contexts; context precision makes one call per context.
+  - The student raised the Phase 9 budget to about $9 (option A: full plan) and chose to fix the lookup before scoring.
+- Fix (`app/agents/summary.py` `resolve_paper`): when no title matches, the paper whose *abstract* names the method as a whole word is used.
+  - Only abstracts count, because body text also names baselines (R1-Searcher appears only as a TeaRAG baseline).
+  - Several matching abstracts give an ambiguous error with candidates; names of 4 characters or fewer must match case exactly.
+  - Covers the planner seeds too, so N3 (HyDE) is fixed as well. The outline says when a paper was resolved this way.
+  - 10 new unit tests; full suite 529 passed, 36 skipped, 1 xfailed.
+  - Local rerun of s01 (`pilot-forced-openai-fix/`): done, reference chunk at rank 2, correct cited answer. Needs a redeploy (rev 00018).
+- Cold start, attempt 1 (rev 00017, `eval/results/phase9/cold-start-1/`):
+  - Scale-to-zero confirmed in the logs: the last request was the deploy smoke test at 06:15:02; uvicorn shut down at 06:30:15; no requests in between.
+  - The gate in my wait script wrongly counted the smoke-test request itself (timestamp-filter bug), so I re-checked the logs and sent the request by hand at 06:40.
+  - `measure_latency.py` sends `/health` before the question, so `/health` took the cold start: 21.8 s.
+    - "Starting new instance" at 06:40:02.4; uvicorn process at 06:40:18.8; app startup 5.76 s (index open); ready at 06:40:24.6.
+    - The question then ran warm: TTFT 6.3 s, total 9.1 s.
+  - This is a valid **container cold-start** sample (21.8 s to first response) but **not** a cold TTFT for a question. Added `--no-health`; the rev 00018 cold run sends the question first.
+- Redeployed (student) as rev `paper-analyst-00018-gll` (image `…:20261028-064437-74965a1`, includes the abstract-lookup fix). Smoke test 06:48:30.
+- **Cold start 2 (rev 00018, `eval/results/phase9/cold-start-2/`):** question sent first, with no `/health`.
+  - Idle 20.9 min: last request 06:48:30; uvicorn shutdown logged 07:03:50; no requests in the window (watcher-checked).
+  - Instance start 07:09:28.2 → process start +14.3 s → app startup 5.8 s → ready at +20.1 s.
+  - Client: first SSE byte 20.4 s, **TTFT 28.7 s**, total 31.5 s. Server-side TTFT 8.3 s (plan: Summary, all Gemini).
+- Forced-provider runs (local, code 85e6649, `eval/results/phase9/forced-{openai,gemini}-local/`), 32 RAGAS items each:
+  - OpenAI: 31 done, h01 partial. Gemini: 32 done.
+  - Two Gemini outliers, both real tail events and kept:
+    - c01, TTFT 34 s: the planner hit its 20 s timeout and the retry succeeded;
+    - p04, TTFT 38 s: one OpenAI embedding call inside `corpus_search` took 30.6 s; the other retrievals were < 0.4 s.
+  - Judge cost for faithfulness + answer relevancy on the OpenAI run: $1.20 (higher than the $0.56 estimate).
+- Main run (deployed rev 00018, routed, warm, `eval/results/phase9/routed-deployed/`): all 44 items `done`.
+  - RAGAS (n = 32, 0 failed): faithfulness 0.981, answer relevance 0.828, context precision 0.714, context recall 0.914.
+  - Non-RAGAS deterministic checks: 12 / 12 pass.
+  - Multi repeats (`routed-deployed-multi/`): 6 more runs, all done, TTFT 24–37 s. The variance comes from planner reasoning (394 reasoning tokens in the slowest run) and extra Data SQL rounds.
+- Forced runs scored with faithfulness and answer relevance only (precision and recall measure retrieval; a retrieval-rank diagnostic covers the providers instead):
+  - OpenAI: 0.994 / 0.737.
+  - Gemini: 0.966 / 0.802.
+- `docs/evaluation.md` written from `summary.json` (`scripts/summarize_phase9.py`).
+  - Self-review corrections before commit: the paraphrase comparison (p01 is an exception), "routed between forced runs" was wrong for answer relevance, an unverified client-location detail removed, two unverified causal explanations removed, and the spend sum fixed to $2.89 system.
+- Spend: $8.36 of the student-raised $9 (system $2.89, judge $5.33, probe $0.15), plus 10 Tavily searches. About $0.6 left for the tester.
+- **Tester Phase 9 gate: PHASE FAIL** (`docs/testing/phase-9-20261028T0737Z.md`). It ran 72 offline recompute checks (all hold), took a second cold sample on rev 00018 (TTFT 30.8 s), and spent about $0.21.
+  - **P9-D1 (Medium):** RAGAS contexts left out Tavily results, which arrive in `web_search` events, not `retrieval` events.
+    - Fixed in `scripts/ragas_eval.py` `contexts_of`, with a `--merge` mode that rescores chosen items and metrics and keeps the rest.
+    - New `tests/unit/test_phase9_ragas_contexts.py` (4 tests).
+    - Affected items, confirmed independently: routed c06, and forced-Gemini c06 and p02. They were rescored on the context-dependent metrics only:
+      - routed c06: F 0.808→0.833, CP 0.987→0.960, CR 0.714→0.833;
+      - Gemini c06: F 0.857→0.966; Gemini p02: F 0.708→0.958.
+    - New means: main F 0.982, CP 0.713, CR 0.917 (AR unchanged 0.828); Gemini F 0.977 (was 0.966). Rescore cost about $0.17.
+  - **P9-D2 (Low):** the evaluation.md §1 "not used for any tuning" was reworded to disclose the post-freeze lookup fix.
+  - **P9-N2:** the doubly rounded figures were recomputed from the unrounded values; "~12 %" corrected to "about 15 %" (14.6 %).
+  - **P9-N3:** `started_utc` is now taken before the request. P9-N1 (a citation marker after the final period is dropped when the next sentence is an abstention; 1 of 119 runs) is noted, not fixed. P9-N4 belongs to Phase 10.
+  - Full suite: 542 passed, 37 skipped, 1 xfailed. Phase 9 spend so far, including the tester: about $8.74 of $9.
+- **Tester retest: PHASE PASS** (`docs/testing/phase-9-retest-20261028T0815Z.md`, $0).
+  - Evidence verifier 72/72: one expected value updated, because its context count now includes web results.
+  - New merge-integrity test 16/16 against 765584c: only the 3 rows changed, answer relevance kept. The new unit tests fail on the pre-fix code. Full suite 542 passed, 37 skipped, 1 xfailed.
+  - Notes fixed afterwards:
+    - P9R-N1: `--merge` now adds the rescore time to `wall_s`; the two merged files' wall times were restored to original + rescore.
+    - P9R-N2: judge cost $5.49 and the tester's $0.21 listed.
+    - P9R-N3: reproduction commands for the forced-Gemini scoring and the merge rescores added.
+  - **Phase 9 marked done.** Spend about $8.74 of the $9 budget. Open: P9-N1 (citation after the final period, noted), P9-N4 (compliance.md, Phase 10), Phase 8b N1 and N2.

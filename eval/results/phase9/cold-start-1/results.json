@@ -1,0 +1,57 @@
+{
+  "summary": {
+    "url": "https://paper-analyst-g7b7dxmyuq-uw.a.run.app",
+    "health": {
+      "status": 200,
+      "latency_s": 22.489
+    },
+    "warmup": false,
+    "runs": 1,
+    "categories": {
+      "simple": {
+        "n": 1,
+        "ttft_median_s": 6.317,
+        "ttft_min_s": 6.317,
+        "ttft_max_s": 6.317,
+        "total_median_s": 9.133,
+        "cost_sum_usd": 0.0156
+      }
+    }
+  },
+  "results": [
+    {
+      "http_status": 200,
+      "first_byte_s": 0.134,
+      "ttft_s": 6.317,
+      "total_s": 9.133,
+      "server_timings": {
+        "retrieval_ms": 21,
+        "llm_ms_sum": 8933,
+        "ttft_ms": 6265,
+        "total_ms": 9081
+      },
+      "status": "done",
+      "workers": [
+        "summary"
+      ],
+      "providers_used": [
+        "gemini-openrouter"
+      ],
+      "llm_calls": [
+        "planner:planner:gemini-openrouter",
+        "summary:worker_tool_loop:gemini-openrouter",
+        "synthesizer:synthesize:gemini-openrouter"
+      ],
+      "cost_usd": 0.015573,
+      "n_citations": 5,
+      "n_tokens": 15,
+      "errors": [],
+      "raw": "self_rag_retrieve.run1.events.jsonl",
+      "category": "simple",
+      "key": "self_rag_retrieve",
+      "query": "How does Self-RAG decide when to retrieve?",
+      "run": 1,
+      "started_utc": "2026-10-28T06:40:33+00:00"
+    }
+  ]
+}

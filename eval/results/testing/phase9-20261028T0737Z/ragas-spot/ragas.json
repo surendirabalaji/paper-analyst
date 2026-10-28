@@ -1,0 +1,182 @@
+{
+ "summary": {
+  "run_dir": "eval/results/testing/phase9-20261028T0737Z/ragas-spot",
+  "label": "routed, deployed rev paper-analyst-00018-gll (image 74965a1), warm",
+  "testset_sha256": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382",
+  "ragas_version": "0.4.3",
+  "judge_model": "gpt-6.1-sol",
+  "judge_provider": "openai",
+  "embeddings": "text-embedding-3-small",
+  "answer_relevancy_strictness": 3,
+  "context_precision_variant": "ContextPrecision (reference-based)",
+  "max_contexts": null,
+  "aggregation": "arithmetic mean over items with a score; failed items counted separately, never imputed",
+  "all": {
+   "n_items": 3,
+   "faithfulness": {
+    "n": 3,
+    "n_failed": 0,
+    "mean": 0.9231,
+    "median": 1.0,
+    "min": 0.7692,
+    "max": 1.0
+   },
+   "answer_relevancy": {
+    "n": 3,
+    "n_failed": 0,
+    "mean": 0.8977,
+    "median": 0.919,
+    "min": 0.8547,
+    "max": 0.9194
+   },
+   "context_recall": {
+    "n": 3,
+    "n_failed": 0,
+    "mean": 0.7037,
+    "median": 0.7778,
+    "min": 0.3333,
+    "max": 1.0
+   }
+  },
+  "by_category": {
+   "rag_compare": {
+    "n_items": 1,
+    "faithfulness": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.7692,
+     "median": 0.7692,
+     "min": 0.7692,
+     "max": 0.7692
+    },
+    "answer_relevancy": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.8547,
+     "median": 0.8547,
+     "min": 0.8547,
+     "max": 0.8547
+    },
+    "context_recall": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.7778,
+     "median": 0.7778,
+     "min": 0.7778,
+     "max": 0.7778
+    }
+   },
+   "rag_hard": {
+    "n_items": 1,
+    "faithfulness": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 1.0,
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.919,
+     "median": 0.919,
+     "min": 0.919,
+     "max": 0.919
+    },
+    "context_recall": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.3333,
+     "median": 0.3333,
+     "min": 0.3333,
+     "max": 0.3333
+    }
+   },
+   "rag_single": {
+    "n_items": 1,
+    "faithfulness": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 1.0,
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.9194,
+     "median": 0.9194,
+     "min": 0.9194,
+     "max": 0.9194
+    },
+    "context_recall": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 1.0,
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    }
+   }
+  },
+  "judge_usage": {
+   "chat_in": 50913,
+   "chat_out": 7448,
+   "chat_cached": 24304,
+   "reasoning": 347,
+   "calls": 18,
+   "embed_tokens": 237
+  },
+  "judge_cost_usd_est": 0.1301,
+  "wall_s": 48.6
+ },
+ "rows": [
+  {
+   "id": "s04",
+   "run": 1,
+   "category": "rag_single",
+   "status": "done",
+   "n_contexts": 7,
+   "n_contexts_all": 7,
+   "answer_chars": 1253,
+   "faithfulness": 1.0,
+   "faithfulness_s": 15.1,
+   "answer_relevancy": 0.9194,
+   "answer_relevancy_s": 8.2,
+   "context_recall": 1.0,
+   "context_recall_s": 4.3
+  },
+  {
+   "id": "c06",
+   "run": 1,
+   "category": "rag_compare",
+   "status": "done",
+   "n_contexts": 14,
+   "n_contexts_all": 14,
+   "answer_chars": 2579,
+   "faithfulness": 0.7692,
+   "faithfulness_s": 27.9,
+   "answer_relevancy": 0.8547,
+   "answer_relevancy_s": 7.5,
+   "context_recall": 0.7778,
+   "context_recall_s": 12.9
+  },
+  {
+   "id": "h02",
+   "run": 1,
+   "category": "rag_hard",
+   "status": "done",
+   "n_contexts": 24,
+   "n_contexts_all": 24,
+   "answer_chars": 1900,
+   "faithfulness": 1.0,
+   "faithfulness_s": 28.3,
+   "answer_relevancy": 0.919,
+   "answer_relevancy_s": 7.3,
+   "context_recall": 0.3333,
+   "context_recall_s": 6.9
+  }
+ ]
+}

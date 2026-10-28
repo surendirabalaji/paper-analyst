@@ -1,0 +1,203 @@
+{
+ "url": "http://localhost:8765",
+ "label": "pilot-fix",
+ "testset_sha256": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382",
+ "results": [
+  {
+   "http_status": 200,
+   "first_byte_s": 0.01,
+   "ttft_s": 6.341,
+   "total_s": 7.766,
+   "server_timings": {
+    "retrieval_ms": 16,
+    "llm_ms_sum": 7715,
+    "ttft_ms": 6338,
+    "total_ms": 7763
+   },
+   "status": "done",
+   "workers": [
+    "summary"
+   ],
+   "providers_used": [
+    "openai"
+   ],
+   "llm_calls": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2884,
+     "ttft_ms": null,
+     "input_tokens": 864,
+     "output_tokens": 79,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.002518,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2454,
+     "ttft_ms": null,
+     "input_tokens": 2572,
+     "output_tokens": 110,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.006244,
+     "cost_source": "estimated"
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "model_id": "gpt-6.1-sol",
+     "model_returned": "gpt-6.1-sol",
+     "status": "ok",
+     "error_kind": null,
+     "attempt": 1,
+     "latency_ms": 2377,
+     "ttft_ms": 955,
+     "input_tokens": 4284,
+     "output_tokens": 151,
+     "reasoning_tokens": 0,
+     "cached_input_tokens": 0,
+     "cost_usd": 0.010078,
+     "cost_source": "estimated"
+    }
+   ],
+   "cost_usd": 0.01884,
+   "n_citations": 2,
+   "n_tokens": 148,
+   "errors": [],
+   "raw": "s01.run1.events.jsonl",
+   "retrieved": [
+    {
+     "key": "2501.15228v2::abstract::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_outline"
+    },
+    {
+     "key": "2501.15228v2::S3.SS3.SSS3::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::002",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::S3.SS4.SSS2::003",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::A4.SS2::000",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    },
+    {
+     "key": "2501.15228v2::A4.SS2::001",
+     "type": "paper_chunk",
+     "agent": "summary",
+     "tool": "get_paper_section"
+    }
+   ],
+   "n_retrieved_chunks": 8,
+   "reference_ranks": {
+    "2501.15228v2::S3.SS3.SSS3::000": 2
+   },
+   "reference_chunk_hit": true,
+   "reference_doc_hit": true,
+   "cited": [
+    "C2",
+    "C5"
+   ],
+   "routes": [
+    {
+     "agent": "planner",
+     "call_site": "planner",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "summary",
+     "call_site": "worker_tool_loop",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    },
+    {
+     "agent": "synthesizer",
+     "call_site": "synthesize",
+     "provider": "openai",
+     "dimension": "forced",
+     "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed."
+    }
+   ],
+   "tool_results": [
+    {
+     "agent": "summary",
+     "tool": "get_paper_outline",
+     "status": "ok",
+     "seeded_by": "planner"
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    },
+    {
+     "agent": "summary",
+     "tool": "get_paper_section",
+     "status": "ok",
+     "seeded_by": null
+    }
+   ],
+   "forced": true,
+   "id": "s01",
+   "run": 1,
+   "category": "rag_single",
+   "latency_category": "simple",
+   "query": "In MMOA-RAG, how is the Generator agent rewarded?",
+   "started_utc": "2026-10-28T06:30:23+00:00"
+  }
+ ]
+}

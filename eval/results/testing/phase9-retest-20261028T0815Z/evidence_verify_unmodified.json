@@ -1,0 +1,1310 @@
+{
+ "checks": [
+  {
+   "id": "T9-TS1 frozen hash",
+   "pass": true,
+   "detail": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382"
+  },
+  {
+   "id": "T9-TS2 composition 44 = 20/6/6/4/2/6",
+   "pass": true,
+   "detail": {
+    "rag_single": 20,
+    "rag_compare": 6,
+    "rag_hard": 6,
+    "data": 4,
+    "multi": 2,
+    "system": 6
+   }
+  },
+  {
+   "id": "T9-TS3 32 RAGAS items, all with reference + reference chunks",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-TS4 ragas flag only on rag_* categories",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-TS5 49 reference chunks over RAGAS items",
+   "pass": true,
+   "detail": 49
+  },
+  {
+   "id": "T9-TS6 every reference chunk id resolves in the Chroma index",
+   "pass": true,
+   "detail": "40/40; count=4521"
+  },
+  {
+   "id": "T9-routed-deployed-H testset hash recorded",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-routed-deployed-U one row per (id, run)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-routed-deployed-R results.json rows reproduce from raw events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-routed-deployed-F no forced routes in an ordinary run",
+   "pass": true,
+   "detail": {
+    "dims": {
+     "cost": 141,
+     "capability": 15
+    },
+    "providers": {
+     "gemini-openrouter": 141,
+     "openai": 15
+    }
+   }
+  },
+  {
+   "id": "T9-routed-deployed-C citations resolve to retrieved chunks / events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-routed-deployed-multi-H testset hash recorded",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-routed-deployed-multi-U one row per (id, run)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-routed-deployed-multi-R results.json rows reproduce from raw events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-routed-deployed-multi-F no forced routes in an ordinary run",
+   "pass": true,
+   "detail": {
+    "dims": {
+     "cost": 49,
+     "capability": 12
+    },
+    "providers": {
+     "gemini-openrouter": 49,
+     "openai": 12
+    }
+   }
+  },
+  {
+   "id": "T9-routed-deployed-multi-C citations resolve to retrieved chunks / events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-forced-openai-local-H testset hash recorded",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-forced-openai-local-U one row per (id, run)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-forced-openai-local-R results.json rows reproduce from raw events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-forced-openai-local-F every route dimension 'forced' and one provider",
+   "pass": true,
+   "detail": {
+    "dims": {
+     "forced": 96
+    },
+    "providers": {
+     "openai": 96
+    },
+    "models": {
+     "gpt-6.1-sol": 96
+    }
+   }
+  },
+  {
+   "id": "T9-forced-openai-local-C citations resolve to retrieved chunks / events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-forced-gemini-local-H testset hash recorded",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-forced-gemini-local-U one row per (id, run)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-forced-gemini-local-R results.json rows reproduce from raw events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-forced-gemini-local-F every route dimension 'forced' and one provider",
+   "pass": true,
+   "detail": {
+    "dims": {
+     "forced": 96
+    },
+    "providers": {
+     "gemini-openrouter": 96
+    },
+    "models": {
+     "google/gemini-3.8-flash": 96
+    }
+   }
+  },
+  {
+   "id": "T9-forced-gemini-local-C citations resolve to retrieved chunks / events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-forced-openai-local-N exactly the 32 RAGAS items",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-forced-gemini-local-N exactly the 32 RAGAS items",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-routed-N all 44 items once",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-multi-N m01, m02 runs 1-3",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-routed-deployed-O started_utc monotonic (no out-of-order rerun rows)",
+   "pass": true,
+   "detail": "2026-10-28T07:11:18+00:00 .. 2026-10-28T07:21:14+00:00"
+  },
+  {
+   "id": "T9-routed-deployed-multi-O started_utc monotonic (no out-of-order rerun rows)",
+   "pass": true,
+   "detail": "2026-10-28T07:21:49+00:00 .. 2026-10-28T07:24:52+00:00"
+  },
+  {
+   "id": "T9-forced-openai-local-O started_utc monotonic (no out-of-order rerun rows)",
+   "pass": true,
+   "detail": "2026-10-28T06:51:41+00:00 .. 2026-10-28T06:58:20+00:00"
+  },
+  {
+   "id": "T9-forced-gemini-local-O started_utc monotonic (no out-of-order rerun rows)",
+   "pass": true,
+   "detail": "2026-10-28T06:58:39+00:00 .. 2026-10-28T07:05:14+00:00"
+  },
+  {
+   "id": "T9-routed-deployed-Z first event after test-set freeze",
+   "pass": true,
+   "detail": "2026-10-28T07:11:18.252Z"
+  },
+  {
+   "id": "T9-routed-deployed-multi-Z first event after test-set freeze",
+   "pass": true,
+   "detail": "2026-10-28T07:21:49.834Z"
+  },
+  {
+   "id": "T9-forced-openai-local-Z first event after test-set freeze",
+   "pass": true,
+   "detail": "2026-10-28T06:51:41.868Z"
+  },
+  {
+   "id": "T9-forced-gemini-local-Z first event after test-set freeze",
+   "pass": true,
+   "detail": "2026-10-28T06:58:39.905Z"
+  },
+  {
+   "id": "T9-RG-routed-deployed-1 rows are exactly the 32 RAGAS items",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-routed-deployed-2 testset hash in ragas summary",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-routed-deployed-3 answers/contexts match raw events; scores in [0,1], none missing",
+   "pass": false,
+   "detail": [
+    [
+     "c06",
+     "n_contexts",
+     14,
+     0,
+     0,
+     18
+    ]
+   ]
+  },
+  {
+   "id": "T9-RG-routed-deployed-4 no retrieved chunk silently dropped from contexts (absent from index)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-RG-routed-deployed-5 RAGAS aggregates recompute",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-RG-routed-deployed-6 no context truncation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-forced-openai-local-1 rows are exactly the 32 RAGAS items",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-forced-openai-local-2 testset hash in ragas summary",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-forced-openai-local-3 answers/contexts match raw events; scores in [0,1], none missing",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-RG-forced-openai-local-4 no retrieved chunk silently dropped from contexts (absent from index)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-RG-forced-openai-local-5 RAGAS aggregates recompute",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-RG-forced-openai-local-6 no context truncation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-forced-gemini-local-1 rows are exactly the 32 RAGAS items",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-forced-gemini-local-2 testset hash in ragas summary",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-forced-gemini-local-3 answers/contexts match raw events; scores in [0,1], none missing",
+   "pass": false,
+   "detail": [
+    [
+     "c06",
+     "n_contexts",
+     14,
+     0,
+     0,
+     18
+    ],
+    [
+     "p02",
+     "n_contexts",
+     14,
+     0,
+     0,
+     18
+    ]
+   ]
+  },
+  {
+   "id": "T9-RG-forced-gemini-local-4 no retrieved chunk silently dropped from contexts (absent from index)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-RG-forced-gemini-local-5 RAGAS aggregates recompute",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-RG-forced-gemini-local-6 no context truncation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-RG-main all four metrics on the main run",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-S1 summary.json latency/cost blocks recompute from raw events",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-S2 simple_all excludes multi and system (36 = 32 + 4)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-S3 provider comparison block routed-deployed recomputes",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-S3 provider comparison block forced-openai-local recomputes",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-S3 provider comparison block forced-gemini-local recomputes",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-S4 routing share 50 requests, 217 ok calls, 190 Gemini / 27 OpenAI, synth 31/19, 19 both",
+   "pass": true,
+   "detail": {
+    "requests": 50,
+    "ok_calls": 217,
+    "by_provider": {
+     "gemini-openrouter": 190,
+     "openai": 27
+    },
+    "synthesis": {
+     "gemini-openrouter": 31,
+     "openai": 19
+    },
+    "requests_both_ok_calls": 19,
+    "requests_both_providers_used": 19,
+    "non_ok_calls": {
+     "('gemini-openrouter', 'error', 'timeout')": 1
+    },
+    "model_returned_mismatch": [],
+    "dimensions": {
+     "cost": 190,
+     "capability": 27
+    },
+    "synthesis_dims_by_provider": {
+     "('gemini-openrouter', 'cost')": 31,
+     "('openai', 'capability')": 19
+    }
+   }
+  },
+  {
+   "id": "T9-S5 summary.json routing block agrees",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "T9-S6 returned model id matches the routed model on every ok call",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "T9-S7 retrieval diagnostic routed-deployed recomputes",
+   "pass": true,
+   "detail": {
+    "items_chunk_hit": 29,
+    "items_doc_hit": 32,
+    "ref_retrieved": 33,
+    "ref_total": 49,
+    "median_rank": 4
+   }
+  },
+  {
+   "id": "T9-S7 retrieval diagnostic forced-openai-local recomputes",
+   "pass": true,
+   "detail": {
+    "items_chunk_hit": 30,
+    "items_doc_hit": 32,
+    "ref_retrieved": 40,
+    "ref_total": 49,
+    "median_rank": 4.0
+   }
+  },
+  {
+   "id": "T9-S7 retrieval diagnostic forced-gemini-local recomputes",
+   "pass": true,
+   "detail": {
+    "items_chunk_hit": 26,
+    "items_doc_hit": 32,
+    "ref_retrieved": 30,
+    "ref_total": 49,
+    "median_rank": 4.5
+   }
+  },
+  {
+   "id": "T9-SC1 system_checks 12/12 pass",
+   "pass": true,
+   "detail": {
+    "n": 12,
+    "passed": 12,
+    "by_category": {
+     "data": "4/4",
+     "multi": "2/2",
+     "system": "6/6"
+    }
+   }
+  },
+  {
+   "id": "T9-SC2 all 8 multi runs: done, data->summary dependency, Summary read the SQL-truth paper, D# and C#",
+   "pass": true,
+   "detail": [
+    {
+     "key": "routed-deployed:m01:1",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    },
+    {
+     "key": "routed-deployed:m02:1",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    },
+    {
+     "key": "routed-deployed-multi:m01:1",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    },
+    {
+     "key": "routed-deployed-multi:m02:1",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    },
+    {
+     "key": "routed-deployed-multi:m01:2",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    },
+    {
+     "key": "routed-deployed-multi:m02:2",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    },
+    {
+     "key": "routed-deployed-multi:m01:3",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    },
+    {
+     "key": "routed-deployed-multi:m02:3",
+     "status": "done",
+     "shape": [
+      [
+       "data",
+       []
+      ],
+      [
+       "summary",
+       [
+        "t1"
+       ]
+      ]
+     ],
+     "summary_read_expected": true,
+     "D": true,
+     "C": true,
+     "data_ok": true
+    }
+   ]
+  },
+  {
+   "id": "T9-SC3 x04 same MCP tool, two agents, distinct queries, both ok",
+   "pass": true,
+   "detail": {
+    "calls": [
+     [
+      "research",
+      "tavily_search",
+      "{\"query\": \"\\\"tool learning\\\" OR \\\"tool use\\\" LLM recent developments trends 2024 2025 2026\"}"
+     ],
+     [
+      "summary",
+      "tavily_search",
+      "{\"query\": \"\\\"Toolformer: Language Models Can Teach Themselves to Use Tools\\\" peer-reviewed venue NeurIPS ICML ICLR ACL\"}"
+     ]
+    ],
+    "results": [
+     [
+      "research",
+      "ok"
+     ],
+     [
+      "summary",
+      "ok"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "T9-SEC no credential patterns in eval/results/phase9",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "passed": 70,
+ "total": 72,
+ "ragas": {
+  "routed-deployed": {
+   "metrics": [
+    "faithfulness",
+    "answer_relevancy",
+    "context_precision",
+    "context_recall"
+   ],
+   "recomputed": {
+    "faithfulness": {
+     "n": 32,
+     "mean": 0.981784375,
+     "median": 1.0,
+     "min": 0.8333
+    },
+    "faithfulness:rag_single": 0.9837,
+    "faithfulness:rag_compare": 0.9656,
+    "faithfulness:rag_hard": 0.9917,
+    "answer_relevancy": {
+     "n": 32,
+     "mean": 0.827671875,
+     "median": 0.8521000000000001,
+     "min": 0.5398
+    },
+    "answer_relevancy:rag_single": 0.8445,
+    "answer_relevancy:rag_compare": 0.8502,
+    "answer_relevancy:rag_hard": 0.7489,
+    "context_precision": {
+     "n": 32,
+     "mean": 0.712634375,
+     "median": 0.7038,
+     "min": 0.2083
+    },
+    "context_precision:rag_single": 0.7161,
+    "context_precision:rag_compare": 0.9049,
+    "context_precision:rag_hard": 0.509,
+    "context_recall": {
+     "n": 32,
+     "mean": 0.9171875,
+     "median": 1.0,
+     "min": 0.25
+    },
+    "context_recall:rag_single": 0.9917,
+    "context_recall:rag_compare": 0.7944,
+    "context_recall:rag_hard": 0.7917
+   },
+   "judge": "gpt-6.1-sol",
+   "judge_cost": 2.8848,
+   "max_contexts": null
+  },
+  "forced-openai-local": {
+   "metrics": [
+    "faithfulness",
+    "answer_relevancy"
+   ],
+   "recomputed": {
+    "faithfulness": {
+     "n": 32,
+     "mean": 0.99369375,
+     "median": 1.0,
+     "min": 0.9167
+    },
+    "faithfulness:rag_single": 1.0,
+    "faithfulness:rag_compare": 1.0,
+    "faithfulness:rag_hard": 0.9664,
+    "answer_relevancy": {
+     "n": 32,
+     "mean": 0.73645625,
+     "median": 0.756,
+     "min": 0.0
+    },
+    "answer_relevancy:rag_single": 0.752,
+    "answer_relevancy:rag_compare": 0.8625,
+    "answer_relevancy:rag_hard": 0.5585
+   },
+   "judge": "gpt-6.1-sol",
+   "judge_cost": 1.1999,
+   "max_contexts": null
+  },
+  "forced-gemini-local": {
+   "metrics": [
+    "faithfulness",
+    "answer_relevancy"
+   ],
+   "recomputed": {
+    "faithfulness": {
+     "n": 32,
+     "mean": 0.9771625,
+     "median": 1.0,
+     "min": 0.8824
+    },
+    "faithfulness:rag_single": 0.9781,
+    "faithfulness:rag_compare": 0.9942,
+    "faithfulness:rag_hard": 0.9568,
+    "answer_relevancy": {
+     "n": 32,
+     "mean": 0.802075,
+     "median": 0.8351500000000001,
+     "min": 0.0
+    },
+    "answer_relevancy:rag_single": 0.8404,
+    "answer_relevancy:rag_compare": 0.867,
+    "answer_relevancy:rag_hard": 0.6095
+   },
+   "judge": "gpt-6.1-sol",
+   "judge_cost": 1.2458,
+   "max_contexts": null
+  }
+ },
+ "latency": {
+  "simple_all": {
+   "ttft_s": {
+    "n": 36,
+    "median": 7.526,
+    "p90": 11.922,
+    "min": 5.8,
+    "max": 31.39
+   },
+   "total_s": {
+    "n": 36,
+    "median": 11.111,
+    "p90": 16.758,
+    "min": 7.592,
+    "max": 38.403
+   },
+   "retrieval_s": {
+    "n": 36,
+    "median": 0.499,
+    "p90": 0.923,
+    "min": 0.009,
+    "max": 1.081
+   },
+   "llm_sum_s": {
+    "n": 36,
+    "median": 10.788,
+    "p90": 15.123,
+    "min": 7.488,
+    "max": 37.173
+   },
+   "cost_usd": {
+    "n": 36,
+    "median": 0.021,
+    "p90": 0.032,
+    "min": 0.008,
+    "max": 0.04
+   }
+  },
+  "simple_rag_items": {
+   "ttft_s": {
+    "n": 32,
+    "median": 7.472,
+    "p90": 9.895,
+    "min": 5.8,
+    "max": 31.39
+   },
+   "total_s": {
+    "n": 32,
+    "median": 10.72,
+    "p90": 16.758,
+    "min": 7.592,
+    "max": 38.403
+   },
+   "retrieval_s": {
+    "n": 32,
+    "median": 0.486,
+    "p90": 0.879,
+    "min": 0.009,
+    "max": 1.009
+   },
+   "llm_sum_s": {
+    "n": 32,
+    "median": 10.189,
+    "p90": 15.123,
+    "min": 7.488,
+    "max": 37.173
+   },
+   "cost_usd": {
+    "n": 32,
+    "median": 0.022,
+    "p90": 0.032,
+    "min": 0.008,
+    "max": 0.04
+   }
+  },
+  "simple_data_items": {
+   "ttft_s": {
+    "n": 4,
+    "median": 12.747,
+    "p90": 14.975,
+    "min": 11.514,
+    "max": 14.975
+   },
+   "total_s": {
+    "n": 4,
+    "median": 12.796,
+    "p90": 15.499,
+    "min": 11.673,
+    "max": 15.499
+   },
+   "retrieval_s": {
+    "n": 4,
+    "median": 0.548,
+    "p90": 1.081,
+    "min": 0.518,
+    "max": 1.081
+   },
+   "llm_sum_s": {
+    "n": 4,
+    "median": 12.198,
+    "p90": 14.339,
+    "min": 11.04,
+    "max": 14.339
+   },
+   "cost_usd": {
+    "n": 4,
+    "median": 0.011,
+    "p90": 0.021,
+    "min": 0.01,
+    "max": 0.021
+   }
+  },
+  "multi": {
+   "ttft_s": {
+    "n": 8,
+    "median": 32.276,
+    "p90": 35.18,
+    "min": 23.978,
+    "max": 37.233
+   },
+   "total_s": {
+    "n": 8,
+    "median": 35.423,
+    "p90": 40.008,
+    "min": 28.308,
+    "max": 40.573
+   },
+   "retrieval_s": {
+    "n": 8,
+    "median": 1.325,
+    "p90": 1.607,
+    "min": 0.534,
+    "max": 1.613
+   },
+   "llm_sum_s": {
+    "n": 8,
+    "median": 33.68,
+    "p90": 38.862,
+    "min": 27.662,
+    "max": 39.381
+   },
+   "cost_usd": {
+    "n": 8,
+    "median": 0.055,
+    "p90": 0.065,
+    "min": 0.043,
+    "max": 0.065
+   }
+  },
+  "system_items": {
+   "ttft_s": {
+    "n": 6,
+    "median": 11.723,
+    "p90": 15.111,
+    "min": 7.014,
+    "max": 29.198
+   },
+   "total_s": {
+    "n": 6,
+    "median": 14.214,
+    "p90": 21.243,
+    "min": 10.375,
+    "max": 37.318
+   },
+   "retrieval_s": {
+    "n": 6,
+    "median": 0.581,
+    "p90": 0.689,
+    "min": 0.237,
+    "max": 1.04
+   },
+   "llm_sum_s": {
+    "n": 6,
+    "median": 11.773,
+    "p90": 17.168,
+    "min": 9.911,
+    "max": 30.939
+   },
+   "cost_usd": {
+    "n": 6,
+    "median": 0.024,
+    "p90": 0.033,
+    "min": 0.016,
+    "max": 0.055
+   }
+  },
+  "cmp:routed-deployed": {
+   "ttft_s": {
+    "n": 32,
+    "median": 7.472,
+    "p90": 9.895,
+    "min": 5.8,
+    "max": 31.39
+   },
+   "total_s": {
+    "n": 32,
+    "median": 10.72,
+    "p90": 16.758,
+    "min": 7.592,
+    "max": 38.403
+   },
+   "retrieval_s": {
+    "n": 32,
+    "median": 0.486,
+    "p90": 0.879,
+    "min": 0.009,
+    "max": 1.009
+   },
+   "llm_sum_s": {
+    "n": 32,
+    "median": 10.189,
+    "p90": 15.123,
+    "min": 7.488,
+    "max": 37.173
+   },
+   "cost_usd": {
+    "n": 32,
+    "median": 0.022,
+    "p90": 0.032,
+    "min": 0.008,
+    "max": 0.04
+   }
+  },
+  "cmp:routed-deployed:cost_mean": 0.0215,
+  "cmp:routed-deployed:status": {
+   "done": 32
+  },
+  "cmp:forced-openai-local": {
+   "ttft_s": {
+    "n": 32,
+    "median": 6.774,
+    "p90": 9.182,
+    "min": 5.478,
+    "max": 11.423
+   },
+   "total_s": {
+    "n": 32,
+    "median": 12.184,
+    "p90": 17.879,
+    "min": 7.46,
+    "max": 23.232
+   },
+   "retrieval_s": {
+    "n": 32,
+    "median": 0.311,
+    "p90": 1.11,
+    "min": 0.017,
+    "max": 1.337
+   },
+   "llm_sum_s": {
+    "n": 32,
+    "median": 11.938,
+    "p90": 17.539,
+    "min": 7.411,
+    "max": 22.602
+   },
+   "cost_usd": {
+    "n": 32,
+    "median": 0.025,
+    "p90": 0.032,
+    "min": 0.015,
+    "max": 0.04
+   }
+  },
+  "cmp:forced-openai-local:cost_mean": 0.0244,
+  "cmp:forced-openai-local:status": {
+   "done": 31,
+   "partial": 1
+  },
+  "cmp:forced-gemini-local": {
+   "ttft_s": {
+    "n": 32,
+    "median": 7.284,
+    "p90": 10.66,
+    "min": 5.65,
+    "max": 37.653
+   },
+   "total_s": {
+    "n": 32,
+    "median": 10.837,
+    "p90": 16.018,
+    "min": 7.636,
+    "max": 40.673
+   },
+   "retrieval_s": {
+    "n": 32,
+    "median": 0.525,
+    "p90": 1.29,
+    "min": 0.012,
+    "max": 30.951
+   },
+   "llm_sum_s": {
+    "n": 32,
+    "median": 10.13,
+    "p90": 12.883,
+    "min": 7.447,
+    "max": 36.907
+   },
+   "cost_usd": {
+    "n": 32,
+    "median": 0.021,
+    "p90": 0.029,
+    "min": 0.011,
+    "max": 0.032
+   }
+  },
+  "cmp:forced-gemini-local:cost_mean": 0.0208,
+  "cmp:forced-gemini-local:status": {
+   "done": 32
+  }
+ },
+ "routing": {
+  "requests": 50,
+  "ok_calls": 217,
+  "by_provider": {
+   "gemini-openrouter": 190,
+   "openai": 27
+  },
+  "synthesis": {
+   "gemini-openrouter": 31,
+   "openai": 19
+  },
+  "requests_both_ok_calls": 19,
+  "requests_both_providers_used": 19,
+  "non_ok_calls": {
+   "('gemini-openrouter', 'error', 'timeout')": 1
+  },
+  "model_returned_mismatch": [],
+  "dimensions": {
+   "cost": 190,
+   "capability": 27
+  },
+  "synthesis_dims_by_provider": {
+   "('gemini-openrouter', 'cost')": 31,
+   "('openai', 'capability')": 19
+  }
+ },
+ "retrieval_diag": {
+  "routed-deployed": {
+   "items_chunk_hit": 29,
+   "items_doc_hit": 32,
+   "ref_retrieved": 33,
+   "ref_total": 49,
+   "median_rank": 4
+  },
+  "forced-openai-local": {
+   "items_chunk_hit": 30,
+   "items_doc_hit": 32,
+   "ref_retrieved": 40,
+   "ref_total": 49,
+   "median_rank": 4.0
+  },
+  "forced-gemini-local": {
+   "items_chunk_hit": 26,
+   "items_doc_hit": 32,
+   "ref_retrieved": 30,
+   "ref_total": 49,
+   "median_rank": 4.5
+  }
+ },
+ "multi_runs": [
+  {
+   "key": "routed-deployed:m01:1",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  },
+  {
+   "key": "routed-deployed:m02:1",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  },
+  {
+   "key": "routed-deployed-multi:m01:1",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  },
+  {
+   "key": "routed-deployed-multi:m02:1",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  },
+  {
+   "key": "routed-deployed-multi:m01:2",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  },
+  {
+   "key": "routed-deployed-multi:m02:2",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  },
+  {
+   "key": "routed-deployed-multi:m01:3",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  },
+  {
+   "key": "routed-deployed-multi:m02:3",
+   "status": "done",
+   "shape": [
+    [
+     "data",
+     []
+    ],
+    [
+     "summary",
+     [
+      "t1"
+     ]
+    ]
+   ],
+   "summary_read_expected": true,
+   "D": true,
+   "C": true,
+   "data_ok": true
+  }
+ ],
+ "dropped_markers": [
+  [
+   "forced-openai-local",
+   "p02",
+   "C10"
+  ]
+ ]
+}

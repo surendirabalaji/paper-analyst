@@ -1,0 +1,168 @@
+{
+ "summary": {
+  "run_dir": "eval/results/phase9/pilot-forced-openai",
+  "label": "pilot-forced-openai-local",
+  "testset_sha256": "50e9c0f3e629e9bc39f6412e72133ab8c925b61f4eeaf22e791680cf1f8f5382",
+  "ragas_version": "0.4.3",
+  "judge_model": "gpt-6.1-sol",
+  "judge_provider": "openai",
+  "embeddings": "text-embedding-3-small",
+  "answer_relevancy_strictness": 3,
+  "context_precision_variant": "ContextPrecision (reference-based)",
+  "max_contexts": null,
+  "aggregation": "arithmetic mean over items with a score; failed items counted separately, never imputed",
+  "all": {
+   "n_items": 2,
+   "faithfulness": {
+    "n": 2,
+    "n_failed": 0,
+    "mean": 0.5,
+    "median": 0.5,
+    "min": 0.0,
+    "max": 1.0
+   },
+   "answer_relevancy": {
+    "n": 2,
+    "n_failed": 0,
+    "mean": 0.4552,
+    "median": 0.4552,
+    "min": 0.0,
+    "max": 0.9104
+   },
+   "context_precision": {
+    "n": 2,
+    "n_failed": 0,
+    "mean": 0.4098,
+    "median": 0.4098,
+    "min": 0.0,
+    "max": 0.8196
+   },
+   "context_recall": {
+    "n": 2,
+    "n_failed": 0,
+    "mean": 0.5,
+    "median": 0.5,
+    "min": 0.0,
+    "max": 1.0
+   }
+  },
+  "by_category": {
+   "rag_compare": {
+    "n_items": 1,
+    "faithfulness": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 1.0,
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    },
+    "answer_relevancy": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.9104,
+     "median": 0.9104,
+     "min": 0.9104,
+     "max": 0.9104
+    },
+    "context_precision": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.8196,
+     "median": 0.8196,
+     "min": 0.8196,
+     "max": 0.8196
+    },
+    "context_recall": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 1.0,
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0
+    }
+   },
+   "rag_single": {
+    "n_items": 1,
+    "faithfulness": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "answer_relevancy": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "context_precision": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "context_recall": {
+     "n": 1,
+     "n_failed": 0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  "judge_usage": {
+   "chat_in": 54717,
+   "chat_out": 5395,
+   "chat_cached": 0,
+   "reasoning": 178,
+   "calls": 32,
+   "embed_tokens": 131
+  },
+  "judge_cost_usd_est": 0.1634,
+  "wall_s": 100.7
+ },
+ "rows": [
+  {
+   "id": "s01",
+   "run": 1,
+   "category": "rag_single",
+   "status": "partial",
+   "n_contexts": 0,
+   "n_contexts_all": 0,
+   "answer_chars": 250,
+   "faithfulness": 0.0,
+   "faithfulness_s": 8.7,
+   "answer_relevancy": 0.0,
+   "answer_relevancy_s": 7.4,
+   "context_precision": 0.0,
+   "context_precision_s": 2.5,
+   "context_recall": 0.0,
+   "context_recall_s": 4.5
+  },
+  {
+   "id": "c01",
+   "run": 1,
+   "category": "rag_compare",
+   "status": "done",
+   "n_contexts": 19,
+   "n_contexts_all": 19,
+   "answer_chars": 1741,
+   "faithfulness": 1.0,
+   "faithfulness_s": 26.5,
+   "answer_relevancy": 0.9104,
+   "answer_relevancy_s": 7.0,
+   "context_precision": 0.8196,
+   "context_precision_s": 59.2,
+   "context_recall": 1.0,
+   "context_recall_s": 7.6
+  }
+ ]
+}

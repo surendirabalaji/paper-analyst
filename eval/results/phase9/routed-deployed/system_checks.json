@@ -1,0 +1,214 @@
+{
+ "summary": {
+  "n": 12,
+  "passed": 12,
+  "by_category": {
+   "data": "4/4",
+   "multi": "2/2",
+   "system": "6/6"
+  }
+ },
+ "rows": [
+  {
+   "id": "d01",
+   "category": "data",
+   "kind": null,
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "answer has '14'": true,
+    "plan has a data task": true,
+    "D# citation": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "There are 14 papers in the corpus published in 2026 [D1].",
+   "run": 1
+  },
+  {
+   "id": "d02",
+   "category": "data",
+   "kind": null,
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "answer has 'Guanzhi Wang'": true,
+    "answer has 'Yuqi Xie'": true,
+    "answer has 'Yunfan Jiang'": true,
+    "answer has 'Ajay Mandlekar'": true,
+    "answer has 'Chaowei Xiao'": true,
+    "answer has 'Yuke Zhu'": true,
+    "answer has 'Linxi Fan'": true,
+    "answer has 'Anima Anandkumar'": true,
+    "plan has a data task": true,
+    "D# citation": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "The authors of the paper \"Voyager: An Open-Ended Embodied Agent with Large Language Models\" (arXiv:2305.16291), listed in order, are [D1, D2]:\n\n* Guanzhi Wang [D1, D2]\n* Yuqi Xie [D2]\n* Yunfan Jiang [D2]\n* Ajay Mandlekar [D2]\n* Chaowei Xiao [D2]\n* Yuke Zhu [D2]\n* Linxi Fan [D2]\n* Anima Anandkumar [D2]",
+   "run": 1
+  },
+  {
+   "id": "d03",
+   "category": "data",
+   "kind": null,
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "answer has 'cs.CL'": true,
+    "answer has '47'": true,
+    "plan has a data task": true,
+    "D# citation": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "The primary arXiv category with the most papers in the corpus is **cs.CL**, which has **47** papers [D1].",
+   "run": 1
+  },
+  {
+   "id": "d04",
+   "category": "data",
+   "kind": null,
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "answer has '58'": true,
+    "plan has a data task": true,
+    "D# citation": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "Exactly 58 papers in the corpus link to a code repository [D1].",
+   "run": 1
+  },
+  {
+   "id": "m01",
+   "category": "multi",
+   "kind": null,
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "plan is data then summary with a dependency": true,
+    "summary read 2606.05339": true,
+    "D# citation": true,
+    "C# citation": true,
+    "fact '2606.05339'": true,
+    "fact '833'": true,
+    "fact '473'": true,
+    "fact '11 '": true,
+    "fact '27 '": true,
+    "fact '55'": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "The most recent paper in the corpus about MCP is **“A Taxonomy of Runtime Faults in Model Context Protocol Servers”** (arXiv:2606.05339), published **June 3, 2026**. [D1]\n\nIts main finding is that **MCP reliability problems extend beyond server crashes**: servers can remain operational while delivering incorrect results because of protocol, session, schema, or tool-execution faults. Failures frequ",
+   "run": 1
+  },
+  {
+   "id": "m02",
+   "category": "multi",
+   "kind": null,
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "plan is data then summary with a dependency": true,
+    "summary read 2601.02553": true,
+    "D# citation": true,
+    "C# citation": true,
+    "fact 'SimpleMem'": true,
+    "fact '2601.02553'": true,
+    "fact 'compression'": true,
+    "fact '26.4'": true,
+    "fact '30-fold'": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "The corpus contains **four 2026 papers about agent memory**, ordered by publication date: [D1][D2][D3][D4]\n\n| Date | Paper | arXiv ID |\n|---|---|---|\n| 2026-01-05 | **SimpleMem: Efficient Lifelong Memory for LLM Agents** | 2601.02553 [D1] |\n| 2026-06-04 | **Memory is Reconstructed, Not Retrieved: Graph Memory for LLM Agents** | 2606.06036 [D2] |\n| 2026-06-23 | **Governed Shared Memory for Multi-Ag",
+   "run": 1
+  },
+  {
+   "id": "x01",
+   "category": "system",
+   "kind": "out_of_corpus",
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "no C# corpus citation": true,
+    "web claims carry W# with a retrieval date": true,
+    "answer marks the source as web, not the corpus": true,
+    "no unresolved citation markers": true
+   },
+   "needs_review": true,
+   "answer_excerpt": "Current web sources retrieved on October 28, 2026, outline that photosynthesis converts light energy into chemical energy through two interconnected stages:\n\n* **Light-Dependent Reactions:** Light energy is initially captured by pigment molecules in leaves [W1]. Water is broken down (oxidized) into oxygen gas, and reaction center pigments pass excited electrons through an electron transport chain ",
+   "run": 1
+  },
+  {
+   "id": "x02",
+   "category": "system",
+   "kind": "missing_paper",
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "says no such paper": true,
+    "no citation to a 'Voyager-2' source": true,
+    "no unresolved citation markers": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "The available evidence does not answer this because no paper titled \"Voyager-2\" by OpenAI exists in the provided evidence. \n\nThe relevant details from the available records and current web sources include:\n\n* **Voyager Authorship and Affiliations:** The paper introducing the system is titled *\"Voyager: An Open-Ended Embodied Agent with Large Language Models\"* and was authored by Guanzhi Wang, Yuqi",
+   "run": 1
+  },
+  {
+   "id": "x03",
+   "category": "system",
+   "kind": "live",
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "tavily_search ok": true,
+    "W# citations with retrieval date": true,
+    "no unresolved citation markers": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "The latest published MCP specification identified in the available official sources is **2026-07-28**, with a subsequent roadmap update dated **August 22, 2026**. The main shift is toward a **stateless, HTTP-native protocol** rather than session-oriented connections. *(Official web sources retrieved October 28, 2026.)* [W1][W5]\n\n### What changed in the specification\n\n- **Stateless requests replace",
+   "run": 1
+  },
+  {
+   "id": "x04",
+   "category": "system",
+   "kind": "mcp_sharing",
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "research called tavily_search": true,
+    "summary called tavily_search": true,
+    "W# and C# citations": true,
+    "no unresolved citation markers": true
+   },
+   "needs_review": false,
+   "answer_excerpt": "**Yes—Toolformer was published at NeurIPS 2023, a peer-reviewed conference, not just posted as a preprint.** The official NeurIPS site lists the paper, and alphaXiv identifies it as an oral presentation at NeurIPS 2023. [W5][W7]\n\n### What has happened recently in tool learning?\n\nToolformer demonstrated self-supervised learning of **which tools to call, when to call them, what arguments to supply, ",
+   "run": 1
+  },
+  {
+   "id": "x05",
+   "category": "system",
+   "kind": "insufficient_evidence",
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "states the evidence does not answer it": true,
+    "no unresolved citation markers": true
+   },
+   "needs_review": true,
+   "answer_excerpt": "**The available evidence does not answer this:** it lacks a comparable production-cost evaluation identifying one agent framework as cheapest across all benchmarks.\n\nThe closest cost table lists **AppWorld at $0.3740 per trace**, the lowest among seven listed systems—but this measures the **LLM-as-a-judge annotation cost**, not the production cost of running the agents. [C7]\n\nA defensible comparis",
+   "run": 1
+  },
+  {
+   "id": "x06",
+   "category": "system",
+   "kind": "adversarial",
+   "status": "done",
+   "pass": true,
+   "checks": {
+    "refuses the unsupported claim": true,
+    "no unresolved citation markers": true
+   },
+   "needs_review": true,
+   "answer_excerpt": "The available evidence does not answer this, as it contains no citation or proof stating that Toolformer never fails.\n\nIn fact, the evidence indicates that Toolformer does make mistakes and has several documented limitations:\n\n* **Non-perfect Task Accuracy:** Evaluation results show that Toolformer does not achieve 100% accuracy on downstream benchmarks; for example, it scores 40.4% on ASDiv, 29.4",
+   "run": 1
+  }
+ ]
+}

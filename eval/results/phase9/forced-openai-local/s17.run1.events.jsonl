@@ -1,0 +1,946 @@
+{"event": "meta", "client_s": 0.004, "data": {"request_id": "35f6f79365aa", "seq": 1, "ts": "2026-10-28T06:54:42.363Z", "t_ms": 0, "single_turn": true, "k": 6, "workers": ["research", "summary", "data"], "budget_s": 120.0}}
+{"event": "transition", "client_s": 0.008, "data": {"request_id": "35f6f79365aa", "seq": 2, "ts": "2026-10-28T06:54:42.365Z", "t_ms": 2, "from": "start", "to": "planner", "reason": "new request", "step": 0}}
+{"event": "llm_route", "client_s": 0.008, "data": {"request_id": "35f6f79365aa", "seq": 3, "ts": "2026-10-28T06:54:42.365Z", "t_ms": 2, "call_site": "planner", "agent": "planner", "provider": "openai", "model_id": "gpt-6.1-sol", "dimension": "forced", "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed.", "features": {"query_chars": 60, "comparison": false}, "reasoning_effort": null, "timeout_s": 20.0, "price_checked": "2026-10-27", "decision_id": "848c5fbc", "provider_label": "OpenAI (direct API)"}}
+{"event": "llm_result", "client_s": 2.457, "data": {"request_id": "35f6f79365aa", "seq": 4, "ts": "2026-10-28T06:54:44.817Z", "t_ms": 2454, "decision_id": "848c5fbc", "agent": "planner", "call_site": "planner", "provider": "openai", "model_id": "gpt-6.1-sol", "model_returned": "gpt-6.1-sol", "upstream_provider": null, "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 2452, "ttft_ms": null, "cost_usd": 0.002554, "cost_source": "estimated", "est_cost_usd": 0.002554, "reported_cost_usd": null, "input_tokens": 862, "output_tokens": 83, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "speculative_retrieval", "client_s": 2.46, "data": {"request_id": "35f6f79365aa", "seq": 5, "ts": "2026-10-28T06:54:44.821Z", "t_ms": 2458, "status": "discarded", "query": "How is Toolformer decoded and evaluated on downstream tasks?", "k": 6, "reason": "plan is not a single Research task"}}
+{"event": "plan", "client_s": 2.46, "data": {"request_id": "35f6f79365aa", "seq": 6, "ts": "2026-10-28T06:54:44.821Z", "t_ms": 2458, "plan_summary": "Explain Toolformer’s decoding procedure and downstream evaluation setup and results.", "source": "llm", "notes": [], "tasks": [{"id": "t1", "worker": "summary", "instruction": "Explain Toolformer’s decoding procedure and downstream task evaluation, including benchmarks, baselines, metrics, and main results, with citations.", "needs_live": false, "depends_on": [], "seeds": [{"tool": "get_paper_outline", "paper": "2302.04761", "by": "planner"}]}]}}
+{"event": "transition", "client_s": 2.461, "data": {"request_id": "35f6f79365aa", "seq": 7, "ts": "2026-10-28T06:54:44.821Z", "t_ms": 2458, "from": "supervisor", "to": "summary", "task_id": "t1", "reason": "task t1 ready (no dependencies)", "step": 1}}
+{"event": "tool_gate", "client_s": 2.461, "data": {"request_id": "35f6f79365aa", "seq": 8, "ts": "2026-10-28T06:54:44.822Z", "t_ms": 2459, "agent": "summary", "tool": "tavily_search", "enabled": false, "reason": "no status or live cue in the task"}}
+{"event": "tool_call", "client_s": 2.462, "data": {"request_id": "35f6f79365aa", "seq": 9, "ts": "2026-10-28T06:54:44.822Z", "t_ms": 2459, "agent": "summary", "tool": "get_paper_outline", "args_safe": {"paper": "2302.04761"}, "seeded_by": "planner"}}
+{"event": "retrieval", "client_s": 2.479, "data": {"request_id": "35f6f79365aa", "seq": 10, "ts": "2026-10-28T06:54:44.839Z", "t_ms": 2476, "agent": "summary", "tool": "get_paper_outline", "query": "2302.04761", "k": 1, "retrieval_ms": 16, "chunks": [{"cite_id": "C1", "type": "paper_chunk", "chunk_id": "2302.04761v1::abstract::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "Abstract", "score": 1.0, "href": "/api/source/chunk/2302.04761v1%3A%3Aabstract%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}]}}
+{"event": "tool_result", "client_s": 2.479, "data": {"request_id": "35f6f79365aa", "seq": 11, "ts": "2026-10-28T06:54:44.840Z", "t_ms": 2477, "agent": "summary", "tool": "get_paper_outline", "status": "ok", "latency_ms": 17, "n_results": 1, "seeded_by": "planner"}}
+{"event": "llm_route", "client_s": 2.481, "data": {"request_id": "35f6f79365aa", "seq": 12, "ts": "2026-10-28T06:54:44.840Z", "t_ms": 2477, "call_site": "worker_tool_loop", "agent": "summary", "provider": "openai", "model_id": "gpt-6.1-sol", "dimension": "forced", "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed.", "features": {"round": 1, "tool_calls_so_far": 1, "context_tokens_est": 1588, "long_source_tokens_est": 0, "comparison": false}, "reasoning_effort": null, "timeout_s": 25.0, "price_checked": "2026-10-27", "decision_id": "1cbb55a8", "provider_label": "OpenAI (direct API)"}}
+{"event": "llm_result", "client_s": 6.106, "data": {"request_id": "35f6f79365aa", "seq": 13, "ts": "2026-10-28T06:54:48.465Z", "t_ms": 6102, "decision_id": "1cbb55a8", "agent": "summary", "call_site": "worker_tool_loop", "provider": "openai", "model_id": "gpt-6.1-sol", "model_returned": "gpt-6.1-sol", "upstream_provider": null, "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 3624, "ttft_ms": null, "cost_usd": 0.005778, "cost_source": "estimated", "est_cost_usd": 0.005778, "reported_cost_usd": null, "input_tokens": 2139, "output_tokens": 150, "reasoning_tokens": 0, "cached_input_tokens": 0}}
+{"event": "tool_call", "client_s": 6.106, "data": {"request_id": "35f6f79365aa", "seq": 14, "ts": "2026-10-28T06:54:48.465Z", "t_ms": 6102, "agent": "summary", "tool": "get_paper_section", "args_safe": {"paper": "2302.04761", "section": "S4"}}}
+{"event": "retrieval", "client_s": 6.128, "data": {"request_id": "35f6f79365aa", "seq": 15, "ts": "2026-10-28T06:54:48.488Z", "t_ms": 6125, "agent": "summary", "tool": "get_paper_section", "query": "2302.04761 / S4", "k": 1, "retrieval_ms": 19, "chunks": [{"cite_id": "C2", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments", "score": 1.0, "href": "/api/source/chunk/2302.04761v1%3A%3AS4%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}]}}
+{"event": "tool_result", "client_s": 6.129, "data": {"request_id": "35f6f79365aa", "seq": 16, "ts": "2026-10-28T06:54:48.489Z", "t_ms": 6126, "agent": "summary", "tool": "get_paper_section", "status": "ok", "latency_ms": 23, "n_results": 1}}
+{"event": "tool_call", "client_s": 6.129, "data": {"request_id": "35f6f79365aa", "seq": 17, "ts": "2026-10-28T06:54:48.489Z", "t_ms": 6126, "agent": "summary", "tool": "search_within_paper", "args_safe": {"paper": "2302.04761", "query": "decoding greedy top 10 API token end API response zero-shot baselines GPT-J GPT-3 OPT Table 2 Table 3 Table 4 Table 5", "k": 10}}}
+{"event": "retrieval", "client_s": 6.449, "data": {"request_id": "35f6f79365aa", "seq": 18, "ts": "2026-10-28T06:54:48.810Z", "t_ms": 6447, "agent": "summary", "tool": "search_within_paper", "query": "2302.04761: decoding greedy top 10 API token end API response zero-shot baselines GPT-J GPT-3 OPT Table 2 Table 3 Table 4 Table 5", "k": 10, "retrieval_ms": 318, "chunks": [{"cite_id": "C3", "type": "paper_chunk", "chunk_id": "2302.04761v1::S5::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "5 Analysis", "score": 0.5464, "href": "/api/source/chunk/2302.04761v1%3A%3AS5%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S5", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C4", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS1::001", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.1 Experimental Setup", "score": 0.5369, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS1%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C5", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks", "score": 0.5013, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C6", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS4::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.4 Multilingual Question Answering", "score": 0.4995, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS4%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS4", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C7", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS1::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.1 LAMA", "score": 0.4981, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS1%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C8", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS2::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.2 Math Datasets", "score": 0.4835, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS2%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS2", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C9", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS1::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.1 Experimental Setup", "score": 0.4812, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C10", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS3::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.3 Question Answering", "score": 0.4806, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS3%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS3", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C11", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS5::001", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.5 Temporal Datasets", "score": 0.4754, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS5%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS5", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C12", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS3::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.3 Language Modeling", "score": 0.4713, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS3%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS3", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}]}}
+{"event": "tool_result", "client_s": 6.45, "data": {"request_id": "35f6f79365aa", "seq": 19, "ts": "2026-10-28T06:54:48.810Z", "t_ms": 6447, "agent": "summary", "tool": "search_within_paper", "status": "ok", "latency_ms": 321, "n_results": 10}}
+{"event": "tool_call", "client_s": 6.45, "data": {"request_id": "35f6f79365aa", "seq": 20, "ts": "2026-10-28T06:54:48.810Z", "t_ms": 6447, "agent": "summary", "tool": "search_within_paper", "args_safe": {"paper": "2302.04761", "query": "downstream tasks LAMA math question answering multilingual temporal datasets accuracy results benchmarks baselines", "k": 10}}}
+{"event": "retrieval", "client_s": 6.698, "data": {"request_id": "35f6f79365aa", "seq": 21, "ts": "2026-10-28T06:54:49.058Z", "t_ms": 6695, "agent": "summary", "tool": "search_within_paper", "query": "2302.04761: downstream tasks LAMA math question answering multilingual temporal datasets accuracy results benchmarks baselines", "k": 10, "retrieval_ms": 246, "chunks": [{"cite_id": "C13", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS1::001", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.1 LAMA", "score": 0.5621, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS1%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C11", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS5::001", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.5 Temporal Datasets", "score": 0.4754, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS5%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS5", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C7", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS1::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.1 LAMA", "score": 0.4981, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS1%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C14", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS5::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.5 Temporal Datasets", "score": 0.5206, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS5%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS5", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C15", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS4::001", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.4 Multilingual Question Answering", "score": 0.5063, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS4%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS4", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C6", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS2.SSS4::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.4 Multilingual Question Answering", "score": 0.4995, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS4%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS4", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C16", "type": "paper_chunk", "chunk_id": "2302.04761v1::A3.SS1::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "C Zero-Shot Prompts › C.1 LAMA and TempLAMA", "score": 0.4987, "href": "/api/source/chunk/2302.04761v1%3A%3AA3.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#A3.SS1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C17", "type": "paper_chunk", "chunk_id": "2302.04761v1::A1.SS1::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "A API Details › A.1 Implementation", "score": 0.4923, "href": "/api/source/chunk/2302.04761v1%3A%3AA1.SS1%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#A1.SS1", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C18", "type": "paper_chunk", "chunk_id": "2302.04761v1::S2::001", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "2 Approach", "score": 0.4865, "href": "/api/source/chunk/2302.04761v1%3A%3AS2%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S2", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}, {"cite_id": "C19", "type": "paper_chunk", "chunk_id": "2302.04761v1::S4.SS4::000", "doc_id": "2302.04761v1", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.4 Scaling Laws", "score": 0.4767, "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS4%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS4", "retrieved_at": "", "agent": "", "sql": "", "columns": null, "rows": null}]}}
+{"event": "tool_result", "client_s": 6.699, "data": {"request_id": "35f6f79365aa", "seq": 22, "ts": "2026-10-28T06:54:49.059Z", "t_ms": 6696, "agent": "summary", "tool": "search_within_paper", "status": "ok", "latency_ms": 248, "n_results": 10}}
+{"event": "worker_result", "client_s": 6.699, "data": {"request_id": "35f6f79365aa", "seq": 23, "ts": "2026-10-28T06:54:49.059Z", "t_ms": 6696, "task_id": "t1", "agent": "summary", "status": "done", "error_kind": null, "attempt": 1, "evidence_ids": ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19"], "rounds": 1, "tool_calls": 4, "evidence_only": true}}
+{"event": "transition", "client_s": 6.699, "data": {"request_id": "35f6f79365aa", "seq": 24, "ts": "2026-10-28T06:54:49.059Z", "t_ms": 6696, "from": "summary", "to": "supervisor", "task_id": "t1", "reason": "t1 done", "step": 1}}
+{"event": "transition", "client_s": 6.7, "data": {"request_id": "35f6f79365aa", "seq": 25, "ts": "2026-10-28T06:54:49.060Z", "t_ms": 6697, "from": "supervisor", "to": "synthesize", "task_id": null, "reason": "no pending tasks", "step": 1}}
+{"event": "llm_route", "client_s": 6.702, "data": {"request_id": "35f6f79365aa", "seq": 26, "ts": "2026-10-28T06:54:49.062Z", "t_ms": 6699, "call_site": "synthesize", "agent": "synthesizer", "provider": "openai", "model_id": "gpt-6.1-sol", "dimension": "forced", "rationale": "ROUTER_FORCE_PROVIDER=openai (evaluation override); policy bypassed.", "features": {"n_tasks": 1, "n_tasks_ok": 1, "n_evidence": 19, "n_papers": 1, "n_web": 0, "n_data": 0, "evidence_tokens_est": 6220, "comparison": false, "statuses": ["done"], "evidence_only": true}, "reasoning_effort": null, "timeout_s": 60.0, "price_checked": "2026-10-27", "decision_id": "bcedaa86", "provider_label": "OpenAI (direct API)"}}
+{"event": "token", "client_s": 10.357, "data": {"request_id": "35f6f79365aa", "seq": 27, "ts": "2026-10-28T06:54:52.718Z", "t_ms": 10354, "delta": "##"}}
+{"event": "token", "client_s": 10.358, "data": {"request_id": "35f6f79365aa", "seq": 28, "ts": "2026-10-28T06:54:52.718Z", "t_ms": 10355, "delta": " Dec"}}
+{"event": "token", "client_s": 10.359, "data": {"request_id": "35f6f79365aa", "seq": 29, "ts": "2026-10-28T06:54:52.719Z", "t_ms": 10356, "delta": "oding"}}
+{"event": "token", "client_s": 10.359, "data": {"request_id": "35f6f79365aa", "seq": 30, "ts": "2026-10-28T06:54:52.720Z", "t_ms": 10357, "delta": "\n\n"}}
+{"event": "token", "client_s": 10.36, "data": {"request_id": "35f6f79365aa", "seq": 31, "ts": "2026-10-28T06:54:52.721Z", "t_ms": 10358, "delta": "Tool"}}
+{"event": "token", "client_s": 10.361, "data": {"request_id": "35f6f79365aa", "seq": 32, "ts": "2026-10-28T06:54:52.721Z", "t_ms": 10358, "delta": "former"}}
+{"event": "token", "client_s": 10.361, "data": {"request_id": "35f6f79365aa", "seq": 33, "ts": "2026-10-28T06:54:52.722Z", "t_ms": 10359, "delta": " uses"}}
+{"event": "token", "client_s": 10.362, "data": {"request_id": "35f6f79365aa", "seq": 34, "ts": "2026-10-28T06:54:52.722Z", "t_ms": 10359, "delta": " **"}}
+{"event": "token", "client_s": 10.363, "data": {"request_id": "35f6f79365aa", "seq": 35, "ts": "2026-10-28T06:54:52.723Z", "t_ms": 10360, "delta": "gre"}}
+{"event": "token", "client_s": 10.363, "data": {"request_id": "35f6f79365aa", "seq": 36, "ts": "2026-10-28T06:54:52.724Z", "t_ms": 10361, "delta": "edy"}}
+{"event": "token", "client_s": 10.432, "data": {"request_id": "35f6f79365aa", "seq": 37, "ts": "2026-10-28T06:54:52.792Z", "t_ms": 10429, "delta": " decoding"}}
+{"event": "token", "client_s": 10.433, "data": {"request_id": "35f6f79365aa", "seq": 38, "ts": "2026-10-28T06:54:52.793Z", "t_ms": 10430, "delta": " with"}}
+{"event": "token", "client_s": 10.618, "data": {"request_id": "35f6f79365aa", "seq": 39, "ts": "2026-10-28T06:54:52.978Z", "t_ms": 10615, "delta": " a"}}
+{"event": "token", "client_s": 10.619, "data": {"request_id": "35f6f79365aa", "seq": 40, "ts": "2026-10-28T06:54:52.979Z", "t_ms": 10616, "delta": " tool"}}
+{"event": "token", "client_s": 10.62, "data": {"request_id": "35f6f79365aa", "seq": 41, "ts": "2026-10-28T06:54:52.981Z", "t_ms": 10618, "delta": "-use"}}
+{"event": "token", "client_s": 10.621, "data": {"request_id": "35f6f79365aa", "seq": 42, "ts": "2026-10-28T06:54:52.982Z", "t_ms": 10618, "delta": " override"}}
+{"event": "token", "client_s": 10.63, "data": {"request_id": "35f6f79365aa", "seq": 43, "ts": "2026-10-28T06:54:52.991Z", "t_ms": 10628, "delta": "**"}}
+{"event": "token", "client_s": 10.631, "data": {"request_id": "35f6f79365aa", "seq": 44, "ts": "2026-10-28T06:54:52.991Z", "t_ms": 10628, "delta": ":"}}
+{"event": "token", "client_s": 10.635, "data": {"request_id": "35f6f79365aa", "seq": 45, "ts": "2026-10-28T06:54:52.996Z", "t_ms": 10633, "delta": " it"}}
+{"event": "token", "client_s": 10.636, "data": {"request_id": "35f6f79365aa", "seq": 46, "ts": "2026-10-28T06:54:52.996Z", "t_ms": 10633, "delta": " starts"}}
+{"event": "token", "client_s": 10.641, "data": {"request_id": "35f6f79365aa", "seq": 47, "ts": "2026-10-28T06:54:53.001Z", "t_ms": 10638, "delta": " an"}}
+{"event": "token", "client_s": 10.641, "data": {"request_id": "35f6f79365aa", "seq": 48, "ts": "2026-10-28T06:54:53.002Z", "t_ms": 10639, "delta": " API"}}
+{"event": "token", "client_s": 10.709, "data": {"request_id": "35f6f79365aa", "seq": 49, "ts": "2026-10-28T06:54:53.070Z", "t_ms": 10707, "delta": " call"}}
+{"event": "token", "client_s": 10.71, "data": {"request_id": "35f6f79365aa", "seq": 50, "ts": "2026-10-28T06:54:53.071Z", "t_ms": 10708, "delta": " whenever"}}
+{"event": "token", "client_s": 10.714, "data": {"request_id": "35f6f79365aa", "seq": 51, "ts": "2026-10-28T06:54:53.075Z", "t_ms": 10712, "delta": " the"}}
+{"event": "token", "client_s": 10.715, "data": {"request_id": "35f6f79365aa", "seq": 52, "ts": "2026-10-28T06:54:53.075Z", "t_ms": 10712, "delta": " special"}}
+{"event": "token", "client_s": 10.72, "data": {"request_id": "35f6f79365aa", "seq": 53, "ts": "2026-10-28T06:54:53.080Z", "t_ms": 10717, "delta": " `<"}}
+{"event": "token", "client_s": 10.72, "data": {"request_id": "35f6f79365aa", "seq": 54, "ts": "2026-10-28T06:54:53.081Z", "t_ms": 10718, "delta": "API"}}
+{"event": "token", "client_s": 10.723, "data": {"request_id": "35f6f79365aa", "seq": 55, "ts": "2026-10-28T06:54:53.084Z", "t_ms": 10721, "delta": ">`"}}
+{"event": "token", "client_s": 10.724, "data": {"request_id": "35f6f79365aa", "seq": 56, "ts": "2026-10-28T06:54:53.084Z", "t_ms": 10721, "delta": " token"}}
+{"event": "token", "client_s": 10.728, "data": {"request_id": "35f6f79365aa", "seq": 57, "ts": "2026-10-28T06:54:53.089Z", "t_ms": 10726, "delta": " is"}}
+{"event": "token", "client_s": 10.729, "data": {"request_id": "35f6f79365aa", "seq": 58, "ts": "2026-10-28T06:54:53.089Z", "t_ms": 10726, "delta": " among"}}
+{"event": "token", "client_s": 10.744, "data": {"request_id": "35f6f79365aa", "seq": 59, "ts": "2026-10-28T06:54:53.104Z", "t_ms": 10741, "delta": " the"}}
+{"event": "token", "client_s": 10.744, "data": {"request_id": "35f6f79365aa", "seq": 60, "ts": "2026-10-28T06:54:53.105Z", "t_ms": 10742, "delta": " **"}}
+{"event": "token", "client_s": 10.805, "data": {"request_id": "35f6f79365aa", "seq": 61, "ts": "2026-10-28T06:54:53.165Z", "t_ms": 10802, "delta": "10"}}
+{"event": "token", "client_s": 10.806, "data": {"request_id": "35f6f79365aa", "seq": 62, "ts": "2026-10-28T06:54:53.166Z", "t_ms": 10803, "delta": " most"}}
+{"event": "token", "client_s": 10.808, "data": {"request_id": "35f6f79365aa", "seq": 63, "ts": "2026-10-28T06:54:53.169Z", "t_ms": 10806, "delta": " probable"}}
+{"event": "token", "client_s": 10.809, "data": {"request_id": "35f6f79365aa", "seq": 64, "ts": "2026-10-28T06:54:53.170Z", "t_ms": 10806, "delta": " next"}}
+{"event": "token", "client_s": 11.043, "data": {"request_id": "35f6f79365aa", "seq": 65, "ts": "2026-10-28T06:54:53.403Z", "t_ms": 11040, "delta": " tokens"}}
+{"event": "token", "client_s": 11.043, "data": {"request_id": "35f6f79365aa", "seq": 66, "ts": "2026-10-28T06:54:53.404Z", "t_ms": 11041, "delta": "**,"}}
+{"event": "token", "client_s": 11.064, "data": {"request_id": "35f6f79365aa", "seq": 67, "ts": "2026-10-28T06:54:53.424Z", "t_ms": 11061, "delta": " even"}}
+{"event": "token", "client_s": 11.065, "data": {"request_id": "35f6f79365aa", "seq": 68, "ts": "2026-10-28T06:54:53.425Z", "t_ms": 11062, "delta": " if"}}
+{"event": "token", "client_s": 11.065, "data": {"request_id": "35f6f79365aa", "seq": 69, "ts": "2026-10-28T06:54:53.426Z", "t_ms": 11063, "delta": " it"}}
+{"event": "token", "client_s": 11.066, "data": {"request_id": "35f6f79365aa", "seq": 70, "ts": "2026-10-28T06:54:53.427Z", "t_ms": 11064, "delta": " is"}}
+{"event": "token", "client_s": 11.067, "data": {"request_id": "35f6f79365aa", "seq": 71, "ts": "2026-10-28T06:54:53.427Z", "t_ms": 11064, "delta": " not"}}
+{"event": "token", "client_s": 11.067, "data": {"request_id": "35f6f79365aa", "seq": 72, "ts": "2026-10-28T06:54:53.428Z", "t_ms": 11065, "delta": " the"}}
+{"event": "token", "client_s": 11.144, "data": {"request_id": "35f6f79365aa", "seq": 73, "ts": "2026-10-28T06:54:53.504Z", "t_ms": 11141, "delta": " single"}}
+{"event": "token", "client_s": 11.144, "data": {"request_id": "35f6f79365aa", "seq": 74, "ts": "2026-10-28T06:54:53.505Z", "t_ms": 11142, "delta": " most"}}
+{"event": "token", "client_s": 11.228, "data": {"request_id": "35f6f79365aa", "seq": 75, "ts": "2026-10-28T06:54:53.588Z", "t_ms": 11225, "delta": " probable"}}
+{"event": "token", "client_s": 11.228, "data": {"request_id": "35f6f79365aa", "seq": 76, "ts": "2026-10-28T06:54:53.589Z", "t_ms": 11226, "delta": " token"}}
+{"event": "token", "client_s": 11.314, "data": {"request_id": "35f6f79365aa", "seq": 77, "ts": "2026-10-28T06:54:53.674Z", "t_ms": 11311, "delta": "."}}
+{"event": "token", "client_s": 11.315, "data": {"request_id": "35f6f79365aa", "seq": 78, "ts": "2026-10-28T06:54:53.675Z", "t_ms": 11312, "delta": " Setting"}}
+{"event": "token", "client_s": 11.318, "data": {"request_id": "35f6f79365aa", "seq": 79, "ts": "2026-10-28T06:54:53.679Z", "t_ms": 11316, "delta": " this"}}
+{"event": "token", "client_s": 11.319, "data": {"request_id": "35f6f79365aa", "seq": 80, "ts": "2026-10-28T06:54:53.679Z", "t_ms": 11316, "delta": " threshold"}}
+{"event": "token", "client_s": 11.321, "data": {"request_id": "35f6f79365aa", "seq": 81, "ts": "2026-10-28T06:54:53.682Z", "t_ms": 11319, "delta": " to"}}
+{"event": "token", "client_s": 11.322, "data": {"request_id": "35f6f79365aa", "seq": 82, "ts": "2026-10-28T06:54:53.682Z", "t_ms": 11319, "delta": " \\("}}
+{"event": "token", "client_s": 11.325, "data": {"request_id": "35f6f79365aa", "seq": 83, "ts": "2026-10-28T06:54:53.686Z", "t_ms": 11323, "delta": "k"}}
+{"event": "token", "client_s": 11.326, "data": {"request_id": "35f6f79365aa", "seq": 84, "ts": "2026-10-28T06:54:53.686Z", "t_ms": 11323, "delta": "="}}
+{"event": "token", "client_s": 11.332, "data": {"request_id": "35f6f79365aa", "seq": 85, "ts": "2026-10-28T06:54:53.692Z", "t_ms": 11329, "delta": "1"}}
+{"event": "token", "client_s": 11.332, "data": {"request_id": "35f6f79365aa", "seq": 86, "ts": "2026-10-28T06:54:53.693Z", "t_ms": 11330, "delta": "\\"}}
+{"event": "token", "client_s": 11.335, "data": {"request_id": "35f6f79365aa", "seq": 87, "ts": "2026-10-28T06:54:53.695Z", "t_ms": 11332, "delta": ")"}}
+{"event": "token", "client_s": 11.335, "data": {"request_id": "35f6f79365aa", "seq": 88, "ts": "2026-10-28T06:54:53.696Z", "t_ms": 11333, "delta": " would"}}
+{"event": "token", "client_s": 11.424, "data": {"request_id": "35f6f79365aa", "seq": 89, "ts": "2026-10-28T06:54:53.784Z", "t_ms": 11421, "delta": " recover"}}
+{"event": "token", "client_s": 11.424, "data": {"request_id": "35f6f79365aa", "seq": 90, "ts": "2026-10-28T06:54:53.785Z", "t_ms": 11422, "delta": " ordinary"}}
+{"event": "token", "client_s": 11.425, "data": {"request_id": "35f6f79365aa", "seq": 91, "ts": "2026-10-28T06:54:53.786Z", "t_ms": 11423, "delta": " greedy"}}
+{"event": "token", "client_s": 11.426, "data": {"request_id": "35f6f79365aa", "seq": 92, "ts": "2026-10-28T06:54:53.787Z", "t_ms": 11424, "delta": " decoding"}}
+{"event": "token", "client_s": 11.427, "data": {"request_id": "35f6f79365aa", "seq": 93, "ts": "2026-10-28T06:54:53.787Z", "t_ms": 11424, "delta": ";"}}
+{"event": "token", "client_s": 11.431, "data": {"request_id": "35f6f79365aa", "seq": 94, "ts": "2026-10-28T06:54:53.791Z", "t_ms": 11428, "delta": " \\("}}
+{"event": "token", "client_s": 11.431, "data": {"request_id": "35f6f79365aa", "seq": 95, "ts": "2026-10-28T06:54:53.792Z", "t_ms": 11429, "delta": "k"}}
+{"event": "token", "client_s": 11.435, "data": {"request_id": "35f6f79365aa", "seq": 96, "ts": "2026-10-28T06:54:53.795Z", "t_ms": 11432, "delta": "="}}
+{"event": "token", "client_s": 11.436, "data": {"request_id": "35f6f79365aa", "seq": 97, "ts": "2026-10-28T06:54:53.796Z", "t_ms": 11433, "delta": "10"}}
+{"event": "token", "client_s": 11.571, "data": {"request_id": "35f6f79365aa", "seq": 98, "ts": "2026-10-28T06:54:53.932Z", "t_ms": 11568, "delta": "\\"}}
+{"event": "token", "client_s": 11.572, "data": {"request_id": "35f6f79365aa", "seq": 99, "ts": "2026-10-28T06:54:53.933Z", "t_ms": 11570, "delta": ")"}}
+{"event": "token", "client_s": 11.583, "data": {"request_id": "35f6f79365aa", "seq": 100, "ts": "2026-10-28T06:54:53.943Z", "t_ms": 11580, "delta": " encourages"}}
+{"event": "token", "client_s": 11.583, "data": {"request_id": "35f6f79365aa", "seq": 101, "ts": "2026-10-28T06:54:53.944Z", "t_ms": 11581, "delta": " more"}}
+{"event": "token", "client_s": 11.674, "data": {"request_id": "35f6f79365aa", "seq": 102, "ts": "2026-10-28T06:54:54.034Z", "t_ms": 11671, "delta": " tool"}}
+{"event": "token", "client_s": 11.675, "data": {"request_id": "35f6f79365aa", "seq": 103, "ts": "2026-10-28T06:54:54.035Z", "t_ms": 11672, "delta": " use"}}
+{"event": "token", "client_s": 11.692, "data": {"request_id": "35f6f79365aa", "seq": 104, "ts": "2026-10-28T06:54:54.052Z", "t_ms": 11689, "delta": "."}}
+{"event": "token", "client_s": 11.692, "data": {"request_id": "35f6f79365aa", "seq": 105, "ts": "2026-10-28T06:54:54.053Z", "t_ms": 11690, "delta": " Evaluation"}}
+{"event": "token", "client_s": 11.693, "data": {"request_id": "35f6f79365aa", "seq": 106, "ts": "2026-10-28T06:54:54.054Z", "t_ms": 11691, "delta": " permits"}}
+{"event": "token", "client_s": 11.694, "data": {"request_id": "35f6f79365aa", "seq": 107, "ts": "2026-10-28T06:54:54.054Z", "t_ms": 11691, "delta": " **"}}
+{"event": "token", "client_s": 11.7, "data": {"request_id": "35f6f79365aa", "seq": 108, "ts": "2026-10-28T06:54:54.061Z", "t_ms": 11698, "delta": "at"}}
+{"event": "token", "client_s": 11.7, "data": {"request_id": "35f6f79365aa", "seq": 109, "ts": "2026-10-28T06:54:54.061Z", "t_ms": 11698, "delta": " most"}}
+{"event": "token", "client_s": 11.705, "data": {"request_id": "35f6f79365aa", "seq": 110, "ts": "2026-10-28T06:54:54.065Z", "t_ms": 11702, "delta": " one"}}
+{"event": "token", "client_s": 11.705, "data": {"request_id": "35f6f79365aa", "seq": 111, "ts": "2026-10-28T06:54:54.066Z", "t_ms": 11703, "delta": " API"}}
+{"event": "token", "client_s": 11.708, "data": {"request_id": "35f6f79365aa", "seq": 112, "ts": "2026-10-28T06:54:54.068Z", "t_ms": 11705, "delta": " call"}}
+{"event": "token", "client_s": 11.708, "data": {"request_id": "35f6f79365aa", "seq": 113, "ts": "2026-10-28T06:54:54.069Z", "t_ms": 11706, "delta": " per"}}
+{"event": "token", "client_s": 11.96, "data": {"request_id": "35f6f79365aa", "seq": 114, "ts": "2026-10-28T06:54:54.320Z", "t_ms": 11957, "delta": " input"}}
+{"event": "token", "client_s": 11.961, "data": {"request_id": "35f6f79365aa", "seq": 115, "ts": "2026-10-28T06:54:54.322Z", "t_ms": 11959, "delta": "**,"}}
+{"event": "token", "client_s": 11.968, "data": {"request_id": "35f6f79365aa", "seq": 116, "ts": "2026-10-28T06:54:54.328Z", "t_ms": 11965, "delta": " to"}}
+{"event": "token", "client_s": 11.968, "data": {"request_id": "35f6f79365aa", "seq": 117, "ts": "2026-10-28T06:54:54.329Z", "t_ms": 11966, "delta": " prevent"}}
+{"event": "token", "client_s": 12.027, "data": {"request_id": "35f6f79365aa", "seq": 118, "ts": "2026-10-28T06:54:54.386Z", "t_ms": 12023, "delta": " repeated"}}
+{"event": "token", "client_s": 12.027, "data": {"request_id": "35f6f79365aa", "seq": 119, "ts": "2026-10-28T06:54:54.388Z", "t_ms": 12025, "delta": "-call"}}
+{"event": "token", "client_s": 12.028, "data": {"request_id": "35f6f79365aa", "seq": 120, "ts": "2026-10-28T06:54:54.389Z", "t_ms": 12026, "delta": " loops"}}
+{"event": "token", "client_s": 12.029, "data": {"request_id": "35f6f79365aa", "seq": 121, "ts": "2026-10-28T06:54:54.389Z", "t_ms": 12026, "delta": " that"}}
+{"event": "token", "client_s": 12.032, "data": {"request_id": "35f6f79365aa", "seq": 122, "ts": "2026-10-28T06:54:54.393Z", "t_ms": 12030, "delta": " never"}}
+{"event": "token", "client_s": 12.032, "data": {"request_id": "35f6f79365aa", "seq": 123, "ts": "2026-10-28T06:54:54.393Z", "t_ms": 12030, "delta": " produce"}}
+{"event": "token", "client_s": 12.036, "data": {"request_id": "35f6f79365aa", "seq": 124, "ts": "2026-10-28T06:54:54.396Z", "t_ms": 12033, "delta": " an"}}
+{"event": "token", "client_s": 12.036, "data": {"request_id": "35f6f79365aa", "seq": 125, "ts": "2026-10-28T06:54:54.397Z", "t_ms": 12034, "delta": " answer"}}
+{"event": "token", "client_s": 12.114, "data": {"request_id": "35f6f79365aa", "seq": 126, "ts": "2026-10-28T06:54:54.474Z", "t_ms": 12111, "delta": "."}}
+{"event": "token", "client_s": 12.115, "data": {"request_id": "35f6f79365aa", "seq": 127, "ts": "2026-10-28T06:54:54.475Z", "t_ms": 12112, "delta": " ["}}
+{"event": "token", "client_s": 12.222, "data": {"request_id": "35f6f79365aa", "seq": 128, "ts": "2026-10-28T06:54:54.582Z", "t_ms": 12219, "delta": "C"}}
+{"event": "token", "client_s": 12.223, "data": {"request_id": "35f6f79365aa", "seq": 129, "ts": "2026-10-28T06:54:54.584Z", "t_ms": 12220, "delta": "5"}}
+{"event": "token", "client_s": 12.296, "data": {"request_id": "35f6f79365aa", "seq": 130, "ts": "2026-10-28T06:54:54.656Z", "t_ms": 12293, "delta": "]\n\n"}}
+{"event": "token", "client_s": 12.297, "data": {"request_id": "35f6f79365aa", "seq": 131, "ts": "2026-10-28T06:54:54.657Z", "t_ms": 12294, "delta": "This"}}
+{"event": "token", "client_s": 12.31, "data": {"request_id": "35f6f79365aa", "seq": 132, "ts": "2026-10-28T06:54:54.670Z", "t_ms": 12307, "delta": " choice"}}
+{"event": "token", "client_s": 12.311, "data": {"request_id": "35f6f79365aa", "seq": 133, "ts": "2026-10-28T06:54:54.672Z", "t_ms": 12309, "delta": " materially"}}
+{"event": "token", "client_s": 12.38, "data": {"request_id": "35f6f79365aa", "seq": 134, "ts": "2026-10-28T06:54:54.740Z", "t_ms": 12377, "delta": " affects"}}
+{"event": "token", "client_s": 12.381, "data": {"request_id": "35f6f79365aa", "seq": 135, "ts": "2026-10-28T06:54:54.742Z", "t_ms": 12379, "delta": " results"}}
+{"event": "token", "client_s": 12.391, "data": {"request_id": "35f6f79365aa", "seq": 136, "ts": "2026-10-28T06:54:54.751Z", "t_ms": 12388, "delta": ":"}}
+{"event": "token", "client_s": 12.392, "data": {"request_id": "35f6f79365aa", "seq": 137, "ts": "2026-10-28T06:54:54.752Z", "t_ms": 12389, "delta": " on"}}
+{"event": "token", "client_s": 12.397, "data": {"request_id": "35f6f79365aa", "seq": 138, "ts": "2026-10-28T06:54:54.757Z", "t_ms": 12394, "delta": " T"}}
+{"event": "token", "client_s": 12.397, "data": {"request_id": "35f6f79365aa", "seq": 139, "ts": "2026-10-28T06:54:54.758Z", "t_ms": 12395, "delta": "-R"}}
+{"event": "token", "client_s": 12.405, "data": {"request_id": "35f6f79365aa", "seq": 140, "ts": "2026-10-28T06:54:54.765Z", "t_ms": 12402, "delta": "Ex"}}
+{"event": "token", "client_s": 12.406, "data": {"request_id": "35f6f79365aa", "seq": 141, "ts": "2026-10-28T06:54:54.766Z", "t_ms": 12403, "delta": ","}}
+{"event": "token", "client_s": 12.411, "data": {"request_id": "35f6f79365aa", "seq": 142, "ts": "2026-10-28T06:54:54.771Z", "t_ms": 12408, "delta": " increasing"}}
+{"event": "token", "client_s": 12.411, "data": {"request_id": "35f6f79365aa", "seq": 143, "ts": "2026-10-28T06:54:54.772Z", "t_ms": 12409, "delta": " \\("}}
+{"event": "token", "client_s": 12.44, "data": {"request_id": "35f6f79365aa", "seq": 144, "ts": "2026-10-28T06:54:54.800Z", "t_ms": 12437, "delta": "k"}}
+{"event": "token", "client_s": 12.44, "data": {"request_id": "35f6f79365aa", "seq": 145, "ts": "2026-10-28T06:54:54.801Z", "t_ms": 12438, "delta": "\\"}}
+{"event": "token", "client_s": 12.482, "data": {"request_id": "35f6f79365aa", "seq": 146, "ts": "2026-10-28T06:54:54.842Z", "t_ms": 12479, "delta": ")"}}
+{"event": "token", "client_s": 12.483, "data": {"request_id": "35f6f79365aa", "seq": 147, "ts": "2026-10-28T06:54:54.843Z", "t_ms": 12480, "delta": " from"}}
+{"event": "token", "client_s": 12.494, "data": {"request_id": "35f6f79365aa", "seq": 148, "ts": "2026-10-28T06:54:54.854Z", "t_ms": 12491, "delta": " "}}
+{"event": "token", "client_s": 12.494, "data": {"request_id": "35f6f79365aa", "seq": 149, "ts": "2026-10-28T06:54:54.855Z", "t_ms": 12492, "delta": "1"}}
+{"event": "token", "client_s": 12.503, "data": {"request_id": "35f6f79365aa", "seq": 150, "ts": "2026-10-28T06:54:54.863Z", "t_ms": 12500, "delta": " to"}}
+{"event": "token", "client_s": 12.504, "data": {"request_id": "35f6f79365aa", "seq": 151, "ts": "2026-10-28T06:54:54.864Z", "t_ms": 12501, "delta": " "}}
+{"event": "token", "client_s": 12.598, "data": {"request_id": "35f6f79365aa", "seq": 152, "ts": "2026-10-28T06:54:54.959Z", "t_ms": 12596, "delta": "10"}}
+{"event": "token", "client_s": 12.599, "data": {"request_id": "35f6f79365aa", "seq": 153, "ts": "2026-10-28T06:54:54.960Z", "t_ms": 12597, "delta": " raises"}}
+{"event": "token", "client_s": 12.603, "data": {"request_id": "35f6f79365aa", "seq": 154, "ts": "2026-10-28T06:54:54.964Z", "t_ms": 12601, "delta": " the"}}
+{"event": "token", "client_s": 12.604, "data": {"request_id": "35f6f79365aa", "seq": 155, "ts": "2026-10-28T06:54:54.965Z", "t_ms": 12602, "delta": " API"}}
+{"event": "token", "client_s": 12.613, "data": {"request_id": "35f6f79365aa", "seq": 156, "ts": "2026-10-28T06:54:54.974Z", "t_ms": 12611, "delta": "-call"}}
+{"event": "token", "client_s": 12.614, "data": {"request_id": "35f6f79365aa", "seq": 157, "ts": "2026-10-28T06:54:54.974Z", "t_ms": 12611, "delta": " rate"}}
+{"event": "token", "client_s": 12.663, "data": {"request_id": "35f6f79365aa", "seq": 158, "ts": "2026-10-28T06:54:55.023Z", "t_ms": 12660, "delta": " from"}}
+{"event": "token", "client_s": 12.663, "data": {"request_id": "35f6f79365aa", "seq": 159, "ts": "2026-10-28T06:54:55.023Z", "t_ms": 12660, "delta": " **"}}
+{"event": "token", "client_s": 12.664, "data": {"request_id": "35f6f79365aa", "seq": 160, "ts": "2026-10-28T06:54:55.025Z", "t_ms": 12662, "delta": "40"}}
+{"event": "token", "client_s": 12.665, "data": {"request_id": "35f6f79365aa", "seq": 161, "ts": "2026-10-28T06:54:55.025Z", "t_ms": 12662, "delta": "."}}
+{"event": "token", "client_s": 12.68, "data": {"request_id": "35f6f79365aa", "seq": 162, "ts": "2026-10-28T06:54:55.041Z", "t_ms": 12678, "delta": "3"}}
+{"event": "token", "client_s": 12.68, "data": {"request_id": "35f6f79365aa", "seq": 163, "ts": "2026-10-28T06:54:55.041Z", "t_ms": 12678, "delta": "%"}}
+{"event": "token", "client_s": 12.683, "data": {"request_id": "35f6f79365aa", "seq": 164, "ts": "2026-10-28T06:54:55.044Z", "t_ms": 12681, "delta": " to"}}
+{"event": "token", "client_s": 12.684, "data": {"request_id": "35f6f79365aa", "seq": 165, "ts": "2026-10-28T06:54:55.044Z", "t_ms": 12681, "delta": " "}}
+{"event": "token", "client_s": 12.687, "data": {"request_id": "35f6f79365aa", "seq": 166, "ts": "2026-10-28T06:54:55.047Z", "t_ms": 12684, "delta": "98"}}
+{"event": "token", "client_s": 12.688, "data": {"request_id": "35f6f79365aa", "seq": 167, "ts": "2026-10-28T06:54:55.048Z", "t_ms": 12685, "delta": "."}}
+{"event": "token", "client_s": 12.694, "data": {"request_id": "35f6f79365aa", "seq": 168, "ts": "2026-10-28T06:54:55.054Z", "t_ms": 12691, "delta": "1"}}
+{"event": "token", "client_s": 12.694, "data": {"request_id": "35f6f79365aa", "seq": 169, "ts": "2026-10-28T06:54:55.055Z", "t_ms": 12692, "delta": "%"}}
+{"event": "token", "client_s": 12.735, "data": {"request_id": "35f6f79365aa", "seq": 170, "ts": "2026-10-28T06:54:55.095Z", "t_ms": 12732, "delta": "**"}}
+{"event": "token", "client_s": 12.736, "data": {"request_id": "35f6f79365aa", "seq": 171, "ts": "2026-10-28T06:54:55.096Z", "t_ms": 12733, "delta": " and"}}
+{"event": "token", "client_s": 12.74, "data": {"request_id": "35f6f79365aa", "seq": 172, "ts": "2026-10-28T06:54:55.100Z", "t_ms": 12737, "delta": " performance"}}
+{"event": "token", "client_s": 12.74, "data": {"request_id": "35f6f79365aa", "seq": 173, "ts": "2026-10-28T06:54:55.101Z", "t_ms": 12738, "delta": " from"}}
+{"event": "token", "client_s": 12.743, "data": {"request_id": "35f6f79365aa", "seq": 174, "ts": "2026-10-28T06:54:55.104Z", "t_ms": 12741, "delta": " **"}}
+{"event": "token", "client_s": 12.744, "data": {"request_id": "35f6f79365aa", "seq": 175, "ts": "2026-10-28T06:54:55.105Z", "t_ms": 12742, "delta": "47"}}
+{"event": "token", "client_s": 12.82, "data": {"request_id": "35f6f79365aa", "seq": 176, "ts": "2026-10-28T06:54:55.180Z", "t_ms": 12817, "delta": "."}}
+{"event": "token", "client_s": 12.821, "data": {"request_id": "35f6f79365aa", "seq": 177, "ts": "2026-10-28T06:54:55.181Z", "t_ms": 12818, "delta": "8"}}
+{"event": "token", "client_s": 12.823, "data": {"request_id": "35f6f79365aa", "seq": 178, "ts": "2026-10-28T06:54:55.184Z", "t_ms": 12821, "delta": "%"}}
+{"event": "token", "client_s": 12.824, "data": {"request_id": "35f6f79365aa", "seq": 179, "ts": "2026-10-28T06:54:55.185Z", "t_ms": 12822, "delta": " to"}}
+{"event": "token", "client_s": 12.829, "data": {"request_id": "35f6f79365aa", "seq": 180, "ts": "2026-10-28T06:54:55.189Z", "t_ms": 12826, "delta": " "}}
+{"event": "token", "client_s": 12.829, "data": {"request_id": "35f6f79365aa", "seq": 181, "ts": "2026-10-28T06:54:55.190Z", "t_ms": 12827, "delta": "53"}}
+{"event": "token", "client_s": 12.832, "data": {"request_id": "35f6f79365aa", "seq": 182, "ts": "2026-10-28T06:54:55.193Z", "t_ms": 12830, "delta": "."}}
+{"event": "token", "client_s": 12.833, "data": {"request_id": "35f6f79365aa", "seq": 183, "ts": "2026-10-28T06:54:55.194Z", "t_ms": 12831, "delta": "5"}}
+{"event": "token", "client_s": 12.837, "data": {"request_id": "35f6f79365aa", "seq": 184, "ts": "2026-10-28T06:54:55.197Z", "t_ms": 12834, "delta": "%"}}
+{"event": "token", "client_s": 12.837, "data": {"request_id": "35f6f79365aa", "seq": 185, "ts": "2026-10-28T06:54:55.198Z", "t_ms": 12835, "delta": "**"}}
+{"event": "token", "client_s": 12.909, "data": {"request_id": "35f6f79365aa", "seq": 186, "ts": "2026-10-28T06:54:55.269Z", "t_ms": 12906, "delta": ";"}}
+{"event": "token", "client_s": 12.909, "data": {"request_id": "35f6f79365aa", "seq": 187, "ts": "2026-10-28T06:54:55.270Z", "t_ms": 12907, "delta": " on"}}
+{"event": "token", "client_s": 12.999, "data": {"request_id": "35f6f79365aa", "seq": 188, "ts": "2026-10-28T06:54:55.359Z", "t_ms": 12996, "delta": " Web"}}
+{"event": "token", "client_s": 13.0, "data": {"request_id": "35f6f79365aa", "seq": 189, "ts": "2026-10-28T06:54:55.360Z", "t_ms": 12997, "delta": "Questions"}}
+{"event": "token", "client_s": 13.006, "data": {"request_id": "35f6f79365aa", "seq": 190, "ts": "2026-10-28T06:54:55.367Z", "t_ms": 13004, "delta": ","}}
+{"event": "token", "client_s": 13.007, "data": {"request_id": "35f6f79365aa", "seq": 191, "ts": "2026-10-28T06:54:55.367Z", "t_ms": 13004, "delta": " calls"}}
+{"event": "token", "client_s": 13.008, "data": {"request_id": "35f6f79365aa", "seq": 192, "ts": "2026-10-28T06:54:55.368Z", "t_ms": 13005, "delta": " rise"}}
+{"event": "token", "client_s": 13.008, "data": {"request_id": "35f6f79365aa", "seq": 193, "ts": "2026-10-28T06:54:55.369Z", "t_ms": 13006, "delta": " from"}}
+{"event": "token", "client_s": 13.015, "data": {"request_id": "35f6f79365aa", "seq": 194, "ts": "2026-10-28T06:54:55.376Z", "t_ms": 13013, "delta": " **"}}
+{"event": "token", "client_s": 13.016, "data": {"request_id": "35f6f79365aa", "seq": 195, "ts": "2026-10-28T06:54:55.376Z", "t_ms": 13013, "delta": "8"}}
+{"event": "token", "client_s": 13.017, "data": {"request_id": "35f6f79365aa", "seq": 196, "ts": "2026-10-28T06:54:55.378Z", "t_ms": 13015, "delta": "."}}
+{"event": "token", "client_s": 13.018, "data": {"request_id": "35f6f79365aa", "seq": 197, "ts": "2026-10-28T06:54:55.378Z", "t_ms": 13015, "delta": "5"}}
+{"event": "token", "client_s": 13.02, "data": {"request_id": "35f6f79365aa", "seq": 198, "ts": "2026-10-28T06:54:55.381Z", "t_ms": 13018, "delta": "%"}}
+{"event": "token", "client_s": 13.021, "data": {"request_id": "35f6f79365aa", "seq": 199, "ts": "2026-10-28T06:54:55.381Z", "t_ms": 13018, "delta": " to"}}
+{"event": "token", "client_s": 13.024, "data": {"request_id": "35f6f79365aa", "seq": 200, "ts": "2026-10-28T06:54:55.385Z", "t_ms": 13022, "delta": " "}}
+{"event": "token", "client_s": 13.024, "data": {"request_id": "35f6f79365aa", "seq": 201, "ts": "2026-10-28T06:54:55.385Z", "t_ms": 13022, "delta": "100"}}
+{"event": "token", "client_s": 13.037, "data": {"request_id": "35f6f79365aa", "seq": 202, "ts": "2026-10-28T06:54:55.397Z", "t_ms": 13034, "delta": "%"}}
+{"event": "token", "client_s": 13.037, "data": {"request_id": "35f6f79365aa", "seq": 203, "ts": "2026-10-28T06:54:55.398Z", "t_ms": 13035, "delta": "**,"}}
+{"event": "token", "client_s": 13.038, "data": {"request_id": "35f6f79365aa", "seq": 204, "ts": "2026-10-28T06:54:55.399Z", "t_ms": 13036, "delta": " and"}}
+{"event": "token", "client_s": 13.038, "data": {"request_id": "35f6f79365aa", "seq": 205, "ts": "2026-10-28T06:54:55.399Z", "t_ms": 13036, "delta": " performance"}}
+{"event": "token", "client_s": 13.094, "data": {"request_id": "35f6f79365aa", "seq": 206, "ts": "2026-10-28T06:54:55.454Z", "t_ms": 13091, "delta": " from"}}
+{"event": "token", "client_s": 13.094, "data": {"request_id": "35f6f79365aa", "seq": 207, "ts": "2026-10-28T06:54:55.455Z", "t_ms": 13092, "delta": " **"}}
+{"event": "token", "client_s": 13.108, "data": {"request_id": "35f6f79365aa", "seq": 208, "ts": "2026-10-28T06:54:55.469Z", "t_ms": 13106, "delta": "19"}}
+{"event": "token", "client_s": 13.109, "data": {"request_id": "35f6f79365aa", "seq": 209, "ts": "2026-10-28T06:54:55.470Z", "t_ms": 13107, "delta": "."}}
+{"event": "token", "client_s": 13.117, "data": {"request_id": "35f6f79365aa", "seq": 210, "ts": "2026-10-28T06:54:55.477Z", "t_ms": 13114, "delta": "3"}}
+{"event": "token", "client_s": 13.117, "data": {"request_id": "35f6f79365aa", "seq": 211, "ts": "2026-10-28T06:54:55.478Z", "t_ms": 13115, "delta": "%"}}
+{"event": "token", "client_s": 13.118, "data": {"request_id": "35f6f79365aa", "seq": 212, "ts": "2026-10-28T06:54:55.479Z", "t_ms": 13116, "delta": " to"}}
+{"event": "token", "client_s": 13.119, "data": {"request_id": "35f6f79365aa", "seq": 213, "ts": "2026-10-28T06:54:55.480Z", "t_ms": 13117, "delta": " "}}
+{"event": "token", "client_s": 13.12, "data": {"request_id": "35f6f79365aa", "seq": 214, "ts": "2026-10-28T06:54:55.480Z", "t_ms": 13117, "delta": "26"}}
+{"event": "token", "client_s": 13.121, "data": {"request_id": "35f6f79365aa", "seq": 215, "ts": "2026-10-28T06:54:55.481Z", "t_ms": 13118, "delta": "."}}
+{"event": "token", "client_s": 13.122, "data": {"request_id": "35f6f79365aa", "seq": 216, "ts": "2026-10-28T06:54:55.482Z", "t_ms": 13119, "delta": "3"}}
+{"event": "token", "client_s": 13.122, "data": {"request_id": "35f6f79365aa", "seq": 217, "ts": "2026-10-28T06:54:55.483Z", "t_ms": 13120, "delta": "%"}}
+{"event": "token", "client_s": 13.123, "data": {"request_id": "35f6f79365aa", "seq": 218, "ts": "2026-10-28T06:54:55.484Z", "t_ms": 13121, "delta": "**"}}
+{"event": "token", "client_s": 13.124, "data": {"request_id": "35f6f79365aa", "seq": 219, "ts": "2026-10-28T06:54:55.485Z", "t_ms": 13122, "delta": "."}}
+{"event": "token", "client_s": 13.182, "data": {"request_id": "35f6f79365aa", "seq": 220, "ts": "2026-10-28T06:54:55.543Z", "t_ms": 13180, "delta": " ["}}
+{"event": "token", "client_s": 13.183, "data": {"request_id": "35f6f79365aa", "seq": 221, "ts": "2026-10-28T06:54:55.544Z", "t_ms": 13180, "delta": "C"}}
+{"event": "token", "client_s": 13.193, "data": {"request_id": "35f6f79365aa", "seq": 222, "ts": "2026-10-28T06:54:55.553Z", "t_ms": 13190, "delta": "3"}}
+{"event": "token", "client_s": 13.194, "data": {"request_id": "35f6f79365aa", "seq": 223, "ts": "2026-10-28T06:54:55.554Z", "t_ms": 13191, "delta": "]\n\n"}}
+{"event": "token", "client_s": 13.198, "data": {"request_id": "35f6f79365aa", "seq": 224, "ts": "2026-10-28T06:54:55.558Z", "t_ms": 13195, "delta": "##"}}
+{"event": "token", "client_s": 13.198, "data": {"request_id": "35f6f79365aa", "seq": 225, "ts": "2026-10-28T06:54:55.559Z", "t_ms": 13196, "delta": " Down"}}
+{"event": "token", "client_s": 13.291, "data": {"request_id": "35f6f79365aa", "seq": 226, "ts": "2026-10-28T06:54:55.651Z", "t_ms": 13288, "delta": "stream"}}
+{"event": "token", "client_s": 13.292, "data": {"request_id": "35f6f79365aa", "seq": 227, "ts": "2026-10-28T06:54:55.652Z", "t_ms": 13289, "delta": " evaluation"}}
+{"event": "token", "client_s": 13.293, "data": {"request_id": "35f6f79365aa", "seq": 228, "ts": "2026-10-28T06:54:55.654Z", "t_ms": 13291, "delta": "\n\n"}}
+{"event": "token", "client_s": 13.294, "data": {"request_id": "35f6f79365aa", "seq": 229, "ts": "2026-10-28T06:54:55.654Z", "t_ms": 13291, "delta": "All"}}
+{"event": "token", "client_s": 13.378, "data": {"request_id": "35f6f79365aa", "seq": 230, "ts": "2026-10-28T06:54:55.738Z", "t_ms": 13375, "delta": " downstream"}}
+{"event": "token", "client_s": 13.378, "data": {"request_id": "35f6f79365aa", "seq": 231, "ts": "2026-10-28T06:54:55.739Z", "t_ms": 13376, "delta": " tasks"}}
+{"event": "token", "client_s": 13.382, "data": {"request_id": "35f6f79365aa", "seq": 232, "ts": "2026-10-28T06:54:55.743Z", "t_ms": 13380, "delta": " use"}}
+{"event": "token", "client_s": 13.383, "data": {"request_id": "35f6f79365aa", "seq": 233, "ts": "2026-10-28T06:54:55.744Z", "t_ms": 13381, "delta": " **"}}
+{"event": "token", "client_s": 13.386, "data": {"request_id": "35f6f79365aa", "seq": 234, "ts": "2026-10-28T06:54:55.747Z", "t_ms": 13384, "delta": "prompt"}}
+{"event": "token", "client_s": 13.387, "data": {"request_id": "35f6f79365aa", "seq": 235, "ts": "2026-10-28T06:54:55.747Z", "t_ms": 13384, "delta": "ed"}}
+{"event": "token", "client_s": 13.391, "data": {"request_id": "35f6f79365aa", "seq": 236, "ts": "2026-10-28T06:54:55.751Z", "t_ms": 13388, "delta": " zero"}}
+{"event": "token", "client_s": 13.392, "data": {"request_id": "35f6f79365aa", "seq": 237, "ts": "2026-10-28T06:54:55.752Z", "t_ms": 13389, "delta": "-shot"}}
+{"event": "token", "client_s": 13.396, "data": {"request_id": "35f6f79365aa", "seq": 238, "ts": "2026-10-28T06:54:55.756Z", "t_ms": 13393, "delta": " evaluation"}}
+{"event": "token", "client_s": 13.396, "data": {"request_id": "35f6f79365aa", "seq": 239, "ts": "2026-10-28T06:54:55.757Z", "t_ms": 13394, "delta": "**"}}
+{"event": "token", "client_s": 13.398, "data": {"request_id": "35f6f79365aa", "seq": 240, "ts": "2026-10-28T06:54:55.759Z", "t_ms": 13396, "delta": ":"}}
+{"event": "token", "client_s": 13.399, "data": {"request_id": "35f6f79365aa", "seq": 241, "ts": "2026-10-28T06:54:55.760Z", "t_ms": 13397, "delta": " models"}}
+{"event": "token", "client_s": 13.485, "data": {"request_id": "35f6f79365aa", "seq": 242, "ts": "2026-10-28T06:54:55.845Z", "t_ms": 13482, "delta": " receive"}}
+{"event": "token", "client_s": 13.485, "data": {"request_id": "35f6f79365aa", "seq": 243, "ts": "2026-10-28T06:54:55.846Z", "t_ms": 13483, "delta": " natural"}}
+{"event": "token", "client_s": 13.643, "data": {"request_id": "35f6f79365aa", "seq": 244, "ts": "2026-10-28T06:54:56.003Z", "t_ms": 13640, "delta": "-language"}}
+{"event": "token", "client_s": 13.648, "data": {"request_id": "35f6f79365aa", "seq": 245, "ts": "2026-10-28T06:54:56.004Z", "t_ms": 13641, "delta": " instructions"}}
+{"event": "token", "client_s": 13.655, "data": {"request_id": "35f6f79365aa", "seq": 246, "ts": "2026-10-28T06:54:56.015Z", "t_ms": 13652, "delta": " but"}}
+{"event": "token", "client_s": 13.656, "data": {"request_id": "35f6f79365aa", "seq": 247, "ts": "2026-10-28T06:54:56.016Z", "t_ms": 13653, "delta": " **"}}
+{"event": "token", "client_s": 13.66, "data": {"request_id": "35f6f79365aa", "seq": 248, "ts": "2026-10-28T06:54:56.020Z", "t_ms": 13657, "delta": "no"}}
+{"event": "token", "client_s": 13.66, "data": {"request_id": "35f6f79365aa", "seq": 249, "ts": "2026-10-28T06:54:56.021Z", "t_ms": 13658, "delta": " in"}}
+{"event": "token", "client_s": 13.661, "data": {"request_id": "35f6f79365aa", "seq": 250, "ts": "2026-10-28T06:54:56.022Z", "t_ms": 13659, "delta": "-context"}}
+{"event": "token", "client_s": 13.662, "data": {"request_id": "35f6f79365aa", "seq": 251, "ts": "2026-10-28T06:54:56.022Z", "t_ms": 13659, "delta": " examples"}}
+{"event": "token", "client_s": 13.721, "data": {"request_id": "35f6f79365aa", "seq": 252, "ts": "2026-10-28T06:54:56.081Z", "t_ms": 13718, "delta": "**,"}}
+{"event": "token", "client_s": 13.721, "data": {"request_id": "35f6f79365aa", "seq": 253, "ts": "2026-10-28T06:54:56.082Z", "t_ms": 13719, "delta": " including"}}
+{"event": "token", "client_s": 13.81, "data": {"request_id": "35f6f79365aa", "seq": 254, "ts": "2026-10-28T06:54:56.170Z", "t_ms": 13807, "delta": " no"}}
+{"event": "token", "client_s": 13.811, "data": {"request_id": "35f6f79365aa", "seq": 255, "ts": "2026-10-28T06:54:56.172Z", "t_ms": 13809, "delta": " task"}}
+{"event": "token", "client_s": 13.911, "data": {"request_id": "35f6f79365aa", "seq": 256, "ts": "2026-10-28T06:54:56.272Z", "t_ms": 13909, "delta": "-specific"}}
+{"event": "token", "client_s": 13.912, "data": {"request_id": "35f6f79365aa", "seq": 257, "ts": "2026-10-28T06:54:56.273Z", "t_ms": 13910, "delta": " demonstrations"}}
+{"event": "token", "client_s": 13.922, "data": {"request_id": "35f6f79365aa", "seq": 258, "ts": "2026-10-28T06:54:56.283Z", "t_ms": 13920, "delta": " of"}}
+{"event": "token", "client_s": 13.923, "data": {"request_id": "35f6f79365aa", "seq": 259, "ts": "2026-10-28T06:54:56.284Z", "t_ms": 13921, "delta": " which"}}
+{"event": "token", "client_s": 13.987, "data": {"request_id": "35f6f79365aa", "seq": 260, "ts": "2026-10-28T06:54:56.348Z", "t_ms": 13985, "delta": " tools"}}
+{"event": "token", "client_s": 13.988, "data": {"request_id": "35f6f79365aa", "seq": 261, "ts": "2026-10-28T06:54:56.348Z", "t_ms": 13985, "delta": " to"}}
+{"event": "token", "client_s": 13.994, "data": {"request_id": "35f6f79365aa", "seq": 262, "ts": "2026-10-28T06:54:56.354Z", "t_ms": 13991, "delta": " use"}}
+{"event": "token", "client_s": 13.994, "data": {"request_id": "35f6f79365aa", "seq": 263, "ts": "2026-10-28T06:54:56.355Z", "t_ms": 13992, "delta": " or"}}
+{"event": "token", "client_s": 13.997, "data": {"request_id": "35f6f79365aa", "seq": 264, "ts": "2026-10-28T06:54:56.357Z", "t_ms": 13994, "delta": " how"}}
+{"event": "token", "client_s": 13.997, "data": {"request_id": "35f6f79365aa", "seq": 265, "ts": "2026-10-28T06:54:56.358Z", "t_ms": 13995, "delta": " to"}}
+{"event": "token", "client_s": 14.001, "data": {"request_id": "35f6f79365aa", "seq": 266, "ts": "2026-10-28T06:54:56.361Z", "t_ms": 13998, "delta": " use"}}
+{"event": "token", "client_s": 14.001, "data": {"request_id": "35f6f79365aa", "seq": 267, "ts": "2026-10-28T06:54:56.362Z", "t_ms": 13999, "delta": " them"}}
+{"event": "token", "client_s": 14.08, "data": {"request_id": "35f6f79365aa", "seq": 268, "ts": "2026-10-28T06:54:56.440Z", "t_ms": 14077, "delta": "."}}
+{"event": "token", "client_s": 14.081, "data": {"request_id": "35f6f79365aa", "seq": 269, "ts": "2026-10-28T06:54:56.441Z", "t_ms": 14078, "delta": " ["}}
+{"event": "token", "client_s": 14.091, "data": {"request_id": "35f6f79365aa", "seq": 270, "ts": "2026-10-28T06:54:56.451Z", "t_ms": 14088, "delta": "C"}}
+{"event": "token", "client_s": 14.092, "data": {"request_id": "35f6f79365aa", "seq": 271, "ts": "2026-10-28T06:54:56.452Z", "t_ms": 14089, "delta": "5"}}
+{"event": "token", "client_s": 14.094, "data": {"request_id": "35f6f79365aa", "seq": 272, "ts": "2026-10-28T06:54:56.455Z", "t_ms": 14092, "delta": "]\n\n"}}
+{"event": "token", "client_s": 14.095, "data": {"request_id": "35f6f79365aa", "seq": 273, "ts": "2026-10-28T06:54:56.455Z", "t_ms": 14092, "delta": "The"}}
+{"event": "token", "client_s": 14.155, "data": {"request_id": "35f6f79365aa", "seq": 274, "ts": "2026-10-28T06:54:56.516Z", "t_ms": 14153, "delta": " main"}}
+{"event": "token", "client_s": 14.156, "data": {"request_id": "35f6f79365aa", "seq": 275, "ts": "2026-10-28T06:54:56.517Z", "t_ms": 14154, "delta": " comparisons"}}
+{"event": "token", "client_s": 14.243, "data": {"request_id": "35f6f79365aa", "seq": 276, "ts": "2026-10-28T06:54:56.603Z", "t_ms": 14240, "delta": " are"}}
+{"event": "token", "client_s": 14.244, "data": {"request_id": "35f6f79365aa", "seq": 277, "ts": "2026-10-28T06:54:56.605Z", "t_ms": 14242, "delta": " against"}}
+{"event": "token", "client_s": 14.255, "data": {"request_id": "35f6f79365aa", "seq": 278, "ts": "2026-10-28T06:54:56.615Z", "t_ms": 14252, "delta": " un"}}
+{"event": "token", "client_s": 14.256, "data": {"request_id": "35f6f79365aa", "seq": 279, "ts": "2026-10-28T06:54:56.616Z", "t_ms": 14253, "delta": "modified"}}
+{"event": "token", "client_s": 14.26, "data": {"request_id": "35f6f79365aa", "seq": 280, "ts": "2026-10-28T06:54:56.620Z", "t_ms": 14257, "delta": " GPT"}}
+{"event": "token", "client_s": 14.261, "data": {"request_id": "35f6f79365aa", "seq": 281, "ts": "2026-10-28T06:54:56.621Z", "t_ms": 14258, "delta": "-J"}}
+{"event": "token", "client_s": 14.266, "data": {"request_id": "35f6f79365aa", "seq": 282, "ts": "2026-10-28T06:54:56.627Z", "t_ms": 14264, "delta": ","}}
+{"event": "token", "client_s": 14.267, "data": {"request_id": "35f6f79365aa", "seq": 283, "ts": "2026-10-28T06:54:56.627Z", "t_ms": 14264, "delta": " GPT"}}
+{"event": "token", "client_s": 14.269, "data": {"request_id": "35f6f79365aa", "seq": 284, "ts": "2026-10-28T06:54:56.629Z", "t_ms": 14266, "delta": "-J"}}
+{"event": "token", "client_s": 14.27, "data": {"request_id": "35f6f79365aa", "seq": 285, "ts": "2026-10-28T06:54:56.630Z", "t_ms": 14267, "delta": " fine"}}
+{"event": "token", "client_s": 14.337, "data": {"request_id": "35f6f79365aa", "seq": 286, "ts": "2026-10-28T06:54:56.697Z", "t_ms": 14334, "delta": "-t"}}
+{"event": "token", "client_s": 14.337, "data": {"request_id": "35f6f79365aa", "seq": 287, "ts": "2026-10-28T06:54:56.698Z", "t_ms": 14335, "delta": "uned"}}
+{"event": "token", "client_s": 14.356, "data": {"request_id": "35f6f79365aa", "seq": 288, "ts": "2026-10-28T06:54:56.716Z", "t_ms": 14353, "delta": " on"}}
+{"event": "token", "client_s": 14.356, "data": {"request_id": "35f6f79365aa", "seq": 289, "ts": "2026-10-28T06:54:56.717Z", "t_ms": 14354, "delta": " CC"}}
+{"event": "token", "client_s": 14.357, "data": {"request_id": "35f6f79365aa", "seq": 290, "ts": "2026-10-28T06:54:56.718Z", "t_ms": 14355, "delta": "Net"}}
+{"event": "token", "client_s": 14.357, "data": {"request_id": "35f6f79365aa", "seq": 291, "ts": "2026-10-28T06:54:56.718Z", "t_ms": 14355, "delta": " without"}}
+{"event": "token", "client_s": 14.358, "data": {"request_id": "35f6f79365aa", "seq": 292, "ts": "2026-10-28T06:54:56.719Z", "t_ms": 14356, "delta": " API"}}
+{"event": "token", "client_s": 14.359, "data": {"request_id": "35f6f79365aa", "seq": 293, "ts": "2026-10-28T06:54:56.719Z", "t_ms": 14356, "delta": " annotations"}}
+{"event": "token", "client_s": 14.444, "data": {"request_id": "35f6f79365aa", "seq": 294, "ts": "2026-10-28T06:54:56.804Z", "t_ms": 14441, "delta": ","}}
+{"event": "token", "client_s": 14.445, "data": {"request_id": "35f6f79365aa", "seq": 295, "ts": "2026-10-28T06:54:56.805Z", "t_ms": 14442, "delta": " and"}}
+{"event": "token", "client_s": 14.446, "data": {"request_id": "35f6f79365aa", "seq": 296, "ts": "2026-10-28T06:54:56.806Z", "t_ms": 14443, "delta": " **"}}
+{"event": "token", "client_s": 14.446, "data": {"request_id": "35f6f79365aa", "seq": 297, "ts": "2026-10-28T06:54:56.807Z", "t_ms": 14444, "delta": "Tool"}}
+{"event": "token", "client_s": 14.448, "data": {"request_id": "35f6f79365aa", "seq": 298, "ts": "2026-10-28T06:54:56.808Z", "t_ms": 14445, "delta": "former"}}
+{"event": "token", "client_s": 14.448, "data": {"request_id": "35f6f79365aa", "seq": 299, "ts": "2026-10-28T06:54:56.809Z", "t_ms": 14446, "delta": " with"}}
+{"event": "token", "client_s": 14.451, "data": {"request_id": "35f6f79365aa", "seq": 300, "ts": "2026-10-28T06:54:56.812Z", "t_ms": 14449, "delta": " API"}}
+{"event": "token", "client_s": 14.452, "data": {"request_id": "35f6f79365aa", "seq": 301, "ts": "2026-10-28T06:54:56.812Z", "t_ms": 14449, "delta": " calls"}}
+{"event": "token", "client_s": 14.453, "data": {"request_id": "35f6f79365aa", "seq": 302, "ts": "2026-10-28T06:54:56.813Z", "t_ms": 14450, "delta": " disabled"}}
+{"event": "token", "client_s": 14.453, "data": {"request_id": "35f6f79365aa", "seq": 303, "ts": "2026-10-28T06:54:56.814Z", "t_ms": 14451, "delta": "**"}}
+{"event": "token", "client_s": 14.458, "data": {"request_id": "35f6f79365aa", "seq": 304, "ts": "2026-10-28T06:54:56.819Z", "t_ms": 14456, "delta": ";"}}
+{"event": "token", "client_s": 14.459, "data": {"request_id": "35f6f79365aa", "seq": 305, "ts": "2026-10-28T06:54:56.820Z", "t_ms": 14457, "delta": " most"}}
+{"event": "token", "client_s": 14.536, "data": {"request_id": "35f6f79365aa", "seq": 306, "ts": "2026-10-28T06:54:56.897Z", "t_ms": 14534, "delta": " tasks"}}
+{"event": "token", "client_s": 14.537, "data": {"request_id": "35f6f79365aa", "seq": 307, "ts": "2026-10-28T06:54:56.897Z", "t_ms": 14534, "delta": " also"}}
+{"event": "token", "client_s": 14.614, "data": {"request_id": "35f6f79365aa", "seq": 308, "ts": "2026-10-28T06:54:56.974Z", "t_ms": 14611, "delta": " include"}}
+{"event": "token", "client_s": 14.615, "data": {"request_id": "35f6f79365aa", "seq": 309, "ts": "2026-10-28T06:54:56.975Z", "t_ms": 14612, "delta": " OPT"}}
+{"event": "token", "client_s": 14.618, "data": {"request_id": "35f6f79365aa", "seq": 310, "ts": "2026-10-28T06:54:56.978Z", "t_ms": 14615, "delta": "-"}}
+{"event": "token", "client_s": 14.618, "data": {"request_id": "35f6f79365aa", "seq": 311, "ts": "2026-10-28T06:54:56.979Z", "t_ms": 14616, "delta": "66"}}
+{"event": "token", "client_s": 14.62, "data": {"request_id": "35f6f79365aa", "seq": 312, "ts": "2026-10-28T06:54:56.980Z", "t_ms": 14617, "delta": "B"}}
+{"event": "token", "client_s": 14.62, "data": {"request_id": "35f6f79365aa", "seq": 313, "ts": "2026-10-28T06:54:56.981Z", "t_ms": 14618, "delta": " and"}}
+{"event": "token", "client_s": 14.623, "data": {"request_id": "35f6f79365aa", "seq": 314, "ts": "2026-10-28T06:54:56.984Z", "t_ms": 14621, "delta": " GPT"}}
+{"event": "token", "client_s": 14.624, "data": {"request_id": "35f6f79365aa", "seq": 315, "ts": "2026-10-28T06:54:56.984Z", "t_ms": 14621, "delta": "-"}}
+{"event": "token", "client_s": 14.631, "data": {"request_id": "35f6f79365aa", "seq": 316, "ts": "2026-10-28T06:54:56.992Z", "t_ms": 14629, "delta": "3"}}
+{"event": "token", "client_s": 14.632, "data": {"request_id": "35f6f79365aa", "seq": 317, "ts": "2026-10-28T06:54:56.992Z", "t_ms": 14629, "delta": "-"}}
+{"event": "token", "client_s": 14.633, "data": {"request_id": "35f6f79365aa", "seq": 318, "ts": "2026-10-28T06:54:56.993Z", "t_ms": 14630, "delta": "175"}}
+{"event": "token", "client_s": 14.633, "data": {"request_id": "35f6f79365aa", "seq": 319, "ts": "2026-10-28T06:54:56.994Z", "t_ms": 14631, "delta": "B"}}
+{"event": "token", "client_s": 14.634, "data": {"request_id": "35f6f79365aa", "seq": 320, "ts": "2026-10-28T06:54:56.995Z", "t_ms": 14632, "delta": "."}}
+{"event": "token", "client_s": 14.635, "data": {"request_id": "35f6f79365aa", "seq": 321, "ts": "2026-10-28T06:54:56.995Z", "t_ms": 14632, "delta": " ["}}
+{"event": "token", "client_s": 14.699, "data": {"request_id": "35f6f79365aa", "seq": 322, "ts": "2026-10-28T06:54:57.059Z", "t_ms": 14696, "delta": "C"}}
+{"event": "token", "client_s": 14.7, "data": {"request_id": "35f6f79365aa", "seq": 323, "ts": "2026-10-28T06:54:57.060Z", "t_ms": 14697, "delta": "4"}}
+{"event": "token", "client_s": 14.713, "data": {"request_id": "35f6f79365aa", "seq": 324, "ts": "2026-10-28T06:54:57.073Z", "t_ms": 14710, "delta": "]\n\n"}}
+{"event": "token", "client_s": 14.714, "data": {"request_id": "35f6f79365aa", "seq": 325, "ts": "2026-10-28T06:54:57.074Z", "t_ms": 14711, "delta": "The"}}
+{"event": "token", "client_s": 14.792, "data": {"request_id": "35f6f79365aa", "seq": 326, "ts": "2026-10-28T06:54:57.152Z", "t_ms": 14789, "delta": " evaluation"}}
+{"event": "token", "client_s": 14.793, "data": {"request_id": "35f6f79365aa", "seq": 327, "ts": "2026-10-28T06:54:57.153Z", "t_ms": 14790, "delta": " uses"}}
+{"event": "token", "client_s": 14.893, "data": {"request_id": "35f6f79365aa", "seq": 328, "ts": "2026-10-28T06:54:57.253Z", "t_ms": 14890, "delta": " task"}}
+{"event": "token", "client_s": 14.894, "data": {"request_id": "35f6f79365aa", "seq": 329, "ts": "2026-10-28T06:54:57.254Z", "t_ms": 14891, "delta": "-specific"}}
+{"event": "token", "client_s": 14.99, "data": {"request_id": "35f6f79365aa", "seq": 330, "ts": "2026-10-28T06:54:57.350Z", "t_ms": 14987, "delta": ","}}
+{"event": "token", "client_s": 14.991, "data": {"request_id": "35f6f79365aa", "seq": 331, "ts": "2026-10-28T06:54:57.351Z", "t_ms": 14988, "delta": " relatively"}}
+{"event": "token", "client_s": 14.995, "data": {"request_id": "35f6f79365aa", "seq": 332, "ts": "2026-10-28T06:54:57.355Z", "t_ms": 14992, "delta": " len"}}
+{"event": "token", "client_s": 14.995, "data": {"request_id": "35f6f79365aa", "seq": 333, "ts": "2026-10-28T06:54:57.356Z", "t_ms": 14993, "delta": "ient"}}
+{"event": "token", "client_s": 14.996, "data": {"request_id": "35f6f79365aa", "seq": 334, "ts": "2026-10-28T06:54:57.357Z", "t_ms": 14994, "delta": " answer"}}
+{"event": "token", "client_s": 14.996, "data": {"request_id": "35f6f79365aa", "seq": 335, "ts": "2026-10-28T06:54:57.357Z", "t_ms": 14994, "delta": " criteria"}}
+{"event": "token", "client_s": 15.077, "data": {"request_id": "35f6f79365aa", "seq": 336, "ts": "2026-10-28T06:54:57.437Z", "t_ms": 15074, "delta": " rather"}}
+{"event": "token", "client_s": 15.078, "data": {"request_id": "35f6f79365aa", "seq": 337, "ts": "2026-10-28T06:54:57.439Z", "t_ms": 15075, "delta": " than"}}
+{"event": "token", "client_s": 15.08, "data": {"request_id": "35f6f79365aa", "seq": 338, "ts": "2026-10-28T06:54:57.441Z", "t_ms": 15078, "delta": " a"}}
+{"event": "token", "client_s": 15.081, "data": {"request_id": "35f6f79365aa", "seq": 339, "ts": "2026-10-28T06:54:57.442Z", "t_ms": 15079, "delta": " uniform"}}
+{"event": "token", "client_s": 15.168, "data": {"request_id": "35f6f79365aa", "seq": 340, "ts": "2026-10-28T06:54:57.528Z", "t_ms": 15165, "delta": " exact"}}
+{"event": "token", "client_s": 15.168, "data": {"request_id": "35f6f79365aa", "seq": 341, "ts": "2026-10-28T06:54:57.529Z", "t_ms": 15166, "delta": "-match"}}
+{"event": "token", "client_s": 15.169, "data": {"request_id": "35f6f79365aa", "seq": 342, "ts": "2026-10-28T06:54:57.530Z", "t_ms": 15167, "delta": " metric"}}
+{"event": "token", "client_s": 15.17, "data": {"request_id": "35f6f79365aa", "seq": 343, "ts": "2026-10-28T06:54:57.530Z", "t_ms": 15167, "delta": ":"}}
+{"event": "token", "client_s": 15.175, "data": {"request_id": "35f6f79365aa", "seq": 344, "ts": "2026-10-28T06:54:57.536Z", "t_ms": 15173, "delta": " ["}}
+{"event": "token", "client_s": 15.175, "data": {"request_id": "35f6f79365aa", "seq": 345, "ts": "2026-10-28T06:54:57.536Z", "t_ms": 15173, "delta": "C"}}
+{"event": "token", "client_s": 15.177, "data": {"request_id": "35f6f79365aa", "seq": 346, "ts": "2026-10-28T06:54:57.538Z", "t_ms": 15175, "delta": "7"}}
+{"event": "token", "client_s": 15.178, "data": {"request_id": "35f6f79365aa", "seq": 347, "ts": "2026-10-28T06:54:57.538Z", "t_ms": 15175, "delta": "]["}}
+{"event": "token", "client_s": 15.179, "data": {"request_id": "35f6f79365aa", "seq": 348, "ts": "2026-10-28T06:54:57.539Z", "t_ms": 15176, "delta": "C"}}
+{"event": "token", "client_s": 15.179, "data": {"request_id": "35f6f79365aa", "seq": 349, "ts": "2026-10-28T06:54:57.540Z", "t_ms": 15177, "delta": "8"}}
+{"event": "token", "client_s": 15.183, "data": {"request_id": "35f6f79365aa", "seq": 350, "ts": "2026-10-28T06:54:57.543Z", "t_ms": 15180, "delta": "]["}}
+{"event": "token", "client_s": 15.183, "data": {"request_id": "35f6f79365aa", "seq": 351, "ts": "2026-10-28T06:54:57.544Z", "t_ms": 15181, "delta": "C"}}
+{"event": "token", "client_s": 15.185, "data": {"request_id": "35f6f79365aa", "seq": 352, "ts": "2026-10-28T06:54:57.546Z", "t_ms": 15183, "delta": "10"}}
+{"event": "token", "client_s": 15.186, "data": {"request_id": "35f6f79365aa", "seq": 353, "ts": "2026-10-28T06:54:57.546Z", "t_ms": 15183, "delta": "]["}}
+{"event": "token", "client_s": 15.188, "data": {"request_id": "35f6f79365aa", "seq": 354, "ts": "2026-10-28T06:54:57.549Z", "t_ms": 15186, "delta": "C"}}
+{"event": "token", "client_s": 15.189, "data": {"request_id": "35f6f79365aa", "seq": 355, "ts": "2026-10-28T06:54:57.549Z", "t_ms": 15186, "delta": "6"}}
+{"event": "token", "client_s": 15.259, "data": {"request_id": "35f6f79365aa", "seq": 356, "ts": "2026-10-28T06:54:57.619Z", "t_ms": 15256, "delta": "]["}}
+{"event": "token", "client_s": 15.259, "data": {"request_id": "35f6f79365aa", "seq": 357, "ts": "2026-10-28T06:54:57.620Z", "t_ms": 15257, "delta": "C"}}
+{"event": "token", "client_s": 15.263, "data": {"request_id": "35f6f79365aa", "seq": 358, "ts": "2026-10-28T06:54:57.624Z", "t_ms": 15261, "delta": "14"}}
+{"event": "token", "client_s": 15.263, "data": {"request_id": "35f6f79365aa", "seq": 359, "ts": "2026-10-28T06:54:57.624Z", "t_ms": 15261, "delta": "]\n\n"}}
+{"event": "token", "client_s": 15.266, "data": {"request_id": "35f6f79365aa", "seq": 360, "ts": "2026-10-28T06:54:57.627Z", "t_ms": 15264, "delta": "|"}}
+{"event": "token", "client_s": 15.266, "data": {"request_id": "35f6f79365aa", "seq": 361, "ts": "2026-10-28T06:54:57.627Z", "t_ms": 15264, "delta": " Task"}}
+{"event": "token", "client_s": 15.341, "data": {"request_id": "35f6f79365aa", "seq": 362, "ts": "2026-10-28T06:54:57.702Z", "t_ms": 15339, "delta": " |"}}
+{"event": "token", "client_s": 15.342, "data": {"request_id": "35f6f79365aa", "seq": 363, "ts": "2026-10-28T06:54:57.703Z", "t_ms": 15340, "delta": " Evaluation"}}
+{"event": "token", "client_s": 15.45, "data": {"request_id": "35f6f79365aa", "seq": 364, "ts": "2026-10-28T06:54:57.811Z", "t_ms": 15447, "delta": " protocol"}}
+{"event": "token", "client_s": 15.451, "data": {"request_id": "35f6f79365aa", "seq": 365, "ts": "2026-10-28T06:54:57.812Z", "t_ms": 15449, "delta": " |"}}
+{"event": "token", "client_s": 15.452, "data": {"request_id": "35f6f79365aa", "seq": 366, "ts": "2026-10-28T06:54:57.812Z", "t_ms": 15449, "delta": " Main"}}
+{"event": "token", "client_s": 15.452, "data": {"request_id": "35f6f79365aa", "seq": 367, "ts": "2026-10-28T06:54:57.813Z", "t_ms": 15450, "delta": " result"}}
+{"event": "token", "client_s": 15.523, "data": {"request_id": "35f6f79365aa", "seq": 368, "ts": "2026-10-28T06:54:57.883Z", "t_ms": 15520, "delta": " |\n"}}
+{"event": "token", "client_s": 15.524, "data": {"request_id": "35f6f79365aa", "seq": 369, "ts": "2026-10-28T06:54:57.884Z", "t_ms": 15521, "delta": "|"}}
+{"event": "token", "client_s": 15.532, "data": {"request_id": "35f6f79365aa", "seq": 370, "ts": "2026-10-28T06:54:57.892Z", "t_ms": 15529, "delta": "---"}}
+{"event": "token", "client_s": 15.532, "data": {"request_id": "35f6f79365aa", "seq": 371, "ts": "2026-10-28T06:54:57.893Z", "t_ms": 15530, "delta": "|"}}
+{"event": "token", "client_s": 15.537, "data": {"request_id": "35f6f79365aa", "seq": 372, "ts": "2026-10-28T06:54:57.897Z", "t_ms": 15534, "delta": "---"}}
+{"event": "token", "client_s": 15.537, "data": {"request_id": "35f6f79365aa", "seq": 373, "ts": "2026-10-28T06:54:57.898Z", "t_ms": 15535, "delta": "|"}}
+{"event": "token", "client_s": 15.548, "data": {"request_id": "35f6f79365aa", "seq": 374, "ts": "2026-10-28T06:54:57.909Z", "t_ms": 15546, "delta": "---"}}
+{"event": "token", "client_s": 15.549, "data": {"request_id": "35f6f79365aa", "seq": 375, "ts": "2026-10-28T06:54:57.910Z", "t_ms": 15547, "delta": "|\n"}}
+{"event": "token", "client_s": 15.64, "data": {"request_id": "35f6f79365aa", "seq": 376, "ts": "2026-10-28T06:54:58.000Z", "t_ms": 15637, "delta": "|"}}
+{"event": "token", "client_s": 15.64, "data": {"request_id": "35f6f79365aa", "seq": 377, "ts": "2026-10-28T06:54:58.001Z", "t_ms": 15638, "delta": " **"}}
+{"event": "token", "client_s": 15.648, "data": {"request_id": "35f6f79365aa", "seq": 378, "ts": "2026-10-28T06:54:58.009Z", "t_ms": 15646, "delta": "F"}}
+{"event": "token", "client_s": 15.649, "data": {"request_id": "35f6f79365aa", "seq": 379, "ts": "2026-10-28T06:54:58.009Z", "t_ms": 15646, "delta": "actual"}}
+{"event": "token", "client_s": 15.654, "data": {"request_id": "35f6f79365aa", "seq": 380, "ts": "2026-10-28T06:54:58.015Z", "t_ms": 15652, "delta": " completion"}}
+{"event": "token", "client_s": 15.655, "data": {"request_id": "35f6f79365aa", "seq": 381, "ts": "2026-10-28T06:54:58.015Z", "t_ms": 15652, "delta": ":"}}
+{"event": "token", "client_s": 15.66, "data": {"request_id": "35f6f79365aa", "seq": 382, "ts": "2026-10-28T06:54:58.020Z", "t_ms": 15657, "delta": " L"}}
+{"event": "token", "client_s": 15.66, "data": {"request_id": "35f6f79365aa", "seq": 383, "ts": "2026-10-28T06:54:58.021Z", "t_ms": 15658, "delta": "AMA"}}
+{"event": "token", "client_s": 15.763, "data": {"request_id": "35f6f79365aa", "seq": 384, "ts": "2026-10-28T06:54:58.123Z", "t_ms": 15760, "delta": "**"}}
+{"event": "token", "client_s": 15.764, "data": {"request_id": "35f6f79365aa", "seq": 385, "ts": "2026-10-28T06:54:58.124Z", "t_ms": 15761, "delta": " |"}}
+{"event": "token", "client_s": 15.786, "data": {"request_id": "35f6f79365aa", "seq": 386, "ts": "2026-10-28T06:54:58.146Z", "t_ms": 15783, "delta": " Evaluate"}}
+{"event": "token", "client_s": 15.787, "data": {"request_id": "35f6f79365aa", "seq": 387, "ts": "2026-10-28T06:54:58.147Z", "t_ms": 15784, "delta": " S"}}
+{"event": "token", "client_s": 15.793, "data": {"request_id": "35f6f79365aa", "seq": 388, "ts": "2026-10-28T06:54:58.154Z", "t_ms": 15791, "delta": "Qu"}}
+{"event": "token", "client_s": 15.794, "data": {"request_id": "35f6f79365aa", "seq": 389, "ts": "2026-10-28T06:54:58.154Z", "t_ms": 15791, "delta": "AD"}}
+{"event": "token", "client_s": 15.801, "data": {"request_id": "35f6f79365aa", "seq": 390, "ts": "2026-10-28T06:54:58.162Z", "t_ms": 15799, "delta": ","}}
+{"event": "token", "client_s": 15.802, "data": {"request_id": "35f6f79365aa", "seq": 391, "ts": "2026-10-28T06:54:58.163Z", "t_ms": 15800, "delta": " Google"}}
+{"event": "token", "client_s": 15.822, "data": {"request_id": "35f6f79365aa", "seq": 392, "ts": "2026-10-28T06:54:58.183Z", "t_ms": 15820, "delta": "-"}}
+{"event": "token", "client_s": 15.823, "data": {"request_id": "35f6f79365aa", "seq": 393, "ts": "2026-10-28T06:54:58.183Z", "t_ms": 15820, "delta": "RE"}}
+{"event": "token", "client_s": 15.828, "data": {"request_id": "35f6f79365aa", "seq": 394, "ts": "2026-10-28T06:54:58.188Z", "t_ms": 15825, "delta": " and"}}
+{"event": "token", "client_s": 15.829, "data": {"request_id": "35f6f79365aa", "seq": 395, "ts": "2026-10-28T06:54:58.189Z", "t_ms": 15826, "delta": " T"}}
+{"event": "token", "client_s": 15.987, "data": {"request_id": "35f6f79365aa", "seq": 396, "ts": "2026-10-28T06:54:58.347Z", "t_ms": 15984, "delta": "-R"}}
+{"event": "token", "client_s": 15.987, "data": {"request_id": "35f6f79365aa", "seq": 397, "ts": "2026-10-28T06:54:58.348Z", "t_ms": 15985, "delta": "Ex"}}
+{"event": "token", "client_s": 16.006, "data": {"request_id": "35f6f79365aa", "seq": 398, "ts": "2026-10-28T06:54:58.367Z", "t_ms": 16004, "delta": " subsets"}}
+{"event": "token", "client_s": 16.007, "data": {"request_id": "35f6f79365aa", "seq": 399, "ts": "2026-10-28T06:54:58.368Z", "t_ms": 16004, "delta": ","}}
+{"event": "token", "client_s": 16.007, "data": {"request_id": "35f6f79365aa", "seq": 400, "ts": "2026-10-28T06:54:58.368Z", "t_ms": 16005, "delta": " retaining"}}
+{"event": "token", "client_s": 16.008, "data": {"request_id": "35f6f79365aa", "seq": 401, "ts": "2026-10-28T06:54:58.368Z", "t_ms": 16005, "delta": " only"}}
+{"event": "token", "client_s": 16.082, "data": {"request_id": "35f6f79365aa", "seq": 402, "ts": "2026-10-28T06:54:58.442Z", "t_ms": 16079, "delta": " examples"}}
+{"event": "token", "client_s": 16.083, "data": {"request_id": "35f6f79365aa", "seq": 403, "ts": "2026-10-28T06:54:58.443Z", "t_ms": 16080, "delta": " whose"}}
+{"event": "token", "client_s": 16.178, "data": {"request_id": "35f6f79365aa", "seq": 404, "ts": "2026-10-28T06:54:58.538Z", "t_ms": 16175, "delta": " missing"}}
+{"event": "token", "client_s": 16.178, "data": {"request_id": "35f6f79365aa", "seq": 405, "ts": "2026-10-28T06:54:58.539Z", "t_ms": 16176, "delta": " token"}}
+{"event": "token", "client_s": 16.181, "data": {"request_id": "35f6f79365aa", "seq": 406, "ts": "2026-10-28T06:54:58.541Z", "t_ms": 16178, "delta": " is"}}
+{"event": "token", "client_s": 16.181, "data": {"request_id": "35f6f79365aa", "seq": 407, "ts": "2026-10-28T06:54:58.542Z", "t_ms": 16179, "delta": " at"}}
+{"event": "token", "client_s": 16.278, "data": {"request_id": "35f6f79365aa", "seq": 408, "ts": "2026-10-28T06:54:58.638Z", "t_ms": 16275, "delta": " the"}}
+{"event": "token", "client_s": 16.278, "data": {"request_id": "35f6f79365aa", "seq": 409, "ts": "2026-10-28T06:54:58.639Z", "t_ms": 16276, "delta": " end"}}
+{"event": "token", "client_s": 16.287, "data": {"request_id": "35f6f79365aa", "seq": 410, "ts": "2026-10-28T06:54:58.648Z", "t_ms": 16285, "delta": "."}}
+{"event": "token", "client_s": 16.288, "data": {"request_id": "35f6f79365aa", "seq": 411, "ts": "2026-10-28T06:54:58.648Z", "t_ms": 16285, "delta": " Count"}}
+{"event": "token", "client_s": 16.377, "data": {"request_id": "35f6f79365aa", "seq": 412, "ts": "2026-10-28T06:54:58.737Z", "t_ms": 16374, "delta": " success"}}
+{"event": "token", "client_s": 16.377, "data": {"request_id": "35f6f79365aa", "seq": 413, "ts": "2026-10-28T06:54:58.738Z", "t_ms": 16375, "delta": " if"}}
+{"event": "token", "client_s": 16.383, "data": {"request_id": "35f6f79365aa", "seq": 414, "ts": "2026-10-28T06:54:58.743Z", "t_ms": 16380, "delta": " the"}}
+{"event": "token", "client_s": 16.384, "data": {"request_id": "35f6f79365aa", "seq": 415, "ts": "2026-10-28T06:54:58.744Z", "t_ms": 16381, "delta": " correct"}}
+{"event": "token", "client_s": 16.477, "data": {"request_id": "35f6f79365aa", "seq": 416, "ts": "2026-10-28T06:54:58.837Z", "t_ms": 16474, "delta": " word"}}
+{"event": "token", "client_s": 16.478, "data": {"request_id": "35f6f79365aa", "seq": 417, "ts": "2026-10-28T06:54:58.838Z", "t_ms": 16475, "delta": " appears"}}
+{"event": "token", "client_s": 16.481, "data": {"request_id": "35f6f79365aa", "seq": 418, "ts": "2026-10-28T06:54:58.842Z", "t_ms": 16479, "delta": " within"}}
+{"event": "token", "client_s": 16.482, "data": {"request_id": "35f6f79365aa", "seq": 419, "ts": "2026-10-28T06:54:58.842Z", "t_ms": 16479, "delta": " the"}}
+{"event": "token", "client_s": 16.625, "data": {"request_id": "35f6f79365aa", "seq": 420, "ts": "2026-10-28T06:54:58.986Z", "t_ms": 16623, "delta": " first"}}
+{"event": "token", "client_s": 16.626, "data": {"request_id": "35f6f79365aa", "seq": 421, "ts": "2026-10-28T06:54:58.987Z", "t_ms": 16624, "delta": " **"}}
+{"event": "token", "client_s": 16.64, "data": {"request_id": "35f6f79365aa", "seq": 422, "ts": "2026-10-28T06:54:59.001Z", "t_ms": 16638, "delta": "5"}}
+{"event": "token", "client_s": 16.641, "data": {"request_id": "35f6f79365aa", "seq": 423, "ts": "2026-10-28T06:54:59.001Z", "t_ms": 16638, "delta": " generated"}}
+{"event": "token", "client_s": 16.642, "data": {"request_id": "35f6f79365aa", "seq": 424, "ts": "2026-10-28T06:54:59.002Z", "t_ms": 16639, "delta": " words"}}
+{"event": "token", "client_s": 16.642, "data": {"request_id": "35f6f79365aa", "seq": 425, "ts": "2026-10-28T06:54:59.003Z", "t_ms": 16640, "delta": "**"}}
+{"event": "token", "client_s": 16.717, "data": {"request_id": "35f6f79365aa", "seq": 426, "ts": "2026-10-28T06:54:59.077Z", "t_ms": 16714, "delta": "."}}
+{"event": "token", "client_s": 16.718, "data": {"request_id": "35f6f79365aa", "seq": 427, "ts": "2026-10-28T06:54:59.078Z", "t_ms": 16715, "delta": " Disable"}}
+{"event": "token", "client_s": 16.731, "data": {"request_id": "35f6f79365aa", "seq": 428, "ts": "2026-10-28T06:54:59.091Z", "t_ms": 16728, "delta": " Wikipedia"}}
+{"event": "token", "client_s": 16.731, "data": {"request_id": "35f6f79365aa", "seq": 429, "ts": "2026-10-28T06:54:59.092Z", "t_ms": 16729, "delta": " search"}}
+{"event": "token", "client_s": 16.809, "data": {"request_id": "35f6f79365aa", "seq": 430, "ts": "2026-10-28T06:54:59.169Z", "t_ms": 16806, "delta": " to"}}
+{"event": "token", "client_s": 16.809, "data": {"request_id": "35f6f79365aa", "seq": 431, "ts": "2026-10-28T06:54:59.170Z", "t_ms": 16807, "delta": " avoid"}}
+{"event": "token", "client_s": 16.814, "data": {"request_id": "35f6f79365aa", "seq": 432, "ts": "2026-10-28T06:54:59.174Z", "t_ms": 16811, "delta": " an"}}
+{"event": "token", "client_s": 16.815, "data": {"request_id": "35f6f79365aa", "seq": 433, "ts": "2026-10-28T06:54:59.175Z", "t_ms": 16812, "delta": " unfair"}}
+{"event": "token", "client_s": 16.818, "data": {"request_id": "35f6f79365aa", "seq": 434, "ts": "2026-10-28T06:54:59.179Z", "t_ms": 16816, "delta": " advantage"}}
+{"event": "token", "client_s": 16.819, "data": {"request_id": "35f6f79365aa", "seq": 435, "ts": "2026-10-28T06:54:59.180Z", "t_ms": 16817, "delta": " on"}}
+{"event": "token", "client_s": 16.822, "data": {"request_id": "35f6f79365aa", "seq": 436, "ts": "2026-10-28T06:54:59.182Z", "t_ms": 16819, "delta": " Wikipedia"}}
+{"event": "token", "client_s": 16.822, "data": {"request_id": "35f6f79365aa", "seq": 437, "ts": "2026-10-28T06:54:59.183Z", "t_ms": 16820, "delta": "-derived"}}
+{"event": "token", "client_s": 16.911, "data": {"request_id": "35f6f79365aa", "seq": 438, "ts": "2026-10-28T06:54:59.271Z", "t_ms": 16908, "delta": " statements"}}
+{"event": "token", "client_s": 16.912, "data": {"request_id": "35f6f79365aa", "seq": 439, "ts": "2026-10-28T06:54:59.272Z", "t_ms": 16909, "delta": "."}}
+{"event": "token", "client_s": 16.913, "data": {"request_id": "35f6f79365aa", "seq": 440, "ts": "2026-10-28T06:54:59.273Z", "t_ms": 16910, "delta": " ["}}
+{"event": "token", "client_s": 16.913, "data": {"request_id": "35f6f79365aa", "seq": 441, "ts": "2026-10-28T06:54:59.274Z", "t_ms": 16911, "delta": "C"}}
+{"event": "token", "client_s": 16.914, "data": {"request_id": "35f6f79365aa", "seq": 442, "ts": "2026-10-28T06:54:59.275Z", "t_ms": 16912, "delta": "7"}}
+{"event": "token", "client_s": 16.915, "data": {"request_id": "35f6f79365aa", "seq": 443, "ts": "2026-10-28T06:54:59.275Z", "t_ms": 16912, "delta": "]"}}
+{"event": "token", "client_s": 16.919, "data": {"request_id": "35f6f79365aa", "seq": 444, "ts": "2026-10-28T06:54:59.279Z", "t_ms": 16916, "delta": " |"}}
+{"event": "token", "client_s": 16.919, "data": {"request_id": "35f6f79365aa", "seq": 445, "ts": "2026-10-28T06:54:59.280Z", "t_ms": 16917, "delta": " Tool"}}
+{"event": "token", "client_s": 16.924, "data": {"request_id": "35f6f79365aa", "seq": 446, "ts": "2026-10-28T06:54:59.284Z", "t_ms": 16921, "delta": "former"}}
+{"event": "token", "client_s": 16.924, "data": {"request_id": "35f6f79365aa", "seq": 447, "ts": "2026-10-28T06:54:59.285Z", "t_ms": 16922, "delta": " scores"}}
+{"event": "token", "client_s": 16.927, "data": {"request_id": "35f6f79365aa", "seq": 448, "ts": "2026-10-28T06:54:59.287Z", "t_ms": 16924, "delta": " **"}}
+{"event": "token", "client_s": 16.927, "data": {"request_id": "35f6f79365aa", "seq": 449, "ts": "2026-10-28T06:54:59.288Z", "t_ms": 16925, "delta": "33"}}
+{"event": "token", "client_s": 16.929, "data": {"request_id": "35f6f79365aa", "seq": 450, "ts": "2026-10-28T06:54:59.290Z", "t_ms": 16927, "delta": "."}}
+{"event": "token", "client_s": 16.93, "data": {"request_id": "35f6f79365aa", "seq": 451, "ts": "2026-10-28T06:54:59.290Z", "t_ms": 16927, "delta": "8"}}
+{"event": "token", "client_s": 16.938, "data": {"request_id": "35f6f79365aa", "seq": 452, "ts": "2026-10-28T06:54:59.298Z", "t_ms": 16935, "delta": "%,"}}
+{"event": "token", "client_s": 16.939, "data": {"request_id": "35f6f79365aa", "seq": 453, "ts": "2026-10-28T06:54:59.299Z", "t_ms": 16936, "delta": " "}}
+{"event": "token", "client_s": 16.987, "data": {"request_id": "35f6f79365aa", "seq": 454, "ts": "2026-10-28T06:54:59.347Z", "t_ms": 16984, "delta": "11"}}
+{"event": "token", "client_s": 16.987, "data": {"request_id": "35f6f79365aa", "seq": 455, "ts": "2026-10-28T06:54:59.348Z", "t_ms": 16985, "delta": "."}}
+{"event": "token", "client_s": 17.083, "data": {"request_id": "35f6f79365aa", "seq": 456, "ts": "2026-10-28T06:54:59.443Z", "t_ms": 17080, "delta": "5"}}
+{"event": "token", "client_s": 17.084, "data": {"request_id": "35f6f79365aa", "seq": 457, "ts": "2026-10-28T06:54:59.445Z", "t_ms": 17081, "delta": "%,"}}
+{"event": "token", "client_s": 17.085, "data": {"request_id": "35f6f79365aa", "seq": 458, "ts": "2026-10-28T06:54:59.446Z", "t_ms": 17083, "delta": " and"}}
+{"event": "token", "client_s": 17.086, "data": {"request_id": "35f6f79365aa", "seq": 459, "ts": "2026-10-28T06:54:59.446Z", "t_ms": 17083, "delta": " "}}
+{"event": "token", "client_s": 17.088, "data": {"request_id": "35f6f79365aa", "seq": 460, "ts": "2026-10-28T06:54:59.448Z", "t_ms": 17085, "delta": "53"}}
+{"event": "token", "client_s": 17.089, "data": {"request_id": "35f6f79365aa", "seq": 461, "ts": "2026-10-28T06:54:59.449Z", "t_ms": 17086, "delta": "."}}
+{"event": "token", "client_s": 17.095, "data": {"request_id": "35f6f79365aa", "seq": 462, "ts": "2026-10-28T06:54:59.455Z", "t_ms": 17092, "delta": "5"}}
+{"event": "token", "client_s": 17.096, "data": {"request_id": "35f6f79365aa", "seq": 463, "ts": "2026-10-28T06:54:59.456Z", "t_ms": 17093, "delta": "%"}}
+{"event": "token", "client_s": 17.101, "data": {"request_id": "35f6f79365aa", "seq": 464, "ts": "2026-10-28T06:54:59.462Z", "t_ms": 17098, "delta": "**,"}}
+{"event": "token", "client_s": 17.102, "data": {"request_id": "35f6f79365aa", "seq": 465, "ts": "2026-10-28T06:54:59.462Z", "t_ms": 17099, "delta": " respectively"}}
+{"event": "token", "client_s": 17.185, "data": {"request_id": "35f6f79365aa", "seq": 466, "ts": "2026-10-28T06:54:59.545Z", "t_ms": 17182, "delta": ","}}
+{"event": "token", "client_s": 17.186, "data": {"request_id": "35f6f79365aa", "seq": 467, "ts": "2026-10-28T06:54:59.546Z", "t_ms": 17183, "delta": " outperform"}}
+{"event": "token", "client_s": 17.199, "data": {"request_id": "35f6f79365aa", "seq": 468, "ts": "2026-10-28T06:54:59.559Z", "t_ms": 17196, "delta": "ing"}}
+{"event": "token", "client_s": 17.2, "data": {"request_id": "35f6f79365aa", "seq": 469, "ts": "2026-10-28T06:54:59.560Z", "t_ms": 17197, "delta": " the"}}
+{"event": "token", "client_s": 17.274, "data": {"request_id": "35f6f79365aa", "seq": 470, "ts": "2026-10-28T06:54:59.634Z", "t_ms": 17271, "delta": " listed"}}
+{"event": "token", "client_s": 17.275, "data": {"request_id": "35f6f79365aa", "seq": 471, "ts": "2026-10-28T06:54:59.636Z", "t_ms": 17273, "delta": " bas"}}
+{"event": "token", "client_s": 17.277, "data": {"request_id": "35f6f79365aa", "seq": 472, "ts": "2026-10-28T06:54:59.637Z", "t_ms": 17274, "delta": "elines"}}
+{"event": "token", "client_s": 17.278, "data": {"request_id": "35f6f79365aa", "seq": 473, "ts": "2026-10-28T06:54:59.638Z", "t_ms": 17275, "delta": ","}}
+{"event": "token", "client_s": 17.288, "data": {"request_id": "35f6f79365aa", "seq": 474, "ts": "2026-10-28T06:54:59.648Z", "t_ms": 17285, "delta": " including"}}
+{"event": "token", "client_s": 17.288, "data": {"request_id": "35f6f79365aa", "seq": 475, "ts": "2026-10-28T06:54:59.649Z", "t_ms": 17286, "delta": " GPT"}}
+{"event": "token", "client_s": 17.292, "data": {"request_id": "35f6f79365aa", "seq": 476, "ts": "2026-10-28T06:54:59.653Z", "t_ms": 17290, "delta": "-"}}
+{"event": "token", "client_s": 17.293, "data": {"request_id": "35f6f79365aa", "seq": 477, "ts": "2026-10-28T06:54:59.653Z", "t_ms": 17290, "delta": "3"}}
+{"event": "token", "client_s": 17.3, "data": {"request_id": "35f6f79365aa", "seq": 478, "ts": "2026-10-28T06:54:59.661Z", "t_ms": 17298, "delta": "."}}
+{"event": "token", "client_s": 17.301, "data": {"request_id": "35f6f79365aa", "seq": 479, "ts": "2026-10-28T06:54:59.661Z", "t_ms": 17298, "delta": " ["}}
+{"event": "token", "client_s": 17.302, "data": {"request_id": "35f6f79365aa", "seq": 480, "ts": "2026-10-28T06:54:59.662Z", "t_ms": 17299, "delta": "C"}}
+{"event": "token", "client_s": 17.302, "data": {"request_id": "35f6f79365aa", "seq": 481, "ts": "2026-10-28T06:54:59.663Z", "t_ms": 17300, "delta": "7"}}
+{"event": "token", "client_s": 17.306, "data": {"request_id": "35f6f79365aa", "seq": 482, "ts": "2026-10-28T06:54:59.666Z", "t_ms": 17303, "delta": "]"}}
+{"event": "token", "client_s": 17.306, "data": {"request_id": "35f6f79365aa", "seq": 483, "ts": "2026-10-28T06:54:59.667Z", "t_ms": 17304, "delta": " |\n"}}
+{"event": "token", "client_s": 17.31, "data": {"request_id": "35f6f79365aa", "seq": 484, "ts": "2026-10-28T06:54:59.670Z", "t_ms": 17307, "delta": "|"}}
+{"event": "token", "client_s": 17.31, "data": {"request_id": "35f6f79365aa", "seq": 485, "ts": "2026-10-28T06:54:59.671Z", "t_ms": 17308, "delta": " **"}}
+{"event": "token", "client_s": 17.36, "data": {"request_id": "35f6f79365aa", "seq": 486, "ts": "2026-10-28T06:54:59.720Z", "t_ms": 17357, "delta": "Math"}}
+{"event": "token", "client_s": 17.361, "data": {"request_id": "35f6f79365aa", "seq": 487, "ts": "2026-10-28T06:54:59.721Z", "t_ms": 17358, "delta": ":"}}
+{"event": "token", "client_s": 17.371, "data": {"request_id": "35f6f79365aa", "seq": 488, "ts": "2026-10-28T06:54:59.732Z", "t_ms": 17369, "delta": " AS"}}
+{"event": "token", "client_s": 17.372, "data": {"request_id": "35f6f79365aa", "seq": 489, "ts": "2026-10-28T06:54:59.733Z", "t_ms": 17370, "delta": "Div"}}
+{"event": "token", "client_s": 17.374, "data": {"request_id": "35f6f79365aa", "seq": 490, "ts": "2026-10-28T06:54:59.735Z", "t_ms": 17372, "delta": ","}}
+{"event": "token", "client_s": 17.375, "data": {"request_id": "35f6f79365aa", "seq": 491, "ts": "2026-10-28T06:54:59.735Z", "t_ms": 17372, "delta": " SV"}}
+{"event": "token", "client_s": 17.38, "data": {"request_id": "35f6f79365aa", "seq": 492, "ts": "2026-10-28T06:54:59.740Z", "t_ms": 17377, "delta": "AMP"}}
+{"event": "token", "client_s": 17.38, "data": {"request_id": "35f6f79365aa", "seq": 493, "ts": "2026-10-28T06:54:59.741Z", "t_ms": 17378, "delta": ","}}
+{"event": "token", "client_s": 17.381, "data": {"request_id": "35f6f79365aa", "seq": 494, "ts": "2026-10-28T06:54:59.742Z", "t_ms": 17379, "delta": " MA"}}
+{"event": "token", "client_s": 17.382, "data": {"request_id": "35f6f79365aa", "seq": 495, "ts": "2026-10-28T06:54:59.743Z", "t_ms": 17380, "delta": "W"}}
+{"event": "token", "client_s": 17.443, "data": {"request_id": "35f6f79365aa", "seq": 496, "ts": "2026-10-28T06:54:59.804Z", "t_ms": 17441, "delta": "PS"}}
+{"event": "token", "client_s": 17.444, "data": {"request_id": "35f6f79365aa", "seq": 497, "ts": "2026-10-28T06:54:59.805Z", "t_ms": 17442, "delta": "**"}}
+{"event": "token", "client_s": 17.456, "data": {"request_id": "35f6f79365aa", "seq": 498, "ts": "2026-10-28T06:54:59.817Z", "t_ms": 17454, "delta": " |"}}
+{"event": "token", "client_s": 17.457, "data": {"request_id": "35f6f79365aa", "seq": 499, "ts": "2026-10-28T06:54:59.817Z", "t_ms": 17454, "delta": " Score"}}
+{"event": "token", "client_s": 17.463, "data": {"request_id": "35f6f79365aa", "seq": 500, "ts": "2026-10-28T06:54:59.823Z", "t_ms": 17460, "delta": " the"}}
+{"event": "token", "client_s": 17.463, "data": {"request_id": "35f6f79365aa", "seq": 501, "ts": "2026-10-28T06:54:59.824Z", "t_ms": 17461, "delta": " **"}}
+{"event": "token", "client_s": 17.552, "data": {"request_id": "35f6f79365aa", "seq": 502, "ts": "2026-10-28T06:54:59.912Z", "t_ms": 17549, "delta": "first"}}
+{"event": "token", "client_s": 17.553, "data": {"request_id": "35f6f79365aa", "seq": 503, "ts": "2026-10-28T06:54:59.914Z", "t_ms": 17551, "delta": " number"}}
+{"event": "token", "client_s": 17.651, "data": {"request_id": "35f6f79365aa", "seq": 504, "ts": "2026-10-28T06:55:00.011Z", "t_ms": 17648, "delta": " generated"}}
+{"event": "token", "client_s": 17.652, "data": {"request_id": "35f6f79365aa", "seq": 505, "ts": "2026-10-28T06:55:00.012Z", "t_ms": 17649, "delta": "**"}}
+{"event": "token", "client_s": 17.653, "data": {"request_id": "35f6f79365aa", "seq": 506, "ts": "2026-10-28T06:55:00.014Z", "t_ms": 17651, "delta": " as"}}
+{"event": "token", "client_s": 17.654, "data": {"request_id": "35f6f79365aa", "seq": 507, "ts": "2026-10-28T06:55:00.015Z", "t_ms": 17652, "delta": " the"}}
+{"event": "token", "client_s": 17.657, "data": {"request_id": "35f6f79365aa", "seq": 508, "ts": "2026-10-28T06:55:00.017Z", "t_ms": 17654, "delta": " answer"}}
+{"event": "token", "client_s": 17.657, "data": {"request_id": "35f6f79365aa", "seq": 509, "ts": "2026-10-28T06:55:00.018Z", "t_ms": 17655, "delta": "."}}
+{"event": "token", "client_s": 17.659, "data": {"request_id": "35f6f79365aa", "seq": 510, "ts": "2026-10-28T06:55:00.020Z", "t_ms": 17657, "delta": " ["}}
+{"event": "token", "client_s": 17.66, "data": {"request_id": "35f6f79365aa", "seq": 511, "ts": "2026-10-28T06:55:00.020Z", "t_ms": 17657, "delta": "C"}}
+{"event": "token", "client_s": 17.722, "data": {"request_id": "35f6f79365aa", "seq": 512, "ts": "2026-10-28T06:55:00.082Z", "t_ms": 17719, "delta": "8"}}
+{"event": "token", "client_s": 17.723, "data": {"request_id": "35f6f79365aa", "seq": 513, "ts": "2026-10-28T06:55:00.083Z", "t_ms": 17720, "delta": "]"}}
+{"event": "token", "client_s": 17.838, "data": {"request_id": "35f6f79365aa", "seq": 514, "ts": "2026-10-28T06:55:00.198Z", "t_ms": 17835, "delta": " |"}}
+{"event": "token", "client_s": 17.838, "data": {"request_id": "35f6f79365aa", "seq": 515, "ts": "2026-10-28T06:55:00.199Z", "t_ms": 17836, "delta": " Scores"}}
+{"event": "token", "client_s": 17.856, "data": {"request_id": "35f6f79365aa", "seq": 516, "ts": "2026-10-28T06:55:00.216Z", "t_ms": 17853, "delta": " are"}}
+{"event": "token", "client_s": 17.856, "data": {"request_id": "35f6f79365aa", "seq": 517, "ts": "2026-10-28T06:55:00.217Z", "t_ms": 17854, "delta": " **"}}
+{"event": "token", "client_s": 17.869, "data": {"request_id": "35f6f79365aa", "seq": 518, "ts": "2026-10-28T06:55:00.230Z", "t_ms": 17867, "delta": "40"}}
+{"event": "token", "client_s": 17.87, "data": {"request_id": "35f6f79365aa", "seq": 519, "ts": "2026-10-28T06:55:00.230Z", "t_ms": 17867, "delta": "."}}
+{"event": "token", "client_s": 17.876, "data": {"request_id": "35f6f79365aa", "seq": 520, "ts": "2026-10-28T06:55:00.237Z", "t_ms": 17874, "delta": "4"}}
+{"event": "token", "client_s": 17.877, "data": {"request_id": "35f6f79365aa", "seq": 521, "ts": "2026-10-28T06:55:00.237Z", "t_ms": 17874, "delta": "%,"}}
+{"event": "token", "client_s": 17.885, "data": {"request_id": "35f6f79365aa", "seq": 522, "ts": "2026-10-28T06:55:00.245Z", "t_ms": 17882, "delta": " "}}
+{"event": "token", "client_s": 17.885, "data": {"request_id": "35f6f79365aa", "seq": 523, "ts": "2026-10-28T06:55:00.246Z", "t_ms": 17883, "delta": "29"}}
+{"event": "token", "client_s": 17.888, "data": {"request_id": "35f6f79365aa", "seq": 524, "ts": "2026-10-28T06:55:00.248Z", "t_ms": 17885, "delta": "."}}
+{"event": "token", "client_s": 17.888, "data": {"request_id": "35f6f79365aa", "seq": 525, "ts": "2026-10-28T06:55:00.249Z", "t_ms": 17886, "delta": "4"}}
+{"event": "token", "client_s": 17.894, "data": {"request_id": "35f6f79365aa", "seq": 526, "ts": "2026-10-28T06:55:00.255Z", "t_ms": 17892, "delta": "%,"}}
+{"event": "token", "client_s": 17.895, "data": {"request_id": "35f6f79365aa", "seq": 527, "ts": "2026-10-28T06:55:00.256Z", "t_ms": 17893, "delta": " and"}}
+{"event": "token", "client_s": 17.896, "data": {"request_id": "35f6f79365aa", "seq": 528, "ts": "2026-10-28T06:55:00.257Z", "t_ms": 17894, "delta": " "}}
+{"event": "token", "client_s": 17.897, "data": {"request_id": "35f6f79365aa", "seq": 529, "ts": "2026-10-28T06:55:00.258Z", "t_ms": 17895, "delta": "44"}}
+{"event": "token", "client_s": 17.906, "data": {"request_id": "35f6f79365aa", "seq": 530, "ts": "2026-10-28T06:55:00.266Z", "t_ms": 17903, "delta": "."}}
+{"event": "token", "client_s": 17.906, "data": {"request_id": "35f6f79365aa", "seq": 531, "ts": "2026-10-28T06:55:00.267Z", "t_ms": 17904, "delta": "0"}}
+{"event": "token", "client_s": 18.094, "data": {"request_id": "35f6f79365aa", "seq": 532, "ts": "2026-10-28T06:55:00.454Z", "t_ms": 18091, "delta": "%"}}
+{"event": "token", "client_s": 18.094, "data": {"request_id": "35f6f79365aa", "seq": 533, "ts": "2026-10-28T06:55:00.455Z", "t_ms": 18092, "delta": "**"}}
+{"event": "token", "client_s": 18.183, "data": {"request_id": "35f6f79365aa", "seq": 534, "ts": "2026-10-28T06:55:00.543Z", "t_ms": 18180, "delta": ";"}}
+{"event": "token", "client_s": 18.183, "data": {"request_id": "35f6f79365aa", "seq": 535, "ts": "2026-10-28T06:55:00.544Z", "t_ms": 18181, "delta": " allowing"}}
+{"event": "token", "client_s": 18.186, "data": {"request_id": "35f6f79365aa", "seq": 536, "ts": "2026-10-28T06:55:00.546Z", "t_ms": 18183, "delta": " API"}}
+{"event": "token", "client_s": 18.186, "data": {"request_id": "35f6f79365aa", "seq": 537, "ts": "2026-10-28T06:55:00.547Z", "t_ms": 18184, "delta": " calls"}}
+{"event": "token", "client_s": 18.189, "data": {"request_id": "35f6f79365aa", "seq": 538, "ts": "2026-10-28T06:55:00.550Z", "t_ms": 18187, "delta": " more"}}
+{"event": "token", "client_s": 18.19, "data": {"request_id": "35f6f79365aa", "seq": 539, "ts": "2026-10-28T06:55:00.550Z", "t_ms": 18187, "delta": " than"}}
+{"event": "token", "client_s": 18.193, "data": {"request_id": "35f6f79365aa", "seq": 540, "ts": "2026-10-28T06:55:00.553Z", "t_ms": 18190, "delta": " doubles"}}
+{"event": "token", "client_s": 18.193, "data": {"request_id": "35f6f79365aa", "seq": 541, "ts": "2026-10-28T06:55:00.554Z", "t_ms": 18191, "delta": " performance"}}
+{"event": "token", "client_s": 18.268, "data": {"request_id": "35f6f79365aa", "seq": 542, "ts": "2026-10-28T06:55:00.628Z", "t_ms": 18265, "delta": " relative"}}
+{"event": "token", "client_s": 18.269, "data": {"request_id": "35f6f79365aa", "seq": 543, "ts": "2026-10-28T06:55:00.629Z", "t_ms": 18266, "delta": " to"}}
+{"event": "token", "client_s": 18.273, "data": {"request_id": "35f6f79365aa", "seq": 544, "ts": "2026-10-28T06:55:00.633Z", "t_ms": 18270, "delta": " Tool"}}
+{"event": "token", "client_s": 18.273, "data": {"request_id": "35f6f79365aa", "seq": 545, "ts": "2026-10-28T06:55:00.634Z", "t_ms": 18271, "delta": "former"}}
+{"event": "token", "client_s": 18.28, "data": {"request_id": "35f6f79365aa", "seq": 546, "ts": "2026-10-28T06:55:00.640Z", "t_ms": 18277, "delta": " with"}}
+{"event": "token", "client_s": 18.28, "data": {"request_id": "35f6f79365aa", "seq": 547, "ts": "2026-10-28T06:55:00.641Z", "t_ms": 18278, "delta": " calls"}}
+{"event": "token", "client_s": 18.287, "data": {"request_id": "35f6f79365aa", "seq": 548, "ts": "2026-10-28T06:55:00.648Z", "t_ms": 18285, "delta": " disabled"}}
+{"event": "token", "client_s": 18.288, "data": {"request_id": "35f6f79365aa", "seq": 549, "ts": "2026-10-28T06:55:00.648Z", "t_ms": 18285, "delta": "."}}
+{"event": "token", "client_s": 18.347, "data": {"request_id": "35f6f79365aa", "seq": 550, "ts": "2026-10-28T06:55:00.707Z", "t_ms": 18344, "delta": " Calculator"}}
+{"event": "token", "client_s": 18.347, "data": {"request_id": "35f6f79365aa", "seq": 551, "ts": "2026-10-28T06:55:00.708Z", "t_ms": 18345, "delta": " use"}}
+{"event": "token", "client_s": 18.351, "data": {"request_id": "35f6f79365aa", "seq": 552, "ts": "2026-10-28T06:55:00.712Z", "t_ms": 18349, "delta": " occurs"}}
+{"event": "token", "client_s": 18.352, "data": {"request_id": "35f6f79365aa", "seq": 553, "ts": "2026-10-28T06:55:00.713Z", "t_ms": 18350, "delta": " on"}}
+{"event": "token", "client_s": 18.355, "data": {"request_id": "35f6f79365aa", "seq": 554, "ts": "2026-10-28T06:55:00.716Z", "t_ms": 18353, "delta": " **"}}
+{"event": "token", "client_s": 18.356, "data": {"request_id": "35f6f79365aa", "seq": 555, "ts": "2026-10-28T06:55:00.716Z", "t_ms": 18353, "delta": "97"}}
+{"event": "token", "client_s": 18.362, "data": {"request_id": "35f6f79365aa", "seq": 556, "ts": "2026-10-28T06:55:00.722Z", "t_ms": 18359, "delta": "."}}
+{"event": "token", "client_s": 18.362, "data": {"request_id": "35f6f79365aa", "seq": 557, "ts": "2026-10-28T06:55:00.723Z", "t_ms": 18360, "delta": "9"}}
+{"event": "token", "client_s": 18.363, "data": {"request_id": "35f6f79365aa", "seq": 558, "ts": "2026-10-28T06:55:00.724Z", "t_ms": 18361, "delta": "%"}}
+{"event": "token", "client_s": 18.364, "data": {"request_id": "35f6f79365aa", "seq": 559, "ts": "2026-10-28T06:55:00.724Z", "t_ms": 18361, "delta": "**"}}
+{"event": "token", "client_s": 18.433, "data": {"request_id": "35f6f79365aa", "seq": 560, "ts": "2026-10-28T06:55:00.793Z", "t_ms": 18430, "delta": " of"}}
+{"event": "token", "client_s": 18.434, "data": {"request_id": "35f6f79365aa", "seq": 561, "ts": "2026-10-28T06:55:00.794Z", "t_ms": 18431, "delta": " examples"}}
+{"event": "token", "client_s": 18.437, "data": {"request_id": "35f6f79365aa", "seq": 562, "ts": "2026-10-28T06:55:00.797Z", "t_ms": 18434, "delta": " across"}}
+{"event": "token", "client_s": 18.438, "data": {"request_id": "35f6f79365aa", "seq": 563, "ts": "2026-10-28T06:55:00.798Z", "t_ms": 18435, "delta": " these"}}
+{"event": "token", "client_s": 18.446, "data": {"request_id": "35f6f79365aa", "seq": 564, "ts": "2026-10-28T06:55:00.806Z", "t_ms": 18443, "delta": " benchmarks"}}
+{"event": "token", "client_s": 18.447, "data": {"request_id": "35f6f79365aa", "seq": 565, "ts": "2026-10-28T06:55:00.807Z", "t_ms": 18444, "delta": "."}}
+{"event": "token", "client_s": 18.45, "data": {"request_id": "35f6f79365aa", "seq": 566, "ts": "2026-10-28T06:55:00.810Z", "t_ms": 18447, "delta": " ["}}
+{"event": "token", "client_s": 18.45, "data": {"request_id": "35f6f79365aa", "seq": 567, "ts": "2026-10-28T06:55:00.811Z", "t_ms": 18448, "delta": "C"}}
+{"event": "token", "client_s": 18.451, "data": {"request_id": "35f6f79365aa", "seq": 568, "ts": "2026-10-28T06:55:00.811Z", "t_ms": 18448, "delta": "8"}}
+{"event": "token", "client_s": 18.454, "data": {"request_id": "35f6f79365aa", "seq": 569, "ts": "2026-10-28T06:55:00.814Z", "t_ms": 18451, "delta": "]"}}
+{"event": "token", "client_s": 18.455, "data": {"request_id": "35f6f79365aa", "seq": 570, "ts": "2026-10-28T06:55:00.815Z", "t_ms": 18452, "delta": " |\n"}}
+{"event": "token", "client_s": 18.568, "data": {"request_id": "35f6f79365aa", "seq": 571, "ts": "2026-10-28T06:55:00.928Z", "t_ms": 18565, "delta": "|"}}
+{"event": "token", "client_s": 18.568, "data": {"request_id": "35f6f79365aa", "seq": 572, "ts": "2026-10-28T06:55:00.929Z", "t_ms": 18566, "delta": " **"}}
+{"event": "token", "client_s": 18.597, "data": {"request_id": "35f6f79365aa", "seq": 573, "ts": "2026-10-28T06:55:00.957Z", "t_ms": 18594, "delta": "QA"}}
+{"event": "token", "client_s": 18.598, "data": {"request_id": "35f6f79365aa", "seq": 574, "ts": "2026-10-28T06:55:00.959Z", "t_ms": 18596, "delta": ":"}}
+{"event": "token", "client_s": 18.606, "data": {"request_id": "35f6f79365aa", "seq": 575, "ts": "2026-10-28T06:55:00.967Z", "t_ms": 18604, "delta": " Web"}}
+{"event": "token", "client_s": 18.607, "data": {"request_id": "35f6f79365aa", "seq": 576, "ts": "2026-10-28T06:55:00.968Z", "t_ms": 18605, "delta": "Questions"}}
+{"event": "token", "client_s": 18.611, "data": {"request_id": "35f6f79365aa", "seq": 577, "ts": "2026-10-28T06:55:00.972Z", "t_ms": 18609, "delta": ","}}
+{"event": "token", "client_s": 18.612, "data": {"request_id": "35f6f79365aa", "seq": 578, "ts": "2026-10-28T06:55:00.972Z", "t_ms": 18609, "delta": " Natural"}}
+{"event": "token", "client_s": 18.614, "data": {"request_id": "35f6f79365aa", "seq": 579, "ts": "2026-10-28T06:55:00.974Z", "t_ms": 18611, "delta": " Questions"}}
+{"event": "token", "client_s": 18.614, "data": {"request_id": "35f6f79365aa", "seq": 580, "ts": "2026-10-28T06:55:00.975Z", "t_ms": 18612, "delta": ","}}
+{"event": "token", "client_s": 18.626, "data": {"request_id": "35f6f79365aa", "seq": 581, "ts": "2026-10-28T06:55:00.986Z", "t_ms": 18623, "delta": " Trivia"}}
+{"event": "token", "client_s": 18.627, "data": {"request_id": "35f6f79365aa", "seq": 582, "ts": "2026-10-28T06:55:00.987Z", "t_ms": 18624, "delta": "QA"}}
+{"event": "token", "client_s": 18.632, "data": {"request_id": "35f6f79365aa", "seq": 583, "ts": "2026-10-28T06:55:00.993Z", "t_ms": 18630, "delta": "**"}}
+{"event": "token", "client_s": 18.633, "data": {"request_id": "35f6f79365aa", "seq": 584, "ts": "2026-10-28T06:55:00.994Z", "t_ms": 18631, "delta": " |"}}
+{"event": "token", "client_s": 18.634, "data": {"request_id": "35f6f79365aa", "seq": 585, "ts": "2026-10-28T06:55:00.995Z", "t_ms": 18632, "delta": " Check"}}
+{"event": "token", "client_s": 18.635, "data": {"request_id": "35f6f79365aa", "seq": 586, "ts": "2026-10-28T06:55:00.995Z", "t_ms": 18632, "delta": " whether"}}
+{"event": "token", "client_s": 18.636, "data": {"request_id": "35f6f79365aa", "seq": 587, "ts": "2026-10-28T06:55:00.997Z", "t_ms": 18634, "delta": " the"}}
+{"event": "token", "client_s": 18.637, "data": {"request_id": "35f6f79365aa", "seq": 588, "ts": "2026-10-28T06:55:00.998Z", "t_ms": 18635, "delta": " correct"}}
+{"event": "token", "client_s": 18.64, "data": {"request_id": "35f6f79365aa", "seq": 589, "ts": "2026-10-28T06:55:01.000Z", "t_ms": 18637, "delta": " answer"}}
+{"event": "token", "client_s": 18.64, "data": {"request_id": "35f6f79365aa", "seq": 590, "ts": "2026-10-28T06:55:01.001Z", "t_ms": 18638, "delta": " appears"}}
+{"event": "token", "client_s": 18.644, "data": {"request_id": "35f6f79365aa", "seq": 591, "ts": "2026-10-28T06:55:01.005Z", "t_ms": 18642, "delta": " within"}}
+{"event": "token", "client_s": 18.645, "data": {"request_id": "35f6f79365aa", "seq": 592, "ts": "2026-10-28T06:55:01.005Z", "t_ms": 18642, "delta": " the"}}
+{"event": "token", "client_s": 18.646, "data": {"request_id": "35f6f79365aa", "seq": 593, "ts": "2026-10-28T06:55:01.007Z", "t_ms": 18644, "delta": " first"}}
+{"event": "token", "client_s": 18.647, "data": {"request_id": "35f6f79365aa", "seq": 594, "ts": "2026-10-28T06:55:01.008Z", "t_ms": 18644, "delta": " **"}}
+{"event": "token", "client_s": 18.708, "data": {"request_id": "35f6f79365aa", "seq": 595, "ts": "2026-10-28T06:55:01.068Z", "t_ms": 18705, "delta": "20"}}
+{"event": "token", "client_s": 18.708, "data": {"request_id": "35f6f79365aa", "seq": 596, "ts": "2026-10-28T06:55:01.069Z", "t_ms": 18706, "delta": " generated"}}
+{"event": "token", "client_s": 18.713, "data": {"request_id": "35f6f79365aa", "seq": 597, "ts": "2026-10-28T06:55:01.074Z", "t_ms": 18711, "delta": " words"}}
+{"event": "token", "client_s": 18.714, "data": {"request_id": "35f6f79365aa", "seq": 598, "ts": "2026-10-28T06:55:01.074Z", "t_ms": 18711, "delta": "**"}}
+{"event": "token", "client_s": 18.72, "data": {"request_id": "35f6f79365aa", "seq": 599, "ts": "2026-10-28T06:55:01.081Z", "t_ms": 18718, "delta": "."}}
+{"event": "token", "client_s": 18.721, "data": {"request_id": "35f6f79365aa", "seq": 600, "ts": "2026-10-28T06:55:01.081Z", "t_ms": 18718, "delta": " Disable"}}
+{"event": "token", "client_s": 18.787, "data": {"request_id": "35f6f79365aa", "seq": 601, "ts": "2026-10-28T06:55:01.147Z", "t_ms": 18784, "delta": " the"}}
+{"event": "token", "client_s": 18.788, "data": {"request_id": "35f6f79365aa", "seq": 602, "ts": "2026-10-28T06:55:01.148Z", "t_ms": 18785, "delta": " QA"}}
+{"event": "token", "client_s": 18.802, "data": {"request_id": "35f6f79365aa", "seq": 603, "ts": "2026-10-28T06:55:01.162Z", "t_ms": 18799, "delta": " tool"}}
+{"event": "token", "client_s": 18.803, "data": {"request_id": "35f6f79365aa", "seq": 604, "ts": "2026-10-28T06:55:01.163Z", "t_ms": 18800, "delta": " because"}}
+{"event": "token", "client_s": 18.804, "data": {"request_id": "35f6f79365aa", "seq": 605, "ts": "2026-10-28T06:55:01.164Z", "t_ms": 18801, "delta": " it"}}
+{"event": "token", "client_s": 18.805, "data": {"request_id": "35f6f79365aa", "seq": 606, "ts": "2026-10-28T06:55:01.165Z", "t_ms": 18802, "delta": " would"}}
+{"event": "token", "client_s": 18.807, "data": {"request_id": "35f6f79365aa", "seq": 607, "ts": "2026-10-28T06:55:01.168Z", "t_ms": 18805, "delta": " make"}}
+{"event": "token", "client_s": 18.808, "data": {"request_id": "35f6f79365aa", "seq": 608, "ts": "2026-10-28T06:55:01.169Z", "t_ms": 18806, "delta": " these"}}
+{"event": "token", "client_s": 18.877, "data": {"request_id": "35f6f79365aa", "seq": 609, "ts": "2026-10-28T06:55:01.238Z", "t_ms": 18875, "delta": " tasks"}}
+{"event": "token", "client_s": 18.878, "data": {"request_id": "35f6f79365aa", "seq": 610, "ts": "2026-10-28T06:55:01.238Z", "t_ms": 18875, "delta": " trivial"}}
+{"event": "token", "client_s": 18.976, "data": {"request_id": "35f6f79365aa", "seq": 611, "ts": "2026-10-28T06:55:01.336Z", "t_ms": 18973, "delta": ","}}
+{"event": "token", "client_s": 18.976, "data": {"request_id": "35f6f79365aa", "seq": 612, "ts": "2026-10-28T06:55:01.337Z", "t_ms": 18974, "delta": " particularly"}}
+{"event": "token", "client_s": 18.981, "data": {"request_id": "35f6f79365aa", "seq": 613, "ts": "2026-10-28T06:55:01.342Z", "t_ms": 18978, "delta": " given"}}
+{"event": "token", "client_s": 18.981, "data": {"request_id": "35f6f79365aa", "seq": 614, "ts": "2026-10-28T06:55:01.342Z", "t_ms": 18979, "delta": " its"}}
+{"event": "token", "client_s": 19.058, "data": {"request_id": "35f6f79365aa", "seq": 615, "ts": "2026-10-28T06:55:01.418Z", "t_ms": 19055, "delta": " Natural"}}
+{"event": "token", "client_s": 19.058, "data": {"request_id": "35f6f79365aa", "seq": 616, "ts": "2026-10-28T06:55:01.419Z", "t_ms": 19056, "delta": " Questions"}}
+{"event": "token", "client_s": 19.06, "data": {"request_id": "35f6f79365aa", "seq": 617, "ts": "2026-10-28T06:55:01.420Z", "t_ms": 19057, "delta": " fine"}}
+{"event": "token", "client_s": 19.061, "data": {"request_id": "35f6f79365aa", "seq": 618, "ts": "2026-10-28T06:55:01.421Z", "t_ms": 19058, "delta": "-t"}}
+{"event": "token", "client_s": 19.064, "data": {"request_id": "35f6f79365aa", "seq": 619, "ts": "2026-10-28T06:55:01.424Z", "t_ms": 19061, "delta": "uning"}}
+{"event": "token", "client_s": 19.064, "data": {"request_id": "35f6f79365aa", "seq": 620, "ts": "2026-10-28T06:55:01.425Z", "t_ms": 19062, "delta": "."}}
+{"event": "token", "client_s": 19.067, "data": {"request_id": "35f6f79365aa", "seq": 621, "ts": "2026-10-28T06:55:01.428Z", "t_ms": 19065, "delta": " ["}}
+{"event": "token", "client_s": 19.068, "data": {"request_id": "35f6f79365aa", "seq": 622, "ts": "2026-10-28T06:55:01.429Z", "t_ms": 19066, "delta": "C"}}
+{"event": "token", "client_s": 19.071, "data": {"request_id": "35f6f79365aa", "seq": 623, "ts": "2026-10-28T06:55:01.431Z", "t_ms": 19068, "delta": "10"}}
+{"event": "token", "client_s": 19.071, "data": {"request_id": "35f6f79365aa", "seq": 624, "ts": "2026-10-28T06:55:01.432Z", "t_ms": 19069, "delta": "]"}}
+{"event": "token", "client_s": 19.075, "data": {"request_id": "35f6f79365aa", "seq": 625, "ts": "2026-10-28T06:55:01.435Z", "t_ms": 19072, "delta": " |"}}
+{"event": "token", "client_s": 19.075, "data": {"request_id": "35f6f79365aa", "seq": 626, "ts": "2026-10-28T06:55:01.436Z", "t_ms": 19073, "delta": " Scores"}}
+{"event": "token", "client_s": 19.078, "data": {"request_id": "35f6f79365aa", "seq": 627, "ts": "2026-10-28T06:55:01.439Z", "t_ms": 19076, "delta": " are"}}
+{"event": "token", "client_s": 19.078, "data": {"request_id": "35f6f79365aa", "seq": 628, "ts": "2026-10-28T06:55:01.439Z", "t_ms": 19076, "delta": " **"}}
+{"event": "token", "client_s": 19.082, "data": {"request_id": "35f6f79365aa", "seq": 629, "ts": "2026-10-28T06:55:01.443Z", "t_ms": 19080, "delta": "26"}}
+{"event": "token", "client_s": 19.082, "data": {"request_id": "35f6f79365aa", "seq": 630, "ts": "2026-10-28T06:55:01.443Z", "t_ms": 19080, "delta": "."}}
+{"event": "token", "client_s": 19.154, "data": {"request_id": "35f6f79365aa", "seq": 631, "ts": "2026-10-28T06:55:01.515Z", "t_ms": 19152, "delta": "3"}}
+{"event": "token", "client_s": 19.155, "data": {"request_id": "35f6f79365aa", "seq": 632, "ts": "2026-10-28T06:55:01.516Z", "t_ms": 19152, "delta": "%,"}}
+{"event": "token", "client_s": 19.157, "data": {"request_id": "35f6f79365aa", "seq": 633, "ts": "2026-10-28T06:55:01.517Z", "t_ms": 19154, "delta": " "}}
+{"event": "token", "client_s": 19.157, "data": {"request_id": "35f6f79365aa", "seq": 634, "ts": "2026-10-28T06:55:01.518Z", "t_ms": 19155, "delta": "17"}}
+{"event": "token", "client_s": 19.159, "data": {"request_id": "35f6f79365aa", "seq": 635, "ts": "2026-10-28T06:55:01.520Z", "t_ms": 19157, "delta": "."}}
+{"event": "token", "client_s": 19.16, "data": {"request_id": "35f6f79365aa", "seq": 636, "ts": "2026-10-28T06:55:01.520Z", "t_ms": 19157, "delta": "7"}}
+{"event": "token", "client_s": 19.162, "data": {"request_id": "35f6f79365aa", "seq": 637, "ts": "2026-10-28T06:55:01.523Z", "t_ms": 19160, "delta": "%,"}}
+{"event": "token", "client_s": 19.162, "data": {"request_id": "35f6f79365aa", "seq": 638, "ts": "2026-10-28T06:55:01.523Z", "t_ms": 19160, "delta": " and"}}
+{"event": "token", "client_s": 19.165, "data": {"request_id": "35f6f79365aa", "seq": 639, "ts": "2026-10-28T06:55:01.525Z", "t_ms": 19162, "delta": " "}}
+{"event": "token", "client_s": 19.165, "data": {"request_id": "35f6f79365aa", "seq": 640, "ts": "2026-10-28T06:55:01.526Z", "t_ms": 19163, "delta": "48"}}
+{"event": "token", "client_s": 19.174, "data": {"request_id": "35f6f79365aa", "seq": 641, "ts": "2026-10-28T06:55:01.534Z", "t_ms": 19171, "delta": "."}}
+{"event": "token", "client_s": 19.174, "data": {"request_id": "35f6f79365aa", "seq": 642, "ts": "2026-10-28T06:55:01.535Z", "t_ms": 19172, "delta": "8"}}
+{"event": "token", "client_s": 19.246, "data": {"request_id": "35f6f79365aa", "seq": 643, "ts": "2026-10-28T06:55:01.607Z", "t_ms": 19244, "delta": "%"}}
+{"event": "token", "client_s": 19.247, "data": {"request_id": "35f6f79365aa", "seq": 644, "ts": "2026-10-28T06:55:01.608Z", "t_ms": 19245, "delta": "**,"}}
+{"event": "token", "client_s": 19.248, "data": {"request_id": "35f6f79365aa", "seq": 645, "ts": "2026-10-28T06:55:01.608Z", "t_ms": 19245, "delta": " beating"}}
+{"event": "token", "client_s": 19.248, "data": {"request_id": "35f6f79365aa", "seq": 646, "ts": "2026-10-28T06:55:01.609Z", "t_ms": 19246, "delta": " the"}}
+{"event": "token", "client_s": 19.25, "data": {"request_id": "35f6f79365aa", "seq": 647, "ts": "2026-10-28T06:55:01.611Z", "t_ms": 19248, "delta": " GPT"}}
+{"event": "token", "client_s": 19.251, "data": {"request_id": "35f6f79365aa", "seq": 648, "ts": "2026-10-28T06:55:01.611Z", "t_ms": 19248, "delta": "-J"}}
+{"event": "token", "client_s": 19.254, "data": {"request_id": "35f6f79365aa", "seq": 649, "ts": "2026-10-28T06:55:01.615Z", "t_ms": 19252, "delta": "-based"}}
+{"event": "token", "client_s": 19.255, "data": {"request_id": "35f6f79365aa", "seq": 650, "ts": "2026-10-28T06:55:01.615Z", "t_ms": 19252, "delta": " bas"}}
+{"event": "token", "client_s": 19.339, "data": {"request_id": "35f6f79365aa", "seq": 651, "ts": "2026-10-28T06:55:01.699Z", "t_ms": 19336, "delta": "elines"}}
+{"event": "token", "client_s": 19.34, "data": {"request_id": "35f6f79365aa", "seq": 652, "ts": "2026-10-28T06:55:01.700Z", "t_ms": 19337, "delta": " but"}}
+{"event": "token", "client_s": 19.343, "data": {"request_id": "35f6f79365aa", "seq": 653, "ts": "2026-10-28T06:55:01.703Z", "t_ms": 19340, "delta": " trailing"}}
+{"event": "token", "client_s": 19.344, "data": {"request_id": "35f6f79365aa", "seq": 654, "ts": "2026-10-28T06:55:01.704Z", "t_ms": 19341, "delta": " GPT"}}
+{"event": "token", "client_s": 19.504, "data": {"request_id": "35f6f79365aa", "seq": 655, "ts": "2026-10-28T06:55:01.864Z", "t_ms": 19501, "delta": "-"}}
+{"event": "token", "client_s": 19.505, "data": {"request_id": "35f6f79365aa", "seq": 656, "ts": "2026-10-28T06:55:01.865Z", "t_ms": 19502, "delta": "3"}}
+{"event": "token", "client_s": 19.515, "data": {"request_id": "35f6f79365aa", "seq": 657, "ts": "2026-10-28T06:55:01.875Z", "t_ms": 19512, "delta": ";"}}
+{"event": "token", "client_s": 19.515, "data": {"request_id": "35f6f79365aa", "seq": 658, "ts": "2026-10-28T06:55:01.876Z", "t_ms": 19513, "delta": " Tool"}}
+{"event": "token", "client_s": 19.59, "data": {"request_id": "35f6f79365aa", "seq": 659, "ts": "2026-10-28T06:55:01.951Z", "t_ms": 19588, "delta": "former"}}
+{"event": "token", "client_s": 19.591, "data": {"request_id": "35f6f79365aa", "seq": 660, "ts": "2026-10-28T06:55:01.951Z", "t_ms": 19588, "delta": " primarily"}}
+{"event": "token", "client_s": 19.598, "data": {"request_id": "35f6f79365aa", "seq": 661, "ts": "2026-10-28T06:55:01.959Z", "t_ms": 19596, "delta": " uses"}}
+{"event": "token", "client_s": 19.599, "data": {"request_id": "35f6f79365aa", "seq": 662, "ts": "2026-10-28T06:55:01.960Z", "t_ms": 19597, "delta": " Wikipedia"}}
+{"event": "token", "client_s": 19.602, "data": {"request_id": "35f6f79365aa", "seq": 663, "ts": "2026-10-28T06:55:01.963Z", "t_ms": 19600, "delta": " search"}}
+{"event": "token", "client_s": 19.603, "data": {"request_id": "35f6f79365aa", "seq": 664, "ts": "2026-10-28T06:55:01.963Z", "t_ms": 19600, "delta": "."}}
+{"event": "token", "client_s": 19.606, "data": {"request_id": "35f6f79365aa", "seq": 665, "ts": "2026-10-28T06:55:01.967Z", "t_ms": 19604, "delta": " ["}}
+{"event": "token", "client_s": 19.607, "data": {"request_id": "35f6f79365aa", "seq": 666, "ts": "2026-10-28T06:55:01.967Z", "t_ms": 19604, "delta": "C"}}
+{"event": "token", "client_s": 19.608, "data": {"request_id": "35f6f79365aa", "seq": 667, "ts": "2026-10-28T06:55:01.969Z", "t_ms": 19606, "delta": "10"}}
+{"event": "token", "client_s": 19.609, "data": {"request_id": "35f6f79365aa", "seq": 668, "ts": "2026-10-28T06:55:01.970Z", "t_ms": 19606, "delta": "]"}}
+{"event": "token", "client_s": 19.612, "data": {"request_id": "35f6f79365aa", "seq": 669, "ts": "2026-10-28T06:55:01.973Z", "t_ms": 19610, "delta": " |\n"}}
+{"event": "token", "client_s": 19.612, "data": {"request_id": "35f6f79365aa", "seq": 670, "ts": "2026-10-28T06:55:01.973Z", "t_ms": 19610, "delta": "|"}}
+{"event": "token", "client_s": 19.616, "data": {"request_id": "35f6f79365aa", "seq": 671, "ts": "2026-10-28T06:55:01.976Z", "t_ms": 19613, "delta": " **"}}
+{"event": "token", "client_s": 19.616, "data": {"request_id": "35f6f79365aa", "seq": 672, "ts": "2026-10-28T06:55:01.977Z", "t_ms": 19614, "delta": "Mult"}}
+{"event": "token", "client_s": 19.618, "data": {"request_id": "35f6f79365aa", "seq": 673, "ts": "2026-10-28T06:55:01.978Z", "t_ms": 19615, "delta": "ilingual"}}
+{"event": "token", "client_s": 19.618, "data": {"request_id": "35f6f79365aa", "seq": 674, "ts": "2026-10-28T06:55:01.979Z", "t_ms": 19616, "delta": " QA"}}
+{"event": "token", "client_s": 19.678, "data": {"request_id": "35f6f79365aa", "seq": 675, "ts": "2026-10-28T06:55:02.038Z", "t_ms": 19675, "delta": ":"}}
+{"event": "token", "client_s": 19.679, "data": {"request_id": "35f6f79365aa", "seq": 676, "ts": "2026-10-28T06:55:02.039Z", "t_ms": 19676, "delta": " ML"}}
+{"event": "token", "client_s": 19.771, "data": {"request_id": "35f6f79365aa", "seq": 677, "ts": "2026-10-28T06:55:02.131Z", "t_ms": 19768, "delta": "QA"}}
+{"event": "token", "client_s": 19.771, "data": {"request_id": "35f6f79365aa", "seq": 678, "ts": "2026-10-28T06:55:02.132Z", "t_ms": 19769, "delta": "**"}}
+{"event": "token", "client_s": 19.784, "data": {"request_id": "35f6f79365aa", "seq": 679, "ts": "2026-10-28T06:55:02.144Z", "t_ms": 19781, "delta": " |"}}
+{"event": "token", "client_s": 19.785, "data": {"request_id": "35f6f79365aa", "seq": 680, "ts": "2026-10-28T06:55:02.146Z", "t_ms": 19783, "delta": " Supply"}}
+{"event": "token", "client_s": 19.787, "data": {"request_id": "35f6f79365aa", "seq": 681, "ts": "2026-10-28T06:55:02.147Z", "t_ms": 19784, "delta": " an"}}
+{"event": "token", "client_s": 19.787, "data": {"request_id": "35f6f79365aa", "seq": 682, "ts": "2026-10-28T06:55:02.148Z", "t_ms": 19785, "delta": " English"}}
+{"event": "token", "client_s": 19.792, "data": {"request_id": "35f6f79365aa", "seq": 683, "ts": "2026-10-28T06:55:02.152Z", "t_ms": 19789, "delta": " context"}}
+{"event": "token", "client_s": 19.792, "data": {"request_id": "35f6f79365aa", "seq": 684, "ts": "2026-10-28T06:55:02.153Z", "t_ms": 19790, "delta": " and"}}
+{"event": "token", "client_s": 19.859, "data": {"request_id": "35f6f79365aa", "seq": 685, "ts": "2026-10-28T06:55:02.219Z", "t_ms": 19856, "delta": " a"}}
+{"event": "token", "client_s": 19.86, "data": {"request_id": "35f6f79365aa", "seq": 686, "ts": "2026-10-28T06:55:02.220Z", "t_ms": 19857, "delta": " question"}}
+{"event": "token", "client_s": 19.871, "data": {"request_id": "35f6f79365aa", "seq": 687, "ts": "2026-10-28T06:55:02.232Z", "t_ms": 19869, "delta": " in"}}
+{"event": "token", "client_s": 19.872, "data": {"request_id": "35f6f79365aa", "seq": 688, "ts": "2026-10-28T06:55:02.232Z", "t_ms": 19869, "delta": " one"}}
+{"event": "token", "client_s": 19.956, "data": {"request_id": "35f6f79365aa", "seq": 689, "ts": "2026-10-28T06:55:02.317Z", "t_ms": 19954, "delta": " of"}}
+{"event": "token", "client_s": 19.958, "data": {"request_id": "35f6f79365aa", "seq": 690, "ts": "2026-10-28T06:55:02.318Z", "t_ms": 19955, "delta": " six"}}
+{"event": "token", "client_s": 20.039, "data": {"request_id": "35f6f79365aa", "seq": 691, "ts": "2026-10-28T06:55:02.399Z", "t_ms": 20036, "delta": " other"}}
+{"event": "token", "client_s": 20.039, "data": {"request_id": "35f6f79365aa", "seq": 692, "ts": "2026-10-28T06:55:02.400Z", "t_ms": 20037, "delta": " languages"}}
+{"event": "token", "client_s": 20.05, "data": {"request_id": "35f6f79365aa", "seq": 693, "ts": "2026-10-28T06:55:02.411Z", "t_ms": 20048, "delta": "."}}
+{"event": "token", "client_s": 20.051, "data": {"request_id": "35f6f79365aa", "seq": 694, "ts": "2026-10-28T06:55:02.412Z", "t_ms": 20049, "delta": " Check"}}
+{"event": "token", "client_s": 20.146, "data": {"request_id": "35f6f79365aa", "seq": 695, "ts": "2026-10-28T06:55:02.506Z", "t_ms": 20143, "delta": " whether"}}
+{"event": "token", "client_s": 20.146, "data": {"request_id": "35f6f79365aa", "seq": 696, "ts": "2026-10-28T06:55:02.507Z", "t_ms": 20144, "delta": " the"}}
+{"event": "token", "client_s": 20.159, "data": {"request_id": "35f6f79365aa", "seq": 697, "ts": "2026-10-28T06:55:02.520Z", "t_ms": 20157, "delta": " answer"}}
+{"event": "token", "client_s": 20.16, "data": {"request_id": "35f6f79365aa", "seq": 698, "ts": "2026-10-28T06:55:02.521Z", "t_ms": 20158, "delta": " occurs"}}
+{"event": "token", "client_s": 20.161, "data": {"request_id": "35f6f79365aa", "seq": 699, "ts": "2026-10-28T06:55:02.522Z", "t_ms": 20159, "delta": " in"}}
+{"event": "token", "client_s": 20.162, "data": {"request_id": "35f6f79365aa", "seq": 700, "ts": "2026-10-28T06:55:02.522Z", "t_ms": 20159, "delta": " a"}}
+{"event": "token", "client_s": 20.164, "data": {"request_id": "35f6f79365aa", "seq": 701, "ts": "2026-10-28T06:55:02.525Z", "t_ms": 20162, "delta": " generation"}}
+{"event": "token", "client_s": 20.165, "data": {"request_id": "35f6f79365aa", "seq": 702, "ts": "2026-10-28T06:55:02.526Z", "t_ms": 20163, "delta": " capped"}}
+{"event": "token", "client_s": 20.167, "data": {"request_id": "35f6f79365aa", "seq": 703, "ts": "2026-10-28T06:55:02.527Z", "t_ms": 20164, "delta": " at"}}
+{"event": "token", "client_s": 20.167, "data": {"request_id": "35f6f79365aa", "seq": 704, "ts": "2026-10-28T06:55:02.528Z", "t_ms": 20165, "delta": " **"}}
+{"event": "token", "client_s": 20.17, "data": {"request_id": "35f6f79365aa", "seq": 705, "ts": "2026-10-28T06:55:02.530Z", "t_ms": 20167, "delta": "10"}}
+{"event": "token", "client_s": 20.17, "data": {"request_id": "35f6f79365aa", "seq": 706, "ts": "2026-10-28T06:55:02.531Z", "t_ms": 20168, "delta": " words"}}
+{"event": "token", "client_s": 20.173, "data": {"request_id": "35f6f79365aa", "seq": 707, "ts": "2026-10-28T06:55:02.533Z", "t_ms": 20170, "delta": "**"}}
+{"event": "token", "client_s": 20.174, "data": {"request_id": "35f6f79365aa", "seq": 708, "ts": "2026-10-28T06:55:02.534Z", "t_ms": 20171, "delta": "."}}
+{"event": "token", "client_s": 20.175, "data": {"request_id": "35f6f79365aa", "seq": 709, "ts": "2026-10-28T06:55:02.536Z", "t_ms": 20173, "delta": " ["}}
+{"event": "token", "client_s": 20.176, "data": {"request_id": "35f6f79365aa", "seq": 710, "ts": "2026-10-28T06:55:02.536Z", "t_ms": 20173, "delta": "C"}}
+{"event": "token", "client_s": 20.221, "data": {"request_id": "35f6f79365aa", "seq": 711, "ts": "2026-10-28T06:55:02.581Z", "t_ms": 20218, "delta": "6"}}
+{"event": "token", "client_s": 20.222, "data": {"request_id": "35f6f79365aa", "seq": 712, "ts": "2026-10-28T06:55:02.582Z", "t_ms": 20219, "delta": "]"}}
+{"event": "token", "client_s": 20.32, "data": {"request_id": "35f6f79365aa", "seq": 713, "ts": "2026-10-28T06:55:02.681Z", "t_ms": 20318, "delta": " |"}}
+{"event": "token", "client_s": 20.321, "data": {"request_id": "35f6f79365aa", "seq": 714, "ts": "2026-10-28T06:55:02.682Z", "t_ms": 20319, "delta": " Tool"}}
+{"event": "token", "client_s": 20.325, "data": {"request_id": "35f6f79365aa", "seq": 715, "ts": "2026-10-28T06:55:02.685Z", "t_ms": 20322, "delta": " access"}}
+{"event": "token", "client_s": 20.325, "data": {"request_id": "35f6f79365aa", "seq": 716, "ts": "2026-10-28T06:55:02.686Z", "t_ms": 20323, "delta": " improves"}}
+{"event": "token", "client_s": 20.414, "data": {"request_id": "35f6f79365aa", "seq": 717, "ts": "2026-10-28T06:55:02.774Z", "t_ms": 20411, "delta": " performance"}}
+{"event": "token", "client_s": 20.415, "data": {"request_id": "35f6f79365aa", "seq": 718, "ts": "2026-10-28T06:55:02.775Z", "t_ms": 20412, "delta": " over"}}
+{"event": "token", "client_s": 20.506, "data": {"request_id": "35f6f79365aa", "seq": 719, "ts": "2026-10-28T06:55:02.866Z", "t_ms": 20503, "delta": " the"}}
+{"event": "token", "client_s": 20.507, "data": {"request_id": "35f6f79365aa", "seq": 720, "ts": "2026-10-28T06:55:02.867Z", "t_ms": 20504, "delta": " disabled"}}
+{"event": "token", "client_s": 20.596, "data": {"request_id": "35f6f79365aa", "seq": 721, "ts": "2026-10-28T06:55:02.956Z", "t_ms": 20593, "delta": "-tool"}}
+{"event": "token", "client_s": 20.596, "data": {"request_id": "35f6f79365aa", "seq": 722, "ts": "2026-10-28T06:55:02.957Z", "t_ms": 20594, "delta": " variant"}}
+{"event": "token", "client_s": 20.599, "data": {"request_id": "35f6f79365aa", "seq": 723, "ts": "2026-10-28T06:55:02.960Z", "t_ms": 20597, "delta": " in"}}
+{"event": "token", "client_s": 20.599, "data": {"request_id": "35f6f79365aa", "seq": 724, "ts": "2026-10-28T06:55:02.960Z", "t_ms": 20597, "delta": " every"}}
+{"event": "token", "client_s": 20.602, "data": {"request_id": "35f6f79365aa", "seq": 725, "ts": "2026-10-28T06:55:02.963Z", "t_ms": 20600, "delta": " language"}}
+{"event": "token", "client_s": 20.603, "data": {"request_id": "35f6f79365aa", "seq": 726, "ts": "2026-10-28T06:55:02.963Z", "t_ms": 20600, "delta": ","}}
+{"event": "token", "client_s": 20.606, "data": {"request_id": "35f6f79365aa", "seq": 727, "ts": "2026-10-28T06:55:02.967Z", "t_ms": 20603, "delta": " but"}}
+{"event": "token", "client_s": 20.606, "data": {"request_id": "35f6f79365aa", "seq": 728, "ts": "2026-10-28T06:55:02.967Z", "t_ms": 20604, "delta": " Tool"}}
+{"event": "token", "client_s": 20.608, "data": {"request_id": "35f6f79365aa", "seq": 729, "ts": "2026-10-28T06:55:02.969Z", "t_ms": 20606, "delta": "former"}}
+{"event": "token", "client_s": 20.609, "data": {"request_id": "35f6f79365aa", "seq": 730, "ts": "2026-10-28T06:55:02.969Z", "t_ms": 20606, "delta": " does"}}
+{"event": "token", "client_s": 20.612, "data": {"request_id": "35f6f79365aa", "seq": 731, "ts": "2026-10-28T06:55:02.972Z", "t_ms": 20609, "delta": " not"}}
+{"event": "token", "client_s": 20.612, "data": {"request_id": "35f6f79365aa", "seq": 732, "ts": "2026-10-28T06:55:02.973Z", "t_ms": 20610, "delta": " consistently"}}
+{"event": "token", "client_s": 20.691, "data": {"request_id": "35f6f79365aa", "seq": 733, "ts": "2026-10-28T06:55:03.051Z", "t_ms": 20688, "delta": " beat"}}
+{"event": "token", "client_s": 20.692, "data": {"request_id": "35f6f79365aa", "seq": 734, "ts": "2026-10-28T06:55:03.052Z", "t_ms": 20689, "delta": " un"}}
+{"event": "token", "client_s": 20.694, "data": {"request_id": "35f6f79365aa", "seq": 735, "ts": "2026-10-28T06:55:03.054Z", "t_ms": 20691, "delta": "modified"}}
+{"event": "token", "client_s": 20.695, "data": {"request_id": "35f6f79365aa", "seq": 736, "ts": "2026-10-28T06:55:03.055Z", "t_ms": 20692, "delta": " GPT"}}
+{"event": "token", "client_s": 20.695, "data": {"request_id": "35f6f79365aa", "seq": 737, "ts": "2026-10-28T06:55:03.056Z", "t_ms": 20693, "delta": "-J"}}
+{"event": "token", "client_s": 20.696, "data": {"request_id": "35f6f79365aa", "seq": 738, "ts": "2026-10-28T06:55:03.057Z", "t_ms": 20694, "delta": "."}}
+{"event": "token", "client_s": 20.77, "data": {"request_id": "35f6f79365aa", "seq": 739, "ts": "2026-10-28T06:55:03.130Z", "t_ms": 20767, "delta": " ["}}
+{"event": "token", "client_s": 20.771, "data": {"request_id": "35f6f79365aa", "seq": 740, "ts": "2026-10-28T06:55:03.131Z", "t_ms": 20768, "delta": "C"}}
+{"event": "token", "client_s": 20.774, "data": {"request_id": "35f6f79365aa", "seq": 741, "ts": "2026-10-28T06:55:03.135Z", "t_ms": 20772, "delta": "6"}}
+{"event": "token", "client_s": 20.775, "data": {"request_id": "35f6f79365aa", "seq": 742, "ts": "2026-10-28T06:55:03.135Z", "t_ms": 20772, "delta": "]["}}
+{"event": "token", "client_s": 20.78, "data": {"request_id": "35f6f79365aa", "seq": 743, "ts": "2026-10-28T06:55:03.140Z", "t_ms": 20777, "delta": "C"}}
+{"event": "token", "client_s": 20.78, "data": {"request_id": "35f6f79365aa", "seq": 744, "ts": "2026-10-28T06:55:03.141Z", "t_ms": 20778, "delta": "15"}}
+{"event": "token", "client_s": 20.781, "data": {"request_id": "35f6f79365aa", "seq": 745, "ts": "2026-10-28T06:55:03.142Z", "t_ms": 20779, "delta": "]"}}
+{"event": "token", "client_s": 20.782, "data": {"request_id": "35f6f79365aa", "seq": 746, "ts": "2026-10-28T06:55:03.142Z", "t_ms": 20779, "delta": " |\n"}}
+{"event": "token", "client_s": 20.786, "data": {"request_id": "35f6f79365aa", "seq": 747, "ts": "2026-10-28T06:55:03.147Z", "t_ms": 20784, "delta": "|"}}
+{"event": "token", "client_s": 20.787, "data": {"request_id": "35f6f79365aa", "seq": 748, "ts": "2026-10-28T06:55:03.147Z", "t_ms": 20784, "delta": " **"}}
+{"event": "token", "client_s": 20.789, "data": {"request_id": "35f6f79365aa", "seq": 749, "ts": "2026-10-28T06:55:03.150Z", "t_ms": 20786, "delta": "Temporal"}}
+{"event": "token", "client_s": 20.79, "data": {"request_id": "35f6f79365aa", "seq": 750, "ts": "2026-10-28T06:55:03.150Z", "t_ms": 20787, "delta": " tasks"}}
+{"event": "token", "client_s": 20.799, "data": {"request_id": "35f6f79365aa", "seq": 751, "ts": "2026-10-28T06:55:03.160Z", "t_ms": 20797, "delta": ":"}}
+{"event": "token", "client_s": 20.8, "data": {"request_id": "35f6f79365aa", "seq": 752, "ts": "2026-10-28T06:55:03.161Z", "t_ms": 20798, "delta": " Temp"}}
+{"event": "token", "client_s": 20.801, "data": {"request_id": "35f6f79365aa", "seq": 753, "ts": "2026-10-28T06:55:03.161Z", "t_ms": 20798, "delta": "L"}}
+{"event": "token", "client_s": 20.801, "data": {"request_id": "35f6f79365aa", "seq": 754, "ts": "2026-10-28T06:55:03.162Z", "t_ms": 20799, "delta": "AMA"}}
+{"event": "token", "client_s": 20.897, "data": {"request_id": "35f6f79365aa", "seq": 755, "ts": "2026-10-28T06:55:03.257Z", "t_ms": 20894, "delta": " and"}}
+{"event": "token", "client_s": 20.898, "data": {"request_id": "35f6f79365aa", "seq": 756, "ts": "2026-10-28T06:55:03.258Z", "t_ms": 20895, "delta": " Dates"}}
+{"event": "token", "client_s": 20.9, "data": {"request_id": "35f6f79365aa", "seq": 757, "ts": "2026-10-28T06:55:03.260Z", "t_ms": 20897, "delta": "et"}}
+{"event": "token", "client_s": 20.9, "data": {"request_id": "35f6f79365aa", "seq": 758, "ts": "2026-10-28T06:55:03.261Z", "t_ms": 20898, "delta": "**"}}
+{"event": "token", "client_s": 20.901, "data": {"request_id": "35f6f79365aa", "seq": 759, "ts": "2026-10-28T06:55:03.262Z", "t_ms": 20898, "delta": " |"}}
+{"event": "token", "client_s": 20.907, "data": {"request_id": "35f6f79365aa", "seq": 760, "ts": "2026-10-28T06:55:03.268Z", "t_ms": 20905, "delta": " Use"}}
+{"event": "token", "client_s": 20.908, "data": {"request_id": "35f6f79365aa", "seq": 761, "ts": "2026-10-28T06:55:03.269Z", "t_ms": 20906, "delta": " the"}}
+{"event": "token", "client_s": 20.913, "data": {"request_id": "35f6f79365aa", "seq": 762, "ts": "2026-10-28T06:55:03.274Z", "t_ms": 20911, "delta": " same"}}
+{"event": "token", "client_s": 20.914, "data": {"request_id": "35f6f79365aa", "seq": 763, "ts": "2026-10-28T06:55:03.274Z", "t_ms": 20911, "delta": " answer"}}
+{"event": "token", "client_s": 20.964, "data": {"request_id": "35f6f79365aa", "seq": 764, "ts": "2026-10-28T06:55:03.324Z", "t_ms": 20961, "delta": " criterion"}}
+{"event": "token", "client_s": 20.965, "data": {"request_id": "35f6f79365aa", "seq": 765, "ts": "2026-10-28T06:55:03.325Z", "t_ms": 20962, "delta": " as"}}
+{"event": "token", "client_s": 20.966, "data": {"request_id": "35f6f79365aa", "seq": 766, "ts": "2026-10-28T06:55:03.327Z", "t_ms": 20964, "delta": " L"}}
+{"event": "token", "client_s": 20.967, "data": {"request_id": "35f6f79365aa", "seq": 767, "ts": "2026-10-28T06:55:03.328Z", "t_ms": 20965, "delta": "AMA"}}
+{"event": "token", "client_s": 21.041, "data": {"request_id": "35f6f79365aa", "seq": 768, "ts": "2026-10-28T06:55:03.401Z", "t_ms": 21038, "delta": ";"}}
+{"event": "token", "client_s": 21.041, "data": {"request_id": "35f6f79365aa", "seq": 769, "ts": "2026-10-28T06:55:03.402Z", "t_ms": 21039, "delta": " Dates"}}
+{"event": "token", "client_s": 21.044, "data": {"request_id": "35f6f79365aa", "seq": 770, "ts": "2026-10-28T06:55:03.405Z", "t_ms": 21042, "delta": "et"}}
+{"event": "token", "client_s": 21.045, "data": {"request_id": "35f6f79365aa", "seq": 771, "ts": "2026-10-28T06:55:03.405Z", "t_ms": 21042, "delta": " specifically"}}
+{"event": "token", "client_s": 21.05, "data": {"request_id": "35f6f79365aa", "seq": 772, "ts": "2026-10-28T06:55:03.411Z", "t_ms": 21048, "delta": " requires"}}
+{"event": "token", "client_s": 21.051, "data": {"request_id": "35f6f79365aa", "seq": 773, "ts": "2026-10-28T06:55:03.411Z", "t_ms": 21048, "delta": " knowing"}}
+{"event": "token", "client_s": 21.053, "data": {"request_id": "35f6f79365aa", "seq": 774, "ts": "2026-10-28T06:55:03.414Z", "t_ms": 21051, "delta": " the"}}
+{"event": "token", "client_s": 21.053, "data": {"request_id": "35f6f79365aa", "seq": 775, "ts": "2026-10-28T06:55:03.414Z", "t_ms": 21051, "delta": " current"}}
+{"event": "token", "client_s": 21.061, "data": {"request_id": "35f6f79365aa", "seq": 776, "ts": "2026-10-28T06:55:03.421Z", "t_ms": 21058, "delta": " date"}}
+{"event": "token", "client_s": 21.061, "data": {"request_id": "35f6f79365aa", "seq": 777, "ts": "2026-10-28T06:55:03.422Z", "t_ms": 21059, "delta": "."}}
+{"event": "token", "client_s": 21.065, "data": {"request_id": "35f6f79365aa", "seq": 778, "ts": "2026-10-28T06:55:03.426Z", "t_ms": 21062, "delta": " ["}}
+{"event": "token", "client_s": 21.065, "data": {"request_id": "35f6f79365aa", "seq": 779, "ts": "2026-10-28T06:55:03.426Z", "t_ms": 21063, "delta": "C"}}
+{"event": "token", "client_s": 21.153, "data": {"request_id": "35f6f79365aa", "seq": 780, "ts": "2026-10-28T06:55:03.513Z", "t_ms": 21150, "delta": "14"}}
+{"event": "token", "client_s": 21.154, "data": {"request_id": "35f6f79365aa", "seq": 781, "ts": "2026-10-28T06:55:03.514Z", "t_ms": 21151, "delta": "]"}}
+{"event": "token", "client_s": 21.163, "data": {"request_id": "35f6f79365aa", "seq": 782, "ts": "2026-10-28T06:55:03.524Z", "t_ms": 21161, "delta": " |"}}
+{"event": "token", "client_s": 21.164, "data": {"request_id": "35f6f79365aa", "seq": 783, "ts": "2026-10-28T06:55:03.524Z", "t_ms": 21161, "delta": " Tool"}}
+{"event": "token", "client_s": 21.166, "data": {"request_id": "35f6f79365aa", "seq": 784, "ts": "2026-10-28T06:55:03.527Z", "t_ms": 21164, "delta": "former"}}
+{"event": "token", "client_s": 21.167, "data": {"request_id": "35f6f79365aa", "seq": 785, "ts": "2026-10-28T06:55:03.527Z", "t_ms": 21164, "delta": " scores"}}
+{"event": "token", "client_s": 21.171, "data": {"request_id": "35f6f79365aa", "seq": 786, "ts": "2026-10-28T06:55:03.531Z", "t_ms": 21168, "delta": " **"}}
+{"event": "token", "client_s": 21.171, "data": {"request_id": "35f6f79365aa", "seq": 787, "ts": "2026-10-28T06:55:03.532Z", "t_ms": 21169, "delta": "16"}}
+{"event": "token", "client_s": 21.224, "data": {"request_id": "35f6f79365aa", "seq": 788, "ts": "2026-10-28T06:55:03.584Z", "t_ms": 21221, "delta": "."}}
+{"event": "token", "client_s": 21.225, "data": {"request_id": "35f6f79365aa", "seq": 789, "ts": "2026-10-28T06:55:03.585Z", "t_ms": 21222, "delta": "3"}}
+{"event": "token", "client_s": 21.229, "data": {"request_id": "35f6f79365aa", "seq": 790, "ts": "2026-10-28T06:55:03.589Z", "t_ms": 21226, "delta": "%"}}
+{"event": "token", "client_s": 21.229, "data": {"request_id": "35f6f79365aa", "seq": 791, "ts": "2026-10-28T06:55:03.590Z", "t_ms": 21227, "delta": " and"}}
+{"event": "token", "client_s": 21.235, "data": {"request_id": "35f6f79365aa", "seq": 792, "ts": "2026-10-28T06:55:03.595Z", "t_ms": 21232, "delta": " "}}
+{"event": "token", "client_s": 21.235, "data": {"request_id": "35f6f79365aa", "seq": 793, "ts": "2026-10-28T06:55:03.596Z", "t_ms": 21233, "delta": "27"}}
+{"event": "token", "client_s": 21.24, "data": {"request_id": "35f6f79365aa", "seq": 794, "ts": "2026-10-28T06:55:03.601Z", "t_ms": 21238, "delta": "."}}
+{"event": "token", "client_s": 21.241, "data": {"request_id": "35f6f79365aa", "seq": 795, "ts": "2026-10-28T06:55:03.602Z", "t_ms": 21239, "delta": "3"}}
+{"event": "token", "client_s": 21.247, "data": {"request_id": "35f6f79365aa", "seq": 796, "ts": "2026-10-28T06:55:03.608Z", "t_ms": 21245, "delta": "%"}}
+{"event": "token", "client_s": 21.248, "data": {"request_id": "35f6f79365aa", "seq": 797, "ts": "2026-10-28T06:55:03.608Z", "t_ms": 21245, "delta": "**,"}}
+{"event": "token", "client_s": 21.253, "data": {"request_id": "35f6f79365aa", "seq": 798, "ts": "2026-10-28T06:55:03.613Z", "t_ms": 21250, "delta": " respectively"}}
+{"event": "token", "client_s": 21.254, "data": {"request_id": "35f6f79365aa", "seq": 799, "ts": "2026-10-28T06:55:03.614Z", "t_ms": 21251, "delta": ","}}
+{"event": "token", "client_s": 21.313, "data": {"request_id": "35f6f79365aa", "seq": 800, "ts": "2026-10-28T06:55:03.672Z", "t_ms": 21309, "delta": " beating"}}
+{"event": "token", "client_s": 21.315, "data": {"request_id": "35f6f79365aa", "seq": 801, "ts": "2026-10-28T06:55:03.674Z", "t_ms": 21311, "delta": " the"}}
+{"event": "token", "client_s": 21.323, "data": {"request_id": "35f6f79365aa", "seq": 802, "ts": "2026-10-28T06:55:03.684Z", "t_ms": 21321, "delta": " listed"}}
+{"event": "token", "client_s": 21.323, "data": {"request_id": "35f6f79365aa", "seq": 803, "ts": "2026-10-28T06:55:03.684Z", "t_ms": 21321, "delta": " bas"}}
+{"event": "token", "client_s": 21.415, "data": {"request_id": "35f6f79365aa", "seq": 804, "ts": "2026-10-28T06:55:03.775Z", "t_ms": 21412, "delta": "elines"}}
+{"event": "token", "client_s": 21.416, "data": {"request_id": "35f6f79365aa", "seq": 805, "ts": "2026-10-28T06:55:03.777Z", "t_ms": 21414, "delta": "."}}
+{"event": "token", "client_s": 21.417, "data": {"request_id": "35f6f79365aa", "seq": 806, "ts": "2026-10-28T06:55:03.778Z", "t_ms": 21415, "delta": " The"}}
+{"event": "token", "client_s": 21.418, "data": {"request_id": "35f6f79365aa", "seq": 807, "ts": "2026-10-28T06:55:03.778Z", "t_ms": 21415, "delta": " calendar"}}
+{"event": "token", "client_s": 21.421, "data": {"request_id": "35f6f79365aa", "seq": 808, "ts": "2026-10-28T06:55:03.782Z", "t_ms": 21419, "delta": " is"}}
+{"event": "token", "client_s": 21.422, "data": {"request_id": "35f6f79365aa", "seq": 809, "ts": "2026-10-28T06:55:03.783Z", "t_ms": 21420, "delta": " used"}}
+{"event": "token", "client_s": 21.425, "data": {"request_id": "35f6f79365aa", "seq": 810, "ts": "2026-10-28T06:55:03.785Z", "t_ms": 21422, "delta": " on"}}
+{"event": "token", "client_s": 21.425, "data": {"request_id": "35f6f79365aa", "seq": 811, "ts": "2026-10-28T06:55:03.786Z", "t_ms": 21423, "delta": " **"}}
+{"event": "token", "client_s": 21.499, "data": {"request_id": "35f6f79365aa", "seq": 812, "ts": "2026-10-28T06:55:03.860Z", "t_ms": 21497, "delta": "54"}}
+{"event": "token", "client_s": 21.5, "data": {"request_id": "35f6f79365aa", "seq": 813, "ts": "2026-10-28T06:55:03.861Z", "t_ms": 21498, "delta": "."}}
+{"event": "token", "client_s": 21.504, "data": {"request_id": "35f6f79365aa", "seq": 814, "ts": "2026-10-28T06:55:03.864Z", "t_ms": 21501, "delta": "8"}}
+{"event": "token", "client_s": 21.504, "data": {"request_id": "35f6f79365aa", "seq": 815, "ts": "2026-10-28T06:55:03.865Z", "t_ms": 21502, "delta": "%"}}
+{"event": "token", "client_s": 21.507, "data": {"request_id": "35f6f79365aa", "seq": 816, "ts": "2026-10-28T06:55:03.868Z", "t_ms": 21505, "delta": "**"}}
+{"event": "token", "client_s": 21.508, "data": {"request_id": "35f6f79365aa", "seq": 817, "ts": "2026-10-28T06:55:03.868Z", "t_ms": 21505, "delta": " of"}}
+{"event": "token", "client_s": 21.512, "data": {"request_id": "35f6f79365aa", "seq": 818, "ts": "2026-10-28T06:55:03.873Z", "t_ms": 21510, "delta": " Dates"}}
+{"event": "token", "client_s": 21.513, "data": {"request_id": "35f6f79365aa", "seq": 819, "ts": "2026-10-28T06:55:03.874Z", "t_ms": 21511, "delta": "et"}}
+{"event": "token", "client_s": 21.514, "data": {"request_id": "35f6f79365aa", "seq": 820, "ts": "2026-10-28T06:55:03.875Z", "t_ms": 21512, "delta": " examples"}}
+{"event": "token", "client_s": 21.515, "data": {"request_id": "35f6f79365aa", "seq": 821, "ts": "2026-10-28T06:55:03.875Z", "t_ms": 21512, "delta": " but"}}
+{"event": "token", "client_s": 21.515, "data": {"request_id": "35f6f79365aa", "seq": 822, "ts": "2026-10-28T06:55:03.876Z", "t_ms": 21513, "delta": " only"}}
+{"event": "token", "client_s": 21.516, "data": {"request_id": "35f6f79365aa", "seq": 823, "ts": "2026-10-28T06:55:03.877Z", "t_ms": 21514, "delta": " **"}}
+{"event": "token", "client_s": 21.519, "data": {"request_id": "35f6f79365aa", "seq": 824, "ts": "2026-10-28T06:55:03.879Z", "t_ms": 21516, "delta": "0"}}
+{"event": "token", "client_s": 21.519, "data": {"request_id": "35f6f79365aa", "seq": 825, "ts": "2026-10-28T06:55:03.880Z", "t_ms": 21517, "delta": "."}}
+{"event": "token", "client_s": 21.52, "data": {"request_id": "35f6f79365aa", "seq": 826, "ts": "2026-10-28T06:55:03.881Z", "t_ms": 21518, "delta": "2"}}
+{"event": "token", "client_s": 21.521, "data": {"request_id": "35f6f79365aa", "seq": 827, "ts": "2026-10-28T06:55:03.882Z", "t_ms": 21518, "delta": "%"}}
+{"event": "token", "client_s": 21.594, "data": {"request_id": "35f6f79365aa", "seq": 828, "ts": "2026-10-28T06:55:03.954Z", "t_ms": 21591, "delta": "**"}}
+{"event": "token", "client_s": 21.595, "data": {"request_id": "35f6f79365aa", "seq": 829, "ts": "2026-10-28T06:55:03.955Z", "t_ms": 21592, "delta": " of"}}
+{"event": "token", "client_s": 21.599, "data": {"request_id": "35f6f79365aa", "seq": 830, "ts": "2026-10-28T06:55:03.960Z", "t_ms": 21597, "delta": " Temp"}}
+{"event": "token", "client_s": 21.6, "data": {"request_id": "35f6f79365aa", "seq": 831, "ts": "2026-10-28T06:55:03.960Z", "t_ms": 21597, "delta": "L"}}
+{"event": "token", "client_s": 21.602, "data": {"request_id": "35f6f79365aa", "seq": 832, "ts": "2026-10-28T06:55:03.963Z", "t_ms": 21600, "delta": "AMA"}}
+{"event": "token", "client_s": 21.602, "data": {"request_id": "35f6f79365aa", "seq": 833, "ts": "2026-10-28T06:55:03.963Z", "t_ms": 21600, "delta": " examples"}}
+{"event": "token", "client_s": 21.606, "data": {"request_id": "35f6f79365aa", "seq": 834, "ts": "2026-10-28T06:55:03.966Z", "t_ms": 21603, "delta": "."}}
+{"event": "token", "client_s": 21.606, "data": {"request_id": "35f6f79365aa", "seq": 835, "ts": "2026-10-28T06:55:03.967Z", "t_ms": 21604, "delta": " ["}}
+{"event": "token", "client_s": 21.61, "data": {"request_id": "35f6f79365aa", "seq": 836, "ts": "2026-10-28T06:55:03.970Z", "t_ms": 21607, "delta": "C"}}
+{"event": "token", "client_s": 21.61, "data": {"request_id": "35f6f79365aa", "seq": 837, "ts": "2026-10-28T06:55:03.971Z", "t_ms": 21608, "delta": "14"}}
+{"event": "token", "client_s": 21.613, "data": {"request_id": "35f6f79365aa", "seq": 838, "ts": "2026-10-28T06:55:03.974Z", "t_ms": 21611, "delta": "]"}}
+{"event": "token", "client_s": 21.614, "data": {"request_id": "35f6f79365aa", "seq": 839, "ts": "2026-10-28T06:55:03.974Z", "t_ms": 21611, "delta": " |\n\n"}}
+{"event": "token", "client_s": 21.615, "data": {"request_id": "35f6f79365aa", "seq": 840, "ts": "2026-10-28T06:55:03.976Z", "t_ms": 21613, "delta": "**"}}
+{"event": "token", "client_s": 21.615, "data": {"request_id": "35f6f79365aa", "seq": 841, "ts": "2026-10-28T06:55:03.976Z", "t_ms": 21613, "delta": "Important"}}
+{"event": "token", "client_s": 21.619, "data": {"request_id": "35f6f79365aa", "seq": 842, "ts": "2026-10-28T06:55:03.980Z", "t_ms": 21617, "delta": " limitation"}}
+{"event": "token", "client_s": 21.62, "data": {"request_id": "35f6f79365aa", "seq": 843, "ts": "2026-10-28T06:55:03.980Z", "t_ms": 21617, "delta": ":**"}}
+{"event": "token", "client_s": 21.693, "data": {"request_id": "35f6f79365aa", "seq": 844, "ts": "2026-10-28T06:55:04.053Z", "t_ms": 21690, "delta": " the"}}
+{"event": "token", "client_s": 21.694, "data": {"request_id": "35f6f79365aa", "seq": 845, "ts": "2026-10-28T06:55:04.055Z", "t_ms": 21692, "delta": " one"}}
+{"event": "token", "client_s": 21.77, "data": {"request_id": "35f6f79365aa", "seq": 846, "ts": "2026-10-28T06:55:04.130Z", "t_ms": 21767, "delta": "-call"}}
+{"event": "token", "client_s": 21.771, "data": {"request_id": "35f6f79365aa", "seq": 847, "ts": "2026-10-28T06:55:04.131Z", "t_ms": 21768, "delta": " restriction"}}
+{"event": "token", "client_s": 21.785, "data": {"request_id": "35f6f79365aa", "seq": 848, "ts": "2026-10-28T06:55:04.145Z", "t_ms": 21782, "delta": " prevents"}}
+{"event": "token", "client_s": 21.786, "data": {"request_id": "35f6f79365aa", "seq": 849, "ts": "2026-10-28T06:55:04.146Z", "t_ms": 21783, "delta": " multi"}}
+{"event": "token", "client_s": 21.867, "data": {"request_id": "35f6f79365aa", "seq": 850, "ts": "2026-10-28T06:55:04.227Z", "t_ms": 21864, "delta": "-step"}}
+{"event": "token", "client_s": 21.868, "data": {"request_id": "35f6f79365aa", "seq": 851, "ts": "2026-10-28T06:55:04.228Z", "t_ms": 21865, "delta": " tool"}}
+{"event": "token", "client_s": 21.87, "data": {"request_id": "35f6f79365aa", "seq": 852, "ts": "2026-10-28T06:55:04.231Z", "t_ms": 21868, "delta": " workflows"}}
+{"event": "token", "client_s": 21.871, "data": {"request_id": "35f6f79365aa", "seq": 853, "ts": "2026-10-28T06:55:04.231Z", "t_ms": 21868, "delta": "—for"}}
+{"event": "token", "client_s": 21.874, "data": {"request_id": "35f6f79365aa", "seq": 854, "ts": "2026-10-28T06:55:04.234Z", "t_ms": 21871, "delta": " example"}}
+{"event": "token", "client_s": 21.874, "data": {"request_id": "35f6f79365aa", "seq": 855, "ts": "2026-10-28T06:55:04.235Z", "t_ms": 21872, "delta": ","}}
+{"event": "token", "client_s": 21.878, "data": {"request_id": "35f6f79365aa", "seq": 856, "ts": "2026-10-28T06:55:04.238Z", "t_ms": 21875, "delta": " first"}}
+{"event": "token", "client_s": 21.878, "data": {"request_id": "35f6f79365aa", "seq": 857, "ts": "2026-10-28T06:55:04.239Z", "t_ms": 21876, "delta": " obtaining"}}
+{"event": "token", "client_s": 21.954, "data": {"request_id": "35f6f79365aa", "seq": 858, "ts": "2026-10-28T06:55:04.314Z", "t_ms": 21951, "delta": " the"}}
+{"event": "token", "client_s": 21.954, "data": {"request_id": "35f6f79365aa", "seq": 859, "ts": "2026-10-28T06:55:04.315Z", "t_ms": 21952, "delta": " current"}}
+{"event": "token", "client_s": 21.96, "data": {"request_id": "35f6f79365aa", "seq": 860, "ts": "2026-10-28T06:55:04.320Z", "t_ms": 21957, "delta": " date"}}
+{"event": "token", "client_s": 21.96, "data": {"request_id": "35f6f79365aa", "seq": 861, "ts": "2026-10-28T06:55:04.321Z", "t_ms": 21958, "delta": " and"}}
+{"event": "token", "client_s": 22.041, "data": {"request_id": "35f6f79365aa", "seq": 862, "ts": "2026-10-28T06:55:04.402Z", "t_ms": 22038, "delta": " then"}}
+{"event": "token", "client_s": 22.042, "data": {"request_id": "35f6f79365aa", "seq": 863, "ts": "2026-10-28T06:55:04.402Z", "t_ms": 22039, "delta": " querying"}}
+{"event": "token", "client_s": 22.047, "data": {"request_id": "35f6f79365aa", "seq": 864, "ts": "2026-10-28T06:55:04.407Z", "t_ms": 22044, "delta": " a"}}
+{"event": "token", "client_s": 22.047, "data": {"request_id": "35f6f79365aa", "seq": 865, "ts": "2026-10-28T06:55:04.408Z", "t_ms": 22045, "delta": " QA"}}
+{"event": "token", "client_s": 22.214, "data": {"request_id": "35f6f79365aa", "seq": 866, "ts": "2026-10-28T06:55:04.574Z", "t_ms": 22211, "delta": " system"}}
+{"event": "token", "client_s": 22.215, "data": {"request_id": "35f6f79365aa", "seq": 867, "ts": "2026-10-28T06:55:04.575Z", "t_ms": 22212, "delta": " with"}}
+{"event": "token", "client_s": 22.393, "data": {"request_id": "35f6f79365aa", "seq": 868, "ts": "2026-10-28T06:55:04.753Z", "t_ms": 22390, "delta": " it"}}
+{"event": "token", "client_s": 22.394, "data": {"request_id": "35f6f79365aa", "seq": 869, "ts": "2026-10-28T06:55:04.754Z", "t_ms": 22391, "delta": "—and"}}
+{"event": "token", "client_s": 22.492, "data": {"request_id": "35f6f79365aa", "seq": 870, "ts": "2026-10-28T06:55:04.852Z", "t_ms": 22489, "delta": " prevents"}}
+{"event": "token", "client_s": 22.492, "data": {"request_id": "35f6f79365aa", "seq": 871, "ts": "2026-10-28T06:55:04.853Z", "t_ms": 22490, "delta": " iterative"}}
+{"event": "token", "client_s": 22.495, "data": {"request_id": "35f6f79365aa", "seq": 872, "ts": "2026-10-28T06:55:04.855Z", "t_ms": 22492, "delta": " search"}}
+{"event": "token", "client_s": 22.495, "data": {"request_id": "35f6f79365aa", "seq": 873, "ts": "2026-10-28T06:55:04.856Z", "t_ms": 22493, "delta": "-query"}}
+{"event": "token", "client_s": 22.573, "data": {"request_id": "35f6f79365aa", "seq": 874, "ts": "2026-10-28T06:55:04.933Z", "t_ms": 22570, "delta": " refinement"}}
+{"event": "token", "client_s": 22.573, "data": {"request_id": "35f6f79365aa", "seq": 875, "ts": "2026-10-28T06:55:04.934Z", "t_ms": 22571, "delta": "."}}
+{"event": "token", "client_s": 22.597, "data": {"request_id": "35f6f79365aa", "seq": 876, "ts": "2026-10-28T06:55:04.958Z", "t_ms": 22595, "delta": " ["}}
+{"event": "token", "client_s": 22.598, "data": {"request_id": "35f6f79365aa", "seq": 877, "ts": "2026-10-28T06:55:04.958Z", "t_ms": 22595, "delta": "C"}}
+{"event": "token", "client_s": 22.599, "data": {"request_id": "35f6f79365aa", "seq": 878, "ts": "2026-10-28T06:55:04.959Z", "t_ms": 22596, "delta": "14"}}
+{"event": "token", "client_s": 22.599, "data": {"request_id": "35f6f79365aa", "seq": 879, "ts": "2026-10-28T06:55:04.960Z", "t_ms": 22597, "delta": "]["}}
+{"event": "token", "client_s": 22.71, "data": {"request_id": "35f6f79365aa", "seq": 880, "ts": "2026-10-28T06:55:05.070Z", "t_ms": 22707, "delta": "C"}}
+{"event": "token", "client_s": 22.71, "data": {"request_id": "35f6f79365aa", "seq": 881, "ts": "2026-10-28T06:55:05.071Z", "t_ms": 22708, "delta": "10"}}
+{"event": "token", "client_s": 22.732, "data": {"request_id": "35f6f79365aa", "seq": 882, "ts": "2026-10-28T06:55:05.092Z", "t_ms": 22729, "delta": "]\n\n"}}
+{"event": "token", "client_s": 22.732, "data": {"request_id": "35f6f79365aa", "seq": 883, "ts": "2026-10-28T06:55:05.093Z", "t_ms": 22730, "delta": "Separ"}}
+{"event": "token", "client_s": 22.751, "data": {"request_id": "35f6f79365aa", "seq": 884, "ts": "2026-10-28T06:55:05.111Z", "t_ms": 22748, "delta": "ately"}}
+{"event": "token", "client_s": 22.752, "data": {"request_id": "35f6f79365aa", "seq": 885, "ts": "2026-10-28T06:55:05.112Z", "t_ms": 22749, "delta": ","}}
+{"event": "token", "client_s": 22.766, "data": {"request_id": "35f6f79365aa", "seq": 886, "ts": "2026-10-28T06:55:05.127Z", "t_ms": 22764, "delta": " the"}}
+{"event": "token", "client_s": 22.767, "data": {"request_id": "35f6f79365aa", "seq": 887, "ts": "2026-10-28T06:55:05.128Z", "t_ms": 22765, "delta": " paper"}}
+{"event": "token", "client_s": 22.772, "data": {"request_id": "35f6f79365aa", "seq": 888, "ts": "2026-10-28T06:55:05.132Z", "t_ms": 22769, "delta": " checks"}}
+{"event": "token", "client_s": 22.772, "data": {"request_id": "35f6f79365aa", "seq": 889, "ts": "2026-10-28T06:55:05.133Z", "t_ms": 22770, "delta": " language"}}
+{"event": "token", "client_s": 22.864, "data": {"request_id": "35f6f79365aa", "seq": 890, "ts": "2026-10-28T06:55:05.224Z", "t_ms": 22861, "delta": "-model"}}
+{"event": "token", "client_s": 22.865, "data": {"request_id": "35f6f79365aa", "seq": 891, "ts": "2026-10-28T06:55:05.226Z", "t_ms": 22863, "delta": "ing"}}
+{"event": "token", "client_s": 22.87, "data": {"request_id": "35f6f79365aa", "seq": 892, "ts": "2026-10-28T06:55:05.231Z", "t_ms": 22868, "delta": " perplex"}}
+{"event": "token", "client_s": 22.871, "data": {"request_id": "35f6f79365aa", "seq": 893, "ts": "2026-10-28T06:55:05.231Z", "t_ms": 22868, "delta": "ity"}}
+{"event": "token", "client_s": 22.875, "data": {"request_id": "35f6f79365aa", "seq": 894, "ts": "2026-10-28T06:55:05.236Z", "t_ms": 22873, "delta": " on"}}
+{"event": "token", "client_s": 22.876, "data": {"request_id": "35f6f79365aa", "seq": 895, "ts": "2026-10-28T06:55:05.236Z", "t_ms": 22873, "delta": " Wiki"}}
+{"event": "token", "client_s": 22.881, "data": {"request_id": "35f6f79365aa", "seq": 896, "ts": "2026-10-28T06:55:05.241Z", "t_ms": 22878, "delta": "Text"}}
+{"event": "token", "client_s": 22.881, "data": {"request_id": "35f6f79365aa", "seq": 897, "ts": "2026-10-28T06:55:05.242Z", "t_ms": 22879, "delta": " and"}}
+{"event": "token", "client_s": 22.884, "data": {"request_id": "35f6f79365aa", "seq": 898, "ts": "2026-10-28T06:55:05.244Z", "t_ms": 22881, "delta": " held"}}
+{"event": "token", "client_s": 22.884, "data": {"request_id": "35f6f79365aa", "seq": 899, "ts": "2026-10-28T06:55:05.245Z", "t_ms": 22882, "delta": "-out"}}
+{"event": "token", "client_s": 22.989, "data": {"request_id": "35f6f79365aa", "seq": 900, "ts": "2026-10-28T06:55:05.349Z", "t_ms": 22986, "delta": " CC"}}
+{"event": "token", "client_s": 22.989, "data": {"request_id": "35f6f79365aa", "seq": 901, "ts": "2026-10-28T06:55:05.350Z", "t_ms": 22987, "delta": "Net"}}
+{"event": "token", "client_s": 22.993, "data": {"request_id": "35f6f79365aa", "seq": 902, "ts": "2026-10-28T06:55:05.354Z", "t_ms": 22991, "delta": ":"}}
+{"event": "token", "client_s": 22.994, "data": {"request_id": "35f6f79365aa", "seq": 903, "ts": "2026-10-28T06:55:05.354Z", "t_ms": 22991, "delta": " with"}}
+{"event": "token", "client_s": 22.998, "data": {"request_id": "35f6f79365aa", "seq": 904, "ts": "2026-10-28T06:55:05.359Z", "t_ms": 22996, "delta": " tools"}}
+{"event": "token", "client_s": 22.999, "data": {"request_id": "35f6f79365aa", "seq": 905, "ts": "2026-10-28T06:55:05.359Z", "t_ms": 22996, "delta": " disabled"}}
+{"event": "token", "client_s": 23.002, "data": {"request_id": "35f6f79365aa", "seq": 906, "ts": "2026-10-28T06:55:05.363Z", "t_ms": 23000, "delta": ","}}
+{"event": "token", "client_s": 23.002, "data": {"request_id": "35f6f79365aa", "seq": 907, "ts": "2026-10-28T06:55:05.363Z", "t_ms": 23000, "delta": " Tool"}}
+{"event": "token", "client_s": 23.037, "data": {"request_id": "35f6f79365aa", "seq": 908, "ts": "2026-10-28T06:55:05.397Z", "t_ms": 23034, "delta": "former"}}
+{"event": "token", "client_s": 23.038, "data": {"request_id": "35f6f79365aa", "seq": 909, "ts": "2026-10-28T06:55:05.398Z", "t_ms": 23035, "delta": " matches"}}
+{"event": "token", "client_s": 23.045, "data": {"request_id": "35f6f79365aa", "seq": 910, "ts": "2026-10-28T06:55:05.405Z", "t_ms": 23042, "delta": " the"}}
+{"event": "token", "client_s": 23.045, "data": {"request_id": "35f6f79365aa", "seq": 911, "ts": "2026-10-28T06:55:05.406Z", "t_ms": 23043, "delta": " CC"}}
+{"event": "token", "client_s": 23.056, "data": {"request_id": "35f6f79365aa", "seq": 912, "ts": "2026-10-28T06:55:05.416Z", "t_ms": 23053, "delta": "Net"}}
+{"event": "token", "client_s": 23.056, "data": {"request_id": "35f6f79365aa", "seq": 913, "ts": "2026-10-28T06:55:05.417Z", "t_ms": 23054, "delta": "-f"}}
+{"event": "token", "client_s": 23.061, "data": {"request_id": "35f6f79365aa", "seq": 914, "ts": "2026-10-28T06:55:05.422Z", "t_ms": 23059, "delta": "ine"}}
+{"event": "token", "client_s": 23.062, "data": {"request_id": "35f6f79365aa", "seq": 915, "ts": "2026-10-28T06:55:05.422Z", "t_ms": 23059, "delta": "-t"}}
+{"event": "token", "client_s": 23.068, "data": {"request_id": "35f6f79365aa", "seq": 916, "ts": "2026-10-28T06:55:05.429Z", "t_ms": 23066, "delta": "uned"}}
+{"event": "token", "client_s": 23.069, "data": {"request_id": "35f6f79365aa", "seq": 917, "ts": "2026-10-28T06:55:05.430Z", "t_ms": 23067, "delta": " baseline"}}
+{"event": "token", "client_s": 23.074, "data": {"request_id": "35f6f79365aa", "seq": 918, "ts": "2026-10-28T06:55:05.435Z", "t_ms": 23072, "delta": " at"}}
+{"event": "token", "client_s": 23.075, "data": {"request_id": "35f6f79365aa", "seq": 919, "ts": "2026-10-28T06:55:05.436Z", "t_ms": 23073, "delta": " **"}}
+{"event": "token", "client_s": 23.12, "data": {"request_id": "35f6f79365aa", "seq": 920, "ts": "2026-10-28T06:55:05.481Z", "t_ms": 23118, "delta": "10"}}
+{"event": "token", "client_s": 23.121, "data": {"request_id": "35f6f79365aa", "seq": 921, "ts": "2026-10-28T06:55:05.482Z", "t_ms": 23119, "delta": "."}}
+{"event": "token", "client_s": 23.129, "data": {"request_id": "35f6f79365aa", "seq": 922, "ts": "2026-10-28T06:55:05.489Z", "t_ms": 23126, "delta": "3"}}
+{"event": "token", "client_s": 23.13, "data": {"request_id": "35f6f79365aa", "seq": 923, "ts": "2026-10-28T06:55:05.490Z", "t_ms": 23127, "delta": " and"}}
+{"event": "token", "client_s": 23.135, "data": {"request_id": "35f6f79365aa", "seq": 924, "ts": "2026-10-28T06:55:05.495Z", "t_ms": 23132, "delta": " "}}
+{"event": "token", "client_s": 23.136, "data": {"request_id": "35f6f79365aa", "seq": 925, "ts": "2026-10-28T06:55:05.496Z", "t_ms": 23133, "delta": "10"}}
+{"event": "token", "client_s": 23.14, "data": {"request_id": "35f6f79365aa", "seq": 926, "ts": "2026-10-28T06:55:05.500Z", "t_ms": 23137, "delta": "."}}
+{"event": "token", "client_s": 23.14, "data": {"request_id": "35f6f79365aa", "seq": 927, "ts": "2026-10-28T06:55:05.501Z", "t_ms": 23138, "delta": "5"}}
+{"event": "token", "client_s": 23.144, "data": {"request_id": "35f6f79365aa", "seq": 928, "ts": "2026-10-28T06:55:05.505Z", "t_ms": 23142, "delta": "**,"}}
+{"event": "token", "client_s": 23.145, "data": {"request_id": "35f6f79365aa", "seq": 929, "ts": "2026-10-28T06:55:05.505Z", "t_ms": 23142, "delta": " respectively"}}
+{"event": "token", "client_s": 23.148, "data": {"request_id": "35f6f79365aa", "seq": 930, "ts": "2026-10-28T06:55:05.508Z", "t_ms": 23145, "delta": "."}}
+{"event": "token", "client_s": 23.148, "data": {"request_id": "35f6f79365aa", "seq": 931, "ts": "2026-10-28T06:55:05.509Z", "t_ms": 23146, "delta": " ["}}
+{"event": "token", "client_s": 23.166, "data": {"request_id": "35f6f79365aa", "seq": 932, "ts": "2026-10-28T06:55:05.526Z", "t_ms": 23163, "delta": "C"}}
+{"event": "token", "client_s": 23.166, "data": {"request_id": "35f6f79365aa", "seq": 933, "ts": "2026-10-28T06:55:05.527Z", "t_ms": 23164, "delta": "12"}}
+{"event": "token", "client_s": 23.218, "data": {"request_id": "35f6f79365aa", "seq": 934, "ts": "2026-10-28T06:55:05.578Z", "t_ms": 23215, "delta": "]"}}
+{"event": "llm_result", "client_s": 23.23, "data": {"request_id": "35f6f79365aa", "seq": 935, "ts": "2026-10-28T06:55:05.588Z", "t_ms": 23225, "decision_id": "bcedaa86", "agent": "synthesizer", "call_site": "synthesize", "provider": "openai", "model_id": "gpt-6.1-sol", "model_returned": "gpt-6.1-sol", "upstream_provider": null, "status": "ok", "attempt": 1, "error_kind": null, "error": null, "latency_ms": 16526, "ttft_ms": 3655, "cost_usd": 0.027346, "cost_source": "estimated", "est_cost_usd": 0.027346, "reported_cost_usd": null, "input_tokens": 8698, "output_tokens": 995, "reasoning_tokens": 78, "cached_input_tokens": 0, "stream_chunks": 908, "max_chunk_gap_ms": 251}}
+{"event": "citation", "client_s": 23.23, "data": {"request_id": "35f6f79365aa", "seq": 936, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C5", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.2 Downstream Tasks", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS2::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.23, "data": {"request_id": "35f6f79365aa", "seq": 937, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C3", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 5 Analysis", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "5 Analysis", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S5::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS5%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S5", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.23, "data": {"request_id": "35f6f79365aa", "seq": 938, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C4", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.1 Experimental Setup", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.1 Experimental Setup", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS1::001", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS1%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS1", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.231, "data": {"request_id": "35f6f79365aa", "seq": 939, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C7", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.2 Downstream Tasks › 4.2.1 LAMA", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.1 LAMA", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS2.SSS1::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS1%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS1", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.231, "data": {"request_id": "35f6f79365aa", "seq": 940, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C8", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.2 Downstream Tasks › 4.2.2 Math Datasets", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.2 Math Datasets", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS2.SSS2::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS2%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS2", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.231, "data": {"request_id": "35f6f79365aa", "seq": 941, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C10", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.2 Downstream Tasks › 4.2.3 Question Answering", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.3 Question Answering", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS2.SSS3::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS3%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS3", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.231, "data": {"request_id": "35f6f79365aa", "seq": 942, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C6", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.2 Downstream Tasks › 4.2.4 Multilingual Question Answering", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.4 Multilingual Question Answering", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS2.SSS4::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS4%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS4", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.231, "data": {"request_id": "35f6f79365aa", "seq": 943, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C14", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.2 Downstream Tasks › 4.2.5 Temporal Datasets", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.5 Temporal Datasets", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS2.SSS5::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS5%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS5", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.231, "data": {"request_id": "35f6f79365aa", "seq": 944, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C15", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.2 Downstream Tasks › 4.2.4 Multilingual Question Answering", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.2 Downstream Tasks › 4.2.4 Multilingual Question Answering", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS2.SSS4::001", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS2.SSS4%3A%3A001", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS2.SSS4", "retrieved_at": null, "found_by": null}}
+{"event": "citation", "client_s": 23.231, "data": {"request_id": "35f6f79365aa", "seq": 945, "ts": "2026-10-28T06:55:05.590Z", "t_ms": 23227, "cite_id": "C12", "type": "paper_chunk", "label": "Toolformer: Language Models Can Teach Themselves to Use Tools — 4 Experiments › 4.3 Language Modeling", "title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "section": "4 Experiments › 4.3 Language Modeling", "doc_id": "2302.04761v1", "chunk_id": "2302.04761v1::S4.SS3::000", "href": "/api/source/chunk/2302.04761v1%3A%3AS4.SS3%3A%3A000", "source_url": "https://arxiv.org/html/2302.04761v1#S4.SS3", "retrieved_at": null, "found_by": null}}
+{"event": "done", "client_s": 23.232, "data": {"request_id": "35f6f79365aa", "seq": 946, "ts": "2026-10-28T06:55:05.592Z", "t_ms": 23229, "status": "done", "plan_source": "llm", "unresolved_citations": [], "dropped_citations": [], "excluded_evidence": [], "tasks": [{"id": "t1", "worker": "summary", "status": "done", "attempts": 1, "error_kind": null, "reason": null, "injected": false}], "gaps": [], "faults_injected": [], "over_budget_s": 0.0, "timings": {"retrieval_ms": 599, "llm_ms_sum": 22602, "ttft_ms": 10354, "total_ms": 23229}, "tokens_by_provider": {"openai": {"input_tokens": 11699, "output_tokens": 1228, "calls": 3, "errors": 0, "cost_usd": 0.035678}}, "providers_used": ["openai"], "fallbacks": 0, "cost_usd": 0.035678, "cost_basis": {"estimated": 3}}}
