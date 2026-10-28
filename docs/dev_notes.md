@@ -410,3 +410,12 @@ Factual log of what happened during development. It is the source for `PROCESS_L
   - P8b-D1 (test harness) fixed in tests only. My unit test no longer makes a real embedding call (speculation off where the real retriever is used). New tests/integration/conftest.py fixture `close_openai_clients` (used by the six live modules) drops langchain-openai's cached clients and collects them at the end of each test while its loop runs. A module-scoped anyio_backend was tried first and did not help (anyio still makes a loop per test). Unit suite 5/5 clean (446 passed); live Phase 6 module 4/4 clean (was about 1 in 3 failing); Phase 4 live routing passes.
   - P8b-D2 fixed in app code (router/context/graph): real provider errors (no fault fired in that attempt, not budget_exhausted) are recorded per request. A task is labelled injected only if no real error happened during it; otherwise its line says it was a real provider error with a test fault also active, and the advice covers the real cause. Two new unit tests. Not deployed yet (next redeploy).
   - The student chose not to run the retest and accepted the block (2026-10-28). Phase 8b marked done as an accepted block. Open notes from the tester: N1 (insufficient_quota retried as a rate limit), N2 (Research does not unlock web search when corpus_search errors), N3 (HyDE seed note wording), N5 (6.35 s just above 6 s), N6 (faithfulness check is a regression signal only).
+
+## Phase 9 (evaluation) — in progress, branch `phase-9-eval`, 2026-10-27
+- Start state: live service still on rev `paper-analyst-00016-dnl` (no P8b-D2 fix). Redeploy requested from the student (auto mode cannot run `scripts/deploy.sh`).
+- OpenAI credits checked with one embedding and one `gpt-6.1-sol` call: both succeeded.
+- Test set draft `eval/testset/testset_v1.jsonl` (36 items, 26 RAGAS); construction method in `eval/testset/README.md`. The first sampler run produced three table- or caption-only chunks, so a prose filter and an appendix filter were added before any question was written. All 40 reference chunk ids resolve. Waiting for student review, then freeze.
+- Planner effort probe (`scripts/planner_effort_probe.py`, `eval/results/phase9/planner-effort-probe/`): 19 questions × 2 runs × {low, minimal}.
+  - Both 38/38 correct plans; worker plans identical on all 38 pairs.
+  - Planner latency median 2.54 s (low) vs 2.51 s (minimal); p90 3.27 vs 3.34 s; max 4.4 vs 6.7 s; one reasoning call each.
+  - No measurable gain from `minimal`; decision left to the student. Cost about $0.15.
